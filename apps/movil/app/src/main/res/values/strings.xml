@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Alarmas QR</string>
+    <string name="lema">Escanea el QR del evento y te avisamos a tiempo</string>
+    <string name="fab_escanear">Escanear</string>
+    <string name="fab_agregar_evento">Agregar evento…</string>
+    <string name="nav_alarmas">Alarmas</string>
+    <string name="nav_calendario">Calendario</string>
+    <string name="nav_ajustes">Ajustes</string>
+    <string name="volver">Volver</string>
+</resources>

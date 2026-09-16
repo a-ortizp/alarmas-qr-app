@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Solo para recursos XML (ventana, ícono). En Compose se usan los tokens de Tokens.kt -->
+    <color name="amarillo_energia">#FFC400</color>
+    <color name="tinta">#17161C</color>
+    <color name="blanco_papel">#FFFFFF</color>
+</resources>

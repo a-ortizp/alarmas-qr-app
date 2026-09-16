@@ -1,0 +1,242 @@
+{
+  "meta": {
+    "name": "Alarmas QR · dataset único de los mockups",
+    "version": "1.0",
+    "date": "2026-09-16",
+    "source": "Mockups Figma v1.4 (móvil) y web v1.2; MOCKUPS.md §3c y §7",
+    "hoy": "2026-08-27",
+    "zonaHoraria": "America/Bogota (GMT-5)",
+    "notes": [
+      "Los mismos datos deben verse en móvil y web para que el recorrido sea coherente.",
+      "Fechas en agosto de 2026: HOY es jueves 27; la entrega es el domingo 30 y el asado el lunes 31.",
+      "Las horas se muestran en formato 12 h con am/pm en Spline Sans Mono.",
+      "escaneosPorSemana es un dato ilustrativo de los mockups (suma 128, igual al indicador)."
+    ]
+  },
+  "usuario": {
+    "id": "u-andres",
+    "nombre": "Andrés Rojas",
+    "aliasPublico": "Andrés R.",
+    "correo": "andres@correo.com",
+    "iniciales": "A. R.",
+    "persona": "el profesional del pantallazo · 29 años · Android de gama media",
+    "privacidad": {
+      "apariciónEnQuienesEscanearon": "solo-iniciales",
+      "mostrarEstadoDeMiAlarma": true,
+      "contarMiYaVoyEnMetricas": true
+    },
+    "ajustes": {
+      "anticipacionPorDefectoMin": 30,
+      "sumarTrayectoDesdeUbicacionHabitual": true,
+      "sonidoPorDefecto": "sonar",
+      "respetarNoMolestar": true,
+      "posponerPorDefectoMin": 10,
+      "confirmarAntesDeAutoAjustar": true,
+      "calendariosVinculados": ["google"],
+      "permisos": { "alarmasExactas": true, "notificaciones": true, "bateriaSinRestricciones": false, "camara": false }
+    }
+  },
+  "alarmas": [
+    {
+      "id": "a-tutor",
+      "titulo": "Reunión con el tutor",
+      "eventoInicio": "2026-08-27T08:00:00-05:00",
+      "suena": "2026-08-27T07:30:00-05:00",
+      "lugar": "Aula SD-703",
+      "origen": "creada-por-mi",
+      "estado": "activa",
+      "anticipacionMin": 30,
+      "trayectoMin": 0,
+      "chips": ["Creada por mí"]
+    },
+    {
+      "id": "a-gimnasio",
+      "titulo": "Gimnasio",
+      "eventoInicio": "2026-08-27T09:30:00-05:00",
+      "suena": "2026-08-27T09:00:00-05:00",
+      "lugar": null,
+      "origen": "creada-por-mi",
+      "estado": "pausada",
+      "anticipacionMin": 30,
+      "trayectoMin": 0,
+      "chips": []
+    },
+    {
+      "id": "a-vuelo",
+      "titulo": "Vuelo BOG–MDE",
+      "eventoInicio": "2026-08-28T08:15:00-05:00",
+      "suena": "2026-08-28T06:45:00-05:00",
+      "lugar": "Aeropuerto",
+      "origen": "creada-por-mi",
+      "estado": "activa",
+      "anticipacionMin": 90,
+      "trayectoMin": 0,
+      "chips": ["Creada por mí"],
+      "etiquetaEvento": "vuelo"
+    },
+    {
+      "id": "a-semillero",
+      "titulo": "Reunión semillero",
+      "eventoInicio": "2026-08-28T18:20:00-05:00",
+      "suena": "2026-08-28T18:00:00-05:00",
+      "lugar": "Virtual",
+      "origen": "escaneada",
+      "estado": "activa",
+      "anticipacionMin": 20,
+      "trayectoMin": 0,
+      "chips": ["✓ Escaneada"],
+      "organizador": { "nombre": "Semillero UX", "verificado": true }
+    },
+    {
+      "id": "a-entrega",
+      "titulo": "Entrega de proyecto UX",
+      "eventoInicio": "2026-08-30T16:00:00-05:00",
+      "suena": "2026-08-30T15:15:00-05:00",
+      "lugar": "Aula SD-703, Universidad",
+      "origen": "escaneada",
+      "estado": "activa",
+      "esNueva": true,
+      "anticipacionMin": 30,
+      "trayectoMin": 15,
+      "chips": ["Nueva", "✓ Escaneada"],
+      "organizador": { "nombre": "MISO · UniAndes", "verificado": true },
+      "detalle": "Sustentación final del prototipo",
+      "cambioDelOrganizador": {
+        "nuevoInicio": "2026-08-30T17:30:00-05:00",
+        "nuevaHoraDeAlarma": "2026-08-30T16:45:00-05:00",
+        "antesSonaba": "2026-08-30T15:15:00-05:00",
+        "autor": "MISO · UniAndes",
+        "motivo": "Cambio de hora del evento"
+      },
+      "alSonar": { "salEnMin": 12, "traficoActual": "moderado", "rutaDisponible": true }
+    },
+    {
+      "id": "a-asado",
+      "titulo": "Asado del semillero",
+      "eventoInicio": "2026-08-31T13:00:00-05:00",
+      "suena": "2026-08-31T12:00:00-05:00",
+      "lugar": "Parque de la 93",
+      "origen": "creada-por-mi",
+      "estado": "activa",
+      "anticipacionMin": 60,
+      "trayectoMin": 0,
+      "chips": ["Creada por mí"]
+    }
+  ],
+  "calendario": {
+    "mes": "2026-08",
+    "diasConAlarmas": { "2026-08-27": 2, "2026-08-28": 2, "2026-08-30": 1, "2026-08-31": 1 },
+    "diaSeleccionado": "2026-08-27"
+  },
+  "eventosQR": [
+    {
+      "id": "e-tutor",
+      "alarmaId": "a-tutor",
+      "titulo": "Reunión con el tutor",
+      "codigoQR": "alarmasqr://evento/e-tutor",
+      "escaneos": 0,
+      "etiqueta": "Aún sin escaneos · recién creado"
+    },
+    {
+      "id": "e-entrega",
+      "alarmaId": "a-entrega",
+      "titulo": "Entrega de proyecto UX",
+      "codigoQR": "alarmasqr://evento/e-entrega",
+      "organizador": "MISO · UniAndes",
+      "verificado": true
+    }
+  ],
+  "qrInvalido": {
+    "contenido": "https://menu.resturl.co/…",
+    "tipoDetectado": "enlace externo",
+    "diagnostico": "Parece el menú de un restaurante. Por tu seguridad no abrimos enlaces automáticamente (protección anti-quishing)."
+  },
+  "pantallazoRecibido": {
+    "origen": "WhatsApp · compartido con Alarmas QR",
+    "grupo": "Grupo MISO UX",
+    "mensaje": "Nos vemos el domingo 30 en SD-703. Escanea para agendar 👇",
+    "eventoDetectado": "e-entrega"
+  },
+  "web": {
+    "indicadores": {
+      "eventosActivos": { "valor": 6, "detalle": "4 propios · 2 escaneados" },
+      "escaneosTotales": { "valor": 128, "detalle": "De tus eventos propios" },
+      "alarmasActivas": { "valor": 97, "detalle": "Conversión: 76 %" },
+      "confirmaronYaVoy": { "valor": 41, "detalle": "Personas que avisaron que van en camino" }
+    },
+    "eventos": [
+      {
+        "id": "w-seminario",
+        "titulo": "Seminario UX",
+        "fechaHora": "2026-08-28T14:00:00-05:00",
+        "origen": "creada-por-mi",
+        "escaneos": 12,
+        "alarmasActivas": 8,
+        "estado": "publicado",
+        "lugar": "Auditorio ML"
+      },
+      {
+        "id": "w-partido",
+        "titulo": "Partido Sintética",
+        "fechaHora": "2026-08-27T19:30:00-05:00",
+        "origen": "escaneada",
+        "escaneos": 16,
+        "alarmasActivas": 11,
+        "alarmasEliminadas": 5,
+        "confirmaronYaVoy": 7,
+        "estado": "publicado",
+        "lugar": "Heroes · Cancha 4"
+      }
+    ],
+    "asistentes": {
+      "eventoId": "w-partido",
+      "total": 16,
+      "mostrados": [
+        { "alias": "Joale7",   "escaneo": "2026-08-21T13:23:00-05:00", "alarma": "activa",    "confirmoYaVoy": false },
+        { "alias": "Mike1008", "escaneo": "2026-08-21T20:03:00-05:00", "alarma": "activa",    "confirmoYaVoy": false },
+        { "alias": "J.P",      "escaneo": "2026-08-20T17:30:00-05:00", "alarma": "eliminada", "confirmoYaVoy": false },
+        { "alias": "CarrosC6", "escaneo": "2026-08-19T16:20:00-05:00", "alarma": "activa",    "confirmoYaVoy": false }
+      ],
+      "notaPrivacidad": "Solo alias o iniciales — nunca teléfono ni correo (Ley 1581)."
+    },
+    "escaneosPorSemana": [
+      { "semana": "2026-07-06", "etiqueta": "6 jul",  "escaneos": 6 },
+      { "semana": "2026-07-13", "etiqueta": "13 jul", "escaneos": 9 },
+      { "semana": "2026-07-20", "etiqueta": "20 jul", "escaneos": 14 },
+      { "semana": "2026-07-27", "etiqueta": "27 jul", "escaneos": 11 },
+      { "semana": "2026-08-03", "etiqueta": "3 ago",  "escaneos": 18 },
+      { "semana": "2026-08-10", "etiqueta": "10 ago", "escaneos": 22 },
+      { "semana": "2026-08-17", "etiqueta": "17 ago", "escaneos": 25 },
+      { "semana": "2026-08-24", "etiqueta": "24 ago", "escaneos": 23, "actual": true }
+    ],
+    "reporte": {
+      "rangos": ["ultimo-mes", "semestre", "personalizado"],
+      "rangoPersonalizado": { "desde": "2026-08-01", "hasta": "2026-08-31" },
+      "formatos": ["pdf", "csv"],
+      "archivoGenerado": "reporte-alarmasqr-ago2026.pdf",
+      "nota": "Solo datos agregados y anónimos (Ley 1581) — sin nombres ni contactos de asistentes."
+    },
+    "descargaQR": {
+      "seleccionados": ["w-seminario", "w-partido"],
+      "formatos": ["png", "pdf"],
+      "afiche": { "marca": "Alarmas QR", "lema": "Escanéalo y te avisamos", "qrMinimoCm": 4, "resolucionPng": 300 }
+    },
+    "eliminarCuenta": {
+      "eventosPublicados": 4,
+      "alarmasDeAsistentes": 97,
+      "diasParaBorrado": 30,
+      "palabraDeConfirmacion": "ELIMINAR",
+      "consejo": "Descarga antes tus reportes (Reportes → PDF / CSV)."
+    }
+  },
+  "mensajes": {
+    "alarmaGuardada": "Alarma guardada · También en Google Calendar",
+    "deshacer": "Deshacer · 5 s",
+    "perfilActualizado": "Perfil actualizado",
+    "descargaCompletada": "Descarga completada exitosamente",
+    "cuentaEliminada": "Cuenta eliminada exitosamente",
+    "camaraActiva": "Cámara activa",
+    "sinAlarmas": "Aún no tienes alarmas",
+    "sinAlarmasDetalle": "Escanea el QR de un evento o comparte un pantallazo con Alarmas QR: la alarma queda programada sin escribir fecha ni hora."
+  }
+}
