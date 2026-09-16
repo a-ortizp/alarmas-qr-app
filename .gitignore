@@ -1,0 +1,30 @@
+# Android · apps/movil
+apps/movil/build/
+apps/movil/**/build/
+apps/movil/.gradle/
+apps/movil/local.properties
+apps/movil/.idea/
+apps/movil/.kotlin/
+apps/movil/captures/
+*.iml
+*.apk
+!apps/movil/app/debug.keystore
+*.jks
+*.keystore
+!*debug.keystore
+
+# Angular · apps/web
+apps/web/node_modules/
+apps/web/dist/
+apps/web/.angular/
+apps/web/coverage/
+apps/web/.nx/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+*.log
+.env
+.vscode/*
+!.vscode/extensions.json
+.idea/

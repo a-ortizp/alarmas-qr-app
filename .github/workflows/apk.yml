@@ -1,0 +1,40 @@
+# APK en cada tag · copiar a .github/workflows/apk.yml
+# Al crear un tag vX.Y.Z compila el APK de release (firmado con el keystore de depuración,
+# suficiente para la prueba del curso) y lo adjunta a una GitHub Release.
+#
+# Requisito en apps/movil/app/build.gradle.kts:
+#   signingConfigs { create("release") { initWith(getByName("debug")) } }
+#   buildTypes { release { signingConfig = signingConfigs.getByName("release"); isMinifyEnabled = false } }
+name: APK
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/movil
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: chmod +x gradlew
+      - name: Compilar APK de release
+        run: ./gradlew assembleRelease --no-daemon
+      - name: Renombrar con la versión
+        run: cp app/build/outputs/apk/release/app-release.apk "alarmas-qr-${GITHUB_REF_NAME}.apk"
+      - name: Publicar Release con el APK
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Alarmas QR ${{ github.ref_name }}
+          files: apps/movil/alarmas-qr-${{ github.ref_name }}.apk
+          generate_release_notes: true
