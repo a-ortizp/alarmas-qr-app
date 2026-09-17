@@ -1,4 +1,4 @@
-// Alarmas QR · Energía puntual · tokens v1.5 (2026-09-16)
+// Alarmas QR · Energía puntual · tokens v1.7 (2026-09-17)
 // Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
 // Copiar a apps/movil/app/src/main/java/<paquete>/ui/theme/Tokens.kt y ajustar el package.
 // Las fuentes van en res/font/ con estos nombres de archivo (Google Fonts, licencia OFL):
@@ -7,7 +7,8 @@
 //   spline_sans_mono_medium.ttf · spline_sans_mono_bold.ttf
 //
 // Reglas: un solo elemento amarillo por pantalla (la acción principal o el FAB); estados activos en Tinta;
-// texto ≤ 15 sp usa los tonos *Texto; botones de 48 dp; radio 14 en tarjetas y hojas, 12 en campos; horas en 12 h.
+// texto ≤ 15 sp usa los tonos *Texto; botones de 52 dp (48 hasta v1.5); radio 14 en tarjetas y hojas, 20 en el diálogo
+// de confirmación, 12 en campos; horas en 12 h. Eliminar y cerrar sesión pasan por un DialogoConfirmacion (DS comp. 47).
 
 package com.alarmasqr.ui.theme
 
@@ -39,7 +40,8 @@ object Colores {
     val GrisMedio       = Color(0xFF77747E)   // marcadores de posición
     val GrisTexto       = Color(0xFF66636D)   // texto secundario ≤ 15 sp · 5.9:1
     val GrisBorde       = Color(0xFFDAD8D2)   // bordes 1.5 · divisores · texto secundario sobre Tinta
-    val Velo            = Color(0xFF17161C).copy(alpha = 0.45f)
+    val Velo            = Color(0xFF17161C).copy(alpha = 0.45f)   // modales web
+    val VeloMovil       = Color(0xFF17161C).copy(alpha = 0.55f)   // hoja inferior y diálogo de confirmación
 }
 
 object Fuentes {
@@ -71,6 +73,8 @@ object Tipografia {
     val H2 = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.SemiBold, fontSize = 22.sp, lineHeight = 26.sp)        // nombre de evento
     val Destacado = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 16.sp)
     val Cuerpo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 16.sp, lineHeight = 24.sp)
+    val TituloDialogo = H2                                                                                               // «¿Eliminar alarma?»
+    val CuerpoDialogo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 14.sp, lineHeight = 20.sp)     // consecuencia concreta
     val Boton = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp)
     val TituloTarjeta = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp, lineHeight = 20.sp)
     val H3 = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 13.sp, letterSpacing = 0.08.em)               // «HOY · JUEVES 27», en mayúsculas
@@ -83,7 +87,8 @@ object Tipografia {
 }
 
 object Tamanos {
-    val Boton = 48.dp                 // toque; la web usa 44
+    val Boton = 52.dp                 // toque (48 hasta v1.5); la web usa 44
+    val DialogoAncho = 342.dp         // 390 − 2 × 24
     val BotonAlarma = 56.dp           // «Ya voy» · «Posponer 10 min»
     val Campo = 48.dp
     val Fab = 56.dp
@@ -99,7 +104,8 @@ object Tamanos {
 object Radios {
     val Pildora = RoundedCornerShape(percent = 50)
     val Tarjeta = RoundedCornerShape(14.dp)
-    val Hoja = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)   // M02h, hoja inferior de M03
+    val Hoja = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)   // M02h, hoja inferior de M03 y M04
+    val Dialogo = RoundedCornerShape(20.dp)                           // DialogoConfirmacion (M04d, M06d, M11d)
     val Campo = RoundedCornerShape(12.dp)
     val Fab = RoundedCornerShape(16.dp)
     val Barra = RoundedCornerShape(4.dp)
@@ -117,6 +123,8 @@ object Espacio {
     val EntreBloques = 12.dp
     val PaddingBoton = 16.dp
     val PaddingTarjeta = 14.dp
+    val PaddingDialogo = 24.dp
+    val EntreBotonesDialogo = 10.dp
 }
 
 object Movimiento {

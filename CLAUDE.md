@@ -20,11 +20,12 @@ Todo el contenido visible es en español; los identificadores de código pueden 
 
 ## Reglas de diseño que el código debe respetar
 
-Fuente de verdad: `packages/tokens/design-tokens.json` (derivado de `docs/DESIGN_SYSTEM.md` v1.5). Nunca escribir colores, tamaños ni radios a mano: usar los tokens.
+Fuente de verdad: `packages/tokens/design-tokens.json` (derivado de `docs/DESIGN_SYSTEM.md` v1.7). Nunca escribir colores, tamaños ni radios a mano: usar los tokens.
 
 - **Un solo elemento amarillo por pantalla**: la acción principal o el FAB extendido. Estados activos (switch, píldoras, pestañas, chip «Nueva») en Tinta. Sobre Tinta el primario es blanco.
-- **Alturas**: botones 48 en móvil (toque) y 44 en web (puntero); acciones de la alarma sonando 56; campos 48; área táctil mínima 48.
-- **Radios**: 14 en tarjetas, modales y contenedores; 12 en campos; píldora en botones, chips y filtros.
+- **Alturas**: botones 52 en móvil (toque; 48 hasta el 2026-09-17) y 44 en web (puntero); acciones de la alarma sonando 56; campos 48; área táctil mínima 48.
+- **Radios**: 14 en tarjetas, modales y contenedores; 20 en el diálogo de confirmación móvil; 12 en campos; píldora en botones, chips y filtros.
+- **Prevención de errores**: ninguna acción irreversible o de salida se ejecuta en un toque. Eliminar una alarma (M04, M06) y cerrar sesión (M11) abren `DialogoConfirmacion` (DS comp. 47, `docs/TRAZABILIDAD.md` §1b): velo Tinta 55 %, título «¿Eliminar alarma?» / «¿Cerrar sesión?», consecuencia concreta, acción segura como primario amarillo («Conservar» / «Cancelar») y confirmación en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura. Eliminar la cuenta (web) usa el modal W07 con fricción.
 - **Texto ≤ 15 pt** usa los tonos AA (`coral.texto`, `verde.texto`, `azul.texto`, `gris.texto`); nada por debajo de 12 salvo la barra inferior (11). Sobre Tinta el texto secundario va en Gris Borde.
 - **Horas** en formato 12 h con Spline Sans Mono y dígitos tabulares; sufijo am/pm en Medium más pequeño en la misma línea.
 - **Movimiento**: transiciones de 250 ms ease in-out; mantener presionado el FAB 500 ms abre la hoja; snackbar «Deshacer» de 5 s; respetar `prefers-reduced-motion`.
@@ -35,7 +36,7 @@ Fuente de verdad: `packages/tokens/design-tokens.json` (derivado de `docs/DESIGN
 
 - Las rutas y nombres de `docs/TRAZABILIDAD.md` son obligatorios; cada ruta lleva el código de pantalla como nombre para poder navegar por código en las pruebas.
 - Los eventos externos (permiso de cámara, push del organizador, hora de la alarma) se simulan con los controles indicados con ⏩ en `docs/NAVEGACION.md` §6; no inventar pantallas ni puntos de entrada nuevos.
-- Los modales web (W04, W05, eliminar cuenta) tienen ruta propia y se abren sobre la página padre con velo Tinta al 45 %.
+- Los modales web (W04, W05, eliminar cuenta) tienen ruta propia y se abren sobre la página padre con velo Tinta al 45 %. En móvil, las hojas (M02h, M04) y los diálogos de confirmación (M04d, M06d, M11d) no son rutas: son estado del componente padre sobre velo Tinta al 55 %.
 - La fila de cabecera de un modal (miga + ✕) es un solo control que cierra.
 
 ## Datos

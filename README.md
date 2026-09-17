@@ -6,7 +6,7 @@ Alarmas QR crea alarmas escaneando el código QR de un evento, sin digitar fecha
 
 | Aplicación | Qué es | Pantallas | Entregable |
 |---|---|---|---|
-| `apps/movil` | App del asistente y organizador (Android) | 19 (M00a–M13 + M02v, M02h, M03b) | APK instalable |
+| `apps/movil` | App del asistente y organizador (Android) | 19 (M00a–M13 + M02v, M02h, M03b) + 3 diálogos de confirmación (M04d, M06d, M11d) | APK instalable |
 | `apps/web` | Administración y consulta para organizadores | 7 (W00, W01, W03, W04, W05, W06 y modales) | Sitio desplegado |
 
 Investigación, prototipos y diseño viven en el repositorio de UX: https://github.com/alejortizp/alarmas-qr-ux. Una copia curada está en `docs/`.
@@ -51,7 +51,7 @@ docs/                documentación UX copiada del repo de UX (ver abajo)
 
 - Sistema «Energía puntual»: fuente de verdad `docs/DESIGN_SYSTEM.md`; tokens en `packages/tokens/design-tokens.json`, consumidos como `Tokens.kt` en Compose (tema `AlarmasQRTheme`) y como variables CSS en Angular (`tokens.css` importado en `styles.css`).
 - Los componentes web se construyen propios sobre el Angular CDK (overlay, tabla, a11y); no se usa `mat-button` ni el tema de Angular Material para no pelear con la anatomía del sistema.
-- Reglas que el código debe respetar: **un solo elemento amarillo por pantalla** (la acción principal o el FAB); estados activos en Tinta; **botones de 48 pt en móvil y 44 pt en web**; radio 14 en tarjetas y modales, 12 en campos; texto ≤ 15 pt en los tonos AA (Coral, Verde, Azul, Gris Texto); horas en formato 12 h con Spline Sans Mono.
+- Reglas que el código debe respetar: **un solo elemento amarillo por pantalla** (la acción principal o el FAB); estados activos en Tinta; **botones de 52 pt en móvil y 44 pt en web**; radio 14 en tarjetas y modales, 20 en el diálogo de confirmación, 12 en campos; **eliminar y cerrar sesión siempre pasan por un diálogo de confirmación** (acción segura prominente, confirmación en contorno, rótulos de máximo dos palabras); texto ≤ 15 pt en los tonos AA (Coral, Verde, Azul, Gris Texto); horas en formato 12 h con Spline Sans Mono.
 - Fuentes (Google Fonts, licencia OFL) empaquetadas en cada app: Bricolage Grotesque (titulares), Archivo (UI), Spline Sans Mono (horas y cifras).
 - Transiciones de 250 ms con ease in-out; mantener presionado el FAB 500 ms abre la hoja «Agregar evento».
 

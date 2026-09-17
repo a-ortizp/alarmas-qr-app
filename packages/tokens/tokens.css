@@ -1,7 +1,8 @@
-/* Alarmas QR · Energía puntual · tokens v1.5 (2026-09-16)
+/* Alarmas QR · Energía puntual · tokens v1.7 (2026-09-17)
    Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
    Reglas: un solo amarillo por pantalla (la acción principal); estados activos en Tinta;
-   texto ≤ 15 px usa los tonos --color-*-texto; botones 48 px en móvil y 44 px en web; radio 14. */
+   texto ≤ 15 px usa los tonos --color-*-texto; botones 52 px en móvil (48 hasta v1.5) y 44 px en web; radio 14 (20 en el diálogo de confirmación).
+   Prevención de errores: eliminar y cerrar sesión pasan por un diálogo con la acción segura prominente. */
 
 :root {
   /* color */
@@ -21,6 +22,7 @@
   --color-gris-texto: #66636d;
   --color-gris-borde: #dad8d2;
   --color-velo: rgba(23, 22, 28, 0.45);
+  --color-velo-movil: rgba(23, 22, 28, 0.55);   /* hoja inferior y diálogo de confirmación */
 
   /* roles */
   --color-fondo: var(--color-blanco);
@@ -49,6 +51,8 @@
   --text-barra-superior: 700 22px/1.15 var(--font-titulares);
   --text-h2: 600 22px/1.2 var(--font-titulares);
   --text-titulo-modal-web: 700 21px/1.2 var(--font-titulares);
+  --text-titulo-dialogo: 600 22px/1.2 var(--font-titulares);
+  --text-cuerpo-dialogo: 400 14px/1.4 var(--font-ui);
   --text-marca-web: 700 17px/1.2 var(--font-titulares);
   --text-destacado: 700 16px/1.4 var(--font-ui);
   --text-cuerpo: 400 16px/1.5 var(--font-ui);
@@ -65,7 +69,10 @@
   --text-rotulo-tabla: 700 11px/1.2 var(--font-ui);  /* mayúsculas, letter-spacing .06em */
 
   /* tamaños */
-  --size-boton-movil: 48px;
+  --size-boton-movil: 52px;
+  --size-dialogo-ancho: 342px;
+  --space-dialogo: 24px;
+  --space-dialogo-entre-botones: 10px;
   --size-boton-web: 44px;
   --size-boton-alarma: 56px;
   --size-campo: 48px;
@@ -92,6 +99,7 @@
   --radius-pildora: 999px;
   --radius-tarjeta: 14px;
   --radius-modal: 14px;
+  --radius-dialogo: 20px;
   --radius-campo: 12px;
   --radius-chip-web: 8px;
   --radius-barra: 4px;

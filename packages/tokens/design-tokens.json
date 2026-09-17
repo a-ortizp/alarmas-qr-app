@@ -2,16 +2,17 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.5",
-    "date": "2026-09-16",
-    "source": "DESIGN_SYSTEM.md v1.5 · STYLE_TILE.md v1.2 · MOCKUPS.md §7",
+    "version": "1.7",
+    "date": "2026-09-17",
+    "source": "DESIGN_SYSTEM.md v1.7 · STYLE_TILE.md v1.2 · MOCKUPS.md §7 (móvil v1.6, web v1.3)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
     "notes": [
       "Un solo elemento amarillo por pantalla: la acción principal o el FAB extendido. Los estados activos van en Tinta.",
       "Coral solo en urgencia y destrucción. Los estados nunca se comunican solo con color.",
       "Texto ≤ 15 pt usa los tonos AA (*.texto); los tonos base quedan para rellenos, íconos y trazos.",
       "Sobre Tinta el texto secundario va en Gris Borde y el primario es blanco (excepción M10).",
-      "Alturas: 48 para toque en móvil, 44 para puntero en web; 56 en las acciones de la alarma sonando."
+      "Alturas: 52 para toque en móvil (v1.6, revisión de tutores del 2026-09-17; antes 48), 44 para puntero en web; 56 en las acciones de la alarma sonando.",
+      "Prevención de errores (v1.7): toda acción destructiva o de salida pasa por un diálogo de confirmación centrado sobre velo Tinta 55 %; la acción segura es el primario amarillo y la que confirma va en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura."
     ]
   },
   "color": {
@@ -40,7 +41,8 @@
       "texto":  { "$value": "#66636D", "$type": "color", "$description": "Gris Texto · texto secundario ≤ 15 pt · 5.9:1" },
       "borde":  { "$value": "#DAD8D2", "$type": "color", "$description": "Bordes 1.5 y divisores · texto secundario sobre Tinta" }
     },
-    "velo": { "$value": "rgba(23, 22, 28, 0.45)", "$type": "color", "$description": "Velo de modal (web) · Tinta al 45 %" }
+    "velo": { "$value": "rgba(23, 22, 28, 0.45)", "$type": "color", "$description": "Velo de modal (web) · Tinta al 45 %" },
+    "velo-movil": { "$value": "rgba(23, 22, 28, 0.55)", "$type": "color", "$description": "Velo de hoja inferior (M02h, M04) y del diálogo de confirmación (M04d, M06d, M11d) · Tinta al 55 %" }
   },
   "font": {
     "family": {
@@ -59,6 +61,8 @@
       "barra-superior":    { "family": "titulares", "weight": 700, "size": 22 },
       "h2":                { "family": "titulares", "weight": 600, "size": 22, "$description": "Sección · nombre de evento (20–22)" },
       "titulo-modal-web":  { "family": "titulares", "weight": 700, "size": 21 },
+      "titulo-dialogo":    { "family": "titulares", "weight": 600, "size": 22, "$description": "Diálogo de confirmación móvil (= h2)" },
+      "cuerpo-dialogo":    { "family": "ui", "weight": 400, "size": 14, "lineHeight": "140%", "$description": "Consecuencia concreta en el diálogo de confirmación" },
       "marca-web":         { "family": "titulares", "weight": 700, "size": 17 },
       "destacado":         { "family": "ui", "weight": 700, "size": 16 },
       "cuerpo":            { "family": "ui", "weight": 400, "size": 16 },
@@ -77,7 +81,8 @@
     }
   },
   "size": {
-    "boton": { "movil": 48, "web": 44, "alarma": 56, "$description": "Alturas de botón: toque / puntero / acciones de la alarma sonando" },
+    "boton": { "movil": 52, "web": 44, "alarma": 56, "$description": "Alturas de botón: toque (52 desde v1.6) / puntero / acciones de la alarma sonando" },
+    "dialogo": { "width": 342, "padding": 24, "gap": 16, "entre-botones": 10, "$description": "Diálogo de confirmación móvil: 390 − 2×24 de ancho, botones apilados de 52" },
     "campo": 48,
     "fab": 56,
     "barra-superior-movil": 56,
@@ -103,10 +108,11 @@
     "pildora": 999,
     "tarjeta": 14,
     "modal": 14,
+    "dialogo": 20,
     "campo": 12,
     "chip-web": 8,
     "barra": 4,
-    "$description": "Radio 14 en tarjetas, modales y contenedores; 12 en campos; píldora en botones, chips y filtros"
+    "$description": "Radio 14 en tarjetas, modales y contenedores; 20 en el diálogo de confirmación móvil; 12 en campos; píldora en botones, chips y filtros"
   },
   "stroke": {
     "borde": 1.5,
