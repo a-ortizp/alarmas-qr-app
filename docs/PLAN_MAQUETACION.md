@@ -11,7 +11,7 @@ Fecha: 2026-09-14 · **Stack decidido el 2026-09-16: Kotlin + Jetpack Compose (m
 | App móvil | **Kotlin + Jetpack Compose** (Material 3, Android Studio, Gradle) | Es la implementación de referencia de Material 3, la base estructural declarada en el Design System. La alarma que suena con la app cerrada usa `AlarmManager` (alarmas exactas) con notificación de pantalla completa; el QR se lee con CameraX + ML Kit; el pantallazo compartido desde WhatsApp llega por un intent filter. El APK sale de `./gradlew assembleRelease`. Ambos integrantes ya trabajaron con Kotlin en la maestría. Flutter se descartó por curva de aprendizaje, no por capacidad. |
 | App web | **Angular + TypeScript** (Angular CLI, componentes independientes, señales), datos en JSON local | Marco completo (enrutador, formularios, inyección de dependencias) que encaja con una aplicación de administración de tablas, filtros y modales. Angular Material implementa Material 3, pero los diez componentes web de L09 se construyen **propios sobre el CDK** (overlay para modales, tabla, a11y) para no pelear con la anatomía de `mat-button`. Gráfica «Escaneos por semana» en SVG propio. Ambos integrantes ya trabajaron con Angular. |
 | Alcance | **Maquetación**: pantallas navegables con datos simulados. Sin backend, sin autenticación real, sin push. | La alarma sí debe sonar de verdad en el APK: es el corazón del concepto y se prueba en un dispositivo. |
-| Diseño | Los tokens se generan desde `DESIGN_SYSTEM.md` a `design-tokens.json` y de ahí a Kotlin (`Tokens.kt`, Compose) y CSS (`tokens.css`, Angular) | Una sola fuente de verdad; las reglas del sistema (un amarillo por pantalla, 48 pt móvil / 44 pt web, radio 14, tonos de texto AA) se vuelven constantes, no recuerdos. |
+| Diseño | Los tokens se generan desde `DESIGN_SYSTEM.md` a `design-tokens.json` y de ahí a Kotlin (`Tokens.kt`, Compose) y CSS (`tokens.css`, Angular) | Una sola fuente de verdad; las reglas del sistema (un amarillo por pantalla, 52 pt móvil / 44 pt web, radio 14, tonos de texto AA, diálogo de confirmación antes de eliminar o salir) se vuelven constantes, no recuerdos. Tokens v1.7 desde el 2026-09-17. |
 
 ## 2 · Estructura del repositorio
 
@@ -59,7 +59,7 @@ Reglas de trabajo: una rama por pantalla o flujo; PR pequeño; el otro aprueba a
 
 ## 5 · Documentación que se lleva al repo de código
 
-No llevar todo el repositorio de UX: una copia curada en `docs/` más el enlace a `alejortizp/alarmas-qr-ux`, que sigue siendo la fuente de la investigación. **Los archivos «nuevos» de esta tabla ya están creados en la carpeta `handoff/` de este repositorio (2026-09-16), listos para copiar; solo las partes marcadas [STACK] esperan la decisión tecnológica.**
+No llevar todo el repositorio de UX: una copia curada en `docs/` más el enlace a `alejortizp/alarmas-qr-ux`, que sigue siendo la fuente de la investigación. **Los archivos «nuevos» de esta tabla ya están creados en la carpeta `handoff/` de este repositorio (2026-09-16), listos para copiar; solo las partes marcadas [STACK] esperan la decisión tecnológica.** Stack decidido el 2026-09-16 y repo `a-ortizp/alarmas-qr-app` creado ese día; el 2026-09-17 el paquete se actualizó (tokens v1.7, dataset v1.1, trazabilidad v1.1 con los diálogos de confirmación M04d/M06d/M11d como estados, docs v2.5.4) y se copió de nuevo al repo de código. `docs/` es una copia: las correcciones se hacen aquí y se vuelven a copiar.
 
 | Nivel | Archivos | Para qué |
 |---|---|---|
@@ -83,14 +83,15 @@ Las tres fuentes (Bricolage Grotesque, Archivo, Spline Sans Mono) son de Google 
 |---|---|---|
 | 0 · Cimientos | Monorepo, proyecto Android Studio en `apps/movil` (Compose Material3, tema con `Tokens.kt`, Navigation Compose con las rutas de `TRAZABILIDAD.md`), proyecto Angular en `apps/web` (enrutador, `tokens.css`, layout con barra lateral), fuentes, dataset, README, CI que compila ambas apps | Sí |
 | 1 · Componentes | Móvil: composables de L03–L08 (botón, chip, tarjeta de alarma, campo, switch, FAB, barra superior, navegación inferior, snackbar). Web: los diez de L09 sobre el CDK (barra lateral, indicador, píldora, chip, tabla, cabecera de modal, modal, gráfica, afiche, snackbar) | Cada quien los de su flujo |
-| 2 · Pantallas | Las 19 móviles y las 7 web con sus estados, con datos del `dataset.json` | Según §3 |
+| 2 · Pantallas | Las 19 móviles (más los 3 diálogos de confirmación como estado de M04, M06 y M11, `DialogoConfirmacion`) y las 7 web con sus estados, con datos del `dataset.json` | Según §3 |
 | 3 · Navegación | Recorridos de `NAVEGACION.md` §6 y §6b; alarma real en el APK | Sí |
 | 4 · Entrega | APK en Release, web desplegada (GitHub Pages o Vercel apuntando a `apps/web`), `docs/` completa | Sí |
 
 ## 7 · Lista de verificación antes de entregar
 
 - [ ] Cada pantalla de `FUNCIONALIDADES.md` existe y se alcanza por la ruta de `NAVEGACION.md`.
-- [ ] Un solo elemento amarillo por pantalla; botones de 48 pt en móvil y 44 pt en web; radio 14.
+- [ ] Un solo elemento amarillo por pantalla; botones de 52 pt en móvil y 44 pt en web; radio 14.
+- [ ] Eliminar una alarma y cerrar sesión pasan por un diálogo de confirmación (M04d, M06d, M11d) con la acción segura prominente y rótulos de máximo dos palabras.
 - [ ] Tonos de texto AA (Coral, Verde, Azul y Gris Texto) para todo texto ≤ 15 pt.
 - [ ] La alarma suena con la app cerrada en un dispositivo real.
 - [ ] El APK está adjunto a un Release y el enlace abre desde el celular.
@@ -100,6 +101,7 @@ Las tres fuentes (Bricolage Grotesque, Archivo, Spline Sans Mono) son de Google 
 ## 8 · Enlaces
 
 - Repositorio de UX (fuente): https://github.com/alejortizp/alarmas-qr-ux
+- Repositorio de código (privado, cuenta educativa): https://github.com/a-ortizp/alarmas-qr-app
 - Prototipo móvil: https://www.figma.com/proto/4nHD4ygcnP33UH0gAhaii5/Mockups-Alarmas---QR-Equipo-UX?node-id=3-71&p=f&scaling=min-zoom&content-scaling=fixed&page-id=1%3A6&starting-point-node-id=3%3A71&show-proto-sidebar=1
 - Prototipo web: https://www.figma.com/proto/4nHD4ygcnP33UH0gAhaii5/Mockups-Alarmas---QR-Equipo-UX?node-id=4072-1861&p=f&scaling=min-zoom&content-scaling=fixed&page-id=4072%3A2&starting-point-node-id=4072%3A1861&show-proto-sidebar=1
 - Design System en Figma: https://www.figma.com/design/lHYLJJIbltBS5Joo850iks
