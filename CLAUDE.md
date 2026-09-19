@@ -20,7 +20,7 @@ Todo el contenido visible es en español; los identificadores de código pueden 
 
 ## Reglas de diseño que el código debe respetar
 
-Fuente de verdad: `packages/tokens/design-tokens.json` (derivado de `docs/DESIGN_SYSTEM.md` v1.7). Nunca escribir colores, tamaños ni radios a mano: usar los tokens.
+Fuente de verdad: `packages/tokens/design-tokens.json` v1.9 (derivado de `docs/DESIGN_SYSTEM.md` v1.10; mockups móviles v1.7 del 2026-09-19: `chip-control` 32 para chips que se tocan, `icono-visor` 48, espaciador flexible en barras superiores). Nunca escribir colores, tamaños ni radios a mano: usar los tokens.
 
 - **Un solo elemento amarillo por pantalla**: la acción principal o el FAB extendido. Estados activos (switch, píldoras, pestañas, chip «Nueva») en Tinta. Sobre Tinta el primario es blanco.
 - **Alturas**: botones 52 en móvil (toque; 48 hasta el 2026-09-17) y 44 en web (puntero); acciones de la alarma sonando 56; campos 48; área táctil mínima 48.

@@ -1,4 +1,4 @@
-// Alarmas QR · Energía puntual · tokens v1.7 (2026-09-17)
+// Alarmas QR · Energía puntual · tokens v1.9 (2026-09-19)
 // Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
 // Copiar a apps/movil/app/src/main/java/<paquete>/ui/theme/Tokens.kt y ajustar el package.
 // Las fuentes van en res/font/ con estos nombres de archivo (Google Fonts, licencia OFL):
@@ -95,10 +95,12 @@ object Tamanos {
     val BarraSuperior = 56.dp
     val NavegacionInferior = 64.dp
     val Chip = 20.dp
+    val ChipControl = 32.dp           // chip que se toca («Linterna · auto»), relleno 14 lateral, radio 16 (v1.7)
     val Switch = 42.dp to 24.dp
     val AreaTactilMinima = 48.dp
     val BandaTextura = 120.dp
     val Icono = 24.dp
+    val IconoVisor = 48.dp            // icono a escala 2 como ilustración de estado en un visor apagado (M12, v1.7)
 }
 
 object Radios {

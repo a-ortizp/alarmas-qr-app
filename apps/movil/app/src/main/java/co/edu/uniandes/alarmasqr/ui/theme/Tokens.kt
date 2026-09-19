@@ -1,4 +1,4 @@
-// Alarmas QR · Energía puntual · tokens v1.7 (2026-09-17) · derivado de packages/tokens/design-tokens.json
+// Alarmas QR · Energía puntual · tokens v1.9 (2026-09-19) · derivado de packages/tokens/design-tokens.json
 // v1.7: botones de 52 dp (revisión de tutores), velo móvil 55 % y tokens del DialogoConfirmacion (DS comp. 47).
 // Fuente de verdad: docs/DESIGN_SYSTEM.md. Nunca escribir colores, tamaños ni radios a mano fuera de este archivo.
 // Reglas: un solo elemento amarillo por pantalla (la acción principal o el FAB); estados activos en Tinta;
@@ -88,9 +88,11 @@ object Tamanos {
     val BarraSuperior = 56.dp
     val NavegacionInferior = 64.dp
     val Chip = 20.dp
+    val ChipControl = 32.dp           // chip que se toca («Linterna · auto», M03): relleno 14 lateral, radio 16 (mockups v1.7)
     val AreaTactilMinima = 48.dp
     val BandaTextura = 120.dp
     val Icono = 24.dp
+    val IconoVisor = 48.dp            // icono a escala 2 como ilustración de estado en un visor apagado (M12, mockups v1.7)
 }
 
 object Radios {

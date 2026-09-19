@@ -1,7 +1,7 @@
 # Alarmas QR · Trazabilidad pantalla → funcionalidad → ruta → componente
 
 Tabla de correspondencia entre los códigos de pantalla de los mockups (Mxx / Wxx), las funcionalidades de `FUNCIONALIDADES.md` (F-Mxx / F-Wxx), la ruta de la app y el nombre del componente raíz. Es independiente del stack: las rutas son las mismas en Flutter, React Native o React; solo cambia cómo se declaran.
-Fecha: 2026-09-16 · v1.1 del 2026-09-17 (diálogos de confirmación, botones de 52) · v1.2 del 2026-09-19 (web v1.5: Reportes y Descargar QR como páginas, estados de W00/W01/W03, diálogo de cerrar sesión, barra lateral colapsable) · Fuente: `FUNCIONALIDADES.md` v2.5.6, `NAVEGACION.md` §4 y §6b, `MOCKUPS.md` §7, `DESIGN_SYSTEM.md` v1.9.
+Fecha: 2026-09-16 · v1.1 del 2026-09-17 (diálogos de confirmación, botones de 52) · v1.2 del 2026-09-19 (web v1.5: Reportes y Descargar QR como páginas, estados de W00/W01/W03, diálogo de cerrar sesión, barra lateral colapsable) · v1.3 del 2026-09-19 (móvil v1.7: notas de forma de la revisión de los tutores en M01, M00a, M03, M09 y M12; sin cambios de rutas) · Fuente: `FUNCIONALIDADES.md` v2.5.7, `NAVEGACION.md` §4 y §6b, `MOCKUPS.md` §7, `DESIGN_SYSTEM.md` v1.9.
 
 Convenciones:
 
@@ -15,24 +15,24 @@ Convenciones:
 
 | Código | Pantalla | F | Ruta | Componente raíz | Navega a |
 |---|---|---|---|---|---|
-| M01 | Bienvenida | F-M01 | `/` | `PantallaBienvenida` | «Comenzar» → M00a · «Ahora no / invitado» → M02v |
-| M00a | Crear cuenta | F-M00a | `/registro` | `PantallaRegistro` | «Crear cuenta» / «Continuar como invitado» → M02v · «Ya tengo cuenta» → M00b |
+| M01 | Bienvenida | F-M01 | `/` | `PantallaBienvenida` | «Comenzar» → M00a · «Ahora no / invitado» → M02v · filas de calendario con icono de 20 (google · outlook · teléfono, v1.7) |
+| M00a | Crear cuenta | F-M00a | `/registro` | `PantallaRegistro` | «Crear cuenta» / «Continuar como invitado» → M02v · «Ya tengo cuenta» → M00b · fila Google / Outlook ajusta al contenido (v1.7) |
 | M00b | Iniciar sesión | F-M00b | `/entrar` | `PantallaEntrar` | «Entrar» → M02 |
 | M02v | Inicio · sin alarmas (primer uso) | F-M02 | `/inicio` (estado vacío) | `PantallaInicio` con `EstadoVacio` | «Escanear QR del evento» → M12 ⏩ · «Elegir pantallazo» → M03b · «Crear el evento a mano» → M07 |
 | M02 | Inicio · lista | F-M02 | `/inicio` | `PantallaInicio` | FAB toque → M12 ⏩ (primer uso) o M03 · FAB mantener → M02h · tarjeta → M06 · Calendario → M02b · Ajustes → M11 |
 | M02h | Agregar evento (hoja) | F-M02 | `/inicio/agregar` (hoja modal) | `HojaAgregarEvento` | «Escanear el QR» → M12 ⏩ / M03 · «Elegir pantallazo» → M03b · «Crear a mano» → M07 |
 | M02b | Vista calendario | F-M02 | `/calendario` | `PantallaCalendario` | tarjeta → M06 · FAB igual que M02 · Alarmas → M02 |
 | M03b | Pantallazo recibido | F-M03 | `/pantallazo` | `PantallaPantallazoRecibido` | «Continuar» → M04 · «Elegir otra imagen» → galería |
-| M03 | Escáner dual | F-M03 | `/escanear` | `PantallaEscaner` | QR detectado → M04 · QR inválido → M13 · «Elegir pantallazo» → M03b · «Crear el evento a mano» → M07 |
+| M03 | Escáner dual | F-M03 | `/escanear` | `PantallaEscaner` | QR detectado → M04 · QR inválido → M13 · «Elegir pantallazo» → M03b · «Crear el evento a mano» → M07 · «Linterna · auto» = control de 32 en la barra (`ChipControl`, v1.7) |
 | M04 | Alarma creada | F-M04 | `/alarma/:id/creada` | `PantallaAlarmaCreada` | «Listo» → M05 · «No puedo asistir · eliminar» → diálogo M04d («Conservar» / velo cierra · «Eliminar» → M02) |
 | M05 | Guardada + deshacer | F-M05 | `/inicio` (con snackbar) | `PantallaInicio` + `SnackbarDeshacer` | «Deshacer · 5 s» revierte · tarjeta nueva → M06 |
 | M06 | Detalle y edición | F-M06 | `/alarma/:id` | `PantallaEditarAlarma` | «Guardar cambios» → M02 · «Eliminar alarma» → diálogo M06d («Conservar» / velo cierra · «Eliminar» → M02) · fila «Cambios del organizador» → M09 ⏩ · «Gestionar en el calendario» → M02b |
 | M07 | Crear evento a mano | F-M07 | `/evento/nuevo` | `PantallaCrearEvento` | «Guardar y crear QR» → M08 |
 | M08 | QR del evento | F-M08 | `/evento/:id/qr` | `PantallaCompartirQR` | «Compartir por WhatsApp» → hoja del SO · «‹» → M02 |
-| M09 | Cambio del organizador | F-M09 | `/alarma/:id/cambio` | `PantallaCambioEvento` | «Aceptar cambio» → M10 ⏩ · «Mantener alarma» / «×» → M02 · título → M06 |
+| M09 | Cambio del organizador | F-M09 | `/alarma/:id/cambio` | `PantallaCambioEvento` | «Aceptar cambio» → M10 ⏩ · «Mantener alarma» / «×» → M02 · título → M06 · «×» al margen derecho de la barra (v1.7) |
 | M10 | Alarma sonando | F-M10 | `/alarma/:id/sonando` (pantalla completa) | `PantallaAlarmaSonando` | «Ya voy» / «Posponer 10 min» → M02 · «Ver ruta ›» → mapas del SO |
 | M11 | Ajustes | F-M11 | `/ajustes` | `PantallaAjustes` | Alarmas → M02 · fila «Cerrar sesión» → diálogo M11d («Cancelar» / velo cierra · «Cerrar sesión» → M01) |
-| M12 | Permiso de cámara | F-M12 | `/permiso-camara` | `PantallaPermisoCamara` | «Abrir ajustes» → ajustes del SO → M03 · «Elegir pantallazo» → M03b · «Crear el evento a mano» → M07 · «‹» → M02 |
+| M12 | Permiso de cámara | F-M12 | `/permiso-camara` | `PantallaPermisoCamara` | «Abrir ajustes» → ajustes del SO → M03 · «Elegir pantallazo» → M03b · «Crear el evento a mano» → M07 · «‹» → M02 · visor apagado con el icono de escaneo a 48 (`IconoVisor`, v1.7) |
 | M13 | QR inválido | F-M13 | `/escanear/invalido` | `PantallaQRInvalido` | «Volver a escanear» → M03 · «Crear el evento a mano» → M07 · «Abrir el enlace bajo mi responsabilidad» → navegador |
 
 ### 1b · Diálogos de confirmación (estados, no rutas)

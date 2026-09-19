@@ -2,9 +2,9 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.7",
-    "date": "2026-09-17",
-    "source": "DESIGN_SYSTEM.md v1.7 · STYLE_TILE.md v1.2 · MOCKUPS.md §7 (móvil v1.6, web v1.3)",
+    "version": "1.9",
+    "date": "2026-09-19",
+    "source": "DESIGN_SYSTEM.md v1.10 · STYLE_TILE.md v1.2 · MOCKUPS.md (móvil v1.7, web v1.5)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
     "notes": [
       "Un solo elemento amarillo por pantalla: la acción principal o el FAB extendido. Los estados activos van en Tinta.",
@@ -334,6 +334,10 @@
     "icono-barra-lateral": 20,
     "control-colapsar-menu": 36,
     "tarjeta-formulario-web": 600,
+    "chip-control": 32,
+    "chip-control$description": "Chip que se toca («Linterna · auto», M03): 32 pt, relleno lateral 14, radio 16 (móvil v1.7, tutores 2026-09-19); el chip de estado sigue en 20",
+    "icono-visor": 48,
+    "icono-visor$description": "Icono del DS a escala 2 como ilustración de estado en un visor apagado (M12, móvil v1.7); sustituye a la ilustración de cámara de 108×90",
     "dialogo-web": {
       "width": 420,
       "padding": 24,
@@ -425,5 +429,5 @@
       "$description": "Retícula de módulos QR que se desvanece hacia abajo; nunca en listas, formularios ni visor"
     }
   },
-  "version": "1.8"
+  "version": "1.9"
 }
