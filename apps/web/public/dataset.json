@@ -1,9 +1,9 @@
 {
   "meta": {
     "name": "Alarmas QR · dataset único de los mockups",
-    "version": "1.1",
-    "date": "2026-09-17",
-    "source": "Mockups Figma v1.6 (móvil) y web v1.3; MOCKUPS.md §3c y §7",
+    "version": "1.2",
+    "date": "2026-09-19",
+    "source": "Mockups Figma v1.6 (móvil) y web v1.5; MOCKUPS.md §3c y §7",
     "hoy": "2026-08-27",
     "zonaHoraria": "America/Bogota (GMT-5)",
     "notes": [
@@ -263,7 +263,40 @@
           "confirmoYaVoy": false
         }
       ],
-      "notaPrivacidad": "Solo alias o iniciales — nunca teléfono ni correo (Ley 1581)."
+      "notaPrivacidad": "Solo alias o iniciales — nunca teléfono ni correo (Ley 1581).",
+      "pagina2": [
+        {
+          "alias": "LauM",
+          "escaneo": "2026-08-18T10:15",
+          "alarma": "activa",
+          "yaVoy": false
+        },
+        {
+          "alias": "Nico_R",
+          "escaneo": "2026-08-17T18:40",
+          "alarma": "activa",
+          "yaVoy": false
+        },
+        {
+          "alias": "D.G",
+          "escaneo": "2026-08-16T11:05",
+          "alarma": "eliminada",
+          "yaVoy": false
+        },
+        {
+          "alias": "Vale22",
+          "escaneo": "2026-08-15T15:30",
+          "alarma": "activa",
+          "yaVoy": false
+        }
+      ],
+      "porPagina": 4,
+      "busquedaEjemplo": {
+        "consulta": "Mi",
+        "resultados": [
+          "Mike1008"
+        ]
+      }
     },
     "escaneosPorSemana": [
       {
@@ -323,7 +356,28 @@
         "csv"
       ],
       "archivoGenerado": "reporte-alarmasqr-ago2026.pdf",
-      "nota": "Solo datos agregados y anónimos (Ley 1581) — sin nombres ni contactos de asistentes."
+      "nota": "Solo datos agregados y anónimos (Ley 1581) — sin nombres ni contactos de asistentes.",
+      "generados": [
+        {
+          "archivo": "reporte-alarmasqr-ago2026.pdf",
+          "fecha": "2026-08-31",
+          "formato": "pdf",
+          "rango": "ultimo-mes"
+        },
+        {
+          "archivo": "reporte-alarmasqr-jul2026.csv",
+          "fecha": "2026-07-31",
+          "formato": "csv",
+          "rango": "ultimo-mes"
+        },
+        {
+          "archivo": "reporte-alarmasqr-2026-1.pdf",
+          "fecha": "2026-06-30",
+          "formato": "pdf",
+          "rango": "semestre"
+        }
+      ],
+      "retencionDias": 90
     },
     "descargaQR": {
       "seleccionados": [
@@ -347,6 +401,79 @@
       "diasParaBorrado": 30,
       "palabraDeConfirmacion": "ELIMINAR",
       "consejo": "Descarga antes tus reportes (Reportes → PDF / CSV)."
+    },
+    "eventosPasados": [
+      {
+        "nombre": "Feria de empleo",
+        "fechaHora": "2026-08-12T09:00",
+        "origen": "creada-por-mi",
+        "escaneos": 31,
+        "alarmasActivas": 22,
+        "estado": "finalizado"
+      },
+      {
+        "nombre": "Taller de Figma",
+        "fechaHora": "2026-08-07T16:00",
+        "origen": "escaneada",
+        "escaneos": 19,
+        "alarmasActivas": 14,
+        "estado": "finalizado"
+      }
+    ],
+    "filtros": {
+      "estado": [
+        "proximos",
+        "pasados",
+        "borradores"
+      ],
+      "origen": [
+        "todos",
+        "creados",
+        "escaneados"
+      ],
+      "borradores": [],
+      "busquedaEjemplo": {
+        "consulta": "Sem",
+        "resultados": [
+          "Seminario UX"
+        ]
+      }
+    },
+    "acceso": {
+      "correoEjemplo": "andres@correo.com",
+      "errorCredenciales": "Correo o contraseña incorrectos. Inténtalo de nuevo o recupera tu contraseña.",
+      "recuperar": {
+        "titulo": "Recuperar contraseña",
+        "texto": "Te enviaremos un enlace al correo registrado para crear una contraseña nueva.",
+        "boton": "Enviar enlace",
+        "volver": "‹ Volver a iniciar sesión"
+      }
+    },
+    "barraLateral": {
+      "items": [
+        {
+          "id": "mis-alarmas",
+          "icono": "alarma"
+        },
+        {
+          "id": "reportes",
+          "icono": "reportes"
+        },
+        {
+          "id": "descargar-qr",
+          "icono": "escanear"
+        },
+        {
+          "id": "ajustes",
+          "icono": "ajustes"
+        },
+        {
+          "id": "cerrar-sesion",
+          "icono": "cerrar-sesion"
+        }
+      ],
+      "anchoExpandida": 208,
+      "anchoColapsada": 64
     }
   },
   "mensajes": {
@@ -365,6 +492,10 @@
     "confirmarCerrarSesionTitulo": "¿Cerrar sesión?",
     "confirmarCerrarSesionCuerpo": "Tus alarmas quedan guardadas en tu cuenta. Para volver a verlas y recibir los cambios del organizador tendrás que iniciar sesión de nuevo.",
     "confirmarCerrarSesionSeguro": "Cancelar",
-    "confirmarCerrarSesionAccion": "Cerrar sesión"
+    "confirmarCerrarSesionAccion": "Cerrar sesión",
+    "correoRecuperacionEnviado": "Te enviamos un correo de recuperación a andres@correo.com",
+    "sinResultadosFiltros": "Sin resultados con estos filtros",
+    "sinBorradores": "No tienes borradores. Los eventos se crean desde la app móvil.",
+    "confirmarCerrarSesionCuerpoWeb": "Tus alarmas siguen activas en el celular. Para volver a consultar tus eventos tendrás que iniciar sesión de nuevo."
   }
 }

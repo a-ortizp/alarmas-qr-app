@@ -1,7 +1,7 @@
 # Alarmas QR · Trazabilidad pantalla → funcionalidad → ruta → componente
 
 Tabla de correspondencia entre los códigos de pantalla de los mockups (Mxx / Wxx), las funcionalidades de `FUNCIONALIDADES.md` (F-Mxx / F-Wxx), la ruta de la app y el nombre del componente raíz. Es independiente del stack: las rutas son las mismas en Flutter, React Native o React; solo cambia cómo se declaran.
-Fecha: 2026-09-16 · v1.1 del 2026-09-17 (diálogos de confirmación, botones de 52) · Fuente: `FUNCIONALIDADES.md` v2.5.4, `NAVEGACION.md` §6 y §6b, `MOCKUPS.md` §7, `DESIGN_SYSTEM.md` v1.7.
+Fecha: 2026-09-16 · v1.1 del 2026-09-17 (diálogos de confirmación, botones de 52) · v1.2 del 2026-09-19 (web v1.5: Reportes y Descargar QR como páginas, estados de W00/W01/W03, diálogo de cerrar sesión, barra lateral colapsable) · Fuente: `FUNCIONALIDADES.md` v2.5.6, `NAVEGACION.md` §4 y §6b, `MOCKUPS.md` §7, `DESIGN_SYSTEM.md` v1.9.
 
 Convenciones:
 
@@ -47,23 +47,33 @@ Anatomía (tokens v1.7): ancho 342 (`size.dialogo.width`), relleno 24, radio 20,
 
 Componentes compartidos del móvil (del Design System): `BotonPrimario`, `BotonSecundario`, `BotonDestructivo`, `DialogoConfirmacion`, `FabEscanear`, `TarjetaAlarma`, `ChipEstado`, `CampoTexto`, `SelectorSegmentado`, `Switch`, `BarraSuperior`, `NavegacionInferior`, `Snackbar`, `CodigoQR`, `SelloVerificado`, `BandaTextura`.
 
-## 2 · Aplicación web (7 pantallas, 14 estados)
+## 2 · Aplicación web (7 páginas, 24 estados · web v1.5)
 
 | Código | Pantalla / estado | F | Ruta | Componente raíz | Navega a |
 |---|---|---|---|---|---|
-| W00 | Inicio de sesión | F-W00 | `/login` | `PaginaLogin` | «Iniciar sesión» → W01 |
+| W00 | Inicio de sesión | F-W00 | `/login` | `PaginaLogin` | «Iniciar sesión» → W01 · «¿Olvidaste tu contraseña?» → W00 recuperar |
+| W00 | · error de credenciales | F-W00 | `/login` (estado tras validar) | `PaginaLogin` (campo con error) | «Iniciar sesión» → W01 · enlace → recuperar |
+| W00 | · Recuperar contraseña | F-W00 | `/login/recuperar` | `PaginaRecuperarContrasena` | «Enviar enlace» → W00 correo enviado · «‹ Volver» → W00 |
+| W00 | · correo enviado | F-W00 | `/login?estado=correo-enviado` | `PaginaLogin` + `Snackbar` (3 s) | — |
 | W00 | · cuenta eliminada | F-W08 | `/login?estado=eliminada` | `PaginaLogin` + `Snackbar` | — |
-| W01 | Mis Alarmas (hub) | F-W01 · F-W02 · F-W06 | `/alarmas` | `PaginaMisAlarmas` | «Ver detalle ›» → W03 · «Exportar reporte» → W04 · «Descargar QR en lote» → W05 · avatar → W06 |
+| W01 | Mis Alarmas (hub) | F-W01 · F-W02 · F-W06 | `/alarmas` | `PaginaMisAlarmas` | «Ver detalle ›» → W03 · «Exportar reporte» → W04 · «Descargar QR en lote» → W05 · avatar → W06 · «colapsar menú» → estado colapsado |
+| W01 | · menú colapsado | — | mismo (preferencia de la barra) | `BarraLateral` (colapsada, 64) | «expandir menú» → W01 |
 | W01 | · pestaña Creados / Escaneados | F-W02 · F-W06 | `/alarmas?origen=creados` · `?origen=escaneados` | `PaginaMisAlarmas` (estado) | — |
-| W03 | Detalle Evento | F-W03 | `/eventos/:id` | `PaginaDetalleEvento` | miga «‹ Mis alarmas» → W01 · «Ver todos ›» → lista completa |
-| W04 | Modal Exportar reporte | F-W04 | `/alarmas/reporte` (modal sobre W01) | `ModalExportarReporte` | «Generar y descargar» → estado Listo · «Cancelar» / cabecera → W01 |
-| W04 | · Rango personalizado · Listo | F-W04 | mismo (estado interno) | `ModalExportarReporte` | «Generar de nuevo» → estado inicial |
-| W05 | Modal Descargar QR en lote | F-W05 | `/alarmas/qr` (modal sobre W01) | `ModalDescargarQR` | «Descargar» → estado Completado · «Cancelar» / cabecera → W01 |
-| W05 | · Completado | F-W05 | mismo (estado interno) | `ModalDescargarQR` + `Snackbar` | — |
+| W01 | · filtro Pasados | F-W02 · F-W06 | `/alarmas?estado=pasados` | `PaginaMisAlarmas` (estado) | «Próximos» → W01 |
+| W01 | · filtro Borradores · sin resultados | F-W02 · F-W06 | `/alarmas?estado=borradores` | `PaginaMisAlarmas` + `EstadoVacio` | «Ver todos» → W01 |
+| W01 | · búsqueda | F-W06 | `/alarmas?q=Sem` | `PaginaMisAlarmas` (campo activo) | «Limpiar» → W01 |
+| W03 | Detalle Evento | F-W03 | `/eventos/:id` | `PaginaDetalleEvento` | miga «‹ Mis alarmas» → W01 · paginador «2» / «›» → página 2 · buscador → búsqueda · «Exportar reporte» → W04 |
+| W03 | · página 2 | F-W03 | `/eventos/:id?pagina=2` | `PaginaDetalleEvento` (estado) | «1» / «‹» → W03 |
+| W03 | · búsqueda de asistente | F-W03 | `/eventos/:id?q=Mi` | `PaginaDetalleEvento` (campo activo) | «Limpiar» → W03 |
+| W04 | Reportes (página) | F-W04 | `/reportes` | `PaginaReportes` (tarjeta del formulario + «Reportes generados») | «Generar y descargar» → estado Listo · «Cancelar» / miga → W01 |
+| W04 | · Rango personalizado · Listo | F-W04 | mismo (estado interno) | `PaginaReportes` | «Generar de nuevo» → estado inicial |
+| W05 | Descargar QR (página) | F-W05 | `/qr` | `PaginaDescargarQR` (tarjeta de selección + «Vista previa del afiche») | «Descargar» → W01 con snackbar · «Cancelar» / miga → W01 |
+| W05 | · Completado | F-W05 | `/alarmas?estado=descarga-completada` | `PaginaMisAlarmas` + `Snackbar` (3 s) | — |
 | W06 | Ajustes de Perfil | F-W07 | `/perfil` | `PaginaPerfil` | «Guardar cambios» → estado Actualizado · «Eliminar mi cuenta» → modal |
 | W06 | · Modal eliminar cuenta | F-W08 | `/perfil/eliminar` (modal sobre W06) | `ModalEliminarCuenta` | «Conservar mi cuenta» → W06 · «Eliminar definitivamente» → W00 (cuenta eliminada) |
 | W06 | · Actualizado | F-W07 | mismo (estado interno) | `PaginaPerfil` + `Snackbar` | — |
-| — | Barra lateral (persistente) | — | — | `BarraLateral` | Mis Alarmas → W01 · Reportes → W04 · Descargar QR → W05 · Ajustes de Perfil → W06 · Cerrar Sesión → W00 |
+| — | Diálogo ¿Cerrar sesión? | transversal | `?dialogo=cerrar-sesion` sobre la página actual | `DialogoConfirmacion` (web, 420) | «Cancelar» / velo → página actual · «Cerrar sesión» → W00 |
+| — | Barra lateral (persistente, con iconos, colapsable) | — | — | `BarraLateral` | Mis Alarmas → W01 · Reportes → W04 · Descargar QR → W05 · Ajustes de Perfil → W06 · Cerrar Sesión → diálogo ¿Cerrar sesión? |
 
 Componentes compartidos de la web (Design System L09): `BarraSuperiorWeb`, `BarraLateral`, `ItemBarraLateral`, `Indicador`, `PildoraFiltro`, `ChipEstadoWeb`, `TablaEventos`, `CabeceraModal`, `Modal`, `GraficaEscaneosSemana`, `VistaPreviaAfiche`, `SnackbarWeb`, `BotonWeb` (primario · secundario · destructivo), `SelectorSegmentadoWeb`, `TarjetaAcceso`.
 

@@ -17,72 +17,290 @@
   },
   "color": {
     "amarillo": {
-      "energia": { "$value": "#FFC400", "$type": "color", "$description": "Acción primaria y marca" },
-      "suave":   { "$value": "#FFF1BF", "$type": "color", "$description": "Tinte y resaltado suave (bloques «Sonará»)" }
+      "energia": {
+        "$value": "#FFC400",
+        "$type": "color",
+        "$description": "Acción primaria y marca"
+      },
+      "suave": {
+        "$value": "#FFF1BF",
+        "$type": "color",
+        "$description": "Tinte y resaltado suave (bloques «Sonará»)"
+      }
     },
-    "tinta":        { "$value": "#17161C", "$type": "color", "$description": "Texto, marca, estados activos, fondos plenos (M03, M10)" },
-    "blanco":       { "$value": "#FFFFFF", "$type": "color", "$description": "Blanco Papel · fondo" },
+    "tinta": {
+      "$value": "#17161C",
+      "$type": "color",
+      "$description": "Texto, marca, estados activos, fondos plenos (M03, M10)"
+    },
+    "blanco": {
+      "$value": "#FFFFFF",
+      "$type": "color",
+      "$description": "Blanco Papel · fondo"
+    },
     "coral": {
-      "alarma": { "$value": "#E8443A", "$type": "color", "$description": "Urgencia · alarma sonando · rellenos e íconos" },
-      "texto":  { "$value": "#C4362E", "$type": "color", "$description": "Coral Texto · destructivo · 5.4:1 sobre blanco" }
+      "alarma": {
+        "$value": "#E8443A",
+        "$type": "color",
+        "$description": "Urgencia · alarma sonando · rellenos e íconos"
+      },
+      "texto": {
+        "$value": "#C4362E",
+        "$type": "color",
+        "$description": "Coral Texto · destructivo · 5.4:1 sobre blanco"
+      }
     },
     "verde": {
-      "confirmado": { "$value": "#129E63", "$type": "color", "$description": "Éxito · verificado · rellenos e íconos" },
-      "texto":      { "$value": "#0B7048", "$type": "color", "$description": "Verde Texto · escaneada · publicado · 6.1:1" },
-      "fondo":      { "$value": "#E9F7F0", "$type": "color", "$description": "Relleno de chips Publicado / Activa (web)" }
+      "confirmado": {
+        "$value": "#129E63",
+        "$type": "color",
+        "$description": "Éxito · verificado · rellenos e íconos"
+      },
+      "texto": {
+        "$value": "#0B7048",
+        "$type": "color",
+        "$description": "Verde Texto · escaneada · publicado · 6.1:1"
+      },
+      "fondo": {
+        "$value": "#E9F7F0",
+        "$type": "color",
+        "$description": "Relleno de chips Publicado / Activa (web)"
+      }
     },
     "azul": {
-      "enlace": { "$value": "#2E7CF6", "$type": "color", "$description": "Informativo · íconos" },
-      "texto":  { "$value": "#1A5BC4", "$type": "color", "$description": "Azul Texto · enlaces · 6.3:1" }
+      "enlace": {
+        "$value": "#2E7CF6",
+        "$type": "color",
+        "$description": "Informativo · íconos"
+      },
+      "texto": {
+        "$value": "#1A5BC4",
+        "$type": "color",
+        "$description": "Azul Texto · enlaces · 6.3:1"
+      }
     },
     "gris": {
-      "niebla": { "$value": "#F4F3EF", "$type": "color", "$description": "Superficies · píldora inactiva · contenedor del segmentado" },
-      "medio":  { "$value": "#77747E", "$type": "color", "$description": "Marcadores de posición · texto secundario base" },
-      "texto":  { "$value": "#66636D", "$type": "color", "$description": "Gris Texto · texto secundario ≤ 15 pt · 5.9:1" },
-      "borde":  { "$value": "#DAD8D2", "$type": "color", "$description": "Bordes 1.5 y divisores · texto secundario sobre Tinta" }
+      "niebla": {
+        "$value": "#F4F3EF",
+        "$type": "color",
+        "$description": "Superficies · píldora inactiva · contenedor del segmentado"
+      },
+      "medio": {
+        "$value": "#77747E",
+        "$type": "color",
+        "$description": "Marcadores de posición · texto secundario base"
+      },
+      "texto": {
+        "$value": "#66636D",
+        "$type": "color",
+        "$description": "Gris Texto · texto secundario ≤ 15 pt · 5.9:1"
+      },
+      "borde": {
+        "$value": "#DAD8D2",
+        "$type": "color",
+        "$description": "Bordes 1.5 y divisores · texto secundario sobre Tinta"
+      }
     },
-    "velo": { "$value": "rgba(23, 22, 28, 0.45)", "$type": "color", "$description": "Velo de modal (web) · Tinta al 45 %" },
-    "velo-movil": { "$value": "rgba(23, 22, 28, 0.55)", "$type": "color", "$description": "Velo de hoja inferior (M02h, M04) y del diálogo de confirmación (M04d, M06d, M11d) · Tinta al 55 %" }
+    "velo": {
+      "$value": "rgba(23, 22, 28, 0.45)",
+      "$type": "color",
+      "$description": "Velo de modal (web) · Tinta al 45 %"
+    },
+    "velo-movil": {
+      "$value": "rgba(23, 22, 28, 0.55)",
+      "$type": "color",
+      "$description": "Velo de hoja inferior (M02h, M04) y del diálogo de confirmación (M04d, M06d, M11d) · Tinta al 55 %"
+    }
   },
   "font": {
     "family": {
-      "titulares": { "$value": "Bricolage Grotesque", "$type": "fontFamily", "$description": "Google Fonts · OFL · pesos 600 y 700" },
-      "ui":        { "$value": "Archivo", "$type": "fontFamily", "$description": "Google Fonts · OFL · 400, 500, 600, 700" },
-      "datos":     { "$value": "Spline Sans Mono", "$type": "fontFamily", "$description": "Google Fonts · OFL · 500 y 700 · horas y cifras, dígitos tabulares" }
+      "titulares": {
+        "$value": "Bricolage Grotesque",
+        "$type": "fontFamily",
+        "$description": "Google Fonts · OFL · pesos 600 y 700"
+      },
+      "ui": {
+        "$value": "Archivo",
+        "$type": "fontFamily",
+        "$description": "Google Fonts · OFL · 400, 500, 600, 700"
+      },
+      "datos": {
+        "$value": "Spline Sans Mono",
+        "$type": "fontFamily",
+        "$description": "Google Fonts · OFL · 500 y 700 · horas y cifras, dígitos tabulares"
+      }
     },
     "scale": {
-      "hora-protagonista": { "family": "datos", "weight": 700, "size": 96, "$description": "M10 alarma sonando; sufijo pm 28" },
-      "hora-sonara":       { "family": "datos", "weight": 700, "size": 52, "$description": "Bloques «Sonará» M04 / M09; etiqueta 12 encima" },
-      "hora-tarjeta":      { "family": "datos", "weight": 700, "size": 26, "$description": "Tarjeta de alarma (26–28) + am/pm Medium 12–14 en línea" },
-      "hora-ampm":         { "family": "datos", "weight": 500, "size": 12 },
-      "indicador-web":     { "family": "datos", "weight": 700, "size": 24, "$description": "Número de la tarjeta de estadística web" },
-      "h1":                { "family": "titulares", "weight": 700, "size": 28, "$description": "Nombre de pantalla (móvil)" },
-      "h1-web":            { "family": "titulares", "weight": 700, "size": 24, "$description": "Título de página web" },
-      "barra-superior":    { "family": "titulares", "weight": 700, "size": 22 },
-      "h2":                { "family": "titulares", "weight": 600, "size": 22, "$description": "Sección · nombre de evento (20–22)" },
-      "titulo-modal-web":  { "family": "titulares", "weight": 700, "size": 21 },
-      "titulo-dialogo":    { "family": "titulares", "weight": 600, "size": 22, "$description": "Diálogo de confirmación móvil (= h2)" },
-      "cuerpo-dialogo":    { "family": "ui", "weight": 400, "size": 14, "lineHeight": "140%", "$description": "Consecuencia concreta en el diálogo de confirmación" },
-      "marca-web":         { "family": "titulares", "weight": 700, "size": 17 },
-      "destacado":         { "family": "ui", "weight": 700, "size": 16 },
-      "cuerpo":            { "family": "ui", "weight": 400, "size": 16 },
-      "boton-movil":       { "family": "ui", "weight": 700, "size": 15 },
-      "titulo-tarjeta":    { "family": "ui", "weight": 700, "size": 15 },
-      "boton-web":         { "family": "ui", "weight": 600, "size": 14.5, "$description": "14–15 según contexto" },
-      "nav-lateral":       { "family": "ui", "weight": 600, "size": 14.5 },
-      "tabla-celda":       { "family": "ui", "weight": 400, "size": 14 },
-      "h3":                { "family": "ui", "weight": 700, "size": 13, "transform": "uppercase", "letterSpacing": "8%", "$description": "Agrupadores «HOY · JUEVES 27»" },
-      "etiqueta":          { "family": "ui", "weight": 400, "size": 13, "$description": "«evento 8:00 am · Aula SD-703»" },
-      "pildora-web":       { "family": "ui", "weight": 600, "size": 13 },
-      "nota":              { "family": "ui", "weight": 400, "size": 12.5 },
-      "chip":              { "family": "ui", "weight": 700, "size": 12 },
-      "rotulo-tabla":      { "family": "ui", "weight": 700, "size": 11, "transform": "uppercase", "letterSpacing": "6%", "$description": "Encabezados de tabla y etiquetas de campo web; mínimo del sistema" },
-      "nav-inferior":      { "family": "ui", "weight": 400, "size": 11, "$description": "Única excepción por debajo de 12" }
+      "hora-protagonista": {
+        "family": "datos",
+        "weight": 700,
+        "size": 96,
+        "$description": "M10 alarma sonando; sufijo pm 28"
+      },
+      "hora-sonara": {
+        "family": "datos",
+        "weight": 700,
+        "size": 52,
+        "$description": "Bloques «Sonará» M04 / M09; etiqueta 12 encima"
+      },
+      "hora-tarjeta": {
+        "family": "datos",
+        "weight": 700,
+        "size": 26,
+        "$description": "Tarjeta de alarma (26–28) + am/pm Medium 12–14 en línea"
+      },
+      "hora-ampm": {
+        "family": "datos",
+        "weight": 500,
+        "size": 12
+      },
+      "indicador-web": {
+        "family": "datos",
+        "weight": 700,
+        "size": 24,
+        "$description": "Número de la tarjeta de estadística web"
+      },
+      "h1": {
+        "family": "titulares",
+        "weight": 700,
+        "size": 28,
+        "$description": "Nombre de pantalla (móvil)"
+      },
+      "h1-web": {
+        "family": "titulares",
+        "weight": 700,
+        "size": 24,
+        "$description": "Título de página web"
+      },
+      "barra-superior": {
+        "family": "titulares",
+        "weight": 700,
+        "size": 22
+      },
+      "h2": {
+        "family": "titulares",
+        "weight": 600,
+        "size": 22,
+        "$description": "Sección · nombre de evento (20–22)"
+      },
+      "titulo-modal-web": {
+        "family": "titulares",
+        "weight": 700,
+        "size": 21
+      },
+      "titulo-dialogo": {
+        "family": "titulares",
+        "weight": 600,
+        "size": 22,
+        "$description": "Diálogo de confirmación móvil (= h2)"
+      },
+      "cuerpo-dialogo": {
+        "family": "ui",
+        "weight": 400,
+        "size": 14,
+        "lineHeight": "140%",
+        "$description": "Consecuencia concreta en el diálogo de confirmación"
+      },
+      "marca-web": {
+        "family": "titulares",
+        "weight": 700,
+        "size": 17
+      },
+      "destacado": {
+        "family": "ui",
+        "weight": 700,
+        "size": 16
+      },
+      "cuerpo": {
+        "family": "ui",
+        "weight": 400,
+        "size": 16
+      },
+      "boton-movil": {
+        "family": "ui",
+        "weight": 700,
+        "size": 15
+      },
+      "titulo-tarjeta": {
+        "family": "ui",
+        "weight": 700,
+        "size": 15
+      },
+      "boton-web": {
+        "family": "ui",
+        "weight": 600,
+        "size": 14.5,
+        "$description": "14–15 según contexto"
+      },
+      "nav-lateral": {
+        "family": "ui",
+        "weight": 600,
+        "size": 14.5
+      },
+      "tabla-celda": {
+        "family": "ui",
+        "weight": 400,
+        "size": 14
+      },
+      "h3": {
+        "family": "ui",
+        "weight": 700,
+        "size": 13,
+        "transform": "uppercase",
+        "letterSpacing": "8%",
+        "$description": "Agrupadores «HOY · JUEVES 27»"
+      },
+      "etiqueta": {
+        "family": "ui",
+        "weight": 400,
+        "size": 13,
+        "$description": "«evento 8:00 am · Aula SD-703»"
+      },
+      "pildora-web": {
+        "family": "ui",
+        "weight": 600,
+        "size": 13
+      },
+      "nota": {
+        "family": "ui",
+        "weight": 400,
+        "size": 12.5
+      },
+      "chip": {
+        "family": "ui",
+        "weight": 700,
+        "size": 12
+      },
+      "rotulo-tabla": {
+        "family": "ui",
+        "weight": 700,
+        "size": 11,
+        "transform": "uppercase",
+        "letterSpacing": "6%",
+        "$description": "Encabezados de tabla y etiquetas de campo web; mínimo del sistema"
+      },
+      "nav-inferior": {
+        "family": "ui",
+        "weight": 400,
+        "size": 11,
+        "$description": "Única excepción por debajo de 12"
+      }
     }
   },
   "size": {
-    "boton": { "movil": 52, "web": 44, "alarma": 56, "$description": "Alturas de botón: toque (52 desde v1.6) / puntero / acciones de la alarma sonando" },
-    "dialogo": { "width": 342, "padding": 24, "gap": 16, "entre-botones": 10, "$description": "Diálogo de confirmación móvil: 390 − 2×24 de ancho, botones apilados de 52" },
+    "boton": {
+      "movil": 52,
+      "web": 44,
+      "alarma": 56,
+      "$description": "Alturas de botón: toque (52 desde v1.6) / puntero / acciones de la alarma sonando"
+    },
+    "dialogo": {
+      "width": 342,
+      "padding": 24,
+      "gap": 16,
+      "entre-botones": 10,
+      "$description": "Diálogo de confirmación móvil: 390 − 2×24 de ancho, botones apilados de 52"
+    },
     "campo": 48,
     "fab": 56,
     "barra-superior-movil": 56,
@@ -96,13 +314,33 @@
     "snackbar-web": 36,
     "tabla-encabezado": 26,
     "tabla-fila": 48,
-    "indicador-web": { "width": 242, "height": 104 },
-    "modal-web": { "min": 540, "max": 600 },
+    "indicador-web": {
+      "width": 242,
+      "height": 104
+    },
+    "modal-web": {
+      "min": 540,
+      "max": 600
+    },
     "tarjeta-acceso": 400,
-    "switch": { "width": 42, "height": 24 },
+    "switch": {
+      "width": 42,
+      "height": 24
+    },
     "area-tactil-minima": 48,
     "banda-textura": 120,
-    "qr-afiche-minimo-cm": 4
+    "qr-afiche-minimo-cm": 4,
+    "barra-lateral-web-colapsada": 64,
+    "icono-barra-lateral": 20,
+    "control-colapsar-menu": 36,
+    "tarjeta-formulario-web": 600,
+    "dialogo-web": {
+      "width": 420,
+      "padding": 24,
+      "gap": 12,
+      "entre-botones": 8,
+      "$description": "Diálogo de confirmación web («¿Cerrar sesión?»): botones apilados de 44, velo 55 %"
+    }
   },
   "radius": {
     "pildora": 999,
@@ -121,22 +359,71 @@
     "marco-pantalla": 3
   },
   "space": {
-    "movil": { "margen": 20, "medianil": 12, "columnas": 4, "entre-bloques": 12 },
-    "web": { "contenido-vertical": 28, "contenido-horizontal": 32, "entre-bloques": 18, "lateral-topbar": 28, "barra-lateral": [20, 12], "modal": 24, "entre-indicadores": 14 },
-    "boton-web-padding": [13, 18],
-    "pildora-padding": [10, 14],
-    "chip-padding": [3, 12]
+    "movil": {
+      "margen": 20,
+      "medianil": 12,
+      "columnas": 4,
+      "entre-bloques": 12
+    },
+    "web": {
+      "contenido-vertical": 28,
+      "contenido-horizontal": 32,
+      "entre-bloques": 18,
+      "lateral-topbar": 28,
+      "barra-lateral": [
+        20,
+        12
+      ],
+      "modal": 24,
+      "entre-indicadores": 14
+    },
+    "boton-web-padding": [
+      13,
+      24
+    ],
+    "pildora-padding": [
+      10,
+      14
+    ],
+    "chip-padding": [
+      3,
+      12
+    ],
+    "boton-web-padding$description": "Relleno del botón píldora web de 44 pt (v1.8: horizontal 24, antes 18; tutores 2026-09-19)"
   },
   "motion": {
-    "transicion": { "duration": 250, "easing": "ease-in-out", "$description": "Smart Animate 250 ms en todas las conexiones del prototipo" },
-    "deshacer": { "duration": 5000, "$description": "Ventana del snackbar «Deshacer»" },
-    "toque-largo": { "duration": 500, "$description": "Mantener presionado el FAB para abrir la hoja «Agregar evento»" }
+    "transicion": {
+      "duration": 250,
+      "easing": "ease-in-out",
+      "$description": "Smart Animate 250 ms en todas las conexiones del prototipo"
+    },
+    "deshacer": {
+      "duration": 5000,
+      "$description": "Ventana del snackbar «Deshacer»"
+    },
+    "toque-largo": {
+      "duration": 500,
+      "$description": "Mantener presionado el FAB para abrir la hoja «Agregar evento»"
+    }
   },
   "elevation": {
     "fab": "0 4px 12px rgba(23, 22, 28, 0.18)",
     "tarjeta-evento": "0 6px 18px rgba(23, 22, 28, 0.10)"
   },
   "texture": {
-    "modulos-qr": { "opacityMax": 0.08, "band": 120, "screens": ["M01", "M04", "M09", "M10", "M12", "M13"], "$description": "Retícula de módulos QR que se desvanece hacia abajo; nunca en listas, formularios ni visor" }
-  }
+    "modulos-qr": {
+      "opacityMax": 0.08,
+      "band": 120,
+      "screens": [
+        "M01",
+        "M04",
+        "M09",
+        "M10",
+        "M12",
+        "M13"
+      ],
+      "$description": "Retícula de módulos QR que se desvanece hacia abajo; nunca en listas, formularios ni visor"
+    }
+  },
+  "version": "1.8"
 }

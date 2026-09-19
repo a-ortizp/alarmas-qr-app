@@ -26,7 +26,7 @@ Exportables: `Mapa_Navegacion_Movil.pdf` y `Mapa_Sitio_Web.pdf` (raíz).
 | UF-W01.1 | Consultar el tablero | 2 | W01 · salida a W02 | Métricas y gráfica recargadas al cambiar el rango; «datos agregados y anónimos» |
 | UF-W02.1 | Revisar mis eventos | 3 | W02 → W03 (propio) · estado de alarma (escaneado) | Resultados de búsqueda, tags «Propio»/«Escaneado», «Sin resultados con estos filtros» |
 
-**Mockups web (2026-09-14, página `03 · Web`):** los tres flujos ocurren en menos pantallas porque W02 vive dentro de W01 como pestañas (Todos / Creados / Escaneados) y W04, W05 y W07 son modales; ver §6b.
+**Mockups web (página `03 · Web`, web v1.5 del 2026-09-19):** W02 vive dentro de W01 como pestañas (Todos / Creados / Escaneados) y estados (Pasados / Borradores / Búsqueda); W04 y W05 son secciones propias (fueron modales del 14 al 19 de septiembre); W07 es el modal «Eliminar cuenta»; W00 tiene error de credenciales y recuperación de contraseña, y «Cerrar Sesión» pasa por un diálogo; ver §4 y §6b.
 
 ## 3 · Mapa de navegación — aplicación móvil
 
@@ -75,27 +75,30 @@ classDef sys fill:#1d1d1b,stroke:#1d1d1b,color:#ffffff;
 
 ## 4 · Mapa de sitio — aplicación web
 
-Árbol clásico de sitio con **W00 como compuerta** y **W01 (Tablero) como hub**, con la barra lateral persistente dando acceso a las cuatro secciones. Profundidad máxima: 3 niveles (W00 → W01/nav → W02 → W03).
+Árbol de sitio con **W00 como compuerta** y **W01 (Mis Alarmas) como hub**, con la barra lateral persistente (colapsable desde la web v1.4) dando acceso a las secciones Reportes, Descargar QR y Ajustes de Perfil. Redibujado el 2026-09-19 con la estructura de los **mockups web v1.5**: W02 vive en W01 como pestañas y estados, W04 y W05 son secciones (ya no modales), W00 tiene error y recuperación de contraseña, y «Cerrar Sesión» pasa por un diálogo. Profundidad máxima: 3 niveles (W00 → W01/nav → W03 → W04).
 
 ```mermaid
 flowchart TD
 
 IN(["Entrada · alarmasqr.app"]):::sys --> W00["W00 · Inicio de sesión"]:::mvp
-W00 -->|"Sesión válida"| W01["W01 · Tablero de control<br>(hub · barra lateral)"]:::mvp
-W00 -.->|"Credenciales inválidas ·<br>error en pantalla"| W00
+W00 -.->|"Credenciales inválidas<br>⏩ campo contraseña"| W00e["W00 · Error de credenciales"]:::pantalla
+W00e -->|"Iniciar sesión"| W01
+W00 -->|"¿Olvidaste tu contraseña?"| W00r["W00 · Recuperar contraseña"]:::pantalla
+W00r -->|"Enviar enlace · snackbar 3 s"| W00
+W00 -->|"Sesión válida"| W01["W01 · Mis Alarmas<br>(hub · barra lateral colapsable)"]:::mvp
+W01 -->|"Pestañas · filtros · buscador"| W01s["W01 · Creados / Escaneados /<br>Pasados / Borradores / Búsqueda"]:::mvp
 NAV["Barra lateral<br>persistente"]:::ext
 W01 --- NAV
-NAV -->|"Mis eventos"| W02["W02 · Mis eventos<br>propios y escaneados"]:::mvp
-NAV -->|"Reportes"| W04["W04 · Reportes PDF / CSV"]:::pantalla
-NAV -->|"Afiches QR"| W05["W05 · Afiches en lote"]:::pantalla
-NAV -->|"Ajustes"| W06["W06 · Perfil de usuario"]:::pantalla
-W01 -->|"Accesos directos"| W02
-W01 --> W04
-W01 --> W05
-W02 -->|"Ver evento propio"| W03["W03 · Detalle y monitoreo<br>anónimo"]:::mvp
+NAV -->|"Reportes"| W04["W04 · Reportes<br>(sección)"]:::pantalla
+NAV -->|"Descargar QR"| W05["W05 · Descargar QR<br>(sección)"]:::pantalla
+NAV -->|"Ajustes de Perfil"| W06["W06 · Ajustes de Perfil"]:::pantalla
+NAV -.->|"Cerrar Sesión"| DLG["Diálogo · ¿Cerrar sesión?"]:::pantalla
+DLG -->|"Cerrar sesión"| W00
+W01 -->|"Ver detalle"| W03["W03 · Detalle Evento<br>(página 2 · búsqueda)"]:::mvp
 W03 -->|"Exportar reporte"| W04
-W06 -->|"Zona de riesgo"| W07["W07 · Eliminar cuenta<br>(modal de confirmación)"]:::pantalla
-W07 -->|"Conservar cuenta"| W06
+W04 -->|"Generar y descargar"| W04l["W04 · Listo"]:::pantalla
+W05 -->|"Descargar"| W05c["W01 + snackbar<br>«Descarga completada» (3 s)"]:::pantalla
+W06 -->|"Eliminar mi cuenta"| W07["W06 · Modal eliminar cuenta"]:::pantalla
 W07 -->|"Eliminada"| W00
 
 classDef pantalla fill:#ffffff,stroke:#1d1d1b,stroke-width:2.5px,rx:10,ry:10;
@@ -108,7 +111,7 @@ classDef sys fill:#1d1d1b,stroke:#1d1d1b,color:#ffffff;
 
 - **Móvil = hub-and-spoke, no jerarquía profunda:** ninguna pantalla queda a más de 2 toques de M02; los errores (M12, M13) son desvíos del flujo de captura que siempre devuelven al camino o a una alternativa (galería, M07) — nunca un callejón sin salida.
 - **Web = árbol de sitio de 3 niveles** con navegación lateral persistente: cualquier sección es alcanzable en 1 clic desde cualquier otra; W07 es un modal sobre W06, no una sección.
-- **Mockups web (2026-09-14):** el árbol se aplana a 2 niveles: W01 «Mis Alarmas» concentra tablero + lista (W02 desaparece como pantalla) y la barra lateral abre W04 y W05 como modales sobre W01; W03 es el único segundo nivel y el modal de eliminar cuenta cuelga de W06. El mapa Mermaid de §4 sigue describiendo la estructura de los wireframes.
+- **Mockups web (2026-09-14 → 2026-09-19):** W01 «Mis Alarmas» concentra tablero + lista (W02 vive como pestañas y estados). Del 14 al 19 de septiembre W04 y W05 eran modales sobre W01 (árbol de 2 niveles); desde la web v1.5 vuelven a ser secciones y el mapa de §4 describe esta estructura. El diálogo «¿Cerrar sesión?» y el modal de eliminar cuenta son las dos confirmaciones de la web.
 - **La retroalimentación acompaña cada transición** (snackbar de guardado, vibración de detección, errores de login) y está detallada por flujo en las tablas 1 y 2.
 
 ## 6 · Recorrido unificado del prototipo (Figma)
@@ -151,23 +154,28 @@ Los diálogos no son puntos de inicio ni aparecen en el recorrido principal de l
 
 **Wireframes web (2026-09-17):** el archivo de wireframes tiene ahora una página `03 · Web` nueva (`2165:2`) construida por mmatallanar-ua con la misma estructura que los mockups (14 marcos, un solo punto de inicio «Inicio» en W00 `2165:3`, 102 conexiones), y la página W00–W07 original quedó como «03 · Web - Copy» (`1:7`). Prototipo: https://www.figma.com/proto/epn1MSPTAFtO0pDOcPdbAv/Wireframes-Alarmas-QR-Equipo-UX?node-id=2165-3&p=f&scaling=min-zoom&content-scaling=fixed&page-id=2165%3A2&starting-point-node-id=2165%3A3&show-proto-sidebar=1 — el recorrido de la tabla siguiente aplica igual. Tras la revisión de los tutores, en los dos archivos el paso «Descargar» de W05 lleva a **W01 con la snackbar «Descarga completada exitosamente»** (ya no al modal) y ese marco vuelve solo a W01 a los 3 s (disparador «After delay», el primero del proyecto).
 
-Prototipo publicado (abre en W00, un solo punto de inicio «Inicio» `4072:1861`, 109 conexiones «On tap» con Smart Animate 250 ms desde la web v1.1): https://www.figma.com/proto/4nHD4ygcnP33UH0gAhaii5/Mockups-Alarmas---QR-Equipo-UX?node-id=4072-1861&p=f&scaling=min-zoom&content-scaling=fixed&page-id=4072%3A2&starting-point-node-id=4072%3A1861&show-proto-sidebar=1
+Prototipo publicado (abre en W00, un solo punto de inicio «Inicio» `4072:1861`, 109 conexiones «On tap» con Smart Animate 250 ms desde la web v1.1; 126 y 15 marcos desde la web v1.4 del 2026-09-19, con la barra lateral colapsable; 220 y 24 marcos desde la web v1.5 del mismo día, con la propuesta de pantallas ejecutada): https://www.figma.com/proto/4nHD4ygcnP33UH0gAhaii5/Mockups-Alarmas---QR-Equipo-UX?node-id=4072-1861&p=f&scaling=min-zoom&content-scaling=fixed&page-id=4072%3A2&starting-point-node-id=4072%3A1861&show-proto-sidebar=1
 
 | Paso | Pantalla | Acción de quien prueba | Llega a | Qué simula |
 |---|---|---|---|---|
 | 1 | W00 Inicio de sesión | «Iniciar sesión» | **W01** Mis Alarmas (Todos) | Sesión válida |
+| 1b | W01 Mis Alarmas | Control «colapsar menú» (doble chevrón, arriba de la barra lateral) · «expandir menú» | **W01 (menú colapsado)**, barra de 64 solo con iconos · W01 | Barra lateral colapsable (2026-09-19, comentario del tutor); los iconos conservan sus destinos |
 | 2 | W01 Mis Alarmas | Pestañas «Creados» / «Escaneados» · «Todos» | W01 (Creados) · W01 (Escaneados) · W01 | Filtro por origen del evento (F-W02, F-W06) |
 | 3 | W01 Mis Alarmas | «Ver detalle ›» de un evento | **W03** Detalle Evento | Monitoreo anónimo (F-W03) |
 | 3b | W03 Detalle | Miga de pan «‹ Mis alarmas» · «Mis Alarmas» en la barra lateral | W01 | Volver al hub |
 | 3c | W01 Mis Alarmas | Leer la tarjeta «Escaneos por semana» bajo la tabla (sin conexión) | — | Tablero F-W01: 8 semanas, total 128 |
-| 4 | W01 / barra lateral | «Exportar reporte» · «Reportes» | **W04** modal Exportar reporte | F-W04 |
-| 4b | W04 modal | «Rango personalizado» → fechas → «Generar y descargar» · «Cancelar» / «✕» | W04 (Rango personalizado) → W04 (Listo) · W01 | Reporte generado («Generar de nuevo» vuelve al inicio del modal) |
-| 5 | W01 / barra lateral | «Descargar QR en lote» · «Descargar QR» | **W05** modal Descargar QR en lote | F-W05 |
-| 5b | W05 modal | «Descargar» · «Cancelar» / «✕» | W01 con la snackbar «Descarga completada» (marco «W05 · Completado», vuelve solo a W01 a los 3 s) · W01 | Descarga completada (2026-09-17: el modal se cierra al completar, ya no queda abierto) |
+| 4 | W01 / barra lateral / W03 | «Exportar reporte» · «Reportes» | **W04** Reportes (sección, web v1.5; modal hasta la v1.4) | F-W04 |
+| 4b | W04 Reportes | «Rango personalizado» → fechas → «Generar y descargar» · «Cancelar» / miga «‹ Mis alarmas» | W04 (Rango personalizado) → W04 (Listo) · W01 | Reporte generado («Generar de nuevo» vuelve al inicio de la sección) |
+| 5 | W01 / barra lateral | «Descargar QR en lote» · «Descargar QR» | **W05** Descargar QR (sección, web v1.5; modal hasta la v1.4) | F-W05 |
+| 5b | W05 Descargar QR | «Descargar» · «Cancelar» / miga «‹ Mis alarmas» | W01 con la snackbar «Descarga completada» (marco «W05 · Completado», vuelve solo a W01 a los 3 s) · W01 | Descarga completada (2026-09-17: el modal se cierra al completar, ya no queda abierto) |
 | 6 | Barra lateral · avatar | «Ajustes de Perfil» · nombre del usuario | **W06** Ajustes de Perfil | F-W07 |
 | 6b | W06 | «Guardar cambios» | W06 (Actualizado) con snackbar «Perfil actualizado» | Perfil guardado |
 | 7 | W06 | «Eliminar mi cuenta» | **W06 · Modal eliminar cuenta** | F-W08 |
 | 7b | Modal eliminar | «Conservar mi cuenta» · «Eliminar definitivamente» | W06 · **W00** (cuenta eliminada) con snackbar | Cierre del ciclo |
-| 8 | Cualquier pantalla | «Cerrar Sesión» | W00 | Salida |
+| 8 | Cualquier pantalla | «Cerrar Sesión» | **Diálogo · ¿Cerrar sesión?** (web v1.5) · «Cancelar» o el velo → W01 · «Cerrar sesión» → W00 | Confirmación antes de salir |
+| 9 | W00 Inicio de sesión | Tocar el campo «Contraseña» (⏩) · «¿Olvidaste tu contraseña?» | **W00 (error de credenciales)** · **W00 (Recuperar contraseña)** | Credenciales inválidas · recuperación (web v1.5) |
+| 9b | W00 Recuperar contraseña | «Enviar enlace» · «‹ Volver a iniciar sesión» | W00 con la snackbar «Te enviamos un correo de recuperación…» (vuelve sola a los 3 s) · W00 | Correo enviado |
+| 10 | W01 (cualquier estado) | Segmento «Pasados» · «Borradores» · tocar el buscador | **W01 (Pasados)** · **W01 (Borradores · sin resultados)** · **W01 (Búsqueda)**; «Próximos», «Ver todos» y «Limpiar» vuelven a W01 | Filtros y búsqueda (F-W02, F-W06) |
+| 11 | W03 Detalle | «2» / «›» del paginador · tocar «Buscar asistente» · «Exportar reporte» | **W03 (página 2)** · **W03 (búsqueda de asistente)** · W04 | Paginación, búsqueda y exportación desde el detalle (F-W03, F-W04) |
 
 **Áreas de toque (web v1.1, 2026-09-14):** ya no hay conexiones sobre texto: «Ver detalle ›» cuelga de su marco, la fila de cabecera de cada modal (miga + «✕») es un solo control que cierra → W01 y la miga de W03 tiene su propio marco. Detalle en `MOCKUPS.md` §7.4.

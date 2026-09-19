@@ -21,7 +21,7 @@ alarmas-qr-app/
 ├── CLAUDE.md                  convenciones para las sesiones de trabajo con IA
 ├── apps/
 │   ├── movil/                 proyecto Android Studio (settings.gradle.kts aquí) · Kotlin + Compose · M00a–M13 + M02v, M02h, M03b
-│   └── web/                   proyecto Angular CLI (angular.json aquí) · W00, W01, W03, W04, W05, W06 y modales
+│   └── web/                   proyecto Angular CLI (angular.json aquí) · W00, W01, W03, W04 Reportes, W05 Descargar QR, W06 (páginas), modal «Eliminar cuenta» y diálogo «¿Cerrar sesión?»
 ├── packages/
 │   └── tokens/                design-tokens.json → Tokens.kt (Compose) · tokens.css (Angular) · fuentes OFL
 ├── docs/                      copia curada de la documentación UX (ver §5)
@@ -36,7 +36,7 @@ alarmas-qr-app/
 - **Las sesiones con Claude Code se abren en la raíz del repo**: trabaja con archivos y con `./gradlew`, `npm` y `git` desde la terminal, así que ve las dos apps a la vez; Android Studio solo hace falta para el emulador, la vista previa de Compose y el depurador.
 - **Fuentes**: los `.ttf` de Bricolage Grotesque, Archivo y Spline Sans Mono se copian a `apps/movil/app/src/main/res/font/` y a `apps/web/src/assets/fonts/`; `packages/tokens/` guarda el original y la licencia OFL.
 
-Nombren ramas, rutas y componentes con los códigos que ya existen (`feature/M06-editar-alarma`, ruta `/m06`, componente `W04ExportModal`): la trazabilidad con `FUNCIONALIDADES.md` queda gratis.
+Nombren ramas, rutas y componentes con los códigos que ya existen (`feature/M06-editar-alarma`, ruta `/m06`, componente `W04ReportesPage`): la trazabilidad con `FUNCIONALIDADES.md` queda gratis.
 
 ## 3 · Reparto para que ambos firmen en las dos apps
 
@@ -67,7 +67,7 @@ No llevar todo el repositorio de UX: una copia curada en `docs/` más el enlace 
 | Obligatorio | `NAVEGACION.md` (§6 y §6b) | Las tablas del recorrido son literalmente el mapa de rutas de cada app. |
 | Obligatorio | `DESIGN_SYSTEM.md` y `STYLE_TILE.md` | Tokens y reglas; de aquí sale `design-tokens.json`. |
 | Obligatorio | `Mockups_Figma_Movil.pdf` y `Mockups_Figma_Web.pdf` | Referencia visual sin depender de Figma. |
-| Recomendado | `MOCKUPS.md` §7 | Medidas web ya tomadas (barra lateral 208, indicador 242×104, tabla 26/48, modal 540–600). |
+| Recomendado | `MOCKUPS.md` §7 | Medidas web ya tomadas (barra lateral 208, indicador 242×104, tabla 26/48, tarjeta de formulario de 600 en Reportes y Descargar QR, diálogo de confirmación web de 420). |
 | Recomendado | `USER_FLOWS.md` | Base para escribir pruebas de flujo. |
 | Recomendado | `CONCLUSIONES_PRUEBAS.md` | Explica el porqué de cada decisión cuando alguien pregunte. |
 | Nuevo | `README.md`, `CLAUDE.md` (plantillas `handoff/README_APP.md`, `handoff/CLAUDE_APP.md`) | Stack, cómo correr, cómo instalar el APK, convenciones. |

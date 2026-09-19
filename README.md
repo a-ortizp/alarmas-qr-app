@@ -7,7 +7,7 @@ Alarmas QR crea alarmas escaneando el código QR de un evento, sin digitar fecha
 | Aplicación | Qué es | Pantallas | Entregable |
 |---|---|---|---|
 | `apps/movil` | App del asistente y organizador (Android) | 19 (M00a–M13 + M02v, M02h, M03b) + 3 diálogos de confirmación (M04d, M06d, M11d) | APK instalable |
-| `apps/web` | Administración y consulta para organizadores | 7 (W00, W01, W03, W04, W05, W06 y modales) | Sitio desplegado |
+| `apps/web` | Administración y consulta para organizadores | 7 páginas (W00, W01, W03, W04 Reportes, W05 Descargar QR, W06) con 24 estados, el modal «Eliminar cuenta» y el diálogo «¿Cerrar sesión?» (web v1.5) | Sitio desplegado |
 
 Investigación, prototipos y diseño viven en el repositorio de UX: https://github.com/alejortizp/alarmas-qr-ux. Una copia curada está en `docs/`.
 
