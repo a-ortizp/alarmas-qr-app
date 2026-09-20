@@ -1,5 +1,8 @@
 package co.edu.uniandes.alarmasqr.navegacion
 
+import androidx.compose.material3.Text
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -63,5 +66,22 @@ class NavegacionAppTest {
         regla.onNodeWithTag("volver").performClick()
         regla.onNodeWithTag("pantalla-M02").assertIsDisplayed()
         assertEquals(1, pila.size)
+    }
+
+    @Test
+    fun `una entrada registrada en entradas sustituye al marcador`() {
+        lateinit var pila: NavBackStack<NavKey>
+        regla.setContent {
+            pila = rememberBackStackApp()
+            AlarmasQRTheme {
+                NavegacionApp(pila, repositorio) {
+                    entry<Pantalla.M01> { Text("Bienvenida real", Modifier.testTag("real-M01")) }
+                }
+            }
+        }
+        regla.onNodeWithTag("real-M01").assertIsDisplayed()
+        regla.onNodeWithTag("pantalla-M01").assertDoesNotExist()
+        regla.runOnUiThread { pila.irA(Pantalla.M12) }
+        regla.onNodeWithTag("pantalla-M12").assertIsDisplayed()
     }
 }
