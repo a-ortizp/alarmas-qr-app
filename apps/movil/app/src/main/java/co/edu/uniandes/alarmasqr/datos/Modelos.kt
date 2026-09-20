@@ -51,6 +51,8 @@ data class Ajustes(
 @Serializable
 data class Permisos(val alarmasExactas: Boolean, val notificaciones: Boolean, val bateriaSinRestricciones: Boolean, val camara: Boolean)
 
+@Serializable data class Organizador(val nombre: String, val verificado: Boolean = false)
+
 @Serializable
 data class Alarma(
     val id: String,
@@ -64,12 +66,29 @@ data class Alarma(
     val anticipacionMin: Int,
     val trayectoMin: Int,
     val chips: List<String> = emptyList(),
-)
+    /** Solo la alarma que el flujo T1 crea al escanear (M04 → M05); arranca fuera de la lista (Plan 2, D3). */
+    val esNueva: Boolean = false,
+    /** «vuelo» en «vuelo 8:15 am · Aeropuerto»; por defecto «evento». */
+    val etiquetaEvento: String? = null,
+    val organizador: Organizador? = null,
+    val detalle: String? = null,
+) {
+    val pausada: Boolean get() = estado == "pausada"
+}
 
 @Serializable data class Calendario(val mes: String, val diasConAlarmas: Map<String, Int>, val diaSeleccionado: String)
 
 @Serializable
-data class EventoQR(val id: String, val alarmaId: String, val titulo: String, val codigoQR: String, val escaneos: Int? = null, val etiqueta: String? = null)
+data class EventoQR(
+    val id: String,
+    val alarmaId: String,
+    val titulo: String,
+    val codigoQR: String,
+    val escaneos: Int? = null,
+    val etiqueta: String? = null,
+    val organizador: String? = null,
+    val verificado: Boolean = false,
+)
 
 @Serializable data class QRInvalido(val contenido: String, val tipoDetectado: String, val diagnostico: String)
 

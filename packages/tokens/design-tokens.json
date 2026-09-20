@@ -2,8 +2,8 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.9",
-    "date": "2026-09-19",
+    "version": "1.10",
+    "date": "2026-09-20",
     "source": "DESIGN_SYSTEM.md v1.10 · STYLE_TILE.md v1.2 · MOCKUPS.md (móvil v1.7, web v1.5)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
     "notes": [
@@ -12,7 +12,8 @@
       "Texto ≤ 15 pt usa los tonos AA (*.texto); los tonos base quedan para rellenos, íconos y trazos.",
       "Sobre Tinta el texto secundario va en Gris Borde y el primario es blanco (excepción M10).",
       "Alturas: 52 para toque en móvil (v1.6, revisión de tutores del 2026-09-17; antes 48), 44 para puntero en web; 56 en las acciones de la alarma sonando.",
-      "Prevención de errores (v1.7): toda acción destructiva o de salida pasa por un diálogo de confirmación centrado sobre velo Tinta 55 %; la acción segura es el primario amarillo y la que confirma va en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura."
+      "Prevención de errores (v1.7): toda acción destructiva o de salida pasa por un diálogo de confirmación centrado sobre velo Tinta 55 %; la acción segura es el primario amarillo y la que confirma va en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura.",
+      "v1.10 (2026-09-20): medidas móviles de la Persona A tomadas de Figma para el Plan 2 (coral suave, radios de visor/casilla/snackbar, flecha «‹», título de evento, rótulo de opción, chip que se toca, medidas size.movil)."
     ]
   },
   "color": {
@@ -48,6 +49,11 @@
         "$value": "#C4362E",
         "$type": "color",
         "$description": "Coral Texto · destructivo · 5.4:1 sobre blanco"
+      },
+      "suave": {
+        "$value": "#FDECEA",
+        "$type": "color",
+        "$description": "Coral Suave · relleno del sello «!» y del chip «enlace externo» de M13"
       }
     },
     "verde": {
@@ -284,7 +290,11 @@
         "weight": 400,
         "size": 11,
         "$description": "Única excepción por debajo de 12"
-      }
+      },
+      "flecha-atras": { "family": "ui", "weight": 700, "size": 26, "$description": "Glifo «‹» de la barra superior móvil, área 44×44 (DS §6)" },
+      "titulo-evento": { "family": "titulares", "weight": 600, "size": 20, "lineHeight": 24, "$description": "Nombre del evento en la tarjeta de M04 y titular de M03b" },
+      "opcion": { "family": "ui", "weight": 700, "size": 14, "$description": "Rótulo de la fila de opción de calendario (M01, set 48)" },
+      "chip-control": { "family": "ui", "weight": 600, "size": 12, "$description": "Texto del chip que se toca («Linterna · auto», M03; mockup v1.7)" }
     }
   },
   "size": {
@@ -344,6 +354,14 @@
       "gap": 12,
       "entre-botones": 8,
       "$description": "Diálogo de confirmación web («¿Cerrar sesión?»): botones apilados de 44, velo 55 %"
+    },
+    "movil": {
+      "switch": [44, 26], "icono-fab": 26, "snackbar": 48, "casilla": 20, "icono-fila": 20, "fila-opcion": 36,
+      "fila-hoja": 100, "caja-icono": 40, "sello": 30, "sello-grande": 64, "diana": 104, "visor-apagado": 110,
+      "visor-bienvenida": 170, "marco-enfoque": 220, "vista-previa": 300, "numeral": 22, "logotipo": 56, "enlace": 32,
+      "boton-atras": 44, "asa": [36, 4], "pildora-nav": [40, 22], "icono-nav": 20, "qr-bienvenida": 84, "qr-visor": 100,
+      "qr-pantallazo": 120, "marco-lectura": 136, "indicador-pagina": [22, 6],
+      "$description": "Medidas de los mockups móviles v1.7 medidas en Figma el 2026-09-20 (Plan 2)"
     }
   },
   "radius": {
@@ -354,6 +372,12 @@
     "campo": 12,
     "chip-web": 8,
     "barra": 4,
+    "visor": 16,
+    "visor-bienvenida": 20,
+    "marco-lectura": 10,
+    "casilla": 4,
+    "snackbar": 12,
+    "caja-icono": 12,
     "$description": "Radio 14 en tarjetas, modales y contenedores; 20 en el diálogo de confirmación móvil; 12 en campos; píldora en botones, chips y filtros"
   },
   "stroke": {
@@ -367,7 +391,16 @@
       "margen": 20,
       "medianil": 12,
       "columnas": 4,
-      "entre-bloques": 12
+      "entre-bloques": 12,
+      "padding-barra": 16,
+      "padding-navegacion": 36,
+      "hoja-superior": 12,
+      "hoja-inferior": 32,
+      "pie-enlace": 32,
+      "gap-fila": 10,
+      "gap-hoja": 6,
+      "gap-dialogo": 16,
+      "gap-tarjeta": 8
     },
     "web": {
       "contenido-vertical": 28,
@@ -412,7 +445,8 @@
   },
   "elevation": {
     "fab": "0 4px 12px rgba(23, 22, 28, 0.18)",
-    "tarjeta-evento": "0 6px 18px rgba(23, 22, 28, 0.10)"
+    "tarjeta-evento": "0 6px 18px rgba(23, 22, 28, 0.10)",
+    "tarjeta": "0 4px 12px rgba(23, 22, 28, 0.18)"
   },
   "texture": {
     "modulos-qr": {
@@ -429,5 +463,5 @@
       "$description": "Retícula de módulos QR que se desvanece hacia abajo; nunca en listas, formularios ni visor"
     }
   },
-  "version": "1.9"
+  "version": "1.10"
 }

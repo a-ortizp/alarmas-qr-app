@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
+import java.time.LocalDate
 import java.time.OffsetDateTime
 
 /**
@@ -15,7 +16,15 @@ import java.time.OffsetDateTime
 class RepositorioDataset(json: String) {
     val dataset: Dataset = formato.decodeFromString(Dataset.serializer(), json)
 
-    private val _alarmas = MutableStateFlow(dataset.alarmas.sortedBy { OffsetDateTime.parse(it.eventoInicio) })
+    /** HOY de los mockups (jueves 27 de agosto de 2026). */
+    val hoy: LocalDate = LocalDate.parse(dataset.meta.hoy)
+
+    /** Alarmas que el flujo crea al escanear (D3): fuera de la lista hasta que llegue su evento. */
+    val pendientesDeEscaneo: List<Alarma> = dataset.alarmas.filter { it.esNueva }
+
+    private fun iniciales(): List<Alarma> = dataset.alarmas.filterNot { it.esNueva }.ordenadas()
+
+    private val _alarmas = MutableStateFlow(iniciales())
     val alarmas: StateFlow<List<Alarma>> = _alarmas.asStateFlow()
 
     /** Última lista antes de la mutación más reciente; la usa «Deshacer · 5 s». */
@@ -28,8 +37,18 @@ class RepositorioDataset(json: String) {
 
     fun evento(id: String): EventoQR? = dataset.eventosQR.firstOrNull { it.id == id }
 
-    fun agregar(alarma: Alarma) = mutar { lista ->
-        (lista.filterNot { it.id == alarma.id } + alarma).sortedBy { OffsetDateTime.parse(it.eventoInicio) }
+    fun agregar(alarma: Alarma) = mutar { lista -> (lista.filterNot { it.id == alarma.id } + alarma).ordenadas() }
+
+    /**
+     * Crea la alarma del evento leído (M03 → M04): toma la alarma del dataset que apunta el evento, la marca
+     * «Nueva» y la agrega. Devuelve null si el evento no existe (→ M13).
+     */
+    fun agregarDesdeEvento(eventoId: String): Alarma? {
+        val evento = evento(eventoId) ?: return null
+        val base = dataset.alarmas.firstOrNull { it.id == evento.alarmaId } ?: return null
+        val nueva = base.copy(esNueva = true, chips = listOf("Nueva") + base.chips.filterNot { it == "Nueva" })
+        agregar(nueva)
+        return nueva
     }
 
     fun eliminar(id: String) = mutar { lista -> lista.filterNot { it.id == id } }
@@ -40,15 +59,23 @@ class RepositorioDataset(json: String) {
         anterior = null
     }
 
+    /** Cuerpo de M04d/M06d con {evento}, {fecha} y {hora} rellenos (dataset.meta.notes). */
+    fun mensajeEliminar(alarma: Alarma): String = dataset.mensajes.confirmarEliminarCuerpo
+        .replace("{evento}", alarma.titulo)
+        .replace("{fecha}", FormatoHora.fechaCorta(alarma.eventoInicio))
+        .replace("{hora}", FormatoHora.horaConSufijo(alarma.eventoInicio))
+
     private fun mutar(cambio: (List<Alarma>) -> List<Alarma>) {
         anterior = _alarmas.value
         _alarmas.value = cambio(_alarmas.value)
     }
 
-    /** Restaura el estado inicial (dataset.alarmas ordenadas, sin deshacer pendiente ni permiso pedido); solo para pruebas. */
+    private fun List<Alarma>.ordenadas() = sortedBy { OffsetDateTime.parse(it.eventoInicio) }
+
+    /** Restaura el estado inicial (5 alarmas, sin deshacer pendiente ni permiso pedido); solo para pruebas. */
     @VisibleForTesting
     fun reiniciar() {
-        _alarmas.value = dataset.alarmas.sortedBy { OffsetDateTime.parse(it.eventoInicio) }
+        _alarmas.value = iniciales()
         anterior = null
         permisoCamaraPedido = false
     }

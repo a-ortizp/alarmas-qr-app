@@ -1,4 +1,4 @@
-// Alarmas QR · Energía puntual · tokens v1.9 (2026-09-19)
+// Alarmas QR · Energía puntual · tokens v1.10 (2026-09-20)
 // Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
 // Copiar a apps/movil/app/src/main/java/<paquete>/ui/theme/Tokens.kt y ajustar el package.
 // Las fuentes van en res/font/ con estos nombres de archivo (Google Fonts, licencia OFL):
@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -34,6 +35,8 @@ object Colores {
     val VerdeConfirmado = Color(0xFF129E63)   // éxito · verificado · rellenos e íconos
     val VerdeTexto      = Color(0xFF0B7048)   // escaneada · publicado · 6.1:1
     val VerdeFondo      = Color(0xFFE9F7F0)   // relleno de chips Publicado / Activa
+    val CoralSuave = Color(0xFFFDECEA)                       // sello «!» y chip «enlace externo» (M13)
+    val BordeSobreTinta = Color(0xFFFFFFFF).copy(alpha = 0.15f) // borde inferior de la barra superior sobre Tinta (M03)
     val AzulEnlace      = Color(0xFF2E7CF6)   // informativo · íconos
     val AzulTexto       = Color(0xFF1A5BC4)   // enlaces · 6.3:1
     val GrisNiebla      = Color(0xFFF4F3EF)   // superficies · píldora inactiva
@@ -84,6 +87,10 @@ object Tipografia {
     val EtiquetaCampo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)                          // etiqueta dentro del contorno
     val NavegacionInferior = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 11.sp)                       // única excepción < 12
     val Enlace = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp, textDecoration = TextDecoration.Underline)
+    val FlechaAtras = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 26.sp)               // «‹» (DS §6)
+    val TituloEvento = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, lineHeight = 24.sp)
+    val Opcion = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 14.sp)                    // fila de opción (M01)
+    val ChipControl = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)          // «Linterna · auto»
 }
 
 object Tamanos {
@@ -103,6 +110,37 @@ object Tamanos {
     val IconoVisor = 48.dp            // icono a escala 2 como ilustración de estado en un visor apagado (M12, v1.7)
 }
 
+/** Medidas de los mockups móviles v1.7 (Figma, 2026-09-20; design-tokens.json `size.movil`). */
+object Medidas {
+    val Switch = DpSize(44.dp, 26.dp)
+    val IconoFab = 26.dp
+    val Snackbar = 48.dp
+    val Casilla = 20.dp
+    val IconoFila = 20.dp
+    val FilaOpcion = 36.dp
+    val FilaHoja = 100.dp
+    val CajaIcono = 40.dp
+    val Sello = 30.dp
+    val SelloGrande = 64.dp
+    val Diana = 104.dp
+    val VisorApagado = 110.dp
+    val VisorBienvenida = 170.dp
+    val MarcoEnfoque = 220.dp
+    val VistaPrevia = 300.dp
+    val Numeral = 22.dp
+    val Logotipo = 56.dp
+    val Enlace = 32.dp
+    val BotonAtras = 44.dp
+    val Asa = DpSize(36.dp, 4.dp)
+    val PildoraNav = DpSize(40.dp, 22.dp)
+    val IconoNav = 20.dp
+    val QRBienvenida = 84.dp
+    val QRVisor = 100.dp
+    val QRPantallazo = 120.dp
+    val MarcoLectura = 136.dp
+    val IndicadorPagina = DpSize(22.dp, 6.dp)
+}
+
 object Radios {
     val Pildora = RoundedCornerShape(percent = 50)
     val Tarjeta = RoundedCornerShape(14.dp)
@@ -111,6 +149,12 @@ object Radios {
     val Campo = RoundedCornerShape(12.dp)
     val Fab = RoundedCornerShape(16.dp)
     val Barra = RoundedCornerShape(4.dp)
+    val Visor = RoundedCornerShape(16.dp)             // visor apagado (M12), vista previa (M03b)
+    val VisorBienvenida = RoundedCornerShape(20.dp)   // visor Tinta de M01
+    val MarcoLectura = RoundedCornerShape(10.dp)      // marco del QR en el pantallazo (M03b)
+    val Casilla = RoundedCornerShape(4.dp)
+    val Snackbar = RoundedCornerShape(12.dp)
+    val CajaIcono = RoundedCornerShape(12.dp)         // caja del icono en las filas de M02h y de M01
 }
 
 object Trazos {
@@ -127,6 +171,15 @@ object Espacio {
     val PaddingTarjeta = 14.dp
     val PaddingDialogo = 24.dp
     val EntreBotonesDialogo = 10.dp
+    val PaddingBarra = 16.dp        // laterales de la barra superior
+    val PaddingNavegacion = 36.dp   // laterales de la barra inferior
+    val HojaSuperior = 12.dp        // relleno superior de la hoja (asa)
+    val HojaInferior = 32.dp        // relleno inferior de la hoja y de los pies con enlace
+    val PieEnlace = 32.dp
+    val GapFila = 10.dp             // entre hora, texto y switch en la tarjeta
+    val GapHoja = 6.dp              // entre filas de la hoja M02h
+    val GapDialogo = 16.dp
+    val GapTarjeta = 8.dp           // entre filas de la tarjeta del evento (M04)
 }
 
 object Movimiento {
@@ -134,4 +187,11 @@ object Movimiento {
     const val ToqueLargoMs = 500L         // mantener presionado el FAB abre la hoja «Agregar evento»
     const val DeshacerMs = 5_000L         // ventana del snackbar «Deshacer»
     const val TexturaOpacidadMax = 0.08f  // retícula de módulos QR, solo banda superior en M01, M04, M09, M10, M12, M13
+}
+
+/** Sombra 0 4 12 Tinta 18 % (FAB, hoja, tarjeta del evento, burbuja de M03b) expresada como elevación de Compose. */
+object Elevaciones {
+    val Fab = 6.dp
+    val Tarjeta = 6.dp
+    val ColorSombra = Colores.Tinta.copy(alpha = 0.18f)
 }
