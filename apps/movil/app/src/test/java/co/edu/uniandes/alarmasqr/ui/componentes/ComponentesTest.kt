@@ -36,20 +36,31 @@ class ComponentesTest {
 
     @Test
     fun `los botones miden 52, los enlaces 32 y la flecha 44, y avisan el toque`() {
-        var toques = 0
+        var primario = 0
+        var secundario = 0
+        var enlace = 0
+        var atras = 0
         regla.setContent {
+            // Column: sin ella, los cuatro controles (todos fillMaxWidth o superpuestos en (0,0)) se apilan bajo
+            // AlarmasQRTheme (MaterialTheme no aporta un layout) y el toque a uno puede ser interceptado por otro
+            // (mismo problema diagnosticado en la prueba de casilla/fila de este archivo).
             AlarmasQRTheme {
-                BotonPrimario("Comenzar", onClick = { toques++ }, modifier = Modifier.testTag("primario"))
-                BotonSecundario("Google", onClick = { toques++ }, modifier = Modifier.testTag("secundario"))
-                BotonEnlace("Continuar como invitado", onClick = { toques++ }, modifier = Modifier.testTag("enlace"))
-                BotonAtras(onClick = { toques++ })
+                Column {
+                    BotonPrimario("Comenzar", onClick = { primario++ }, modifier = Modifier.testTag("primario"))
+                    BotonSecundario("Google", onClick = { secundario++ }, modifier = Modifier.testTag("secundario"))
+                    BotonEnlace("Continuar como invitado", onClick = { enlace++ }, modifier = Modifier.testTag("enlace"))
+                    BotonAtras(onClick = { atras++ })
+                }
             }
         }
         regla.onNodeWithTag("primario").assertHeightIsEqualTo(52.dp).performClick()
+        assertEquals(1, primario)
         regla.onNodeWithTag("secundario").assertHeightIsEqualTo(52.dp).performClick()
+        assertEquals(1, secundario)
         regla.onNodeWithTag("enlace").assertHeightIsEqualTo(32.dp).performClick()
+        assertEquals(1, enlace)
         regla.onNodeWithTag("atras").assertHeightIsEqualTo(44.dp).assertWidthIsEqualTo(44.dp).performClick()
-        assertEquals(4, toques)
+        assertEquals(1, atras)
     }
 
     @Test
