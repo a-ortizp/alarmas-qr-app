@@ -294,7 +294,9 @@
       "flecha-atras": { "family": "ui", "weight": 700, "size": 26, "$description": "Glifo «‹» de la barra superior móvil, área 44×44 (DS §6)" },
       "titulo-evento": { "family": "titulares", "weight": 600, "size": 20, "lineHeight": 24, "$description": "Nombre del evento en la tarjeta de M04 y titular de M03b" },
       "opcion": { "family": "ui", "weight": 700, "size": 14, "$description": "Rótulo de la fila de opción de calendario (M01, set 48)" },
-      "chip-control": { "family": "ui", "weight": 600, "size": 12, "$description": "Texto del chip que se toca («Linterna · auto», M03; mockup v1.7)" }
+      "chip-control": { "family": "ui", "weight": 600, "size": 12, "$description": "Texto del chip que se toca («Linterna · auto», M03; mockup v1.7)" },
+      "valor-campo": { "family": "ui", "weight": 400, "size": 15, "lineHeight": 16, "$description": "Valor de CampoTexto (Figma 3:11)" },
+      "divisor": { "family": "ui", "weight": 400, "size": 12, "$description": "Texto de Divisor («o continúa con», «mientras tanto»)" }
     }
   },
   "size": {
@@ -400,7 +402,12 @@
       "gap-fila": 10,
       "gap-hoja": 6,
       "gap-dialogo": 16,
-      "gap-tarjeta": 8
+      "gap-tarjeta": 8,
+      "padding-campo-vertical": 7,
+      "gap-campo": 2,
+      "padding-chip-control": 14,
+      "padding-fila-vertical": 8,
+      "gap-divisor": 8
     },
     "web": {
       "contenido-vertical": 28,

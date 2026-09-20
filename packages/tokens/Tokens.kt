@@ -91,6 +91,8 @@ object Tipografia {
     val TituloEvento = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, lineHeight = 24.sp)
     val Opcion = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 14.sp)                    // fila de opción (M01)
     val ChipControl = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)          // «Linterna · auto»
+    val ValorCampo = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 16.sp)   // valor de CampoTexto (Figma 3:11)
+    val Divisor = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.sp)                 // «o continúa con» · «mientras tanto»
 }
 
 object Tamanos {
@@ -180,6 +182,11 @@ object Espacio {
     val GapHoja = 6.dp              // entre filas de la hoja M02h
     val GapDialogo = 16.dp
     val GapTarjeta = 8.dp           // entre filas de la tarjeta del evento (M04)
+    val PaddingCampoVertical = 7.dp // relleno vertical de CampoTexto (Figma 3:11)
+    val GapCampo = 2.dp             // entre la etiqueta y el valor de CampoTexto
+    val PaddingChipControl = 14.dp  // relleno lateral del chip que se toca (DS set 49)
+    val PaddingFilaVertical = 8.dp  // relleno vertical de FilaOpcionCalendario (DS set 48)
+    val GapDivisor = 8.dp           // entre la línea y el texto de Divisor
 }
 
 object Movimiento {
