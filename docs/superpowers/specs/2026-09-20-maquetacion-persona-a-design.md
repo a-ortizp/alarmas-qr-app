@@ -51,7 +51,7 @@ Las versiones exactas se leen de `apps/movil/gradle/libs.versions.toml` y `apps/
 
 - `sealed interface Pantalla : NavKey` con `@Serializable data object`/`data class`; cada clave conserva `codigo`, `ruta` (la de TRAZABILIDAD, `{id}` sustituido) y `funcionalidad`. Un `Pantalla.porRuta(ruta)` resuelve deep links (notificación de la alarma, intent SEND de pantallazo → M03b).
 - Un solo `NavBackStack<Pantalla>` guardado con `rememberNavBackStack`. Reglas: M01 es raíz; entrar/registrarse reemplaza la pila por `[M02v]` o `[M02]`; las pestañas inferiores (M02, M02b, M11) reemplazan la cima sin apilar.
-- `HojaInferirSceneStrategy`: si la cima es M02h o M04, la escena dibuja la entrada anterior atenuada con velo Tinta 55 % y la cima como hoja inferior (radio 24 arriba, asa); tocar el velo = `removeLastOrNull()`.
+- `HojaInferiorSceneStrategy`: si la cima es M02h o M04, la escena dibuja la entrada anterior atenuada con velo Tinta 55 % y la cima como hoja inferior (radio 24 arriba, asa); tocar el velo = `removeLastOrNull()`.
 - Diálogos M04d/M06d/M11d: `estadoDialogo` en el ViewModel de la pantalla padre; `DialogoConfirmacion` sobre velo Tinta 55 %; tocar el velo = acción segura.
 - `AndamioPrincipal` decide barra inferior y FAB según la cima (`conNavegacionInferior`, `conFab`); en M03 y M10 la superficie es Tinta con edge-to-edge (skill `edge-to-edge`).
 - Controles ⏩ (NAVEGACION §6): FAB/«Escanear QR del evento» → M12 solo la primera vez (`permisoCamaraPedido` en `RepositorioDataset`); «Abrir ajustes» en M12 → M03; tocar el visor de M03 → M04 con `e-entrega`; tocar «vibra al detectar» → M13; en M03b «Continuar» → M04. La cámara real navega igual cuando ML Kit detecta un código.
