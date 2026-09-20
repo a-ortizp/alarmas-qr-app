@@ -1,6 +1,7 @@
 package co.edu.uniandes.alarmasqr.datos
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,6 +34,7 @@ class RepositorioDataset(json: String) {
 
     fun eliminar(id: String) = mutar { lista -> lista.filterNot { it.id == id } }
 
+    /** Un solo nivel: revierte la última mutación; una segunda llamada no hace nada (comportamiento del snackbar de 5 s). */
     fun deshacer() {
         anterior?.let { _alarmas.value = it }
         anterior = null
@@ -41,6 +43,14 @@ class RepositorioDataset(json: String) {
     private fun mutar(cambio: (List<Alarma>) -> List<Alarma>) {
         anterior = _alarmas.value
         _alarmas.value = cambio(_alarmas.value)
+    }
+
+    /** Restaura el estado inicial (dataset.alarmas ordenadas, sin deshacer pendiente ni permiso pedido); solo para pruebas. */
+    @VisibleForTesting
+    fun reiniciar() {
+        _alarmas.value = dataset.alarmas.sortedBy { OffsetDateTime.parse(it.eventoInicio) }
+        anterior = null
+        permisoCamaraPedido = false
     }
 
     companion object {
@@ -55,5 +65,9 @@ class RepositorioDataset(json: String) {
                     context.applicationContext.assets.open("dataset.json").bufferedReader().use { it.readText() }
                 ).also { instancia = it }
             }
+
+        /** Olvida la instancia única; solo para pruebas que necesitan una instancia nueva entre casos. */
+        @VisibleForTesting
+        fun olvidarInstancia() { instancia = null }
     }
 }

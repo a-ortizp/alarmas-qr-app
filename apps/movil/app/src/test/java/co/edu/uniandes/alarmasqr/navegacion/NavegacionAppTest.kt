@@ -21,7 +21,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [35])
+@Config(sdk = [35]) // tope de Robolectric 4.16; subir junto con Robolectric (compileSdk es 36)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class NavegacionAppTest {
     @get:Rule val regla = createComposeRule()
@@ -66,6 +66,26 @@ class NavegacionAppTest {
         regla.onNodeWithTag("volver").performClick()
         regla.onNodeWithTag("pantalla-M02").assertIsDisplayed()
         assertEquals(1, pila.size)
+    }
+
+    @Test
+    fun `una hoja real registrada con el metadato de hoja se dibuja sobre la entrada anterior`() {
+        lateinit var pila: NavBackStack<NavKey>
+        regla.setContent {
+            pila = rememberBackStackApp(Pantalla.M02)
+            AlarmasQRTheme {
+                NavegacionApp(pila, repositorio) {
+                    entry<Pantalla.M04>(metadata = HojaInferiorSceneStrategy.hoja()) {
+                        Text("Hoja real", Modifier.testTag("real-M04"))
+                    }
+                }
+            }
+        }
+        regla.runOnUiThread { pila.irA(Pantalla.M04("a-tutor")) }
+        regla.waitForIdle()
+        regla.onNodeWithTag("real-M04").assertIsDisplayed()
+        regla.onNodeWithTag("pantalla-M02").assertIsDisplayed()
+        assertEquals(listOf<NavKey>(Pantalla.M02, Pantalla.M04("a-tutor")), pila.toList())
     }
 
     @Test

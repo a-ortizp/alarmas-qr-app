@@ -31,6 +31,15 @@ class RepositorioDatasetTest {
     }
 
     @Test
+    fun `reiniciar restaura las 6 alarmas tras eliminar`() {
+        val repo = RepositorioDataset(json)
+        repo.eliminar("a-tutor")
+        assertEquals(5, repo.alarmas.value.size)
+        repo.reiniciar()
+        assertEquals(6, repo.alarmas.value.size)
+    }
+
+    @Test
     fun `agregar pone la alarma en orden cronologico y deshacer la quita`() {
         val repo = RepositorioDataset(json)
         val nueva = repo.alarma("a-tutor")!!.copy(id = "a-nueva", titulo = "Nueva", eventoInicio = "2026-08-27T08:30:00-05:00", suena = "2026-08-27T08:00:00-05:00", chips = listOf("Nueva"))

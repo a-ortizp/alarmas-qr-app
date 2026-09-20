@@ -20,6 +20,11 @@ sealed interface Pantalla : NavKey {
     /** Se dibuja como hoja inferior sobre la entrada anterior (HojaInferiorSceneStrategy). */
     val esHoja: Boolean get() = false
 
+    /**
+     * Ruta sintética: TRAZABILIDAD la registra como `/` (raíz de la app), no como literal `bienvenida`.
+     * Necesita clave propia porque `porRuta` no puede resolver la cadena vacía sin ambigüedad.
+     * Nota pendiente: `docs/TRAZABILIDAD.md` debe recibir la misma aclaración en el repo de UX.
+     */
     @Serializable data object M01 : Pantalla {
         override val codigo = "M01"; override val ruta = "bienvenida"; override val titulo = "Bienvenida"; override val funcionalidad = "F-M01"
         override val esRaiz = true
@@ -30,6 +35,11 @@ sealed interface Pantalla : NavKey {
     @Serializable data object M00b : Pantalla {
         override val codigo = "M00b"; override val ruta = "entrar"; override val titulo = "Iniciar sesión"; override val funcionalidad = "F-M00b"
     }
+    /**
+     * Ruta sintética: TRAZABILIDAD la registra como `/inicio` en estado vacío, no como literal `inicio/vacio`.
+     * Necesita clave propia porque M02v y M02 comparten la misma ruta de TRAZABILIDAD según el estado.
+     * Nota pendiente: `docs/TRAZABILIDAD.md` debe recibir la misma aclaración en el repo de UX.
+     */
     @Serializable data object M02v : Pantalla {
         override val codigo = "M02v"; override val ruta = "inicio/vacio"; override val titulo = "Inicio · sin alarmas"; override val funcionalidad = "F-M02"
         override val esRaiz = true; override val conNavegacionInferior = true
@@ -56,6 +66,11 @@ sealed interface Pantalla : NavKey {
         override val codigo = "M04"; override val ruta = "alarma/$id/creada"; override val titulo = "Alarma programada"; override val funcionalidad = "F-M04"
         override val esHoja = true
     }
+    /**
+     * Ruta sintética: TRAZABILIDAD la registra como `/inicio` con snackbar, no como literal `inicio/guardada/{id}`.
+     * Necesita clave propia porque M05 y M02 comparten la misma ruta de TRAZABILIDAD según el estado.
+     * Nota pendiente: `docs/TRAZABILIDAD.md` debe recibir la misma aclaración en el repo de UX.
+     */
     @Serializable data class M05(val id: String) : Pantalla {
         override val codigo = "M05"; override val ruta = "inicio/guardada/$id"; override val titulo = "Guardada + deshacer"; override val funcionalidad = "F-M05"
         override val esRaiz = true; override val conNavegacionInferior = true; override val conFab = true
@@ -101,8 +116,12 @@ sealed interface Pantalla : NavKey {
             )
         }
 
-        /** Resuelve una ruta concreta («alarma/a-tutor/creada») a su clave; null si no existe. */
+        /**
+         * Resuelve una ruta concreta («alarma/a-tutor/creada») a su clave; null si no existe.
+         * Tolera la barra inicial (y final) porque los deep links llegan como `Uri.path`, que la incluye.
+         */
         fun porRuta(ruta: String): Pantalla? {
+            val ruta = ruta.trim('/')
             todas.firstOrNull { !it.ruta.contains(ID) && it.ruta == ruta }?.let { return it }
             val partes = ruta.split("/")
             return todas.filter { it.ruta.contains(ID) }.firstNotNullOfOrNull { plantilla ->

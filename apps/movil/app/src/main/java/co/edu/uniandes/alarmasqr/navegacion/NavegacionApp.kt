@@ -51,6 +51,10 @@ private val pestanas = listOf(
  * ([entradaMarcador]) es el `fallback` del `entryProvider`, así que solo se usa para las claves que [entradas] no
  * registró — las pantallas reales tienen prioridad por construcción, no por orden. Barra inferior y FAB los decide
  * la clave visible (`conNavegacionInferior`, `conFab`).
+ *
+ * Una pantalla real que sea hoja (M02h, M04) debe registrarse en [entradas] con el metadato de
+ * [HojaInferiorSceneStrategy.hoja]: `entry<Pantalla.M04>(metadata = HojaInferiorSceneStrategy.hoja()) { … }`.
+ * Sin ese metadato la entrada real se dibuja a pantalla completa en vez de como hoja modal sobre la anterior.
  */
 @Composable
 fun NavegacionApp(

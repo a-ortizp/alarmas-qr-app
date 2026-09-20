@@ -69,7 +69,7 @@ data class Alarma(
 @Serializable data class Calendario(val mes: String, val diasConAlarmas: Map<String, Int>, val diaSeleccionado: String)
 
 @Serializable
-data class EventoQR(val id: String, val alarmaId: String, val titulo: String, val codigoQR: String, val escaneos: Int = 0, val etiqueta: String = "")
+data class EventoQR(val id: String, val alarmaId: String, val titulo: String, val codigoQR: String, val escaneos: Int? = null, val etiqueta: String? = null)
 
 @Serializable data class QRInvalido(val contenido: String, val tipoDetectado: String, val diagnostico: String)
 
