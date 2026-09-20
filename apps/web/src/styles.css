@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+/* Alarmas QR · estilos globales. Los valores viven en tokens.css; aquí solo se aplican. */
+@import './tokens.css';
+
+@font-face { font-family: 'Bricolage Grotesque'; src: url('/fonts/BricolageGrotesque.ttf') format('truetype'); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: 'Archivo'; src: url('/fonts/Archivo.ttf') format('truetype'); font-weight: 100 900; font-display: swap; }
+@font-face { font-family: 'Spline Sans Mono'; src: url('/fonts/SplineSansMono.ttf') format('truetype'); font-weight: 300 700; font-display: swap; }
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
