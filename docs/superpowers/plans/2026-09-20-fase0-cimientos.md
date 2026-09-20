@@ -6,7 +6,7 @@
 
 **Architecture:** Móvil: Kotlin + Compose Material 3 re-tematizado, Navigation 3 con un solo `NavBackStack<Pantalla>` y una estrategia de escena de hoja inferior; datos en memoria desde `assets/dataset.json` con kotlinx.serialization. Web: Angular 22 standalone + señales, rutas generadas desde una constante `PANTALLAS`, `DatosService` con `httpResource`, layout con barra lateral; pruebas con Vitest + `TestBed`.
 
-**Tech Stack:** JDK 17 · Gradle 8.14.3 · AGP 8.13.2 · Kotlin 2.2.21 · Compose BOM 2026.09.00 · Navigation 3 1.1.7 · lifecycle 2.11.0 · kotlinx-serialization-json 1.11.0 · Robolectric 4.16 · Node 22.23.2 · Angular 22.1 · Vitest.
+**Tech Stack:** JDK 17 · Gradle 8.14.3 · AGP 8.13.2 · Kotlin 2.2.21 · Compose BOM 2026.06.00 · Navigation 3 1.1.7 · lifecycle 2.10.0 · kotlinx-serialization-json 1.11.0 · Robolectric 4.16 · Node 22.23.2 · Angular 22.1 · Vitest.
 
 **Spec:** `docs/superpowers/specs/2026-09-20-maquetacion-persona-a-design.md`
 
@@ -90,14 +90,16 @@ zipStorePath=wrapper/dists
 
 - [ ] **Step 3: Reescribir `libs.versions.toml`**
 
+Nota (ruling 2026-09-20): el BOM 2026.09.00, core-ktx 1.19.0 y lifecycle 2.11.0 exigen compileSdk 37 + AGP 9.1 (AAR metadata verificado en Maven); se fijan las últimas versiones compatibles con compileSdk 36 / AGP 8.13: BOM 2026.06.00 (Compose 1.11.3, Material3 1.4.0), core-ktx 1.18.0, lifecycle 2.10.0.
+
 ```toml
 [versions]
 agp = "8.13.2"
 kotlin = "2.2.21"
-coreKtx = "1.19.0"
-lifecycle = "2.11.0"
+coreKtx = "1.18.0"
+lifecycle = "2.10.0"
 activityCompose = "1.13.0"
-composeBom = "2026.09.00"
+composeBom = "2026.06.00"
 navigation3 = "1.1.7"
 serializationJson = "1.11.0"
 camerax = "1.6.2"
@@ -255,7 +257,7 @@ Expected: `BUILD SUCCESSFUL`. Si AGP 8.13.2 pide una versión de Gradle mayor, u
 
 ```bash
 git add apps/movil/gradle apps/movil/app/build.gradle.kts apps/movil/gradle.properties
-git commit -m "Fase 0: versiones móviles (AGP 8.13, Kotlin 2.2, Compose BOM 2026.09, Navigation 3 1.1.7)
+git commit -m "Fase 0: versiones móviles (AGP 8.13, Kotlin 2.2, Compose BOM 2026.06, Navigation 3 1.1.7)
 
 Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 ```
@@ -1619,9 +1621,9 @@ Insertar tras «## Cómo correr» una tabla generada leyendo `libs.versions.toml
 | Móvil | Gradle | 8.14.3 | `apps/movil/gradle/wrapper/gradle-wrapper.properties` |
 | Móvil | Android Gradle Plugin | 8.13.2 | `apps/movil/gradle/libs.versions.toml` |
 | Móvil | Kotlin (+ Compose y serialization) | 2.2.21 | ídem |
-| Móvil | Jetpack Compose BOM | 2026.09.00 | ídem |
+| Móvil | Jetpack Compose BOM | 2026.06.00 | ídem |
 | Móvil | Navigation 3 | 1.1.7 | ídem |
-| Móvil | Lifecycle / ViewModel | 2.11.0 | ídem |
+| Móvil | Lifecycle / ViewModel | 2.10.0 | ídem |
 | Móvil | kotlinx-serialization-json | 1.11.0 | ídem |
 | Móvil | CameraX · ML Kit Barcode · ZXing | 1.6.2 · 17.3.0 · 3.5.4 | ídem |
 | Móvil | compileSdk / targetSdk / minSdk | 36 / 36 / 26 | `app/build.gradle.kts` |
