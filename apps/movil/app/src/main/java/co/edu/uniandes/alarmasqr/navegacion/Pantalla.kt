@@ -88,13 +88,18 @@ sealed interface Pantalla : NavKey {
     }
 
     companion object {
-        val inicio: Pantalla = M01
         private const val ID = "{id}"
 
+        // perezosos: la interfaz tiene getters por defecto y la JVM la inicializa junto con el companion al
+        // inicializar cualquier data object; sin lazy la lista se construiría con INSTANCE aún nulos.
+        val inicio: Pantalla by lazy { M01 }
+
         /** Las 19 pantallas con un id de ejemplo para las parametrizadas (para tablas, pruebas y el marcador). */
-        val todas: List<Pantalla> = listOf(
-            M01, M00a, M00b, M02v, M02, M02h, M02b, M03b, M03, M04(ID), M05(ID), M06(ID), M07, M08(ID), M09(ID), M10(ID), M11, M12, M13,
-        )
+        val todas: List<Pantalla> by lazy {
+            listOf(
+                M01, M00a, M00b, M02v, M02, M02h, M02b, M03b, M03, M04(ID), M05(ID), M06(ID), M07, M08(ID), M09(ID), M10(ID), M11, M12, M13,
+            )
+        }
 
         /** Resuelve una ruta concreta («alarma/a-tutor/creada») a su clave; null si no existe. */
         fun porRuta(ruta: String): Pantalla? {

@@ -45,22 +45,6 @@ private val pestanas = listOf(
     Triple(Pantalla.M11, "Ajustes", Icons.Outlined.Settings),
 )
 
-/** Id de ejemplo para las claves parametrizadas al registrar marcadores (no se usa para resolver datos reales). */
-private const val ID_MARCADOR = "{id}"
-
-/**
- * Copia de [Pantalla.todas] para registrar los marcadores. No se reutiliza `Pantalla.todas` directamente: bajo
- * Robolectric, recorrer esa lista (obtenida vía el getter del companion) dentro del `entryProvider` produce un
- * `NullPointerException` espurio en cada rama del `when` de [registrarMarcador] — el mismo recorrido con una lista
- * construida en este módulo no falla. Mismo contenido, sin pasar por el getter del companion en ese punto.
- */
-private val plantillasMarcador: List<Pantalla> = listOf(
-    Pantalla.M01, Pantalla.M00a, Pantalla.M00b, Pantalla.M02v, Pantalla.M02, Pantalla.M02h,
-    Pantalla.M02b, Pantalla.M03b, Pantalla.M03, Pantalla.M04(ID_MARCADOR), Pantalla.M05(ID_MARCADOR),
-    Pantalla.M06(ID_MARCADOR), Pantalla.M07, Pantalla.M08(ID_MARCADOR), Pantalla.M09(ID_MARCADOR),
-    Pantalla.M10(ID_MARCADOR), Pantalla.M11, Pantalla.M12, Pantalla.M13,
-)
-
 /**
  * Raíz de navegación (Navigation 3). Las pantallas reales se registran con [entradas]; lo que no esté registrado se
  * muestra como [PantallaMarcador]. Barra inferior y FAB los decide la clave visible (`conNavegacionInferior`, `conFab`).
@@ -105,7 +89,7 @@ fun NavegacionApp(
             sceneStrategies = listOf(estrategiaHoja),
             entryProvider = entryProvider {
                 entradas()
-                plantillasMarcador.forEach { plantilla -> registrarMarcador(plantilla, alVolver) }
+                Pantalla.todas.forEach { plantilla -> registrarMarcador(plantilla, alVolver) }
             },
         )
     }
