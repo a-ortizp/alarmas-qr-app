@@ -66,11 +66,11 @@ object Fuentes {
 
 /** Escala tipográfica del Design System (L02 + complementos). Los colores se aplican en el uso, no aquí. */
 object Tipografia {
-    val HoraProtagonista = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 96.sp, lineHeight = 96.sp)   // M10
-    val HoraProtagonistaSufijo = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 28.sp)
-    val HoraSonara = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 52.sp, lineHeight = 52.sp)         // M04 / M09
-    val HoraTarjeta = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 26.sp, lineHeight = 26.sp)        // tarjeta de alarma
-    val HoraAmPm = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp)
+    val HoraProtagonista = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 96.sp, lineHeight = 96.sp, fontFeatureSettings = "tnum")   // M10
+    val HoraProtagonistaSufijo = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 28.sp, fontFeatureSettings = "tnum")
+    val HoraSonara = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 52.sp, lineHeight = 52.sp, fontFeatureSettings = "tnum")         // M04 / M09
+    val HoraTarjeta = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 26.sp, lineHeight = 26.sp, fontFeatureSettings = "tnum")        // tarjeta de alarma
+    val HoraAmPm = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")
     val H1 = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 28.sp, lineHeight = 32.sp)             // nombre de pantalla
     val BarraSuperior = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 22.sp)
     val H2 = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.SemiBold, fontSize = 22.sp, lineHeight = 26.sp)        // nombre de evento
@@ -141,6 +141,9 @@ object Medidas {
     val QRPantallazo = 120.dp
     val MarcoLectura = 136.dp
     val IndicadorPagina = DpSize(22.dp, 6.dp)
+    val Perilla = 20.dp
+    val HoraTarjetaAncho = 81.dp      // columna fija de la hora para que las tarjetas alineen el texto
+    val AccionSnackbar = DpSize(110.dp, 26.dp)
 }
 
 object Radios {
@@ -187,6 +190,13 @@ object Espacio {
     val PaddingChipControl = 14.dp  // relleno lateral del chip que se toca (DS set 49)
     val PaddingFilaVertical = 8.dp  // relleno vertical de FilaOpcionCalendario (DS set 48)
     val GapDivisor = 8.dp           // entre la línea y el texto de Divisor
+    val GapHoraSufijo = 6.dp        // entre la hora y el sufijo am/pm de la tarjeta
+    val GapTextoTarjeta = 3.dp      // entre título, línea del evento y chips de la tarjeta
+    val GapChips = 6.dp             // entre chips de la tarjeta
+    val GapNavegacion = 3.dp        // entre la píldora y el rótulo de la navegación inferior
+    val PaddingFabInicio = 20.dp    // relleno inicial del FAB «Escanear»
+    val PaddingFabFin = 24.dp       // relleno final del FAB «Escanear»
+    val PaddingTarjetaVertical = 10.dp // relleno vertical de la tarjeta de alarma
 }
 
 object Movimiento {

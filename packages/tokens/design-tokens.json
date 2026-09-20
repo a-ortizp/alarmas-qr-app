@@ -141,24 +141,28 @@
         "family": "datos",
         "weight": 700,
         "size": 96,
-        "$description": "M10 alarma sonando; sufijo pm 28"
+        "tabular": true,
+        "$description": "M10 alarma sonando; sufijo pm 28, dígitos tabulares"
       },
       "hora-sonara": {
         "family": "datos",
         "weight": 700,
         "size": 52,
-        "$description": "Bloques «Sonará» M04 / M09; etiqueta 12 encima"
+        "tabular": true,
+        "$description": "Bloques «Sonará» M04 / M09; etiqueta 12 encima, dígitos tabulares"
       },
       "hora-tarjeta": {
         "family": "datos",
         "weight": 700,
         "size": 26,
-        "$description": "Tarjeta de alarma (26–28) + am/pm Medium 12–14 en línea"
+        "tabular": true,
+        "$description": "Tarjeta de alarma (26–28) + am/pm Medium 12–14 en línea, dígitos tabulares"
       },
       "hora-ampm": {
         "family": "datos",
         "weight": 500,
-        "size": 12
+        "size": 12,
+        "tabular": true
       },
       "indicador-web": {
         "family": "datos",
@@ -362,7 +366,8 @@
       "fila-hoja": 100, "caja-icono": 40, "sello": 30, "sello-grande": 64, "diana": 104, "visor-apagado": 110,
       "visor-bienvenida": 170, "marco-enfoque": 220, "vista-previa": 300, "numeral": 22, "logotipo": 56, "enlace": 32,
       "boton-atras": 44, "asa": [36, 4], "pildora-nav": [40, 22], "icono-nav": 20, "qr-bienvenida": 84, "qr-visor": 100,
-      "qr-pantallazo": 120, "marco-lectura": 136, "indicador-pagina": [22, 6],
+      "qr-pantallazo": 120, "marco-lectura": 136, "indicador-pagina": [22, 6], "perilla": 20, "hora-tarjeta-ancho": 81,
+      "accion-snackbar": [110, 26],
       "$description": "Medidas de los mockups móviles v1.7 medidas en Figma el 2026-09-20 (Plan 2)"
     }
   },
@@ -407,7 +412,13 @@
       "gap-campo": 2,
       "padding-chip-control": 14,
       "padding-fila-vertical": 8,
-      "gap-divisor": 8
+      "gap-divisor": 8,
+      "gap-hora-sufijo": 6,
+      "gap-texto-tarjeta": 3,
+      "gap-chips": 6,
+      "gap-navegacion": 3,
+      "padding-fab": [20, 24],
+      "padding-tarjeta-vertical": 10
     },
     "web": {
       "contenido-vertical": 28,

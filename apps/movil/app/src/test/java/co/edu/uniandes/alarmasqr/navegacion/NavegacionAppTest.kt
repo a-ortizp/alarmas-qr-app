@@ -3,10 +3,12 @@ package co.edu.uniandes.alarmasqr.navegacion
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performSemanticsAction
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.test.core.app.ApplicationProvider
@@ -103,5 +105,25 @@ class NavegacionAppTest {
         regla.onNodeWithTag("pantalla-M01").assertDoesNotExist()
         regla.runOnUiThread { pila.irA(Pantalla.M12) }
         regla.onNodeWithTag("pantalla-M12").assertIsDisplayed()
+    }
+
+    @Test
+    fun `el FAB pasa por M12 la primera vez y por M03 despues, mantenerlo abre M02h`() {
+        repositorio.reiniciar()
+        lateinit var pila: NavBackStack<NavKey>
+        regla.setContent {
+            pila = rememberBackStackApp(Pantalla.M02)
+            AlarmasQRTheme { NavegacionApp(pila, repositorio) }
+        }
+        regla.onNodeWithTag("fab-escanear").performClick()
+        regla.onNodeWithTag("pantalla-M12").assertIsDisplayed()
+        regla.runOnUiThread { pila.removeLastOrNull() }
+        regla.onNodeWithTag("fab-escanear").performClick()
+        regla.onNodeWithTag("pantalla-M03").assertIsDisplayed()
+        regla.runOnUiThread { pila.removeLastOrNull() }
+        regla.onNodeWithTag("fab-escanear").performSemanticsAction(SemanticsActions.OnLongClick)
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M02h").assertIsDisplayed()
+        assertEquals(listOf<NavKey>(Pantalla.M02, Pantalla.M02h), pila.toList())
     }
 }
