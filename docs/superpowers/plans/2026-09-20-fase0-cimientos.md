@@ -936,6 +936,9 @@ Nota: `36.dp`/`4.dp` son la única medida de la asa y no existe como token; en e
 
 - [ ] **Step 5: `NavegacionApp.kt`**
 
+Nota (ruling 2026-09-20, ronda 2): `EntryProviderScope.entry<T>` lanza excepción si se registra dos veces la misma clase, así que el bloque de abajo se ejecutó con los marcadores como `fallback` de `entryProvider(fallback = { clave -> entradaMarcador(clave, alVolver) }) { entradas() }` y sin `registrarMarcador`; véase el código commiteado en f6680e2. El contrato público no cambia.
+
+
 ```kotlin
 package co.edu.uniandes.alarmasqr.navegacion
 
