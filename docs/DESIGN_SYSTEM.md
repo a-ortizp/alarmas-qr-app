@@ -1,7 +1,7 @@
 # Alarmas QR · Design System "Energía puntual"
 
 Sistema de diseño de alta fidelidad derivado del prototipo de navegación (24 pantallas: 16 móviles M00a–M13 + 8 web W00–W07), del Style Tile "Energía puntual" y de la sábana de 17 controles de los wireframes.
-Fecha: 2026-09-01 · **v1.10 del 2026-09-19 (solo documento: reglas de la revisión de los tutores sobre los mockups móviles v1.7, ver §5)** · v1.1/v1.2 del 2026-09-08 (correcciones tras la crítica de diseño, ver §6) · **v1.3/v1.4 del 2026-09-14: componentes web tal como quedaron en los mockups de la página `03 · Web` (ver §7), construidos como lámina L09 en Figma** · **v1.6 del 2026-09-17: botones móviles a 52 pt por la revisión de los tutores** · **v1.7 del 2026-09-17: set 47 «Diálogo de confirmación · móvil» en L08** · Insumos: `STYLE_TILE.md`, `Wireframes_Alarmas_QR.html`, prototipos publicados (Figma), `FUNCIONALIDADES.md`.
+Fecha: 2026-09-01 · **v1.11 del 2026-09-19 (archivo Figma: sets 48 «Iconos de calendario · móvil» y 49 «Chip como control · móvil» en L08 v1.8, ver §5)** · v1.10 del 2026-09-19 (solo documento: reglas de la revisión de los tutores sobre los mockups móviles v1.7) · v1.1/v1.2 del 2026-09-08 (correcciones tras la crítica de diseño, ver §6) · **v1.3/v1.4 del 2026-09-14: componentes web tal como quedaron en los mockups de la página `03 · Web` (ver §7), construidos como lámina L09 en Figma** · **v1.6 del 2026-09-17: botones móviles a 52 pt por la revisión de los tutores** · **v1.7 del 2026-09-17: set 47 «Diálogo de confirmación · móvil» en L08** · Insumos: `STYLE_TILE.md`, `Wireframes_Alarmas_QR.html`, prototipos publicados (Figma), `FUNCIONALIDADES.md`.
 Entregables: archivo Figma «Design System Alarmas QR Equipo UX» (láminas 1920×1080 + componentes con variantes), `Design_System_Alarmas_QR.pdf` y la versión web de este documento (artefacto, ver §4).
 
 ---
@@ -90,7 +90,7 @@ Convención de estados base: **normal · presionado/hover · deshabilitado**, m�
 | # | Componente | Estados | Variantes | Total |
 |---|---|---|---|---|
 | 18 | Tarjeta de alarma | activa · pausada · recién guardada · eliminada | — | 4 |
-| 19 | Chip de estado | — | Mía·QR · Escaneada ✓ · Nueva · Propio · Escaneado · activa · pausada · eliminada · **como control** («Linterna · auto», 32 pt, relleno 14, r16; v1.10) | 8 (+1 uso) |
+| 19 | Chip de estado | — | Mía·QR · Escaneada ✓ · Nueva · Propio · Escaneado · activa · pausada · eliminada (no es un botón; el chip que se toca es el set 49, L08) | 8 |
 | 20 | Tarjeta de estadística (web) | — | número · número + detalle | 2 |
 | 21 | Tabla de datos (web) | encabezado · fila normal · fila hover | — | 3 |
 | 22 | Código QR | real · placeholder · con marco de visor | — | 3 |
@@ -108,7 +108,14 @@ Convención de estados base: **normal · presionado/hover · deshabilitado**, m�
 | 29 | Banner / aviso en línea | informativo · error · éxito | — | 3 |
 | 30 | Estado vacío / sin resultados | — | móvil · web | 2 |
 
-**Totales: 29 componentes · 79 estados/variantes** en L03–L07, más los complementos 31–36 (L08) y los componentes web 37–46 (L09, v1.4) y el diálogo de confirmación móvil 47 (L08, v1.7): 46 componentes en el archivo Figma.
+### F · Complementos móviles de la revisión de los tutores (L08 v1.8, 2026-09-19)
+
+| # | Componente | Estados | Variantes | Total |
+|---|---|---|---|---|
+| 48 | Iconos de calendario · móvil (M01) | — | Google (monograma G) · Outlook · Teams (sobre) · Teléfono (smartphone); 24 px, trazo 2 Tinta, remates redondos, sin relleno; instancias a 20 pt al inicio de la fila de opción | 3 |
+| 49 | Chip como control · móvil (M03) | Inactiva · Activa | 32 pt, relleno lateral 14, radio 16, Archivo SemiBold 13; Inactiva contorno 1.5 Tinta, Activa relleno Tinta con texto blanco; sobre Tinta usa contorno Gris Medio (comp. 33) | 2 |
+
+**Totales: 29 componentes · 79 estados/variantes** en L03–L07, más los complementos 31–36 (L08) y los componentes web 37–46 (L09, v1.4) el diálogo de confirmación móvil 47 (L08, v1.7) y los sets 48 y 49 de la revisión de los tutores (L08 v1.8, v1.11): 48 componentes en el archivo Figma.
 
 ---
 
@@ -123,7 +130,7 @@ Convención de estados base: **normal · presionado/hover · deshabilitado**, m�
 | L05 · Navegación | Componentes 12–16 |
 | L06 · Contenido y datos | Componentes 18–25 |
 | L07 · Retroalimentación | Componentes 26–30 |
-| L08 · Complementos v1.7 | Componentes 31–36: acciones de alarma sonando, controles sobre Tinta, primario sobre amarillo, hora en tarjeta 28 + 14, tonos de texto; **47 · Diálogo de confirmación · móvil** (set `45:38`, variantes Eliminar alarma / Cerrar sesión, 2026-09-17) |
+| L08 · Complementos v1.8 | Componentes 31–36: acciones de alarma sonando, controles sobre Tinta (el chip «Linterna · auto» del comp. 33 mide 32 pt desde la v1.11), primario sobre amarillo, hora en tarjeta 28 + 14, tonos de texto; **47 · Diálogo de confirmación · móvil** (set `45:38`, variantes Eliminar alarma / Cerrar sesión, 2026-09-17); **48 · Iconos de calendario · móvil** (set `52:28`, Google / Outlook · Teams / Teléfono, con muestra de la fila de opción de M01) y **49 · Chip como control · móvil** (set `53:26`, Inactiva / Activa), 2026-09-19 |
 | L09 · Web v1.3 (2026-09-14) | Componentes 37–46: píldora de filtro (set Activa/Inactiva), chip web de estado (set Publicado/Activa/Eliminada/Creada por mí), cabecera de modal como control de cierre, gráfica «Escaneos por semana», vista previa del afiche (comp. 23 concretado, con instancia del QR real), snackbar web, botón web de 42 pt (set Primario/Secundario/Destructivo), barra lateral de 208, tarjeta de acceso web y selector segmentado web de 36 pt |
 
 Base estructural: **Material 3** (anatomía y métricas de los componentes: alturas 44/52/56 — **52 para toque en móvil (v1.6, revisión de los tutores; 48 entre la v1.1 y la v1.5), 44 para puntero en web** (v1.5) —, radio 14 px/píldora en tarjetas, modales y campos, área táctil 48 px) re-tematizado con la paleta "Energía puntual". Reglas transversales: amarillo solo en la acción principal; coral solo en urgencia/destrucción; sobre amarillo siempre texto Tinta (12.9:1); estados nunca comunicados solo con color (color + forma/símbolo).
@@ -213,6 +220,7 @@ Los mockups de la aplicación web (página `03 · Web`, 24 marcos de 1280×820 d
 
 ## 5 · Changelog
 
+- **2026-09-19 · v1.11** — Archivo Figma, lámina **L08 · Complementos v1.8**: los tres iconos de la revisión de los tutores pasan al DS como set **48 · Iconos de calendario · móvil** (`52:28`; variantes Proveedor = Google / Outlook · Teams / Teléfono; 24 px, trazo 2 con el estilo Principal/Tinta, remates y uniones redondos; redibujados con las mismas curvas que los componentes `icono · google/outlook/teléfono` de los mockups) con una muestra `uso · fila de opción (M01)` (350×36, icono a 20 pt + rótulo Archivo Bold 14 + casilla); y la regla «chip como control» pasa a ser el set **49 · Chip como control · móvil** (`53:26`; Estado = Inactiva con contorno 1.5 Tinta / Activa con relleno Tinta y texto blanco; 32 pt, relleno lateral 14, radio 16, Archivo SemiBold 13), colocado bajo la columna 32–34. El chip «Linterna · auto» del comp. 33 «Enlace y chip sobre Tinta» pasa de 19 a **32 pt** (relleno 14, radio 16) para coincidir con M03. Título y subtítulo de la lámina actualizados (v1.8, «revisión de tutores del 2026-09-17 y del 2026-09-19»). `Design_System_Alarmas_QR.pdf`: página 8 (L08) reexportada y empalmada (9 páginas). Los mockups no cambian (ya usaban esta anatomía desde la v1.7).
 - **2026-09-19 · v1.10 (solo documento)** — Revisión de los tutores sobre los mockups móviles (`MOCKUPS.md` §8, móvil v1.7). Reglas nuevas: (1) **chip como control** — un chip que se toca («Linterna · auto», M03) mide 32 pt con relleno lateral 14 y radio 16, la altura de los enlaces de texto; el chip de estado (comp. 19) sigue en 19–20; (2) **barras superiores** con título a la izquierda y control a la derecha usan un espaciador FILL, nunca fijo, y respetan el relleno de 16 a ambos lados (M03 y M09 tenían la «×» y el chip pegados o desbordando el borde); (3) **filas de opciones con icono** — las opciones de calendario de M01 llevan un icono de línea de 20 pt antes del rótulo; tres iconos nuevos en los Recursos gráficos de los mockups (`icono · google` monograma G, `icono · outlook` sobre, `icono · teléfono` smartphone; 24 px, trazo 2 Tinta, remates redondos, monocromos en vez de logotipos por el amarillo estricto), **pendientes de llevar a la lámina de iconografía del archivo del DS**; (4) **visor apagado** — la ilustración de estado de M12 pasa de una cámara fotográfica de 108×90 al icono `escanear` del DS a 48 px, porque el uso es desde el teléfono; (5) al cambiar la altura de un componente hay que revisar los contenedores fijos que lo envuelven (M00a recortaba los botones de 52 en un marco de 48). Sin cambios en el archivo Figma del DS ni en el PDF.
 - **2026-09-19 · v1.9 (solo documento)** — §7 sincronizada con los mockups web v1.5 (24 marcos): secciones con tarjeta de formulario (W04 Reportes, W05 Descargar QR), estado vacío de tabla, paginador navegable, campo de búsqueda activo, campo con error, enlace en línea y diálogo de confirmación web «¿Cerrar sesión?»; el velo de modal queda solo para «Eliminar cuenta». Pendiente en el archivo Figma del DS: llevar estos patrones a L09.
 - **2026-09-19 · v1.8 (solo documento)** — Revisión de los tutores sobre los mockups web (`MOCKUPS.md` §7.6). Dos reglas: (1) «Agregar padding» en los botones de W01 → todo botón píldora web de 44 pt lleva **relleno horizontal 24** (antes 18; 22 botones cambiados); (2) «el sidebar debería poder colapsarse, agreguen iconos» → el ítem de barra lateral (comp. 14w) lleva **icono de línea de 20 pt** (alarma, reportes, escanear, ajustes, cerrar sesión; tres iconos nuevos en `00 · Recursos gráficos` del archivo de mockups) y la barra tiene un control «colapsar / expandir menú» con un estado colapsado de 64 pt. Pendiente en el archivo Figma del DS: actualizar el comp. 14w y el botón web de L09 con estas medidas.
