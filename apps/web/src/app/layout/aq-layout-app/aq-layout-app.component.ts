@@ -21,7 +21,7 @@ import { PANTALLAS } from '../../navegacion/pantallas';
     .layout { display: grid; grid-template-columns: var(--size-barra-lateral-web) 1fr; min-height: 100vh; }
     .aq-barra-lateral { display: flex; flex-direction: column; gap: var(--space-web-bloques); padding: var(--space-web-contenido-y) var(--space-web-contenido-x); background: var(--color-gris-niebla); }
     .marca { font-family: var(--font-titulares); font-weight: 700; }
-    a { color: var(--color-texto); text-decoration: none; padding: 0 var(--space-boton-web); height: var(--size-item-barra-lateral); display: flex; align-items: center; border-radius: var(--radius-pildora); }
+    a { color: var(--color-texto); text-decoration: none; padding: var(--space-boton-web); display: flex; align-items: center; border-radius: var(--radius-pildora); }
     a.activa { background: var(--color-tinta); color: var(--color-blanco); }
   `,
 })
