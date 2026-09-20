@@ -5,6 +5,10 @@ import { Injectable, signal } from '@angular/core';
 export class SesionService {
   private readonly _iniciada = signal(false);
   readonly iniciada = this._iniciada.asReadonly();
-  iniciar(): void { this._iniciada.set(true); }
-  cerrar(): void { this._iniciada.set(false); }
+  iniciar(): void {
+    this._iniciada.set(true);
+  }
+  cerrar(): void {
+    this._iniciada.set(false);
+  }
 }

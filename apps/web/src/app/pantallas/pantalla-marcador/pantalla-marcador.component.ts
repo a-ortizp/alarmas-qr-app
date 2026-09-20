@@ -12,9 +12,20 @@ import { PantallaWeb } from '../../navegacion/pantallas';
     </section>
   `,
   styles: `
-    .marcador { display: grid; gap: var(--space-web-bloques); padding: var(--space-web-contenido-y) var(--space-web-contenido-x); }
-    h1 { font: var(--text-h1-web); font-family: var(--font-titulares); margin: 0; }
-    p { margin: 0; color: var(--color-texto-secundario); }
+    .marcador {
+      display: grid;
+      gap: var(--space-web-bloques);
+      padding: var(--space-web-contenido-y) var(--space-web-contenido-x);
+    }
+    h1 {
+      font: var(--text-h1-web);
+      font-family: var(--font-titulares);
+      margin: 0;
+    }
+    p {
+      margin: 0;
+      color: var(--color-texto-secundario);
+    }
   `,
 })
 export class PantallaMarcadorComponent {

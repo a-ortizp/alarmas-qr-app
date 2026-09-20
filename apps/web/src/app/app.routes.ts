@@ -9,16 +9,29 @@ import { W05DescargarQrComponent } from './pantallas/w05-descargar-qr/w05-descar
 import { W06PerfilComponent } from './pantallas/w06-perfil/w06-perfil.component';
 
 const componentes = {
-  W00: W00LoginComponent, W01: W01MisAlarmasComponent, W03: W03DetalleEventoComponent,
-  W04: W04ReportesComponent, W05: W05DescargarQrComponent, W06: W06PerfilComponent,
+  W00: W00LoginComponent,
+  W01: W01MisAlarmasComponent,
+  W03: W03DetalleEventoComponent,
+  W04: W04ReportesComponent,
+  W05: W05DescargarQrComponent,
+  W06: W06PerfilComponent,
 } as const;
 
-const ruta = (p: PantallaWeb) => ({ path: p.ruta, component: componentes[p.codigo], title: `${p.titulo} · Alarmas QR`, data: { codigo: p.codigo } });
+const ruta = (p: PantallaWeb) => ({
+  path: p.ruta,
+  component: componentes[p.codigo],
+  title: `${p.titulo} · Alarmas QR`,
+  data: { codigo: p.codigo },
+});
 
 /** Rutas de docs/TRAZABILIDAD.md §2, generadas desde PANTALLAS. Los estados (?estado=, ?dialogo=) se leen con query params. */
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
-  ...PANTALLAS.filter(p => !p.conBarraLateral).map(ruta),
-  { path: '', component: AqLayoutAppComponent, children: PANTALLAS.filter(p => p.conBarraLateral).map(ruta) },
+  ...PANTALLAS.filter((p) => !p.conBarraLateral).map(ruta),
+  {
+    path: '',
+    component: AqLayoutAppComponent,
+    children: PANTALLAS.filter((p) => p.conBarraLateral).map(ruta),
+  },
   { path: '**', redirectTo: 'login' },
 ];

@@ -7,7 +7,13 @@ import dataset from '../../../public/dataset.json';
 
 describe('DatosService', () => {
   it('carga dataset.json y expone usuario y mensajes como señales', async () => {
-    TestBed.configureTestingModule({ providers: [provideZonelessChangeDetection(), provideHttpClient(), provideHttpClientTesting()] });
+    TestBed.configureTestingModule({
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
+    });
     const servicio = TestBed.inject(DatosService);
     const http = TestBed.inject(HttpTestingController);
     TestBed.tick();

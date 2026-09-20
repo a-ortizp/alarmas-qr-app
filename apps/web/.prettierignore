@@ -1,0 +1,3 @@
+# tokens.css es una copia derivada de packages/tokens/tokens.css (fuente de verdad); el job «datos»
+# de ci.yml exige que ambos archivos sean idénticos byte a byte, así que Prettier no debe reformatearlo.
+src/tokens.css

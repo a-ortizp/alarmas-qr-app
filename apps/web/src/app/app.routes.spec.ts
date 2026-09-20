@@ -6,11 +6,15 @@ import { routes } from './app.routes';
 import { PANTALLAS } from './navegacion/pantallas';
 
 describe('rutas de TRAZABILIDAD §2', () => {
-  beforeEach(() => TestBed.configureTestingModule({ providers: [provideZonelessChangeDetection(), provideRouter(routes)] }));
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection(), provideRouter(routes)],
+    }),
+  );
 
   it('declara las 6 páginas con su código', () => {
-    expect(PANTALLAS.map(p => p.codigo)).toEqual(['W00', 'W01', 'W03', 'W04', 'W05', 'W06']);
-    expect(PANTALLAS.find(p => p.codigo === 'W06')?.ruta).toBe('perfil');
+    expect(PANTALLAS.map((p) => p.codigo)).toEqual(['W00', 'W01', 'W03', 'W04', 'W05', 'W06']);
+    expect(PANTALLAS.find((p) => p.codigo === 'W06')?.ruta).toBe('perfil');
   });
 
   it('/perfil muestra el marcador W06 dentro del layout con barra lateral', async () => {

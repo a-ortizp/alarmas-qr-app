@@ -1,4 +1,3 @@
-# APK en cada tag · copiar a .github/workflows/apk.yml
 # Al crear un tag vX.Y.Z compila el APK de release (firmado con el keystore de depuración,
 # suficiente para la prueba del curso) y lo adjunta a una GitHub Release.
 #
