@@ -93,6 +93,8 @@ object Tipografia {
     val ChipControl = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)          // «Linterna · auto»
     val ValorCampo = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 16.sp)   // valor de CampoTexto (Figma 3:11)
     val Divisor = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.sp)                 // «o continúa con» · «mientras tanto»
+    val EtiquetaDato = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 12.sp, letterSpacing = 0.08.em)   // «FECHA», «LUGAR» (tarjeta del evento, M04)
+    val Dato = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.5.sp)                  // valor de fila de la tarjeta del evento y sello «✓ verificado»
 }
 
 object Tamanos {
@@ -144,6 +146,9 @@ object Medidas {
     val Perilla = 20.dp
     val HoraTarjetaAncho = 81.dp      // columna fija de la hora para que las tarjetas alineen el texto
     val AccionSnackbar = DpSize(110.dp, 26.dp)
+    val ModuloTextura = 8.dp          // banda de textura «módulos QR» (retícula 8×8, paso 14)
+    val PasoTextura = 14.dp
+    val EtiquetaDato = 74.dp          // ancho fijo de la columna de etiqueta en la tarjeta del evento (M04)
 }
 
 object Radios {
@@ -160,6 +165,8 @@ object Radios {
     val Casilla = RoundedCornerShape(4.dp)
     val Snackbar = RoundedCornerShape(12.dp)
     val CajaIcono = RoundedCornerShape(12.dp)         // caja del icono en las filas de M02h y de M01
+    val Modulo = RoundedCornerShape(2.dp)             // módulo de la banda de textura «módulos QR»
+    val QR = RoundedCornerShape(4.dp)                 // fondo del Código QR real (ZXing)
 }
 
 object Trazos {
@@ -197,6 +204,7 @@ object Espacio {
     val PaddingFabInicio = 20.dp    // relleno inicial del FAB «Escanear»
     val PaddingFabFin = 24.dp       // relleno final del FAB «Escanear»
     val PaddingTarjetaVertical = 10.dp // relleno vertical de la tarjeta de alarma
+    val PaddingTarjetaEvento = 16.dp   // relleno horizontal de la tarjeta del evento (M04); el vertical usa PaddingTarjeta
 }
 
 object Movimiento {
@@ -204,6 +212,7 @@ object Movimiento {
     const val ToqueLargoMs = 500L         // mantener presionado el FAB abre la hoja «Agregar evento»
     const val DeshacerMs = 5_000L         // ventana del snackbar «Deshacer»
     const val TexturaOpacidadMax = 0.08f  // retícula de módulos QR, solo banda superior en M01, M04, M09, M10, M12, M13
+    const val TexturaOpacidadMin = 0.02f  // opacidad de la última fila de la retícula
 }
 
 /** Sombra 0 4 12 Tinta 18 % (FAB, hoja, tarjeta del evento, burbuja de M03b) expresada como elevación de Compose. */
