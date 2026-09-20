@@ -12,9 +12,9 @@ Todo el contenido visible es en español; los identificadores de código pueden 
 
 ## Stack
 
-- **Móvil** (`apps/movil`): Kotlin 2.x + Jetpack Compose con Material 3 (Compose BOM), Navigation Compose, `ViewModel` + `StateFlow`, CameraX + ML Kit para el QR, `AlarmManager` (alarmas exactas) + notificación de pantalla completa para la alarma, intent filter para el pantallazo compartido. JDK 17, Gradle wrapper versionado. Comandos desde `apps/movil`: `./gradlew assembleDebug`, `installDebug`, `testDebugUnitTest lintDebug`, `assembleRelease`. Abrir en Android Studio la carpeta `apps/movil`, nunca la raíz.
-- **Web** (`apps/web`): Angular 18+ con componentes independientes y señales, TypeScript estricto, Angular CDK (overlay, tabla, a11y) sin Angular Material ni su tema; estilos con variables CSS de `tokens.css`. Comandos desde `apps/web`: `npm ci`, `npx ng serve`, `npx ng test --watch=false`, `npx ng build --configuration production`.
-- **Pruebas**: JUnit + pruebas de Compose (`createComposeRule`) en móvil; Karma/Jasmine o Jest con `TestBed` en web; un flujo T1–T8 por app como prueba de navegación.
+- **Móvil** (`apps/movil`): Kotlin 2.x + Jetpack Compose con Material 3 (Compose BOM), Navigation 3 (`NavDisplay`, claves `Pantalla : NavKey`, hoja inferior como `SceneStrategy`), `ViewModel` + `StateFlow`, CameraX + ML Kit para el QR, `AlarmManager` (alarmas exactas) + notificación de pantalla completa para la alarma, intent filter para el pantallazo compartido. JDK 17, Gradle wrapper versionado. Comandos desde `apps/movil`: `./gradlew assembleDebug`, `installDebug`, `testDebugUnitTest lintDebug`, `assembleRelease`. Abrir en Android Studio la carpeta `apps/movil`, nunca la raíz.
+- **Web** (`apps/web`): Angular 22 con componentes independientes y señales, TypeScript estricto, Angular CDK (overlay, tabla, a11y) sin Angular Material ni su tema; estilos con variables CSS de `tokens.css`; pruebas con Vitest + `TestBed`. Comandos desde `apps/web`: `npm ci`, `npx ng serve`, `npx ng test --watch=false`, `npx ng build --configuration production`.
+- **Pruebas**: JUnit + pruebas de Compose (`createComposeRule`) en móvil; Vitest con `TestBed` en web; un flujo T1–T8 por app como prueba de navegación.
 - **CI**: `.github/workflows/ci.yml` (lint + tests + build de lo que cambió, en cada PR) y `apk.yml` (APK de release firmado con el keystore de depuración, adjunto a la Release en cada tag `vX.Y.Z`).
 - **Tokens**: nunca escribir colores, tamaños ni radios a mano; en Compose usar `Colores`, `Tipografia`, `Tamanos`, `Radios` de `Tokens.kt`; en Angular las variables `--color-*`, `--text-*`, `--size-*`, `--radius-*` de `tokens.css`.
 
@@ -38,6 +38,7 @@ Fuente de verdad: `packages/tokens/design-tokens.json` v1.9 (derivado de `docs/D
 - Los eventos externos (permiso de cámara, push del organizador, hora de la alarma) se simulan con los controles indicados con ⏩ en `docs/NAVEGACION.md` §6; no inventar pantallas ni puntos de entrada nuevos.
 - En la web (v1.5) Reportes (`/reportes`) y Descargar QR (`/qr`) son páginas con miga «‹ Mis alarmas», título y una tarjeta de formulario de 600 px con una tarjeta lateral; el único modal es «Eliminar cuenta» (ruta propia sobre `/perfil`, velo Tinta al 45 %) y «Cerrar Sesión» abre el diálogo de confirmación web (velo 55 %, 420 px, «Cancelar» primario / «Cerrar sesión» contorno). La barra lateral lleva un icono por ítem y se colapsa a 64 px. En móvil, las hojas (M02h, M04) y los diálogos de confirmación (M04d, M06d, M11d) no son rutas: son estado del componente padre sobre velo Tinta al 55 %.
 - La fila de cabecera de un modal (miga + ✕) es un solo control que cierra.
+- En móvil las hojas M02h y M04 son claves del back stack dibujadas por `HojaInferiorSceneStrategy`; los diálogos siguen siendo estado.
 
 ## Datos
 

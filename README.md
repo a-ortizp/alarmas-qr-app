@@ -13,7 +13,7 @@ Investigación, prototipos y diseño viven en el repositorio de UX: https://gith
 
 ## Cómo correr
 
-Requisitos: JDK 17, Android Studio (Koala o posterior) con SDK 34 y un emulador o dispositivo con Android 8+; Node 20 y npm 10.
+Requisitos: JDK 17, Android Studio (Koala o posterior) con Android SDK 36 y un emulador o dispositivo con Android 8+ (minSdk 26); Node 22.23.2 (`nvm use`, ver `apps/web/.nvmrc`) y npm 10.
 
 ```
 # apps/movil · abrir la carpeta apps/movil en Android Studio (no la raíz del repo)
@@ -22,13 +22,33 @@ cd apps/movil
 ./gradlew installDebug             # lo instala en el emulador o dispositivo conectado
 ./gradlew testDebugUnitTest lintDebug
 
-# apps/web
+# apps/web · antes de cualquier npm/npx: source ~/.nvm/nvm.sh && nvm use 22.23.2 (o `nvm use` con el .nvmrc)
 cd apps/web
 npm ci
 npx ng serve                       # http://localhost:4200
-npx ng test --watch=false
+npx ng test --watch=false          # Vitest vía @angular/build:unit-test
 npx ng build --configuration production
 ```
+
+## Frameworks y versiones
+
+| Ámbito | Herramienta | Versión | Dónde se fija |
+|---|---|---|---|
+| Móvil | JDK | 17 | `apps/movil/app/build.gradle.kts` |
+| Móvil | Gradle | 8.14.3 | `apps/movil/gradle/wrapper/gradle-wrapper.properties` |
+| Móvil | Android Gradle Plugin | 8.13.2 | `apps/movil/gradle/libs.versions.toml` |
+| Móvil | Kotlin (+ Compose y serialization) | 2.2.21 | ídem |
+| Móvil | Jetpack Compose BOM | 2026.06.00 | ídem |
+| Móvil | Navigation 3 | 1.1.7 | ídem |
+| Móvil | Lifecycle / ViewModel | 2.10.0 | ídem |
+| Móvil | kotlinx-serialization-json | 1.11.0 | ídem |
+| Móvil | CameraX · ML Kit Barcode · ZXing | 1.6.2 · 17.3.0 · 3.5.4 | ídem |
+| Móvil | compileSdk / targetSdk / minSdk | 36 / 36 / 26 | `app/build.gradle.kts` |
+| Móvil | Robolectric (pruebas JVM de Compose) | 4.16 | `libs.versions.toml` |
+| Web | Node / npm | 22.23.2 / 10.9.8 | `apps/web/.nvmrc`, `package.json` (`packageManager`), CI |
+| Web | Angular core / CDK · Angular CLI | 22.1.7 · 22.1.7 / 22.1.8 | `apps/web/package-lock.json` (declarado `^22.1.0` / `^22.1.8` en `package.json`) |
+| Web | TypeScript | 6.0.3 | `apps/web/package-lock.json` (declarado `~6.0.2`) |
+| Web | Vitest (vía `@angular/build:unit-test`) | 4.1.11 | `apps/web/package-lock.json` (declarado `^4.0.8`) |
 
 ## Instalar el APK
 
@@ -40,7 +60,7 @@ npx ng build --configuration production
 ## Estructura
 
 ```
-apps/movil/          proyecto Android Studio · Kotlin + Jetpack Compose (Material 3) · Navigation Compose
+apps/movil/          proyecto Android Studio · Kotlin + Jetpack Compose (Material 3) · Navigation 3
 apps/web/            proyecto Angular CLI · componentes independientes · señales · CDK para modales y tabla
 packages/tokens/     design-tokens.json · Tokens.kt (Compose) · tokens.css (Angular) · fuentes OFL
 docs/                documentación UX copiada del repo de UX (ver abajo)
@@ -60,6 +80,12 @@ docs/                documentación UX copiada del repo de UX (ver abajo)
 Cada pantalla conserva su código de los mockups. La tabla pantalla → funcionalidad → ruta → componente está en `docs/TRAZABILIDAD.md`; las funcionalidades en `docs/FUNCIONALIDADES.md` (F-Mxx / F-Wxx) y los recorridos en `docs/NAVEGACION.md` §6 y §6b.
 
 Convenciones de git: una rama por pantalla o flujo (`feature/M06-editar-alarma`), PR pequeño revisado por el otro integrante, mensaje de commit con el código de pantalla al inicio («M06: selector de anticipación»).
+
+## Cómo continuar (Persona B)
+
+- Móvil: cada pantalla es una clave en `navegacion/Pantalla.kt`. Para construir M06: crear `ui/pantallas/m06/M06EditarAlarmaScreen.kt` (+ `ViewModel`) y registrarla en `MainActivity` con `NavegacionApp(pila, repositorio) { entry<Pantalla.M06> { M06EditarAlarmaScreen(it.id, …) } }`; el marcador desaparece solo — `NavegacionApp` arma su `NavDisplay` con `entryProvider(fallback = { clave -> entradaMarcador(clave, alVolver) }) { entradas() }`, así que el `fallback` solo dibuja las claves que `entradas` no registró; las pantallas reales tienen prioridad por construcción, no por orden. Cada clase de pantalla debe registrarse una sola vez dentro de `entradas`: Navigation 3 lanza una excepción si una clave se registra dos veces. Datos: `RepositorioDataset` (`alarmas`, `alarma(id)`, `agregar`, `eliminar`, `deshacer`). Pruebas: `createComposeRule` + Robolectric, navegar con `pila.irA(Pantalla.M06("a-tutor"))` y afirmar `testTag("pantalla-M06")`. Nota: `Pantalla.todas` y `Pantalla.inicio` son `by lazy` en el companion porque la interfaz `Pantalla` tiene getters con valor por defecto (ciclo de inicialización de la JVM); no "simplificarlos" quitando el `lazy`.
+- Web: cada página está en `src/app/pantallas/<código>/`; sustituir el `<aq-pantalla-marcador>` por la página real. Rutas y barra lateral salen de `navegacion/pantallas.ts`; datos de `DatosService` (señales `usuario`, `web`, `alarmas`, `mensajes`). Componentes compartidos en `src/app/componentes/` (los de tablero: indicador, tabla, gráfica, píldora, afiche, paginador, quedan por construir en L09).
+- Convenciones: rama por pantalla, commit «M06: …», PR revisado por el otro integrante; tokens siempre, nunca valores a mano.
 
 ## Datos simulados
 
