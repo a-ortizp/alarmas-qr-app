@@ -29,6 +29,7 @@ object Colores {
     val AmarilloEnergia = Color(0xFFFFC400)   // acción primaria y marca
     val AmarilloSuave   = Color(0xFFFFF1BF)   // tinte · bloques «Sonará»
     val Tinta           = Color(0xFF17161C)   // texto · marca · estados activos · fondos plenos (M03, M10)
+    val Tinta25         = Color(0xFF17161C).copy(alpha = 0.25f)   // puntos inactivos del indicador de página (M01)
     val Blanco          = Color(0xFFFFFFFF)   // Blanco Papel · fondo
     val CoralAlarma     = Color(0xFFE8443A)   // urgencia · alarma sonando · rellenos e íconos
     val CoralTexto      = Color(0xFFC4362E)   // destructivo como texto · 5.4:1
@@ -72,10 +73,12 @@ object Tipografia {
     val HoraTarjeta = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 26.sp, lineHeight = 26.sp, fontFeatureSettings = "tnum")        // tarjeta de alarma
     val HoraAmPm = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")
     val H1 = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 28.sp, lineHeight = 32.sp)             // nombre de pantalla
+    val Titular = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 32.sp)                           // «Escanea y listo» (M01, marco 3:71)
     val BarraSuperior = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 22.sp)
     val H2 = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.SemiBold, fontSize = 22.sp, lineHeight = 26.sp)        // nombre de evento
     val Destacado = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 16.sp)
     val Cuerpo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 16.sp, lineHeight = 24.sp)
+    val Parrafo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 21.sp)            // párrafo bajo el titular (M01)
     val TituloDialogo = H2                                                                                               // «¿Eliminar alarma?»
     val CuerpoDialogo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 14.sp, lineHeight = 20.sp)     // consecuencia concreta
     val Boton = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp)
@@ -149,6 +152,7 @@ object Medidas {
     val ModuloTextura = 8.dp          // banda de textura «módulos QR» (retícula 8×8, paso 14)
     val PasoTextura = 14.dp
     val EtiquetaDato = 74.dp          // ancho fijo de la columna de etiqueta en la tarjeta del evento (M04)
+    val PuntoPagina = 6.dp            // punto inactivo y gap del indicador de página (M01)
 }
 
 object Radios {
@@ -205,6 +209,9 @@ object Espacio {
     val PaddingFabFin = 24.dp       // relleno final del FAB «Escanear»
     val PaddingTarjetaVertical = 10.dp // relleno vertical de la tarjeta de alarma
     val PaddingTarjetaEvento = 16.dp   // relleno horizontal de la tarjeta del evento (M04); el vertical usa PaddingTarjeta
+    val AntesBoton = 28.dp              // espaciador antes de «Comenzar» (M01)
+    val PaddingPantallaSuperior = 24.dp // relleno superior de la columna de M01
+    val PaddingPantallaInferior = 16.dp // relleno inferior de la columna de M01
 }
 
 object Movimiento {

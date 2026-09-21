@@ -34,6 +34,11 @@
       "$type": "color",
       "$description": "Texto, marca, estados activos, fondos plenos (M03, M10)"
     },
+    "tinta-25": {
+      "$value": "rgba(23, 22, 28, 0.25)",
+      "$type": "color",
+      "$description": "Tinta al 25 % · puntos inactivos del indicador de página (M01)"
+    },
     "blanco": {
       "$value": "#FFFFFF",
       "$type": "color",
@@ -176,6 +181,12 @@
         "size": 28,
         "$description": "Nombre de pantalla (móvil)"
       },
+      "titular": {
+        "family": "titulares",
+        "weight": 700,
+        "size": 32,
+        "$description": "«Escanea y listo» de M01 (marco 3:71)"
+      },
       "h1-web": {
         "family": "titulares",
         "weight": 700,
@@ -225,6 +236,13 @@
         "family": "ui",
         "weight": 400,
         "size": 16
+      },
+      "parrafo": {
+        "family": "ui",
+        "weight": 400,
+        "size": 15,
+        "lineHeight": 21,
+        "$description": "Párrafo de M01 bajo el titular (marco 3:71)"
       },
       "boton-movil": {
         "family": "ui",
@@ -369,7 +387,7 @@
       "visor-bienvenida": 170, "marco-enfoque": 220, "vista-previa": 300, "numeral": 22, "logotipo": 56, "enlace": 32,
       "boton-atras": 44, "asa": [36, 4], "pildora-nav": [40, 22], "icono-nav": 20, "qr-bienvenida": 84, "qr-visor": 100,
       "qr-pantallazo": 120, "marco-lectura": 136, "indicador-pagina": [22, 6], "perilla": 20, "hora-tarjeta-ancho": 81,
-      "accion-snackbar": [110, 26], "modulo-textura": 8, "paso-textura": 14, "etiqueta-dato": 74,
+      "accion-snackbar": [110, 26], "modulo-textura": 8, "paso-textura": 14, "etiqueta-dato": 74, "punto-pagina": 6,
       "$description": "Medidas de los mockups móviles v1.7 medidas en Figma el 2026-09-20 (Plan 2)"
     }
   },
@@ -423,7 +441,9 @@
       "gap-navegacion": 3,
       "padding-fab": [20, 24],
       "padding-tarjeta-vertical": 10,
-      "padding-tarjeta-evento": 16
+      "padding-tarjeta-evento": 16,
+      "antes-boton": 28,
+      "padding-pantalla": [24, 16]
     },
     "web": {
       "contenido-vertical": 28,
