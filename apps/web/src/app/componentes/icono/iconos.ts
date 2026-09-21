@@ -6,6 +6,7 @@ export type NombreIcono =
   | 'ajustes'
   | 'cerrar-sesion'
   | 'colapsar'
+  | 'menu'
   | 'advertencia'
   | 'qr'
   | 'calendario'
@@ -76,6 +77,12 @@ export const ICONOS: Record<NombreIcono, DefinicionIcono> = {
     caja: 24,
     trazo: 2,
     formas: [{ d: 'M11 7L6 12L11 17' }, { d: 'M18 7L13 12L18 17' }],
+  },
+  /** ☰ de la barra superior bajo el corte web-cajon (tokens v1.13); sin mockup, mismo trazo que «colapsar». */
+  menu: {
+    caja: 24,
+    trazo: 2,
+    formas: [{ d: 'M4 6H20' }, { d: 'M4 12H20' }, { d: 'M4 18H20' }],
   },
   advertencia: {
     caja: 24,

@@ -46,6 +46,8 @@ let siguienteId = 0;
       z-index: 20;
       display: grid;
       place-items: center;
+      /* Columna que puede encogerse: el max-width de la caja manda bajo su ancho de puntero (tokens v1.13). */
+      grid-template-columns: minmax(0, 1fr);
     }
     .velo {
       position: absolute;

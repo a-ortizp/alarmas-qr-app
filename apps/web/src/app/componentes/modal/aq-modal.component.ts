@@ -33,6 +33,8 @@ let siguienteId = 0;
       z-index: 20;
       display: grid;
       place-items: center;
+      /* Columna que puede encogerse: el max-width de la caja manda bajo su ancho de puntero (tokens v1.13). */
+      grid-template-columns: minmax(0, 1fr);
     }
     .velo {
       position: absolute;
@@ -47,6 +49,8 @@ let siguienteId = 0;
       box-sizing: border-box;
       width: var(--size-modal-web);
       max-width: calc(100% - 2 * var(--space-web-modal));
+      max-height: calc(100% - 2 * var(--space-web-modal));
+      overflow-y: auto;
       /* Borde hacia dentro, como en Figma: el relleno 22 cuenta desde el borde exterior. */
       padding: calc(var(--space-web-modal) - var(--stroke-borde));
       background: var(--color-blanco);

@@ -42,6 +42,8 @@ import { DatosService } from '../../datos/datos.service';
     .pagina {
       display: grid;
       place-items: center;
+      /* Columna que puede encogerse: la tarjeta de 520 baja hasta el ancho de la ventana (tokens v1.13). */
+      grid-template-columns: minmax(0, 1fr);
       box-sizing: border-box;
       min-height: 100vh;
       padding: var(--space-web-contenido-y) var(--space-web-contenido-x);

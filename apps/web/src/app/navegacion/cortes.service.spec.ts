@@ -10,6 +10,8 @@ function simularVentana(anchoInicial: number) {
       ({
         '--breakpoint-web-colapsar-barra': ' 1200px',
         '--breakpoint-web-apilar-columnas': '1100px',
+        '--breakpoint-web-cajon': '900px',
+        '--breakpoint-web-telefono': '600px',
       })[token] ?? '',
   } as CSSStyleDeclaration);
   let ancho = anchoInicial;
@@ -30,7 +32,7 @@ function simularVentana(anchoInicial: number) {
   };
 }
 
-describe('CortesService (tokens breakpoint v1.12)', () => {
+describe('CortesService (tokens breakpoint v1.12–v1.13)', () => {
   const matchMediaOriginal = window.matchMedia;
   afterEach(() => {
     vi.restoreAllMocks();
@@ -58,6 +60,20 @@ describe('CortesService (tokens breakpoint v1.12)', () => {
     cambiarAncho(1300);
     expect(cortes.colapsarBarra()).toBe(false);
     expect(cortes.apilarColumnas()).toBe(false);
+  });
+
+  it('bajo 900 abre el modo cajón y bajo 600 el de teléfono (v1.13)', () => {
+    const cambiarAncho = simularVentana(1280);
+    TestBed.configureTestingModule({ providers: proveedoresPrueba() });
+    const cortes = TestBed.inject(CortesService);
+    expect(cortes.cajon()).toBe(false);
+    expect(cortes.telefono()).toBe(false);
+    cambiarAncho(800);
+    expect(cortes.cajon()).toBe(true);
+    expect(cortes.telefono()).toBe(false);
+    cambiarAncho(360);
+    expect(cortes.cajon()).toBe(true);
+    expect(cortes.telefono()).toBe(true);
   });
 
   it('sin matchMedia (pruebas, SSR) se comporta como el marco de referencia', () => {

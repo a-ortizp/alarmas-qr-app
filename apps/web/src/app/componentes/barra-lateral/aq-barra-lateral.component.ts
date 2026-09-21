@@ -1,24 +1,39 @@
-import { Component, model, output } from '@angular/core';
+import { Component, booleanAttribute, computed, input, model, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AqIconoComponent } from '../icono/aq-icono.component';
 import { ITEM_CERRAR_SESION, ITEMS_BARRA_LATERAL } from '../../navegacion/barra-lateral';
 
-/** Barra lateral web (DS comp. 14w, web v1.4): ítems con icono, píldora activa Tinta, colapsable a 64. */
+/**
+ * Barra lateral web (DS comp. 14w, web v1.4): ítems con icono, píldora activa Tinta, colapsable a 64.
+ * Con `cajon` (tokens v1.13, bajo 900) va siempre expandida y el control pasa a «Cerrar menú».
+ */
 @Component({
   selector: 'aq-barra-lateral',
   imports: [RouterLink, RouterLinkActive, AqIconoComponent],
   template: `
-    <nav class="barra" [class.colapsada]="colapsada()" aria-label="Menú principal">
-      <button
-        type="button"
-        class="control"
-        data-control-menu
-        [attr.aria-label]="colapsada() ? 'Expandir menú' : 'Colapsar menú'"
-        [attr.aria-expanded]="!colapsada()"
-        (click)="colapsada.set(!colapsada())"
-      >
-        <aq-icono nombre="colapsar" [class.girado]="colapsada()" />
-      </button>
+    <nav class="barra" [class.colapsada]="plegada()" aria-label="Menú principal">
+      @if (cajon()) {
+        <button
+          type="button"
+          class="control"
+          data-control-menu
+          aria-label="Cerrar menú"
+          (click)="cerrarCajon.emit()"
+        >
+          <aq-icono nombre="colapsar" />
+        </button>
+      } @else {
+        <button
+          type="button"
+          class="control"
+          data-control-menu
+          [attr.aria-label]="colapsada() ? 'Expandir menú' : 'Colapsar menú'"
+          [attr.aria-expanded]="!colapsada()"
+          (click)="colapsada.set(!colapsada())"
+        >
+          <aq-icono nombre="colapsar" [class.girado]="colapsada()" />
+        </button>
+      }
       @for (item of items; track item.id) {
         <a
           class="item"
@@ -26,8 +41,8 @@ import { ITEM_CERRAR_SESION, ITEMS_BARRA_LATERAL } from '../../navegacion/barra-
           routerLinkActive="activo"
           #activo="routerLinkActive"
           [attr.aria-current]="activo.isActive ? 'page' : null"
-          [attr.aria-label]="colapsada() ? item.texto : null"
-          [attr.title]="colapsada() ? item.texto : null"
+          [attr.aria-label]="plegada() ? item.texto : null"
+          [attr.title]="plegada() ? item.texto : null"
           [attr.data-item]="item.id"
         >
           <aq-icono [nombre]="item.icono" />
@@ -39,8 +54,8 @@ import { ITEM_CERRAR_SESION, ITEMS_BARRA_LATERAL } from '../../navegacion/barra-
         type="button"
         class="item"
         [attr.data-item]="salida.id"
-        [attr.aria-label]="colapsada() ? salida.texto : null"
-        [attr.title]="colapsada() ? salida.texto : null"
+        [attr.aria-label]="plegada() ? salida.texto : null"
+        [attr.title]="plegada() ? salida.texto : null"
         (click)="cerrarSesion.emit()"
       >
         <aq-icono [nombre]="salida.icono" />
@@ -126,7 +141,11 @@ import { ITEM_CERRAR_SESION, ITEMS_BARRA_LATERAL } from '../../navegacion/barra-
 })
 export class AqBarraLateralComponent {
   readonly colapsada = model(false);
+  readonly cajon = input(false, { transform: booleanAttribute });
   readonly cerrarSesion = output<void>();
+  readonly cerrarCajon = output<void>();
+  /** El cajón nunca se pliega a 64: ocupa 208 sobre el velo. */
+  protected readonly plegada = computed(() => this.colapsada() && !this.cajon());
   protected readonly items = ITEMS_BARRA_LATERAL;
   protected readonly salida = ITEM_CERRAR_SESION;
 }

@@ -7,6 +7,7 @@ import { AqBotonComponent } from '../../componentes/boton/aq-boton.component';
 import { AqIconoComponent } from '../../componentes/icono/aq-icono.component';
 import { DatosService } from '../../datos/datos.service';
 import { SesionService } from '../../datos/sesion.service';
+import { CortesService } from '../../navegacion/cortes.service';
 
 /** W06 · Modal eliminar cuenta (F-W08, /perfil/eliminar): fricción de escribir ELIMINAR; la acción segura es la prominente. */
 @Component({
@@ -58,7 +59,7 @@ import { SesionService } from '../../datos/sesion.service';
             [formField]="formulario.confirmacion"
           />
         </div>
-        <div class="acciones">
+        <div class="acciones" [attr.data-apiladas]="telefono() ? '' : null">
           <button aq-boton type="button" (click)="conservar()">Conservar mi cuenta</button>
           <button
             aq-boton
@@ -108,12 +109,20 @@ import { SesionService } from '../../datos/sesion.service';
     .acciones button {
       flex: 1;
     }
+    /* Bajo el corte web-telefono (tokens v1.13) los dos botones no caben lado a lado: se apilan, la segura arriba. */
+    .acciones[data-apiladas] {
+      flex-direction: column;
+    }
+    .acciones[data-apiladas] button {
+      flex: none;
+    }
   `,
 })
 export class W06ModalEliminarCuentaComponent {
   private readonly router = inject(Router);
   private readonly sesion = inject(SesionService);
   protected readonly cuenta = inject(DatosService).eliminarCuenta;
+  protected readonly telefono = inject(CortesService).telefono;
   protected readonly formulario = form(signal({ confirmacion: '' }));
 
   /** «Consejo: descarga antes…»: el dataset trae la frase con mayúscula inicial. */

@@ -1,11 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { SnackbarService } from './snackbar.service';
+import { CortesService } from '../../navegacion/cortes.service';
 
 /** Snackbar web (DS comp. 42): píldora Tinta centrada abajo, visto Verde Texto y texto blanco SemiBold 14. */
 @Component({
   selector: 'aq-snackbar',
   template: `
-    <div class="region" role="status" aria-live="polite">
+    <div
+      class="region"
+      role="status"
+      aria-live="polite"
+      [attr.data-telefono]="telefono() ? '' : null"
+    >
       @if (servicio.mensaje(); as mensaje) {
         <div class="snackbar">
           <svg class="icono" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -47,6 +53,19 @@ import { SnackbarService } from './snackbar.service';
       font: var(--text-snackbar-web);
       white-space: nowrap;
     }
+    /* Bajo el corte web-telefono (tokens v1.13) el mensaje puede partirse en dos líneas dentro de márgenes de 16. */
+    .region[data-telefono] {
+      left: var(--space-16);
+      right: var(--space-16);
+      display: flex;
+      justify-content: center;
+      transform: none;
+    }
+    .region[data-telefono] .snackbar {
+      height: auto;
+      min-height: var(--size-snackbar-web);
+      white-space: normal;
+    }
     .icono {
       flex: none;
       width: var(--size-icono-snackbar);
@@ -63,4 +82,5 @@ import { SnackbarService } from './snackbar.service';
 })
 export class AqSnackbarComponent {
   protected readonly servicio = inject(SnackbarService);
+  protected readonly telefono = inject(CortesService).telefono;
 }

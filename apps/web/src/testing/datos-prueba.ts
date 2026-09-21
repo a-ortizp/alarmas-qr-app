@@ -31,15 +31,19 @@ export async function cargarDataset(): Promise<void> {
 }
 
 /** CortesService falso: señales que la prueba mueve para simular que la ventana cruza los cortes de ancho. */
-export function cortesFalsos(colapsar = false, apilar = false) {
+export function cortesFalsos(colapsar = false, apilar = false, cajon = false, telefono = false) {
   const colapsarBarra = signal(colapsar);
   const apilarColumnas = signal(apilar);
+  const enCajon = signal(cajon);
+  const enTelefono = signal(telefono);
   const proveedor: Provider = {
     provide: CortesService,
     useValue: {
       colapsarBarra: colapsarBarra.asReadonly(),
       apilarColumnas: apilarColumnas.asReadonly(),
+      cajon: enCajon.asReadonly(),
+      telefono: enTelefono.asReadonly(),
     },
   };
-  return { proveedor, colapsarBarra, apilarColumnas };
+  return { proveedor, colapsarBarra, apilarColumnas, cajon: enCajon, telefono: enTelefono };
 }
