@@ -96,6 +96,8 @@ object Tipografia {
     val Dato = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.5.sp)                  // valor de fila de la tarjeta del evento y sello «✓ verificado»
     val PieAcceso = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)             // pie de M00a/M00b: «¿Ya tienes cuenta? Inicia sesión»
     val NotaLarga = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.sp, lineHeight = 17.sp)   // consentimiento de datos (M00a)
+    val Codigo = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")   // contenido del QR inválido (M13)
+    val EnlaceCorto = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 14.sp)               // «Abrir el enlace bajo mi responsabilidad» (M13); el subrayado lo aplica BotonEnlace
 }
 
 object Tamanos {
@@ -174,6 +176,7 @@ object Trazos {
     val Borde = 1.5.dp
     val BordeFino = 1.dp
     val Foco = 2.dp
+    val MarcoPantalla = 3.dp   // borde del sello «!» (M13)
 }
 
 object Espacio {
@@ -216,6 +219,11 @@ object Espacio {
     val PaddingPantallaSuperior = 24.dp // relleno superior de la columna de M01
     val PaddingPantallaInferior = 16.dp // relleno inferior de la columna de M01
     val PaddingAccesoSuperior = 28.dp   // relleno superior de la columna de M00a/M00b
+    val PaddingPermisoSuperior = 14.dp  // relleno superior del contenido de M12 y M13
+    val GapPermiso = 11.dp              // gap de columna del contenido de M12 y M13
+    val GapPasos = 7.dp                 // entre filas de la tarjeta «pasos» (M12) y del diagnóstico (M13)
+    val PaddingPasosVertical = 12.dp    // relleno vertical de la tarjeta «pasos» (M12) y del diagnóstico (M13)
+    val AntesAcciones = 32.dp           // espaciador fijo antes de las acciones de M13
 }
 
 object Movimiento {
@@ -224,6 +232,7 @@ object Movimiento {
     const val DeshacerMs = 5_000L
     const val TexturaOpacidadMax = 0.08f
     const val TexturaOpacidadMin = 0.02f
+    const val TexturaAtenuada = 0.5f   // banda de textura al 50 % detrás de los titulares (M12, M13)
 }
 
 /** Sombra 0 4 12 Tinta 18 % (FAB, hoja, tarjeta del evento, burbuja de M03b) expresada como elevación de Compose. */

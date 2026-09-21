@@ -341,7 +341,9 @@
       "etiqueta-dato": { "family": "ui", "weight": 700, "size": 12, "letterSpacing": "8%", "$description": "Etiqueta de fila de la tarjeta del evento («FECHA», «LUGAR»), M04" },
       "dato": { "family": "ui", "weight": 400, "size": 13.5, "$description": "Valor de fila de la tarjeta del evento (M04) y sello «✓ verificado»" },
       "pie-acceso": { "family": "ui", "weight": 600, "size": 13, "$description": "Pie de M00a/M00b: «¿Ya tienes cuenta? Inicia sesión»" },
-      "nota-larga": { "family": "ui", "weight": 400, "size": 12, "lineHeight": 17, "$description": "Consentimiento de datos en M00a" }
+      "nota-larga": { "family": "ui", "weight": 400, "size": 12, "lineHeight": 17, "$description": "Consentimiento de datos en M00a" },
+      "codigo": { "family": "datos", "weight": 500, "size": 12, "tabular": true, "$description": "Contenido del QR inválido (M13), = hora-ampm" },
+      "enlace-corto": { "family": "ui", "weight": 700, "size": 14, "$description": "«Abrir el enlace bajo mi responsabilidad» (M13); el subrayado lo aplica el componente BotonEnlace" }
     }
   },
   "size": {
@@ -471,7 +473,12 @@
       "padding-tarjeta-evento": 16,
       "antes-boton": 28,
       "padding-pantalla": [24, 16],
-      "padding-acceso-superior": 28
+      "padding-acceso-superior": 28,
+      "padding-permiso-superior": 14,
+      "gap-permiso": 11,
+      "gap-pasos": 7,
+      "padding-pasos-vertical": 12,
+      "antes-acciones": 32
     },
     "web": {
       "contenido-vertical": 28,
@@ -523,6 +530,7 @@
     "modulos-qr": {
       "opacityMax": 0.08,
       "opacityMin": 0.02,
+      "opacityTitulares": 0.5,
       "band": 120,
       "screens": [
         "M01",
@@ -532,7 +540,7 @@
         "M12",
         "M13"
       ],
-      "$description": "Retícula de módulos QR que se desvanece hacia abajo; nunca en listas, formularios ni visor"
+      "$description": "Retícula de módulos QR que se desvanece hacia abajo; nunca en listas, formularios ni visor. `opacityTitulares` atenúa la banda completa al 50 % detrás de los titulares de M12 y M13 (MOCKUPS §3c paso 4)."
     }
   },
   "version": "1.10"

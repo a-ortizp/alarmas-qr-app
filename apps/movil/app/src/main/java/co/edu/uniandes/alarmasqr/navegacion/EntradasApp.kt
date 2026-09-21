@@ -1,6 +1,9 @@
 package co.edu.uniandes.alarmasqr.navegacion
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.EntryProviderScope
@@ -14,6 +17,8 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02InicioScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02InicioViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02hAgregarEventoSheet
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02vEstadoVacio
+import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 
 /**
  * Registro de las pantallas reales de la Persona A (Plan 2). Lo comparten MainActivity y las pruebas de flujo, así
@@ -58,6 +63,27 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             alEscanear = { if (repositorio.permisoCamaraPedido) pila.reemplazarCima(Pantalla.M03) else { repositorio.permisoCamaraPedido = true; pila.reemplazarCima(Pantalla.M12) } },
             alElegirPantallazo = { pila.reemplazarCima(Pantalla.M03b) },
             alCrearAMano = { pila.reemplazarCima(Pantalla.M07) },
+        )
+    }
+    entry<Pantalla.M12> {
+        val abrirAjustes = rememberSolicitudPermisoCamara(alTerminar = { pila.reemplazarCima(Pantalla.M03) })
+        M12PermisoCamaraScreen(
+            alVolver = { pila.removeLastOrNull() },
+            alAbrirAjustes = abrirAjustes,
+            alElegirPantallazo = { pila.reemplazarCima(Pantalla.M03b) },
+            alCrearAMano = { pila.reemplazarCima(Pantalla.M07) },
+        )
+    }
+    entry<Pantalla.M13> {
+        val context = LocalContext.current
+        M13QRInvalidoScreen(
+            diagnostico = repositorio.dataset.qrInvalido,
+            alVolver = { pila.removeLastOrNull() },
+            alVolverAEscanear = { pila.removeLastOrNull() },      // vuelve a M03 sin pasar por M12 (NAVEGACION §6 a)
+            alCrearAMano = { pila.reemplazarCima(Pantalla.M07) },
+            alAbrirEnlace = {
+                runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(repositorio.dataset.qrInvalido.contenido))) }
+            },
         )
     }
 }
