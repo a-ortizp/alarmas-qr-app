@@ -1,4 +1,4 @@
-/* Alarmas QR · Energía puntual · tokens v1.9 (2026-09-19)
+/* Alarmas QR · Energía puntual · tokens v1.11 (2026-09-21)
    Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
    Reglas: un solo amarillo por pantalla (la acción principal); estados activos en Tinta;
    texto ≤ 15 px usa los tonos --color-*-texto; botones 52 px en móvil (48 hasta v1.5) y 44 px en web; radio 14 (20 en el diálogo de confirmación).
@@ -52,7 +52,7 @@
   --text-h1-web: 700 24px/1.15 var(--font-titulares);
   --text-barra-superior: 700 22px/1.15 var(--font-titulares);
   --text-h2: 600 22px/1.2 var(--font-titulares);
-  --text-titulo-modal-web: 700 21px/1.2 var(--font-titulares);
+  --text-titulo-modal-web: 700 18px/1.2 var(--font-titulares);
   --text-titulo-dialogo: 600 22px/1.2 var(--font-titulares);
   --text-cuerpo-dialogo: 400 14px/1.4 var(--font-ui);
   --text-marca-web: 700 17px/1.2 var(--font-titulares);
@@ -100,9 +100,8 @@
   --size-tabla-fila: 48px;
   --size-indicador-web-w: 242px;
   --size-indicador-web-h: 104px;
-  --size-modal-web-min: 540px;
-  --size-modal-web-max: 600px;
-  --size-tarjeta-acceso: 400px;
+  --size-modal-web: 481px;
+  --size-tarjeta-acceso: 520px;
   --size-area-tactil: 48px;
 
   /* radios y trazos */
@@ -124,8 +123,50 @@
   --space-web-contenido-y: 28px;
   --space-web-contenido-x: 32px;
   --space-web-bloques: 18px;
-  --space-web-modal: 24px;
+  --space-web-modal: 22px;
   --space-web-indicadores: 14px;
+
+  /* web · medidas de Figma para la Persona A (Plan 3, v1.11) */
+  --text-marca-acceso: 700 24px/normal var(--font-titulares);
+  --text-titulo-tarjeta-web: 700 17px/normal var(--font-titulares);
+  --text-cuerpo-web: 400 14px/normal var(--font-ui);          /* subtítulos, enlaces, notas, nombre en la barra */
+  --text-descripcion-web: 400 13.5px/normal var(--font-ui);   /* descripciones de tarjeta (W06) */
+  --text-rotulo-web: 400 14.5px/normal var(--font-ui);        /* rótulos de switch, lista del modal */
+  --text-valor-campo: 400 15px/normal var(--font-ui);
+  --text-etiqueta-campo: 600 12px/normal var(--font-ui);      /* Figma 11; nada por debajo de 12 */
+  --text-etiqueta-externa: 600 13px/normal var(--font-ui);    /* «Escribe ELIMINAR para confirmar» */
+  --text-nota-acceso: 400 13px/normal var(--font-ui);
+  --text-snackbar-web: 600 14px/normal var(--font-ui);
+  --size-logo-acceso: 36px;
+  --size-logo-barra: 32px;
+  --size-avatar-web: 32px;
+  --size-icono-snackbar: 16px;
+  --size-icono-advertencia: 24px;
+  --size-icono-vineta: 16px;
+  --size-pildora-colapsada: 40px;
+  --size-switch-ancho: 42px;
+  --size-switch-alto: 24px;
+  --size-switch-perilla: 18px;
+  --size-tarjeta-perfil-web: 561px;
+  --space-tarjeta-acceso: 34px;
+  --space-tarjeta-acceso-gap: 20px;
+  --space-tarjeta-web: 22px;
+  --space-tarjeta-peligro: 20px;
+  --space-campo-x: 14px;
+  --space-snackbar-web: 10px 18px;
+  --space-snackbar-web-borde: 24px;
+  --space-barra-lateral-web: 20px 12px;
+  --space-barra-superior-web: 28px;
+  --space-item-barra-lateral: 9px 16px;
+  --space-segmentado: 3px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --opacity-deshabilitado: 0.45;
+  --elevation-dialogo-web: 0 12px 32px rgba(23, 22, 28, 0.18);
 
   /* movimiento y elevación */
   --motion-transicion: 250ms ease-in-out;

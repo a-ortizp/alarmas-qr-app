@@ -63,6 +63,18 @@ export interface EventoWeb {
   lugar: string;
 }
 
+export interface Acceso {
+  correoEjemplo: string;
+  errorCredenciales: string;
+  recuperar: { titulo: string; texto: string; boton: string; volver: string };
+}
+
+export interface BarraLateralDatos {
+  items: { id: string; icono: string }[];
+  anchoExpandida: number;
+  anchoColapsada: number;
+}
+
 export interface DatosWeb {
   indicadores: {
     eventosActivos: Indicador;
@@ -78,4 +90,6 @@ export interface DatosWeb {
     palabraDeConfirmacion: string;
     consejo: string;
   };
+  acceso: Acceso;
+  barraLateral: BarraLateralDatos;
 }
