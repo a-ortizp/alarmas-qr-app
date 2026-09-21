@@ -15,6 +15,8 @@ Investigación, prototipos y diseño viven en el repositorio de UX: https://gith
 
 Requisitos: JDK 17, Android Studio compatible con AGP 9.4 (si al sincronizar pide actualizar el IDE, actualizarlo) con Android SDK 36 y un emulador o dispositivo con Android 8+ (minSdk 26); Node 22.23.2 (`nvm use`, ver `apps/web/.nvmrc`) y npm 10.
 
+Gradle corre siempre con JDK 17 (`gradle/gradle-daemon-jvm.properties`): si la máquina no lo tiene, lo descarga. Los finales de línea los fija `.gitattributes` (LF, salvo `.bat`/`.cmd`), así `gradlew` funciona igual en Windows, WSL y CI.
+
 `apps/movil/local.properties` (git-ignorado) debe apuntar a un Android SDK con la plataforma 36 instalada — `sdk.dir=/ruta/al/Android/Sdk` — cuando `ANDROID_HOME` no está exportado en el entorno; Android Studio lo genera solo al abrir `apps/movil`.
 
 ```
@@ -36,7 +38,7 @@ npx ng build --configuration production
 
 | Ámbito | Herramienta | Versión | Dónde se fija |
 |---|---|---|---|
-| Móvil | JDK | 17 | `apps/movil/app/build.gradle.kts` |
+| Móvil | JDK (código y daemon de Gradle) | 17 | `apps/movil/app/build.gradle.kts` y `apps/movil/gradle/gradle-daemon-jvm.properties` (Gradle lo busca o lo descarga solo, sin importar `JAVA_HOME`) |
 | Móvil | Gradle | 9.6.0 | `apps/movil/gradle/wrapper/gradle-wrapper.properties` |
 | Móvil | Android Gradle Plugin (Kotlin integrado, DSL nuevo) | 9.4.1 | `apps/movil/gradle/libs.versions.toml` |
 | Móvil | Kotlin (plugins Compose y serialization; sin `kotlin-android`, lo integra AGP 9) | 2.2.21 | ídem |
