@@ -12,7 +12,7 @@ marco) con los ids de `docs/MOCKUPS.md` §5.
 | M00a | 3:2 | ok · diferencias: subtítulo parte en 2 líneas en vez de 1 (métrica de fuente de Robolectric, igual que M01) |
 | M00b | 3:37 | ok · diferencias: campo Correo enfocado con cursor y valor tecleado en Figma; la implementación lo precarga sin foco (aceptado, ver brief) |
 | M02v | 4020:3553 | ok · pixel-perfect (diana, título, párrafo a 3 líneas y los tres botones alinean con el marco) |
-| M02 | 3:131 | ok · diferencias aceptadas: 5ª alarma «Asado del semillero» / LUNES 31 (decisión D3, el marco solo muestra 4); sufijo am/pm de la hora se parte en 2 líneas en la columna de 81 dp (métrica de fuente de Robolectric, ver nota abajo); «evento 6:20 pm» en la tarjeta «Reunión semillero» es el valor de `dataset.json` (fuente única de datos), 10 min distinto del marco |
+| M02 | 3:131 | ok · diferencias aceptadas: 5ª alarma «Asado del semillero» / LUNES 31 (decisión D3, el marco solo muestra 4); «evento 6:20 pm» en la tarjeta «Reunión semillero» es el valor de `dataset.json` (fuente única de datos), 10 min distinto del marco. El sufijo am/pm ya no se parte de línea (ver nota abajo) |
 | M02h | 4019:3139 | pendiente (Tarea 14) |
 | M12 | 6:87 | pendiente |
 | M13 | 6:122 | pendiente |
@@ -32,10 +32,14 @@ la salida real de `regla.capturar("M01")` dentro de `M01BienvenidaScreenTest`, l
 de calendario, así que las tres quedan sin marcar como en el marco de Figma. Diferencia aceptada frente a Figma: el
 párrafo se parte en 3 líneas en vez de 2 (métrica de fuente de Robolectric).
 
-**Nota M02 (Tarea 7):** en `M02.png` el sufijo am/pm de `TarjetaAlarma` (columna fija `Medidas.HoraTarjetaAncho` =
-81 dp, componente de una tarea anterior, fuera del alcance de esta tarea) se parte en dos líneas («a» / «m») en vez
-de quedar en una sola línea junto a la hora, como en el marco de Figma. Es el mismo tipo de diferencia de métrica de
-fuente bajo Robolectric que ya se documentó para M01 y M00a (Spline Sans Mono con dígitos tabulares mide un poco más
-ancho bajo Robolectric que en Figma/dispositivo real); no se tocó `TarjetaAlarma.kt` porque no es un archivo de esta
-tarea. Queda anotado para que una tarea futura decida si amplía `HoraTarjetaAncho` o si lo acepta también en un
-dispositivo real.
+**Nota M02 (Tarea 7, corregida en la ronda 1 de revisión):** en la primera versión de `M02.png` el sufijo am/pm de
+`TarjetaAlarma` se partía en dos líneas («a» / «m») en vez de quedar en una sola línea junto a la hora. No era una
+diferencia de métrica de fuente de Robolectric (como se pensó al principio): era un defecto real de tamaño. La
+columna de la hora tenía un ancho fijo (`Modifier.width(Medidas.HoraTarjetaAncho)` = 81 dp) que no alcanza: 4 dígitos
+tabulares a 26 sp (Spline Sans Mono Bold) miden ≈ 62 dp, más el gap de 6 dp, más «am»/«pm» a 12 sp (≈ 14 dp) suman
+≈ 82 dp > 81 dp, así que el sufijo se partía letra por letra en toda tarjeta. Se corrigió en `TarjetaAlarma.kt`
+(componente compartido con M04/M05, por eso se arregló en esta misma tarea): la columna ahora usa
+`Modifier.widthIn(min = Medidas.HoraTarjetaAncho)` — conserva el ancho de 81 dp como mínimo (alinea igual que antes
+en el caso común) pero puede crecer para horas de 5 dígitos como «12:00 pm» — y ambos `Text` (hora y sufijo) llevan
+`maxLines = 1, softWrap = false`. `M02.png` es la salida real tras el arreglo: las cinco tarjetas, incluida
+«12:00 pm», muestran el sufijo en una sola línea.

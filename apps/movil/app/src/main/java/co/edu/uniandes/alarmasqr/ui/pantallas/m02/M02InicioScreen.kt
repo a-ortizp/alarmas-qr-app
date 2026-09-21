@@ -43,8 +43,8 @@ fun M02InicioScreen(estado: EstadoInicio, alTocarAlarma: (String) -> Unit, alCam
             verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
         ) {
             estado.grupos.forEach { grupo ->
-                item(key = grupo.etiqueta) { AgrupadorDia(grupo.etiqueta) }
-                items(grupo.alarmas, key = { it.id }) { alarma ->
+                item(key = "grupo-${grupo.etiqueta}") { AgrupadorDia(grupo.etiqueta) }
+                items(grupo.alarmas, key = { "alarma-${it.id}" }) { alarma ->
                     TarjetaAlarma(alarma, onClick = { alTocarAlarma(alarma.id) }, alCambiarActiva = { alCambiarActiva(alarma.id, it) })
                 }
             }

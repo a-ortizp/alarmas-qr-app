@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,8 +34,9 @@ fun AgrupadorDia(texto: String, modifier: Modifier = Modifier) {
 /**
  * DS comp. 18 «Tarjeta de alarma» (anatomía única v1.3): 350×75 (53 sin chip), borde 1.5 Gris Borde (2 Verde Texto
  * si es «recién guardada»), radio 14, relleno 14/10; hora Spline Sans Mono Bold 26 + am/pm Medium 12 en la misma
- * línea, título Archivo Bold 15, «evento h:mm · lugar» 13 Gris Texto, chips debajo y el interruptor a la derecha.
- * Pausada: sin fondo (tutores v1.6), todo en Gris Texto e interruptor apagado.
+ * línea (columna de ancho mínimo `HoraTarjetaAncho`, sin ajuste de línea, para que crezca con horas de 5 dígitos
+ * como «12:00 pm» sin partir el sufijo), título Archivo Bold 15, «evento h:mm · lugar» 13 Gris Texto, chips debajo
+ * y el interruptor a la derecha. Pausada: sin fondo (tutores v1.6), todo en Gris Texto e interruptor apagado.
  */
 @Composable
 fun TarjetaAlarma(alarma: Alarma, onClick: () -> Unit, alCambiarActiva: (Boolean) -> Unit, modifier: Modifier = Modifier) {
@@ -49,9 +50,9 @@ fun TarjetaAlarma(alarma: Alarma, onClick: () -> Unit, alCambiarActiva: (Boolean
         horizontalArrangement = Arrangement.spacedBy(Espacio.GapFila),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(Modifier.width(Medidas.HoraTarjetaAncho), horizontalArrangement = Arrangement.spacedBy(Espacio.GapHoraSufijo)) {
-            Text(FormatoHora.hora(alarma.suena), style = Tipografia.HoraTarjeta, color = principal, modifier = Modifier.alignByBaseline())
-            Text(FormatoHora.sufijo(alarma.suena), style = Tipografia.HoraAmPm, color = principal, modifier = Modifier.alignByBaseline())
+        Row(Modifier.widthIn(min = Medidas.HoraTarjetaAncho), horizontalArrangement = Arrangement.spacedBy(Espacio.GapHoraSufijo)) {
+            Text(FormatoHora.hora(alarma.suena), style = Tipografia.HoraTarjeta, color = principal, maxLines = 1, softWrap = false, modifier = Modifier.alignByBaseline())
+            Text(FormatoHora.sufijo(alarma.suena), style = Tipografia.HoraAmPm, color = principal, maxLines = 1, softWrap = false, modifier = Modifier.alignByBaseline())
         }
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoTarjeta)) {
             Text(alarma.titulo, style = Tipografia.TituloTarjeta, color = principal)
