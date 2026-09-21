@@ -17,4 +17,10 @@ describe('App', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
+
+  it('monta el snackbar global una sola vez', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    expect((fixture.nativeElement as HTMLElement).querySelectorAll('aq-snackbar').length).toBe(1);
+  });
 });
