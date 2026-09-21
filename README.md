@@ -170,6 +170,28 @@ W01, W03, W04 y W05 siguen como marcadores de la Persona B, ya dentro del layout
 
 A 1280 los dos cortes quedan por encima, así que las capturas de `docs/verificacion/` no cambian. Las variables CSS no funcionan dentro de `@media`, así que los cortes se leen en tiempo de ejecución con `CortesService` (`src/app/navegacion/cortes.service.ts`, señales `colapsarBarra` y `apilarColumnas`, vía `matchMedia`). Nunca se escribe una `@media` con px a mano, porque la guardia de tokens lo rechaza.
 
+### Web responsive (tokens v1.13 · rama `feature/web-responsive`, sin fusionar hasta el visto bueno del profesor)
+
+Sobre la degradación elegante, la web se adapta hasta **360 px** sin scroll horizontal de página. Hay dos cortes más en `design-tokens.json` (`breakpoint`) y en `tokens.css`:
+- `--breakpoint-web-cajon` (**900**): con la ventana más angosta, la barra lateral sale del grid y el contenido ocupa todo el ancho.
+  - La barra superior muestra un botón ☰ «Abrir menú» (48 en teléfono) antes de la marca, que abre la barra como **cajón** de 208, siempre expandido, sobre velo Tinta 55 %.
+  - El cajón se cierra con Escape, con el velo, con su control «Cerrar menú» (el mismo icono «) o al elegir un ítem. «Cerrar Sesión» cierra el cajón y abre el diálogo de confirmación.
+  - El cajón no es una ruta: es estado del layout (`menuAbierto`), igual que los diálogos del móvil. Atrapa el foco (`cdkTrapFocus`) y lo devuelve al ☰ al cerrarse. Si la ventana cruza el corte, se cierra solo.
+- `--breakpoint-web-telefono` (**600**): con la ventana más angosta, `CortesService` pone `data-ancho="telefono"` en `<html>` y `tokens.css` (`:root[data-ancho~="telefono"]`, grupo `breakpoint-telefono` del JSON) reemplaza medidas de puntero por las de toque:
+  - Botones, selector segmentado, ítems del cajón y ☰ a **48**, el área táctil mínima.
+  - Márgenes de contenido de 16/20, barra superior con margen 16, relleno de la tarjeta de acceso de 22 y separación entre bloques de 14.
+  - Los componentes no cambian: siguen leyendo `var(--size-boton-web)`.
+  - Lo que cambia de composición va con la señal `telefono()`: el nombre del usuario en la barra superior queda solo para lectores de pantalla (se ve el avatar), el modal «Eliminar cuenta» apila «Conservar mi cuenta» sobre «Eliminar definitivamente» y el snackbar puede partirse en dos líneas dentro de márgenes de 16.
+- Las cajas con ancho de Figma (tarjeta de acceso 520, modal 481, diálogo 420) ya tenían `max-width`. Sus contenedores de grilla centrada llevan `grid-template-columns: minmax(0, 1fr)` para que puedan encogerse, y el modal tiene scroll interno si la ventana es baja.
+
+A 1280 ningún corte aplica, así que la entrega pixel-perfect y las capturas de `docs/verificacion/` no cambian. Verificado en navegador a 360, 768 y 1280 (sin desborde horizontal en W00, W00 recuperar, W06, el modal y los marcadores). Pruebas: `src/app/web-responsive.spec.ts` y `cortes.service.spec.ts`.
+
+**Pendiente en el repo de UX si el profesor lo aprueba:**
+- DS §7: el cajón web (comp. 14w, variante cajón) y el icono ☰, que no tiene mockup (trazo 2 como «colapsar»).
+- DS: las alturas de toque en web bajo 600.
+- MOCKUPS §7: marcos de referencia a 360 y 768.
+- NAVEGACION §6b: el cajón como estado del layout.
+
 **Decisiones D1–D16** (sección «Decisiones» del plan). Las que se pueden querer revertir:
 - El modal «Eliminar cuenta» sigue el mockup: 481, sin miga + ✕ y título 18 (D2).
 - Campos de 48 con etiqueta 12 y placeholder Gris Medio, frente a los 46/11 del mockup (D3).
@@ -202,7 +224,12 @@ A 1280 los dos cortes quedan por encima, así que las capturas de `docs/verifica
   - No toques el colapso: ya es automático en `AqLayoutAppComponent` (`colapsada = linkedSignal(cortes.colapsarBarra)`) y aplica a todas tus páginas dentro del layout. Tus páginas deben verse bien con la barra en 208 y en 64.
   - Si una página tuya tiene dos columnas o una fila de tarjetas (W01 indicadores + gráfica, W04/W05 tarjeta de formulario de 600 + tarjeta lateral), inyecta `CortesService` y apílalas con `apilarColumnas()`, igual que W06 (`[attr.data-apilada]` + `.fila[data-apilada] { flex-direction: column }`).
   - Las tablas anchas (W01, W03) van dentro de un contenedor con `overflow-x: auto`, no con anchos en px.
-  - Para un corte nuevo: agrégalo primero a `design-tokens.json` (`breakpoint`) y a los dos `tokens.css`, y luego como señal en `CortesService`. Pruébalo con `cortesFalsos()` de `src/testing/datos-prueba.ts`, como en `degradacion-elegante.spec.ts`.
+  - Para un corte nuevo: agrégalo primero a `design-tokens.json` (`breakpoint`) y a los dos `tokens.css`, y luego como señal en `CortesService`. Pruébalo con `cortesFalsos(colapsar, apilar, cajon, telefono)` de `src/testing/datos-prueba.ts`, como en `degradacion-elegante.spec.ts` y `web-responsive.spec.ts`.
+  - **Responsive (v1.13):** tu página debe verse sin scroll horizontal de 360 a 1280 y más. El cajón (bajo 900) y los tokens de toque (bajo 600) ya aplican solos.
+    - Para medidas, usa solo tokens. Si hace falta otro valor de teléfono, agrégalo al grupo `breakpoint-telefono` y a `:root[data-ancho~="telefono"]` de los dos `tokens.css`.
+    - Para la composición, usa `telefono()` o `cajon()` de `CortesService` con un atributo `data-*`, como las acciones del modal «Eliminar cuenta». En W01, por ejemplo, los cuatro indicadores de 242 se reparten en dos filas.
+    - Un contenedor `display: grid; place-items: center` lleva `grid-template-columns: minmax(0, 1fr)`.
+    - Revisa en `ng serve` a 360, 768 y 1280 que `document.documentElement.scrollWidth === innerWidth`.
 - Convenciones: rama por pantalla, commit «M06: …», PR revisado por el otro integrante; tokens siempre, nunca valores a mano.
 
 ## Datos simulados
