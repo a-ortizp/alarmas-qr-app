@@ -1,0 +1,22 @@
+# Finales de línea iguales en Windows, WSL, macOS y CI: LF en el repositorio y
+# en la copia de trabajo, salvo los scripts de Windows.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binarios: nunca convertir.
+*.jar binary
+*.keystore binary
+*.jks binary
+*.apk binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
