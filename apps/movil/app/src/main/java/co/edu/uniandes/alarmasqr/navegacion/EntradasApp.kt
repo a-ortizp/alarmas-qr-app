@@ -8,6 +8,8 @@ import android.os.Vibrator
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -20,6 +22,7 @@ import androidx.navigation3.runtime.NavKey
 import co.edu.uniandes.alarmasqr.alarma.ProgramadorAlarmas
 import co.edu.uniandes.alarmasqr.alarma.rememberSolicitudPermisoNotificaciones
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
+import co.edu.uniandes.alarmasqr.navegacion.LocalSnackbarApp
 import co.edu.uniandes.alarmasqr.qr.ResultadoQR
 import co.edu.uniandes.alarmasqr.ui.pantallas.m00.M00aRegistroScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m00.M00bEntrarScreen
@@ -36,6 +39,7 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
+import kotlinx.coroutines.withTimeoutOrNull
 
 /**
  * Registro de las pantallas reales de la Persona A (Plan 2). Lo comparten MainActivity y las pruebas de flujo, así
@@ -140,6 +144,21 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             alConservar = vm::cerrarDialogo,
             alEliminar = { vm.eliminar(); pila.reemplazarTodo(Pantalla.M02) },
         )
+    }
+    entry<Pantalla.M05> { clave ->
+        val vm = viewModel(key = clave.id) { M02InicioViewModel(repositorio, alarmaNueva = clave.id) }
+        val estado by vm.estado.collectAsStateWithLifecycle()
+        val snackbar = LocalSnackbarApp.current
+        val mensajes = repositorio.dataset.mensajes
+        LaunchedEffect(clave.id) {
+            // F-M05: «Deshacer (5 s)». Ventana fija de Movimiento.DeshacerMs; al vencer, el snackbar se retira solo.
+            val resultado = withTimeoutOrNull(Movimiento.DeshacerMs) {
+                snackbar.showSnackbar(message = mensajes.alarmaGuardada, actionLabel = mensajes.deshacer, duration = SnackbarDuration.Indefinite)
+            }
+            if (resultado == SnackbarResult.ActionPerformed) { vm.deshacer(); pila.reemplazarTodo(Pantalla.M02) }
+            else if (resultado == null) snackbar.currentSnackbarData?.dismiss()
+        }
+        M02InicioScreen(estado, alTocarAlarma = { pila.irA(Pantalla.M06(it)) }, alCambiarActiva = vm::cambiarActiva, codigo = "M05")
     }
     entry<Pantalla.M13> {
         val context = LocalContext.current

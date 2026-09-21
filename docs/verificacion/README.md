@@ -20,7 +20,7 @@ marco) con los ids de `docs/MOCKUPS.md` §5.
 | M03b | 4020:3295 | ok · pixel-perfect (chip «✓ QR detectado», título, burbuja de WhatsApp con «Grupo MISO UX · hoy 8:12 am», el marco de lectura con el QR, «Origen: WhatsApp · compartido con Alarmas QR», «Continuar», «Elegir otra imagen» y la nota final alinean con el marco). Diferencia aceptada: el mensaje parte en «Nos vemos el domingo 30 en» / «SD-703. Escanea para agendar 👇» en vez de «…en SD-703.» / «Escanea…» (métrica de fuente de Robolectric, igual que M01/M00a/M03). Intent de compartir: pendiente de prueba en dispositivo (compartir una imagen desde la galería a «Alarmas QR» no se puede probar en este entorno) |
 | M04 | 4:189 | contenido ok · pantalla completa: Tarea 14 (ver nota M04 abajo) |
 | M04d | 4330:1432 | contenido ok · pantalla completa: Tarea 14 (ver nota M04 abajo) |
-| M05 | 4:223 | pendiente |
+| M05 | 4:223 | ok · diferencias aceptadas: 5ª alarma «Asado del semillero» / LUNES 31 (decisión D3, el marco solo muestra 4); snackbar «Alarma guardada · También en Google Calendar» con «Deshacer · 5 s» sobre el FAB, que es la colocación por defecto del `Scaffold` de Material 3 (el snackbar se ubica siempre encima del FAB cuando hay uno, con un hueco de ~16 dp; el marco los separa 60 dp) — ver nota M05 abajo. La tarjeta «Entrega de proyecto UX» muestra los chips «Nueva» y «✓ Escaneada» juntos (el marco solo muestra «Nueva»): ambos chips vienen de `dataset.json` (`a-entrega.chips`), fuente única de datos que esta tarea no puede tocar; el resto (barra, agrupadores, tarjetas de HOY/MAÑANA, borde Verde Texto de la tarjeta nueva, FAB) alinea con el marco |
 
 **Nota M01 (Tarea 5, corregida en las rondas 1 y 2 de revisión):** el ayudante `capturar()` de `Verificacion.kt` ya
 no usa `captureToImage()` — esa API cuelga bajo Robolectric en este proyecto (`forceRedraw()` espera hasta 2000 ms
@@ -68,3 +68,15 @@ un dispositivo real no tiene este problema — véase p. ej. robolectric/robolec
 `M04AlarmaCreadaSheetTest` toca en su lugar una esquina del velo (`performTouchInput { click(Offset(10f, 10f)) }`),
 claramente fuera del diálogo, para probar el mismo comportamiento («tocar el velo equivale a la acción segura») sin
 depender de esa zona; el comentario en el test documenta la razón.
+
+**Nota M05 (Tarea 13):** `M05.png` es la salida real de `regla.capturar("M05")` en `M05GuardadaTest`, montando
+`NavegacionApp` completo con `entradasApp`, así que incluye la barra superior, la lista con la alarma nueva, el
+snackbar y el FAB, y la barra inferior. Se verificó por muestreo de píxeles que el snackbar (fondo Tinta) queda por
+encima del FAB, con un hueco de ≈19 dp entre ambos: es la colocación por defecto del `Scaffold` de Material 3
+(siempre ubica el snackbar encima del FAB cuando hay uno, calculado a partir de la altura real del FAB; no es
+configurable sin un `Scaffold` a medida, fuera de alcance) — el marco de Figma los separa 60 dp en vez de los ~16 dp
+resultantes, diferencia aceptada en el plan. La tarjeta «Entrega de proyecto UX» muestra dos chips («Nueva» y
+«✓ Escaneada») porque `dataset.json` ya trae ambos en `alarmas[].chips` para `a-entrega` (la entrada `esNueva: true`
+que `agregarDesdeEvento` activa al escanear); el marco solo dibuja «Nueva». `dataset.json` es la única fuente de
+datos simulados (CLAUDE.md, «Datos») y esta tarea no la modifica ni toca `TarjetaAlarma.kt` (fuera del alcance de
+archivos de la Tarea 13), así que se documenta como diferencia aceptada en vez de «corregirse».
