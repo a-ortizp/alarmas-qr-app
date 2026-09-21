@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { PANTALLAS, PantallaWeb } from './navegacion/pantallas';
 import { AqLayoutAppComponent } from './layout/aq-layout-app/aq-layout-app.component';
 import { W00LoginComponent } from './pantallas/w00-login/w00-login.component';
+import { W00RecuperarContrasenaComponent } from './pantallas/w00-recuperar-contrasena/w00-recuperar-contrasena.component';
 import { W01MisAlarmasComponent } from './pantallas/w01-mis-alarmas/w01-mis-alarmas.component';
 import { W03DetalleEventoComponent } from './pantallas/w03-detalle-evento/w03-detalle-evento.component';
 import { W04ReportesComponent } from './pantallas/w04-reportes/w04-reportes.component';
@@ -28,6 +29,12 @@ const ruta = (p: PantallaWeb) => ({
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   ...PANTALLAS.filter((p) => !p.conBarraLateral).map(ruta),
+  {
+    path: 'login/recuperar',
+    component: W00RecuperarContrasenaComponent,
+    title: 'Recuperar contraseña · Alarmas QR',
+    data: { codigo: 'W00' },
+  },
   {
     path: '',
     component: AqLayoutAppComponent,
