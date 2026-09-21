@@ -15,27 +15,27 @@ permissions:
 
 jobs:
   apk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: apps/movil
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
         with:
           packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - run: chmod +x gradlew
       - name: Compilar APK de release
         run: ./gradlew assembleRelease --no-daemon
       - name: Renombrar con la versión
         run: cp app/build/outputs/apk/release/app-release.apk "alarmas-qr-${GITHUB_REF_NAME}.apk"
       - name: Publicar Release con el APK
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: Alarmas QR ${{ github.ref_name }}
           files: apps/movil/alarmas-qr-${{ github.ref_name }}.apk

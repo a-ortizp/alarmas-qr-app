@@ -12,53 +12,55 @@ concurrency:
 
 jobs:
   datos:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Dataset y tokens idénticos en móvil y web
         run: cmp packages/tokens/dataset.json apps/movil/app/src/main/assets/dataset.json && cmp packages/tokens/dataset.json apps/web/public/dataset.json && cmp packages/tokens/tokens.css apps/web/src/tokens.css
 
   cambios:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       movil: ${{ steps.filtro.outputs.movil }}
       web: ${{ steps.filtro.outputs.web }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
+      - uses: actions/checkout@v7
+      - uses: dorny/paths-filter@v4
         id: filtro
         with:
           filters: |
             movil:
               - 'apps/movil/**'
               - 'packages/tokens/**'
+              - '.github/workflows/ci.yml'
             web:
               - 'apps/web/**'
               - 'packages/tokens/**'
+              - '.github/workflows/ci.yml'
 
   movil:
     needs: cambios
     if: needs.cambios.outputs.movil == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: apps/movil
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
         with:
           packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - run: chmod +x gradlew
       - name: Lint y pruebas unitarias
         run: ./gradlew lintDebug testDebugUnitTest --no-daemon
       - name: Compilar APK de depuración
         run: ./gradlew assembleDebug --no-daemon
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: app-debug
           path: apps/movil/app/build/outputs/apk/debug/*.apk
@@ -67,13 +69,13 @@ jobs:
   web:
     needs: cambios
     if: needs.cambios.outputs.web == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: apps/web
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: '22.23.2'
           cache: npm
