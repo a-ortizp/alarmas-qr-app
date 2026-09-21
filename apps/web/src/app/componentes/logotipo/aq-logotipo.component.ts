@@ -18,20 +18,18 @@ import { Component, input } from '@angular/core';
       <rect class="punto" x="14.79" y="14.79" width="6.429" height="6.429" rx="1.607" />
     </svg>
   `,
-  host: {
-    '[class.acceso]': "tamano() === 'acceso'",
-    '[class.barra]': "tamano() === 'barra'",
-  },
+  // Tamaño en atributo, no en clase: .barra chocaría con la regla encapsulada de aq-barra-superior.
+  host: { '[attr.data-tamano]': 'tamano()' },
   styles: `
     :host {
       display: inline-flex;
       flex: none;
     }
-    :host(.acceso) {
+    :host([data-tamano='acceso']) {
       width: var(--size-logo-acceso);
       height: var(--size-logo-acceso);
     }
-    :host(.barra) {
+    :host([data-tamano='barra']) {
       width: var(--size-logo-barra);
       height: var(--size-logo-barra);
     }

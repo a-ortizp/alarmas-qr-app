@@ -47,7 +47,8 @@ let siguienteId = 0;
       box-sizing: border-box;
       width: var(--size-modal-web);
       max-width: calc(100% - 2 * var(--space-web-modal));
-      padding: var(--space-web-modal);
+      /* Borde hacia dentro, como en Figma: el relleno 22 cuenta desde el borde exterior. */
+      padding: calc(var(--space-web-modal) - var(--stroke-borde));
       background: var(--color-blanco);
       border: var(--stroke-borde) solid var(--color-destructivo);
       border-radius: var(--radius-modal);

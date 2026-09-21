@@ -26,25 +26,23 @@ export type TamanoIcono = 'barra' | 'vineta' | 'advertencia';
       }
     </svg>
   `,
-  host: {
-    '[class.barra]': "tamano() === 'barra'",
-    '[class.vineta]': "tamano() === 'vineta'",
-    '[class.advertencia]': "tamano() === 'advertencia'",
-  },
+  // El tamaño va en un atributo y no en una clase: una clase como «barra» chocaría con las
+  // reglas encapsuladas del padre (aq-barra-lateral y aq-barra-superior usan .barra).
+  host: { '[attr.data-tamano]': 'tamano()' },
   styles: `
     :host {
       display: inline-flex;
       flex: none;
     }
-    :host(.barra) {
+    :host([data-tamano='barra']) {
       width: var(--size-icono-barra-lateral);
       height: var(--size-icono-barra-lateral);
     }
-    :host(.vineta) {
+    :host([data-tamano='vineta']) {
       width: var(--size-icono-vineta);
       height: var(--size-icono-vineta);
     }
-    :host(.advertencia) {
+    :host([data-tamano='advertencia']) {
       width: var(--size-icono-advertencia);
       height: var(--size-icono-advertencia);
     }

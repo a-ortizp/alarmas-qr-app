@@ -20,7 +20,8 @@ import { AqLogotipoComponent } from '../logotipo/aq-logotipo.component';
       box-sizing: border-box;
       width: var(--size-tarjeta-acceso);
       max-width: 100%;
-      padding: var(--space-tarjeta-acceso);
+      /* Borde hacia dentro, como en Figma: el relleno 34 cuenta desde el borde exterior. */
+      padding: calc(var(--space-tarjeta-acceso) - var(--stroke-borde));
       background: var(--color-blanco);
       border: var(--stroke-borde) solid var(--color-borde);
       border-radius: var(--radius-tarjeta);

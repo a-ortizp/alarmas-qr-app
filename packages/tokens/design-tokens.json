@@ -226,6 +226,7 @@
       "etiqueta-campo": { "family": "ui", "weight": 600, "size": 12, "$description": "Figma 11; nada por debajo de 12 (Plan 3 D3)" },
       "etiqueta-externa": { "family": "ui", "weight": 600, "size": 13 },
       "nota-acceso": { "family": "ui", "weight": 400, "size": 13 },
+      "error-campo-web": { "family": "ui", "weight": 400, "size": 12.5, "$description": "Mensaje de error bajo el campo web (W00); interlineado normal como en Figma, a diferencia de nota (1.4)" },
       "snackbar-web": { "family": "ui", "weight": 600, "size": 14 },
       "titulo-dialogo": {
         "family": "titulares",

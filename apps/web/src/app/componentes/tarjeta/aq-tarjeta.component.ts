@@ -10,13 +10,14 @@ import { Component, input } from '@angular/core';
       display: flex;
       flex-direction: column;
       box-sizing: border-box;
-      padding: var(--space-tarjeta-web);
+      /* Figma dibuja el borde hacia dentro: el relleno se mide desde el borde exterior. */
+      padding: calc(var(--space-tarjeta-web) - var(--stroke-borde));
       background: var(--color-blanco);
       border: var(--stroke-borde) solid var(--color-borde);
       border-radius: var(--radius-tarjeta);
     }
     :host(.peligro) {
-      padding: var(--space-tarjeta-peligro);
+      padding: calc(var(--space-tarjeta-peligro) - var(--stroke-borde));
       border-color: var(--color-destructivo);
     }
   `,

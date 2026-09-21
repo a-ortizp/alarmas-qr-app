@@ -20,7 +20,7 @@ Todo el contenido visible es en español; los identificadores de código pueden 
 
 ## Reglas de diseño que el código debe respetar
 
-Fuente de verdad: `packages/tokens/design-tokens.json` v1.10 (derivado de `docs/DESIGN_SYSTEM.md` v1.10; mockups móviles v1.7 del 2026-09-19: `chip-control` 32 para chips que se tocan, `icono-visor` 48, espaciador flexible en barras superiores). Nunca escribir colores, tamaños ni radios a mano: usar los tokens.
+Fuente de verdad: `packages/tokens/design-tokens.json` v1.11 (v1.11 del 2026-09-21: medidas web de la Persona A, Plan 3) (derivado de `docs/DESIGN_SYSTEM.md` v1.10; mockups móviles v1.7 del 2026-09-19: `chip-control` 32 para chips que se tocan, `icono-visor` 48, espaciador flexible en barras superiores). Nunca escribir colores, tamaños ni radios a mano: usar los tokens.
 
 - **Un solo elemento amarillo por pantalla**: la acción principal o el FAB extendido. Estados activos (switch, píldoras, pestañas, chip «Nueva») en Tinta; la píldora activa de la barra inferior en Gris Niebla (DS §6) es la excepción documentada. Sobre Tinta el primario es blanco.
 - **Alturas**: botones 52 en móvil (toque; 48 hasta el 2026-09-17) y 44 en web (puntero); acciones de la alarma sonando 56; campos 48; área táctil mínima 48.
@@ -38,7 +38,7 @@ Fuente de verdad: `packages/tokens/design-tokens.json` v1.10 (derivado de `docs/
 - En móvil, las pantallas reales se registran en `navegacion/EntradasApp.kt` (`entradasApp`); el marcador de la Fase 0 es el `fallback` del `entryProvider`, así que solo dibuja las claves que `entradasApp` todavía no registró.
 - Los eventos externos (permiso de cámara, push del organizador, hora de la alarma) se simulan con los controles indicados con ⏩ en `docs/NAVEGACION.md` §6; no inventar pantallas ni puntos de entrada nuevos.
 - En la web (v1.5) Reportes (`/reportes`) y Descargar QR (`/qr`) son páginas con miga «‹ Mis alarmas», título y una tarjeta de formulario de 600 px con una tarjeta lateral; el único modal es «Eliminar cuenta» (ruta propia sobre `/perfil`, velo Tinta al 45 %) y «Cerrar Sesión» abre el diálogo de confirmación web (velo 55 %, 420 px, «Cancelar» primario / «Cerrar sesión» contorno). La barra lateral lleva un icono por ítem y se colapsa a 64 px. En móvil, las hojas M02h y M04 son claves del back stack dibujadas como hoja inferior por `HojaInferiorSceneStrategy` sobre velo Tinta al 55 %; los diálogos de confirmación (M04d, M06d, M11d) no son rutas: son estado del componente padre sobre el mismo velo.
-- La fila de cabecera de un modal (miga + ✕) es un solo control que cierra.
+- La fila de cabecera de un modal (miga + ✕) es un solo control que cierra. Excepción vigente: el modal «Eliminar cuenta» sigue el mockup web v1.5 (sin miga; se cierra con «Conservar mi cuenta», Escape o el velo; D2 del Plan 3, pendiente de reflejar en el repo de UX).
 
 ## Datos
 

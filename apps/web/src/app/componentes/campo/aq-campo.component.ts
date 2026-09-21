@@ -71,7 +71,7 @@ let siguienteId = 0;
     }
     .mensaje-error {
       margin: 0;
-      font: var(--text-nota);
+      font: var(--text-error-campo-web);
       color: var(--color-destructivo);
     }
   `,

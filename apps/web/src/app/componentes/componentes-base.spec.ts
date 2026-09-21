@@ -80,6 +80,16 @@ describe('Componentes base L09', () => {
     expect(svg.querySelectorAll('path').length).toBe(ICONOS.alarma.formas.length);
   });
 
+  it('aq-icono y aq-logotipo marcan el tamaño en data-tamano, no en una clase que choque con .barra del padre', async () => {
+    const f = await montar();
+    const icono = (f.nativeElement as HTMLElement).querySelector('#icono')!;
+    expect(icono.getAttribute('data-tamano')).toBe('barra');
+    expect(icono.classList).not.toContain('barra');
+    const logotipo = (f.nativeElement as HTMLElement).querySelector('#acceso aq-logotipo')!;
+    expect(logotipo.getAttribute('data-tamano')).toBe('acceso');
+    expect(logotipo.classList).not.toContain('acceso');
+  });
+
   it('cada icono tiene caja 16 o 24 y al menos un trazado', () => {
     for (const [nombre, def] of Object.entries(ICONOS)) {
       expect([16, 24], nombre).toContain(def.caja);

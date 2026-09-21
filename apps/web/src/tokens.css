@@ -136,6 +136,7 @@
   --text-etiqueta-campo: 600 12px/normal var(--font-ui);      /* Figma 11; nada por debajo de 12 */
   --text-etiqueta-externa: 600 13px/normal var(--font-ui);    /* «Escribe ELIMINAR para confirmar» */
   --text-nota-acceso: 400 13px/normal var(--font-ui);
+  --text-error-campo-web: 400 12.5px/normal var(--font-ui); /* mensaje de error bajo el campo (W00) */
   --text-snackbar-web: 600 14px/normal var(--font-ui);
   --size-logo-acceso: 36px;
   --size-logo-barra: 32px;
