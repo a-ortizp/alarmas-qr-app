@@ -11,6 +11,7 @@ import {
 } from '../../componentes/selector-segmentado/aq-selector-segmentado.component';
 import { SnackbarService } from '../../componentes/snackbar/snackbar.service';
 import { DatosService } from '../../datos/datos.service';
+import { CortesService } from '../../navegacion/cortes.service';
 
 /** W06 · Ajustes de Perfil (F-W07): perfil, privacidad ante organizadores y acceso al modal «Eliminar cuenta» (hija /perfil/eliminar). */
 @Component({
@@ -28,7 +29,7 @@ import { DatosService } from '../../datos/datos.service';
   template: `
     <section class="pagina" data-codigo="W06">
       <h1 class="titulo">Ajustes de Perfil</h1>
-      <div class="fila">
+      <div class="fila" [attr.data-apilada]="apilar() ? '' : null">
         <aq-tarjeta class="perfil">
           <h2 class="titulo-tarjeta">Perfil</h2>
           <aq-campo etiqueta="NOMBRES Y APELLIDOS" [formField]="formularioPerfil.nombre" />
@@ -101,6 +102,14 @@ import { DatosService } from '../../datos/datos.service';
       flex: 0 0 var(--size-tarjeta-perfil-web);
       gap: var(--space-16);
     }
+    /* Bajo el corte web-apilar-columnas (tokens v1.12) las dos columnas se apilan a todo el ancho. */
+    .fila[data-apilada] {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .fila[data-apilada] .perfil {
+      flex: none;
+    }
     .columna {
       display: flex;
       flex: 1;
@@ -138,6 +147,7 @@ import { DatosService } from '../../datos/datos.service';
 export class W06PerfilComponent {
   private readonly datos = inject(DatosService);
   private readonly snackbar = inject(SnackbarService);
+  protected readonly apilar = inject(CortesService).apilarColumnas;
 
   protected readonly opcionesAparicion: readonly OpcionSegmentada[] = [
     { valor: 'nombre-completo', texto: 'Nombre completo' },

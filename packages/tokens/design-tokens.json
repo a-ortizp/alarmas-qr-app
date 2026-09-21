@@ -2,7 +2,7 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.11",
+    "version": "1.12",
     "date": "2026-09-21",
     "source": "DESIGN_SYSTEM.md v1.10 · STYLE_TILE.md v1.2 · MOCKUPS.md (móvil v1.7, web v1.5)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
@@ -14,7 +14,8 @@
       "Alturas: 52 para toque en móvil (v1.6, revisión de tutores del 2026-09-17; antes 48), 44 para puntero en web; 56 en las acciones de la alarma sonando.",
       "Prevención de errores (v1.7): toda acción destructiva o de salida pasa por un diálogo de confirmación centrado sobre velo Tinta 55 %; la acción segura es el primario amarillo y la que confirma va en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura.",
       "v1.10 (2026-09-20): medidas móviles de la Persona A tomadas de Figma para el Plan 2 (coral suave, radios de visor/casilla/snackbar, flecha «‹», título de evento, rótulo de opción, chip que se toca, medidas size.movil).",
-      "v1.11 (2026-09-21): medidas web de la Persona A tomadas de Figma para el Plan 3 (tarjeta de acceso 520, modal «Eliminar cuenta» 481 con relleno 22 y título 18, textos y medidas size.web/space.web, sombra del diálogo web, snackbar web 3 s). Campos 48 con etiqueta 12 por regla (Figma 46/11)."
+      "v1.11 (2026-09-21): medidas web de la Persona A tomadas de Figma para el Plan 3 (tarjeta de acceso 520, modal «Eliminar cuenta» 481 con relleno 22 y título 18, textos y medidas size.web/space.web, sombra del diálogo web, snackbar web 3 s). Campos 48 con etiqueta 12 por regla (Figma 46/11).",
+      "v1.12 (2026-09-21): cortes de ancho web (breakpoint) para la degradación elegante fuera del marco de referencia 1280×820: bajo 1200 la barra lateral se colapsa sola; bajo 1100 las columnas de página (W06) se apilan. A 1280 nada cambia."
     ]
   },
   "color": {
@@ -437,6 +438,16 @@
       "$description": "Medidas de los mockups móviles v1.7 medidas en Figma el 2026-09-20 (Plan 2)"
     }
   },
+  "breakpoint": {
+    "web-colapsar-barra": {
+      "$value": 1200,
+      "$description": "Por debajo de este ancho de ventana la barra lateral web se colapsa sola (64); al volver a superarlo se expande. Entre cruces el usuario puede expandir o colapsar con el control. 1280 (marco de Figma) queda por encima: el mockup no cambia."
+    },
+    "web-apilar-columnas": {
+      "$value": 1100,
+      "$description": "Por debajo de este ancho de ventana las páginas con dos columnas (W06: tarjeta Perfil 561 + columna de Privacidad/Eliminación) las apilan en una. Con la barra colapsada el contenido mide ancho − 128; W06 necesita 561 + 18 + 385 (selector segmentado) = 964."
+    }
+  },
   "radius": {
     "pildora": 999,
     "tarjeta": 14,
@@ -589,5 +600,5 @@
     },
     "qr-visor-opacity": 0.5
   },
-  "version": "1.11"
+  "version": "1.12"
 }

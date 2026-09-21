@@ -1,4 +1,4 @@
-/* Alarmas QR · Energía puntual · tokens v1.11 (2026-09-21)
+/* Alarmas QR · Energía puntual · tokens v1.12 (2026-09-21)
    Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
    Reglas: un solo amarillo por pantalla (la acción principal); estados activos en Tinta;
    texto ≤ 15 px usa los tonos --color-*-texto; botones 52 px en móvil (48 hasta v1.5) y 44 px en web; radio 14 (20 en el diálogo de confirmación).
@@ -168,6 +168,11 @@
   --space-16: 16px;
   --opacity-deshabilitado: 0.45;
   --elevation-dialogo-web: 0 12px 32px rgba(23, 22, 28, 0.18);
+
+  /* cortes de ancho web (v1.12): degradación elegante fuera del marco 1280×820.
+     No se usan dentro de @media (las variables no funcionan ahí): CortesService los lee con getComputedStyle. */
+  --breakpoint-web-colapsar-barra: 1200px;   /* bajo este ancho la barra lateral se colapsa sola */
+  --breakpoint-web-apilar-columnas: 1100px;  /* bajo este ancho las páginas de dos columnas (W06) se apilan */
 
   /* movimiento y elevación */
   --motion-transicion: 250ms ease-in-out;

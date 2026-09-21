@@ -31,3 +31,6 @@ Thumbs.db
 
 # Espacio de trabajo de superpowers (subagent-driven-development)
 .superpowers/
+
+# Salidas del MCP de Playwright (capturas y logs de verificación)
+.playwright-mcp/
