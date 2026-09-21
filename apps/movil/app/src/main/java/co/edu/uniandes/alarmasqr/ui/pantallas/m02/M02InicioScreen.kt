@@ -28,6 +28,7 @@ import co.edu.uniandes.alarmasqr.ui.theme.Colores
 import co.edu.uniandes.alarmasqr.ui.theme.Espacio
 import co.edu.uniandes.alarmasqr.ui.theme.Medidas
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
+import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
 
 /**
  * M02 · Inicio · lista (F-M02) y M05 (misma pantalla con la alarma nueva resaltada; el snackbar lo muestra la
@@ -60,8 +61,9 @@ fun M02InicioScreen(estado: EstadoInicio, alTocarAlarma: (String) -> Unit, alCam
 fun M02vEstadoVacio(mensajes: Mensajes, alEscanear: () -> Unit, alElegirPantallazo: () -> Unit, alCrearAMano: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M02v")) {
         BarraSuperior("Mis alarmas")
-        Column(
-            Modifier.fillMaxSize().padding(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
+        ColumnaDesplazable(
+            Modifier.fillMaxSize(),
+            relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
             verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

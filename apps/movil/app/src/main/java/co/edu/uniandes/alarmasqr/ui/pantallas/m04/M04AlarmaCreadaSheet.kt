@@ -35,6 +35,8 @@ import co.edu.uniandes.alarmasqr.ui.theme.Espacio
 import co.edu.uniandes.alarmasqr.ui.theme.Medidas
 import co.edu.uniandes.alarmasqr.ui.theme.Radios
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 
 /** M04 · Alarma programada (F-M04): hoja sobre la lista; «Listo» → M05, el enlace de descarte abre M04d. */
 @Composable
@@ -44,7 +46,7 @@ fun M04AlarmaCreadaSheet(
 ) {
     val alarma = estado.alarma
     Column(
-        Modifier.fillMaxWidth().padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.EntreBloques, bottom = Espacio.HojaInferior).testTag("pantalla-M04"),
+        Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.EntreBloques, bottom = Espacio.HojaInferior).testTag("pantalla-M04"),
         verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

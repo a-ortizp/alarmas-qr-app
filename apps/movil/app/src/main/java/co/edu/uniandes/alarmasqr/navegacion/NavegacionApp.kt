@@ -1,5 +1,6 @@
 package co.edu.uniandes.alarmasqr.navegacion
 
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -85,7 +86,8 @@ fun NavegacionApp(
         ) { relleno ->
             NavDisplay(
                 backStack = backStack,
-                modifier = Modifier.padding(relleno),
+                // consumeWindowInsets: el imePadding() de ColumnaDesplazable no vuelve a sumar la barra de navegación.
+                modifier = Modifier.padding(relleno).consumeWindowInsets(relleno),
                 onBack = { backStack.removeLastOrNull() },
                 sceneStrategies = listOf(estrategiaHoja),
                 entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator(), rememberViewModelStoreNavEntryDecorator()),

@@ -35,6 +35,8 @@ import co.edu.uniandes.alarmasqr.ui.theme.Radios
 import co.edu.uniandes.alarmasqr.ui.theme.Tamanos
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
 import co.edu.uniandes.alarmasqr.ui.theme.Trazos
+import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
+import androidx.compose.foundation.layout.PaddingValues
 
 /** M12 · Permiso de cámara (F-M12): explicación + «Abrir ajustes»; alternativas ancladas abajo (tutores v1.6). */
 @Composable
@@ -43,8 +45,9 @@ fun M12PermisoCamaraScreen(alVolver: () -> Unit, alAbrirAjustes: () -> Unit, alE
         BarraSuperior("Permiso de cámara", alVolver = alVolver)
         Box(Modifier.fillMaxSize()) {
             BandaTextura(Modifier.align(Alignment.TopCenter), opacidad = Movimiento.TexturaAtenuada)
-            Column(
-                Modifier.fillMaxSize().padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingPermisoSuperior, bottom = Espacio.HojaInferior),
+            ColumnaDesplazable(
+                Modifier.fillMaxSize(),
+                relleno = PaddingValues(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingPermisoSuperior, bottom = Espacio.HojaInferior),
                 verticalArrangement = Arrangement.spacedBy(Espacio.GapPermiso),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {

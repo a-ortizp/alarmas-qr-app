@@ -29,12 +29,14 @@ import co.edu.uniandes.alarmasqr.ui.theme.Radios
 import co.edu.uniandes.alarmasqr.ui.theme.Tamanos
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
 import co.edu.uniandes.alarmasqr.ui.theme.Trazos
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 
 /** M02h · Hoja «Agregar evento» (F-M02): única entrada de captura; la primera fila es el único amarillo de la hoja. */
 @Composable
 fun M02hAgregarEventoSheet(alEscanear: () -> Unit, alElegirPantallazo: () -> Unit, alCrearAMano: () -> Unit) {
     Column(
-        Modifier.fillMaxWidth().padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.GapHoja, bottom = Espacio.HojaInferiorCorta).testTag("pantalla-M02h"),
+        Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.GapHoja, bottom = Espacio.HojaInferiorCorta).testTag("pantalla-M02h"),
         verticalArrangement = Arrangement.spacedBy(Espacio.GapHoja),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

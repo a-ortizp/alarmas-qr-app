@@ -34,6 +34,8 @@ import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
 import co.edu.uniandes.alarmasqr.ui.theme.Radios
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
 import co.edu.uniandes.alarmasqr.ui.theme.Trazos
+import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
+import androidx.compose.foundation.layout.PaddingValues
 
 /** M13 · QR sin evento (F-M13): diagnóstico anti-quishing; el enlace solo se abre bajo decisión explícita. */
 @Composable
@@ -42,8 +44,9 @@ fun M13QRInvalidoScreen(diagnostico: QRInvalido, alVolver: () -> Unit, alVolverA
         BarraSuperior("QR sin evento", alVolver = alVolver)
         Box(Modifier.fillMaxSize()) {
             BandaTextura(Modifier.align(Alignment.TopCenter), opacidad = Movimiento.TexturaAtenuada)
-            Column(
-                Modifier.fillMaxSize().padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingPermisoSuperior, bottom = Espacio.PaddingBoton),
+            ColumnaDesplazable(
+                Modifier.fillMaxSize(),
+                relleno = PaddingValues(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingPermisoSuperior, bottom = Espacio.PaddingBoton),
                 verticalArrangement = Arrangement.spacedBy(Espacio.GapPermiso),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
