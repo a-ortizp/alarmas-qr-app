@@ -85,6 +85,7 @@ private fun VisorBienvenida() {
     Box(Modifier.fillMaxWidth().height(Medidas.VisorBienvenida).clip(Radios.VisorBienvenida).background(Colores.Tinta), contentAlignment = Alignment.Center) {
         BandaTextura(Modifier.align(Alignment.TopCenter), sobreTinta = true, alto = Medidas.VisorBienvenida)
         CodigoQR("alarmasqr://evento/e-entrega", tamano = Medidas.QRBienvenida)
+        // Posiciones del vector medido en Figma (anexo §1, capas 4013:2900 y 4013:2902); excepción documentada como las proporciones de DianaQR.
         Destello(tamano = Medidas.CajaIcono, color = Colores.Blanco, modifier = Modifier.align(Alignment.TopStart).offset(x = 22.dp, y = 18.dp))
         Destello(tamano = Tamanos.Icono, color = Colores.Blanco, modifier = Modifier.align(Alignment.TopStart).offset(x = 298.dp, y = 110.dp))
     }

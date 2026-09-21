@@ -22,12 +22,12 @@ marco) con los ids de `docs/MOCKUPS.md` §5.
 | M04d | 4330:1432 | pendiente |
 | M05 | 4:223 | pendiente |
 
-**Nota M01 (Tarea 5, corregida en la ronda 1 de revisión):** el ayudante `capturar()` de `Verificacion.kt` ya no usa
-`captureToImage()` — esa API cuelga bajo Robolectric en este proyecto (`forceRedraw()` espera hasta 2000 ms un
-callback de redibujo real que solo se salta con el atajo `RobolectricIdlingStrategy.hasRobolectricFingerprint()`,
+**Nota M01 (Tarea 5, corregida en las rondas 1 y 2 de revisión):** el ayudante `capturar()` de `Verificacion.kt` ya
+no usa `captureToImage()` — esa API cuelga bajo Robolectric en este proyecto (`forceRedraw()` espera hasta 2000 ms
+un callback de redibujo real que solo se salta con el atajo `RobolectricIdlingStrategy.hasRobolectricFingerprint()`,
 añadido en `compose-ui-test-junit4-android` 1.12; el `composeBom` fijado aquí resuelve 1.11.3 y subirlo exige
 compileSdk 37 + AGP 9.1.0, fuera de alcance). `capturar()` ahora dibuja el `decorView` de la actividad de prueba
 directamente (`decorView.draw(Canvas)` sobre un `Bitmap`), que sí completa de forma síncrona. `M01.png` es otra vez
-la salida real de `regla.capturar("M01")` dentro de `M01BienvenidaScreenTest` (por eso «Google Calendar» aparece
-marcado: la prueba llama a `capturar()` justo después de alternar esa fila). Diferencia aceptada frente a Figma: el
+la salida real de `regla.capturar("M01")` dentro de `M01BienvenidaScreenTest`, llamado antes de tocar cualquier fila
+de calendario, así que las tres quedan sin marcar como en el marco de Figma. Diferencia aceptada frente a Figma: el
 párrafo se parte en 3 líneas en vez de 2 (métrica de fuente de Robolectric).
