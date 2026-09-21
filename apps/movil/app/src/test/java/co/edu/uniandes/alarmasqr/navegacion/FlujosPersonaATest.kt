@@ -63,6 +63,9 @@ class FlujosPersonaATest {
         regla.onNodeWithTag("pantalla-M12").assertIsDisplayed()
         regla.onNodeWithTag("abrir-ajustes").performClick()
         regla.onNodeWithTag("pantalla-M03").assertIsDisplayed()
+        // Con el permiso CAMERA real concedido (preparar()), el visor está encendido y el chip sí describe su
+        // estado real (fix round de revisión final: antes se mostraba también sin permiso, ver M03EscanerScreenTest).
+        regla.onNodeWithText("● Cámara activa").assertIsDisplayed()
         regla.onNodeWithTag("visor").performClick()
         regla.waitForIdle()
         regla.onNodeWithTag("pantalla-M04").assertIsDisplayed()

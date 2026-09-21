@@ -56,8 +56,12 @@ fun M03EscanerScreen(
             ChipControl("Linterna · auto", activo = estado.linterna, onClick = alAlternarLinterna, sobreTinta = true, modifier = Modifier.testTag("linterna"))
         }
         Box(Modifier.fillMaxWidth().weight(1f)) {
-            if (tienePermiso) VisorCamara(linterna = estado.linterna, alLeer = alLeer, modifier = Modifier.fillMaxSize())
-            ChipEstado("● Cámara activa", VarianteChip.Escaneada, modifier = Modifier.align(Alignment.TopCenter).padding(top = Espacio.ChipVisorSuperior))
+            if (tienePermiso) {
+                VisorCamara(linterna = estado.linterna, alLeer = alLeer, modifier = Modifier.fillMaxSize())
+                // «Cámara activa» solo tiene sentido con el permiso real concedido; sin él el visor está apagado
+                // (D5) y el chip mentiría sobre el estado de la cámara.
+                ChipEstado("● Cámara activa", VarianteChip.Escaneada, modifier = Modifier.align(Alignment.TopCenter).padding(top = Espacio.ChipVisorSuperior))
+            }
             Column(Modifier.align(Alignment.Center), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(Espacio.GapVisor)) {
                 MarcoEnfoque(Modifier.clickable(role = Role.Button, onClick = alTocarVisor).testTag("visor"))
                 Text("Apunta al código QR del evento", style = Tipografia.Destacado, color = Colores.Blanco)

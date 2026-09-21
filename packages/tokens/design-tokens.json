@@ -533,6 +533,10 @@
     "vibracion": {
       "duration": 80,
       "$description": "Vibración corta al detectar el código QR en M03 (F-M03)"
+    },
+    "ignorar-relectura": {
+      "duration": 2000,
+      "$description": "M03 ignora una lectura de QR igual a la última consumida durante esta ventana, para no reabrir M13 en bucle al volver de esa pantalla con el mismo QR inválido frente a la cámara"
     }
   },
   "elevation": {

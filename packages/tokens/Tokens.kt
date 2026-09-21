@@ -67,32 +67,32 @@ object Fuentes {
 
 /** Escala tipográfica del Design System (L02 + complementos). Los colores se aplican en el uso, no aquí. */
 object Tipografia {
-    val HoraProtagonista = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 96.sp, lineHeight = 96.sp, fontFeatureSettings = "tnum")   // M10
-    val HoraProtagonistaSufijo = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 28.sp, fontFeatureSettings = "tnum")
-    val HoraSonara = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 52.sp, lineHeight = 52.sp, fontFeatureSettings = "tnum")         // M04 / M09
-    val HoraTarjeta = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 26.sp, lineHeight = 26.sp, fontFeatureSettings = "tnum")        // tarjeta de alarma
-    val HoraAmPm = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")
-    val H1 = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 28.sp, lineHeight = 32.sp)             // nombre de pantalla
-    val TituloVacio = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 24.sp)                       // «Aún no tienes alarmas» (M02v)
-    val Titular = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 32.sp)                           // «Escanea y listo» (M01, marco 3:71)
-    val BarraSuperior = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 22.sp)
-    val H2 = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.SemiBold, fontSize = 22.sp, lineHeight = 26.sp)        // nombre de evento
-    val Destacado = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-    val Chevron = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 20.sp)                                   // «›» de las filas de M02h
-    val Cuerpo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 16.sp, lineHeight = 24.sp)
-    val Parrafo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 21.sp)            // párrafo bajo el titular (M01)
+    val HoraProtagonista = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 96.sp, lineHeight = 96.sp, fontFeatureSettings = "tnum")   // M10
+    val HoraProtagonistaSufijo = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 28.sp, fontFeatureSettings = "tnum")
+    val HoraSonara = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 52.sp, lineHeight = 52.sp, fontFeatureSettings = "tnum")         // M04 / M09
+    val HoraTarjeta = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 26.sp, lineHeight = 26.sp, fontFeatureSettings = "tnum")        // tarjeta de alarma
+    val HoraAmPm = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")
+    val H1 = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 28.sp, lineHeight = 32.sp)             // nombre de pantalla
+    val TituloVacio = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 24.sp)                       // «Aún no tienes alarmas» (M02v)
+    val Titular = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 32.sp)                           // «Escanea y listo» (M01, marco 3:71)
+    val BarraSuperior = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 22.sp)
+    val H2 = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.SemiBold, fontSize = 22.sp, lineHeight = 26.sp)        // nombre de evento
+    val Destacado = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+    val Chevron = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 20.sp)                                   // «›» de las filas de M02h
+    val Cuerpo = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 16.sp, lineHeight = 24.sp)
+    val Parrafo = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 21.sp)            // párrafo bajo el titular (M01)
     val TituloDialogo = H2                                                                                               // «¿Eliminar alarma?»
-    val CuerpoDialogo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 14.sp, lineHeight = 20.sp)     // consecuencia concreta
-    val Boton = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp)
-    val TituloTarjeta = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp, lineHeight = 20.sp)
-    val H3 = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 13.sp, letterSpacing = 0.08.em)               // «HOY · JUEVES 27», en mayúsculas
-    val Etiqueta = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 18.sp)           // «evento 8:00 am · Aula SD-703»
-    val Nota = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.5.sp, lineHeight = 17.sp)
-    val NotaHoja = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 17.5.sp)          // aviso de pie de la hoja M02h
-    val Chip = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 12.sp)
-    val EtiquetaCampo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)                          // etiqueta dentro del contorno
-    val NavegacionInferior = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 11.sp)                       // única excepción < 12
-    val Enlace = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp, textDecoration = TextDecoration.Underline)
+    val CuerpoDialogo = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 14.sp, lineHeight = 20.sp)     // consecuencia concreta
+    val Boton = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+    val TituloTarjeta = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp, lineHeight = 20.sp)
+    val H3 = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 13.sp, letterSpacing = 0.08.em)               // «HOY · JUEVES 27», en mayúsculas
+    val Etiqueta = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 18.sp)           // «evento 8:00 am · Aula SD-703»
+    val Nota = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.5.sp, lineHeight = 17.sp)
+    val NotaHoja = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 17.5.sp)          // aviso de pie de la hoja M02h
+    val Chip = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+    val EtiquetaCampo = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)                          // etiqueta dentro del contorno
+    val NavegacionInferior = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 11.sp)                       // única excepción < 12
+    val Enlace = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 15.sp, textDecoration = TextDecoration.Underline)
     val FlechaAtras = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 26.sp)               // «‹» (DS §6)
     val TituloEvento = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, lineHeight = 24.sp)
     val Opcion = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 14.sp)                    // fila de opción (M01)
@@ -120,7 +120,6 @@ object Tamanos {
     val NavegacionInferior = 64.dp
     val Chip = 20.dp
     val ChipControl = 32.dp           // chip que se toca («Linterna · auto»), relleno 14 lateral, radio 16 (v1.7)
-    val Switch = 42.dp to 24.dp
     val AreaTactilMinima = 48.dp
     val BandaTextura = 120.dp
     val Icono = 24.dp
@@ -255,6 +254,7 @@ object Movimiento {
     const val TexturaAtenuada = 0.5f      // banda de textura al 50 % detrás de los titulares (M12, M13)
     const val QROpacidadVisor = 0.5f      // opacidad del QR de fondo dentro del marco de enfoque (M03)
     const val VibracionMs = 80L           // «vibra al detectar el código» (F-M03)
+    const val IgnorarRelecturaMs = 2_000L // M03 ignora una lectura igual a la última consumida (evita el bucle M03↔M13)
 }
 
 /** Sombra 0 4 12 Tinta 18 % (FAB, hoja, tarjeta del evento, burbuja de M03b) expresada como elevación de Compose. */

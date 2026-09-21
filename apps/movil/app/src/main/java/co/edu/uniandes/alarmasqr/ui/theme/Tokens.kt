@@ -247,6 +247,7 @@ object Movimiento {
     const val TexturaAtenuada = 0.5f   // banda de textura al 50 % detrás de los titulares (M12, M13)
     const val QROpacidadVisor = 0.5f   // opacidad del QR de fondo dentro del marco de enfoque (M03)
     const val VibracionMs = 80L        // «vibra al detectar el código» (F-M03)
+    const val IgnorarRelecturaMs = 2_000L   // M03 ignora una lectura igual a la última consumida (evita el bucle M03↔M13)
 }
 
 /** Sombra 0 4 12 Tinta 18 % (FAB, hoja, tarjeta del evento, burbuja de M03b) expresada como elevación de Compose. */

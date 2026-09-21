@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.assertContentDescriptionEquals
 import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsOff
@@ -59,7 +60,9 @@ class ComponentesTest {
         assertEquals(1, secundario)
         regla.onNodeWithTag("enlace").assertHeightIsEqualTo(32.dp).performClick()
         assertEquals(1, enlace)
-        regla.onNodeWithTag("atras").assertHeightIsEqualTo(44.dp).assertWidthIsEqualTo(44.dp).performClick()
+        regla.onNodeWithTag("atras").assertHeightIsEqualTo(44.dp).assertWidthIsEqualTo(44.dp)
+            .assertContentDescriptionEquals("Atrás")   // TalkBack leía solo «‹» sin esto (fix round de revisión final)
+            .performClick()
         assertEquals(1, atras)
     }
 

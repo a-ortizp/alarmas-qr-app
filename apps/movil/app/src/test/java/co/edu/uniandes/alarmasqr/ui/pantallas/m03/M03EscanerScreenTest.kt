@@ -39,7 +39,9 @@ class M03EscanerScreenTest {
         regla.onNodeWithTag("pantalla-M03").assertIsDisplayed()
         regla.onNodeWithText("Escanear QR").assertIsDisplayed()
         regla.onNodeWithTag("linterna").assertIsOff()
-        regla.onNodeWithText("● Cámara activa").assertIsDisplayed()
+        // Sin permiso real el visor queda apagado (D5): el chip «● Cámara activa» mentiría sobre su estado, así
+        // que no se dibuja (fix round de revisión final; con permiso sí aparece, ver FlujosPersonaATest T1).
+        regla.onNodeWithText("● Cámara activa").assertDoesNotExist()
         regla.onNodeWithText("Apunta al código QR del evento").assertIsDisplayed()
         regla.capturar("M03")
         regla.onNodeWithTag("linterna").performClick()

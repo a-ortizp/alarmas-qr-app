@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
@@ -90,7 +91,7 @@ fun BotonEnlace(texto: String, onClick: () -> Unit, modifier: Modifier = Modifie
 fun BotonAtras(onClick: () -> Unit, modifier: Modifier = Modifier, sobreTinta: Boolean = false) {
     TextButton(
         onClick = onClick,
-        modifier = modifier.size(Medidas.BotonAtras).testTag("atras").semantics { role = Role.Button },
+        modifier = modifier.size(Medidas.BotonAtras).testTag("atras").semantics { role = Role.Button; contentDescription = "Atrás" },
         shape = Radios.Pildora,
         contentPadding = PaddingValues(0.dp),
         colors = ButtonDefaults.textButtonColors(contentColor = if (sobreTinta) Colores.Blanco else Colores.Tinta),
