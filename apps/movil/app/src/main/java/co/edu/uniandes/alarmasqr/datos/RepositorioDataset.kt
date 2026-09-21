@@ -53,6 +53,11 @@ class RepositorioDataset(json: String) {
 
     fun eliminar(id: String) = mutar { lista -> lista.filterNot { it.id == id } }
 
+    /** Interruptor de la tarjeta: pausa o reactiva sin afectar «Deshacer» (no pasa por `mutar`). */
+    fun cambiarEstado(id: String, pausada: Boolean) {
+        _alarmas.value = _alarmas.value.map { if (it.id == id) it.copy(estado = if (pausada) "pausada" else "activa") else it }
+    }
+
     /** Un solo nivel: revierte la última mutación; una segunda llamada no hace nada (comportamiento del snackbar de 5 s). */
     fun deshacer() {
         anterior?.let { _alarmas.value = it }

@@ -181,6 +181,12 @@
         "size": 28,
         "$description": "Nombre de pantalla (móvil)"
       },
+      "titulo-vacio": {
+        "family": "titulares",
+        "weight": 700,
+        "size": 24,
+        "$description": "«Aún no tienes alarmas» (M02v, estado vacío)"
+      },
       "titular": {
         "family": "titulares",
         "weight": 700,
@@ -231,6 +237,12 @@
         "family": "ui",
         "weight": 700,
         "size": 16
+      },
+      "chevron": {
+        "family": "ui",
+        "weight": 700,
+        "size": 20,
+        "$description": "«›» de las filas de M02h"
       },
       "cuerpo": {
         "family": "ui",
@@ -293,6 +305,13 @@
         "family": "ui",
         "weight": 400,
         "size": 12.5
+      },
+      "nota-hoja": {
+        "family": "ui",
+        "weight": 400,
+        "size": 13,
+        "lineHeight": 17.5,
+        "$description": "Aviso de pie de la hoja M02h"
       },
       "chip": {
         "family": "ui",
@@ -423,13 +442,19 @@
       "medianil": 12,
       "columnas": 4,
       "entre-bloques": 12,
+      "vacio-superior": 64,
+      "vacio-entre": 8,
       "padding-barra": 16,
       "padding-navegacion": 36,
       "hoja-superior": 12,
       "hoja-inferior": 32,
+      "hoja-inferior-corta": 28,
       "pie-enlace": 32,
       "gap-fila": 10,
       "gap-hoja": 6,
+      "padding-fila-hoja": 16,
+      "gap-fila-hoja": 14,
+      "gap-texto-hoja": 2,
       "gap-dialogo": 16,
       "gap-tarjeta": 8,
       "padding-campo-vertical": 7,

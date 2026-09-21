@@ -73,10 +73,12 @@ object Tipografia {
     val HoraTarjeta = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 26.sp, lineHeight = 26.sp, fontFeatureSettings = "tnum")        // tarjeta de alarma
     val HoraAmPm = TextStyle(Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")
     val H1 = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 28.sp, lineHeight = 32.sp)             // nombre de pantalla
+    val TituloVacio = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 24.sp)                       // «Aún no tienes alarmas» (M02v)
     val Titular = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 32.sp)                           // «Escanea y listo» (M01, marco 3:71)
     val BarraSuperior = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 22.sp)
     val H2 = TextStyle(Fuentes.Titulares, fontWeight = FontWeight.SemiBold, fontSize = 22.sp, lineHeight = 26.sp)        // nombre de evento
     val Destacado = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+    val Chevron = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 20.sp)                                   // «›» de las filas de M02h
     val Cuerpo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 16.sp, lineHeight = 24.sp)
     val Parrafo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 21.sp)            // párrafo bajo el titular (M01)
     val TituloDialogo = H2                                                                                               // «¿Eliminar alarma?»
@@ -86,6 +88,7 @@ object Tipografia {
     val H3 = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 13.sp, letterSpacing = 0.08.em)               // «HOY · JUEVES 27», en mayúsculas
     val Etiqueta = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 18.sp)           // «evento 8:00 am · Aula SD-703»
     val Nota = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.5.sp, lineHeight = 17.sp)
+    val NotaHoja = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 17.5.sp)          // aviso de pie de la hoja M02h
     val Chip = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 12.sp)
     val EtiquetaCampo = TextStyle(Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)                          // etiqueta dentro del contorno
     val NavegacionInferior = TextStyle(Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 11.sp)                       // única excepción < 12
@@ -185,6 +188,8 @@ object Espacio {
     val Margen = 20.dp        // retícula de 4 columnas
     val Medianil = 12.dp
     val EntreBloques = 12.dp
+    val VacioSuperior = 64.dp       // espaciador antes de la diana en el estado vacío (M02v)
+    val VacioEntre = 8.dp           // entre bloques del estado vacío (M02v)
     val PaddingBoton = 16.dp
     val PaddingTarjeta = 14.dp
     val PaddingDialogo = 24.dp
@@ -193,9 +198,13 @@ object Espacio {
     val PaddingNavegacion = 36.dp   // laterales de la barra inferior
     val HojaSuperior = 12.dp        // relleno superior de la hoja (asa)
     val HojaInferior = 32.dp        // relleno inferior de la hoja y de los pies con enlace
+    val HojaInferiorCorta = 28.dp   // relleno inferior de la hoja M02h
     val PieEnlace = 32.dp
     val GapFila = 10.dp             // entre hora, texto y switch en la tarjeta
     val GapHoja = 6.dp              // entre filas de la hoja M02h
+    val PaddingFilaHoja = 16.dp     // relleno lateral de una fila de la hoja M02h
+    val GapFilaHoja = 14.dp         // entre la caja de icono y el texto de una fila de la hoja M02h
+    val GapTextoHoja = 2.dp         // entre título y subtítulo de una fila de la hoja M02h
     val GapDialogo = 16.dp
     val GapTarjeta = 8.dp           // entre filas de la tarjeta del evento (M04)
     val PaddingCampoVertical = 7.dp // relleno vertical de CampoTexto (Figma 3:11)
