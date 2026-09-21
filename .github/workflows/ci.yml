@@ -6,6 +6,11 @@ on:
   push:
     branches: [main]
 
+# Mínimos: leer el código y, en los PR, la lista de archivos cambiados (dorny/paths-filter usa la API).
+permissions:
+  contents: read
+  pull-requests: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
