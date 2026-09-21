@@ -15,7 +15,6 @@ import { PantallaWeb } from '../../navegacion/pantallas';
     .marcador {
       display: grid;
       gap: var(--space-web-bloques);
-      padding: var(--space-web-contenido-y) var(--space-web-contenido-x);
     }
     h1 {
       font: var(--text-h1-web);
