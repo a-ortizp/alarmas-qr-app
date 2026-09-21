@@ -1,16 +1,12 @@
 package co.edu.uniandes.alarmasqr.navegacion
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.rememberLifecycleOwner
 import androidx.navigation3.runtime.NavEntry
@@ -18,7 +14,9 @@ import androidx.navigation3.scene.OverlayScene
 import androidx.navigation3.scene.Scene
 import androidx.navigation3.scene.SceneStrategy
 import androidx.navigation3.scene.SceneStrategyScope
+import co.edu.uniandes.alarmasqr.ui.componentes.Asa
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
+import co.edu.uniandes.alarmasqr.ui.theme.Espacio
 import co.edu.uniandes.alarmasqr.ui.theme.Radios
 
 /**
@@ -66,15 +64,10 @@ private data class EscenaHoja<T : Any>(
             shape = Radios.Hoja,
             containerColor = Colores.Blanco,
             scrimColor = Colores.VeloMovil,
-            dragHandle = { Asa() },
+            // Figma: el asa queda 12 dp bajo el techo de la hoja (Espacio.HojaSuperior), no pegada a él.
+            dragHandle = { Asa(Modifier.padding(top = Espacio.HojaSuperior)) },
         ) {
             CompositionLocalProvider(LocalLifecycleOwner provides propietario) { entrada.Content() }
         }
     }
-}
-
-/** Asa de la hoja (DS comp. 30 «Hoja inferior»): 36×4, Gris Borde, píldora. */
-@Composable
-private fun Asa() {
-    Box(Modifier.width(36.dp).height(4.dp).background(Colores.GrisBorde, Radios.Pildora))
 }

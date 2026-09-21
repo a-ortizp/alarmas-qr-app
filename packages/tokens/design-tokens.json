@@ -2,8 +2,8 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.9",
-    "date": "2026-09-19",
+    "version": "1.10",
+    "date": "2026-09-20",
     "source": "DESIGN_SYSTEM.md v1.10 · STYLE_TILE.md v1.2 · MOCKUPS.md (móvil v1.7, web v1.5)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
     "notes": [
@@ -12,7 +12,8 @@
       "Texto ≤ 15 pt usa los tonos AA (*.texto); los tonos base quedan para rellenos, íconos y trazos.",
       "Sobre Tinta el texto secundario va en Gris Borde y el primario es blanco (excepción M10).",
       "Alturas: 52 para toque en móvil (v1.6, revisión de tutores del 2026-09-17; antes 48), 44 para puntero en web; 56 en las acciones de la alarma sonando.",
-      "Prevención de errores (v1.7): toda acción destructiva o de salida pasa por un diálogo de confirmación centrado sobre velo Tinta 55 %; la acción segura es el primario amarillo y la que confirma va en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura."
+      "Prevención de errores (v1.7): toda acción destructiva o de salida pasa por un diálogo de confirmación centrado sobre velo Tinta 55 %; la acción segura es el primario amarillo y la que confirma va en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura.",
+      "v1.10 (2026-09-20): medidas móviles de la Persona A tomadas de Figma para el Plan 2 (coral suave, radios de visor/casilla/snackbar, flecha «‹», título de evento, rótulo de opción, chip que se toca, medidas size.movil)."
     ]
   },
   "color": {
@@ -33,6 +34,11 @@
       "$type": "color",
       "$description": "Texto, marca, estados activos, fondos plenos (M03, M10)"
     },
+    "tinta-25": {
+      "$value": "rgba(23, 22, 28, 0.25)",
+      "$type": "color",
+      "$description": "Tinta al 25 % · puntos inactivos del indicador de página (M01)"
+    },
     "blanco": {
       "$value": "#FFFFFF",
       "$type": "color",
@@ -48,6 +54,11 @@
         "$value": "#C4362E",
         "$type": "color",
         "$description": "Coral Texto · destructivo · 5.4:1 sobre blanco"
+      },
+      "suave": {
+        "$value": "#FDECEA",
+        "$type": "color",
+        "$description": "Coral Suave · relleno del sello «!» y del chip «enlace externo» de M13"
       }
     },
     "verde": {
@@ -135,24 +146,28 @@
         "family": "datos",
         "weight": 700,
         "size": 96,
-        "$description": "M10 alarma sonando; sufijo pm 28"
+        "tabular": true,
+        "$description": "M10 alarma sonando; sufijo pm 28, dígitos tabulares"
       },
       "hora-sonara": {
         "family": "datos",
         "weight": 700,
         "size": 52,
-        "$description": "Bloques «Sonará» M04 / M09; etiqueta 12 encima"
+        "tabular": true,
+        "$description": "Bloques «Sonará» M04 / M09; etiqueta 12 encima, dígitos tabulares"
       },
       "hora-tarjeta": {
         "family": "datos",
         "weight": 700,
         "size": 26,
-        "$description": "Tarjeta de alarma (26–28) + am/pm Medium 12–14 en línea"
+        "tabular": true,
+        "$description": "Tarjeta de alarma (26–28) + am/pm Medium 12–14 en línea, dígitos tabulares"
       },
       "hora-ampm": {
         "family": "datos",
         "weight": 500,
-        "size": 12
+        "size": 12,
+        "tabular": true
       },
       "indicador-web": {
         "family": "datos",
@@ -165,6 +180,18 @@
         "weight": 700,
         "size": 28,
         "$description": "Nombre de pantalla (móvil)"
+      },
+      "titulo-vacio": {
+        "family": "titulares",
+        "weight": 700,
+        "size": 24,
+        "$description": "«Aún no tienes alarmas» (M02v, estado vacío)"
+      },
+      "titular": {
+        "family": "titulares",
+        "weight": 700,
+        "size": 32,
+        "$description": "«Escanea y listo» de M01 (marco 3:71)"
       },
       "h1-web": {
         "family": "titulares",
@@ -211,10 +238,23 @@
         "weight": 700,
         "size": 16
       },
+      "chevron": {
+        "family": "ui",
+        "weight": 700,
+        "size": 20,
+        "$description": "«›» de las filas de M02h"
+      },
       "cuerpo": {
         "family": "ui",
         "weight": 400,
         "size": 16
+      },
+      "parrafo": {
+        "family": "ui",
+        "weight": 400,
+        "size": 15,
+        "lineHeight": 21,
+        "$description": "Párrafo de M01 bajo el titular (marco 3:71)"
       },
       "boton-movil": {
         "family": "ui",
@@ -266,6 +306,13 @@
         "weight": 400,
         "size": 12.5
       },
+      "nota-hoja": {
+        "family": "ui",
+        "weight": 400,
+        "size": 13,
+        "lineHeight": 17.5,
+        "$description": "Aviso de pie de la hoja M02h"
+      },
       "chip": {
         "family": "ui",
         "weight": 700,
@@ -284,7 +331,22 @@
         "weight": 400,
         "size": 11,
         "$description": "Única excepción por debajo de 12"
-      }
+      },
+      "flecha-atras": { "family": "ui", "weight": 700, "size": 26, "$description": "Glifo «‹» de la barra superior móvil, área 44×44 (DS §6)" },
+      "titulo-evento": { "family": "titulares", "weight": 600, "size": 20, "lineHeight": 24, "$description": "Nombre del evento en la tarjeta de M04 y titular de M03b" },
+      "opcion": { "family": "ui", "weight": 700, "size": 14, "$description": "Rótulo de la fila de opción de calendario (M01, set 48)" },
+      "chip-control": { "family": "ui", "weight": 600, "size": 12, "$description": "Texto del chip que se toca («Linterna · auto», M03; mockup v1.7)" },
+      "valor-campo": { "family": "ui", "weight": 400, "size": 15, "lineHeight": 16, "$description": "Valor de CampoTexto (Figma 3:11)" },
+      "divisor": { "family": "ui", "weight": 400, "size": 12, "$description": "Texto de Divisor («o continúa con», «mientras tanto»)" },
+      "etiqueta-dato": { "family": "ui", "weight": 700, "size": 12, "letterSpacing": "8%", "$description": "Etiqueta de fila de la tarjeta del evento («FECHA», «LUGAR»), M04" },
+      "dato": { "family": "ui", "weight": 400, "size": 13.5, "$description": "Valor de fila de la tarjeta del evento (M04) y sello «✓ verificado»" },
+      "pie-acceso": { "family": "ui", "weight": 600, "size": 13, "$description": "Pie de M00a/M00b: «¿Ya tienes cuenta? Inicia sesión»" },
+      "nota-larga": { "family": "ui", "weight": 400, "size": 12, "lineHeight": 17, "$description": "Consentimiento de datos en M00a" },
+      "codigo": { "family": "datos", "weight": 500, "size": 12, "tabular": true, "$description": "Contenido del QR inválido (M13), = hora-ampm" },
+      "enlace-corto": { "family": "ui", "weight": 700, "size": 14, "$description": "«Abrir el enlace bajo mi responsabilidad» (M13); el subrayado lo aplica el componente BotonEnlace" },
+      "mensaje": { "family": "ui", "weight": 400, "size": 13, "lineHeight": 17, "$description": "Mensaje de WhatsApp en la burbuja de M03b" },
+      "enlace-descarte": { "family": "ui", "weight": 500, "size": 14, "$description": "Enlace «No puedo asistir · eliminar alarma» de M04 (descarte, Archivo Medium)" },
+      "margen-sonara": { "family": "ui", "weight": 400, "size": 13, "lineHeight": 17.5, "$description": "Margen + trayecto y enlace «Editar» del bloque SONARÁ (M04)" }
     }
   },
   "size": {
@@ -344,6 +406,16 @@
       "gap": 12,
       "entre-botones": 8,
       "$description": "Diálogo de confirmación web («¿Cerrar sesión?»): botones apilados de 44, velo 55 %"
+    },
+    "movil": {
+      "switch": [44, 26], "icono-fab": 26, "snackbar": 48, "casilla": 20, "icono-fila": 20, "fila-opcion": 36,
+      "fila-hoja": 100, "caja-icono": 40, "sello": 30, "sello-grande": 64, "diana": 104, "visor-apagado": 110,
+      "visor-bienvenida": 170, "marco-enfoque": 220, "esquina-enfoque": 40, "radio-esquina-enfoque": 20, "vista-previa": 300, "numeral": 22, "logotipo": 56, "enlace": 32,
+      "boton-atras": 44, "asa": [36, 4], "pildora-nav": [40, 22], "icono-nav": 20, "qr-bienvenida": 84, "qr-visor": 100,
+      "qr-pantallazo": 120, "marco-lectura": 136, "indicador-pagina": [22, 6], "perilla": 20, "hora-tarjeta-ancho": 81,
+      "accion-snackbar": [110, 26], "modulo-textura": 8, "paso-textura": 14, "etiqueta-dato": 74, "punto-pagina": 6,
+      "burbuja": [250, 227],
+      "$description": "Medidas de los mockups móviles v1.7 medidas en Figma el 2026-09-20 (Plan 2)"
     }
   },
   "radius": {
@@ -354,20 +426,69 @@
     "campo": 12,
     "chip-web": 8,
     "barra": 4,
+    "visor": 16,
+    "visor-bienvenida": 20,
+    "marco-lectura": 10,
+    "casilla": 4,
+    "snackbar": 12,
+    "caja-icono": 12,
+    "modulo": 2,
+    "qr": 4,
     "$description": "Radio 14 en tarjetas, modales y contenedores; 20 en el diálogo de confirmación móvil; 12 en campos; píldora en botones, chips y filtros"
   },
   "stroke": {
     "borde": 1.5,
     "borde-fino": 1,
     "foco": 2,
-    "marco-pantalla": 3
+    "marco-pantalla": 3,
+    "marco-enfoque": 4
   },
   "space": {
     "movil": {
       "margen": 20,
       "medianil": 12,
       "columnas": 4,
-      "entre-bloques": 12
+      "entre-bloques": 12,
+      "vacio-superior": 64,
+      "vacio-entre": 8,
+      "padding-barra": 16,
+      "padding-navegacion": 36,
+      "hoja-superior": 12,
+      "hoja-inferior": 32,
+      "hoja-inferior-corta": 28,
+      "pie-enlace": 32,
+      "gap-fila": 10,
+      "gap-hoja": 6,
+      "padding-fila-hoja": 16,
+      "gap-fila-hoja": 14,
+      "gap-texto-hoja": 2,
+      "gap-dialogo": 16,
+      "gap-tarjeta": 8,
+      "padding-campo-vertical": 7,
+      "gap-campo": 2,
+      "padding-chip-control": 14,
+      "padding-fila-vertical": 8,
+      "gap-divisor": 8,
+      "gap-hora-sufijo": 6,
+      "gap-texto-tarjeta": 3,
+      "gap-chips": 6,
+      "gap-navegacion": 3,
+      "padding-fab": [20, 24],
+      "padding-tarjeta-vertical": 10,
+      "padding-tarjeta-evento": 16,
+      "antes-boton": 28,
+      "padding-pantalla": [24, 16],
+      "padding-acceso-superior": 28,
+      "padding-permiso-superior": 14,
+      "gap-permiso": 11,
+      "gap-pasos": 7,
+      "padding-pasos-vertical": 12,
+      "antes-acciones": 32,
+      "gap-visor": 16,
+      "chip-visor-superior": 24,
+      "padding-marco-lectura": 8,
+      "gap-sonara": 2,
+      "gap-titulo": 8
     },
     "web": {
       "contenido-vertical": 28,
@@ -408,15 +529,26 @@
     "toque-largo": {
       "duration": 500,
       "$description": "Mantener presionado el FAB para abrir la hoja «Agregar evento»"
+    },
+    "vibracion": {
+      "duration": 80,
+      "$description": "Vibración corta al detectar el código QR en M03 (F-M03)"
+    },
+    "ignorar-relectura": {
+      "duration": 2000,
+      "$description": "M03 ignora una lectura de QR igual a la última consumida durante esta ventana, para no reabrir M13 en bucle al volver de esa pantalla con el mismo QR inválido frente a la cámara"
     }
   },
   "elevation": {
     "fab": "0 4px 12px rgba(23, 22, 28, 0.18)",
-    "tarjeta-evento": "0 6px 18px rgba(23, 22, 28, 0.10)"
+    "tarjeta-evento": "0 6px 18px rgba(23, 22, 28, 0.10)",
+    "tarjeta": "0 4px 12px rgba(23, 22, 28, 0.18)"
   },
   "texture": {
     "modulos-qr": {
       "opacityMax": 0.08,
+      "opacityMin": 0.02,
+      "opacityTitulares": 0.5,
       "band": 120,
       "screens": [
         "M01",
@@ -426,8 +558,9 @@
         "M12",
         "M13"
       ],
-      "$description": "Retícula de módulos QR que se desvanece hacia abajo; nunca en listas, formularios ni visor"
-    }
+      "$description": "Retícula de módulos QR que se desvanece hacia abajo; nunca en listas, formularios ni visor. `opacityTitulares` atenúa la banda completa al 50 % detrás de los titulares de M12 y M13 (MOCKUPS §3c paso 4)."
+    },
+    "qr-visor-opacity": 0.5
   },
-  "version": "1.9"
+  "version": "1.10"
 }

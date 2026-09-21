@@ -28,3 +28,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# Espacio de trabajo de superpowers (subagent-driven-development)
+.superpowers/

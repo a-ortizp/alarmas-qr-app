@@ -94,6 +94,7 @@ Las tres fuentes (Bricolage Grotesque, Archivo, Spline Sans Mono) son de Google 
 - [ ] Eliminar una alarma y cerrar sesión pasan por un diálogo de confirmación (M04d, M06d, M11d) con la acción segura prominente y rótulos de máximo dos palabras.
 - [ ] Tonos de texto AA (Coral, Verde, Azul y Gris Texto) para todo texto ≤ 15 pt.
 - [ ] La alarma suena con la app cerrada en un dispositivo real.
+  > 2026-09-21 (Plan 2, Persona A): la implementación está completa (`AlarmManager.setExactAndAllowWhileIdle` + `ReceptorAlarma` + notificación de pantalla completa con deep link a M10, decisión D4); falta la prueba manual en un dispositivo real, así que la casilla sigue sin marcar. Ver README «Plan 2 · móvil de la Persona A» § «Cómo probar la alarma con la app cerrada».
 - [ ] El APK está adjunto a un Release y el enlace abre desde el celular.
 - [ ] Ambos autores tienen commits en `apps/movil` y en `apps/web`.
 - [ ] `docs/` contiene los archivos de §5 y el enlace al repositorio de UX.
