@@ -16,7 +16,7 @@ marco) con los ids de `docs/MOCKUPS.md` §5.
 | M02h | 4019:3139 | pendiente (Tarea 14) |
 | M12 | 6:87 | ok · pixel-perfect (visor apagado, título a 2 líneas, tarjeta «ACTÍVALA EN 3 PASOS», «Abrir ajustes» y las dos alternativas ancladas abajo alinean con el marco; banda de textura atenuada al 50 % verificada por muestreo de píxeles, sin diferencias de recorte de línea) |
 | M13 | 6:122 | ok · pixel-perfect (sello «!», título, cuerpo, tarjeta «QUÉ DETECTAMOS» con el chip y el código Spline Sans Mono, «Volver a escanear», «Crear el evento a mano» y el enlace subrayado alinean con el marco; banda de textura atenuada al 50 % verificada por muestreo de píxeles, sin diferencias de recorte de línea) |
-| M03 | 4:135 | pendiente |
+| M03 | 4:135 | ok · diferencias aceptadas: el marco de enfoque usa dos segmentos rectos con `StrokeCap.Round` + `StrokeJoin.Round` (brief), así que el giro de cada esquina es un remate de radio pequeño (mitad del trazo, 2 dp); el marco de Figma usa un icono de esquina con radio grande (~20 dp), notablemente más curvo. No hay token de radio de esquina en el brief para esta pieza y cambiar a un trazado con `arcTo` de radio propio saldría del alcance de la Tarea 9. Título «Escanear QR» algo más grueso que en Figma (métrica de fuente de Robolectric, igual que M01/M00a). El resto (barra Tinta, chip «Linterna · auto», chip «● Cámara activa», textos del visor, hoja blanca r24 con los dos secundarios y el asa) alinea con el marco. Cámara real: pendiente de prueba en dispositivo (no se puede probar en este entorno) |
 | M03b | 4020:3295 | pendiente |
 | M04 | 4:189 | pendiente |
 | M04d | 4330:1432 | pendiente |

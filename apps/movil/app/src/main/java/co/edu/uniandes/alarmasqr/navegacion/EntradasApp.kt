@@ -1,8 +1,13 @@
 package co.edu.uniandes.alarmasqr.navegacion
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.VibrationEffect
+import android.os.Vibrator
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -10,6 +15,7 @@ import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
+import co.edu.uniandes.alarmasqr.qr.ResultadoQR
 import co.edu.uniandes.alarmasqr.ui.pantallas.m00.M00aRegistroScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m00.M00bEntrarScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m01.M01BienvenidaScreen
@@ -17,8 +23,11 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02InicioScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02InicioViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02hAgregarEventoSheet
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02vEstadoVacio
+import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03EscanerScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03EscanerViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
+import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
 
 /**
  * Registro de las pantallas reales de la Persona A (Plan 2). Lo comparten MainActivity y las pruebas de flujo, así
@@ -74,6 +83,30 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             alCrearAMano = { pila.reemplazarCima(Pantalla.M07) },
         )
     }
+    entry<Pantalla.M03> {
+        val context = LocalContext.current
+        val vm = viewModel { M03EscanerViewModel(repositorio) }
+        val estado by vm.estado.collectAsStateWithLifecycle()
+        val tienePermiso = remember { tienePermisoCamara(context) }
+        LaunchedEffect(estado.resultado) {
+            when (val r = estado.resultado) {
+                is ResultadoQR.EventoDetectado -> {
+                    vibrar(context)
+                    val alarma = repositorio.agregarDesdeEvento(r.eventoId)
+                    vm.consumirResultado()
+                    if (alarma != null) pila.reemplazarCima(Pantalla.M04(alarma.id))
+                }
+                is ResultadoQR.QRInvalido -> { vm.consumirResultado(); pila.irA(Pantalla.M13) }
+                null -> Unit
+            }
+        }
+        M03EscanerScreen(
+            estado = estado, tienePermiso = tienePermiso,
+            alVolver = { pila.removeLastOrNull() }, alAlternarLinterna = vm::alternarLinterna, alLeer = vm::leer,
+            alTocarVisor = vm::simularEventoValido, alTocarVibra = vm::simularInvalido,
+            alElegirPantallazo = { pila.reemplazarCima(Pantalla.M03b) }, alCrearAMano = { pila.reemplazarCima(Pantalla.M07) },
+        )
+    }
     entry<Pantalla.M13> {
         val context = LocalContext.current
         M13QRInvalidoScreen(
@@ -86,4 +119,10 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             },
         )
     }
+}
+
+/** «vibra al detectar el código» (F-M03). */
+private fun vibrar(context: Context) {
+    val vibrador = context.getSystemService(Vibrator::class.java) ?: return
+    vibrador.vibrate(VibrationEffect.createOneShot(Movimiento.VibracionMs, VibrationEffect.DEFAULT_AMPLITUDE))
 }

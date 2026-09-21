@@ -132,6 +132,7 @@ object Medidas {
     val VisorApagado = 110.dp
     val VisorBienvenida = 170.dp
     val MarcoEnfoque = 220.dp
+    val EsquinaEnfoque = 40.dp        // largo de cada esquina del marco de enfoque de M03 (v1.7)
     val VistaPrevia = 300.dp
     val Numeral = 22.dp
     val Logotipo = 56.dp
@@ -177,6 +178,7 @@ object Trazos {
     val BordeFino = 1.dp
     val Foco = 2.dp
     val MarcoPantalla = 3.dp   // borde del sello «!» (M13)
+    val MarcoEnfoque = 4.dp    // trazo de las esquinas del marco de enfoque de M03
 }
 
 object Espacio {
@@ -224,6 +226,8 @@ object Espacio {
     val GapPasos = 7.dp                 // entre filas de la tarjeta «pasos» (M12) y del diagnóstico (M13)
     val PaddingPasosVertical = 12.dp    // relleno vertical de la tarjeta «pasos» (M12) y del diagnóstico (M13)
     val AntesAcciones = 32.dp           // espaciador fijo antes de las acciones de M13
+    val GapVisor = 16.dp                // entre el marco de enfoque y los textos del visor (M03)
+    val ChipVisorSuperior = 24.dp       // separación del chip «● Cámara activa» respecto al techo del visor (M03)
 }
 
 object Movimiento {
@@ -233,6 +237,8 @@ object Movimiento {
     const val TexturaOpacidadMax = 0.08f
     const val TexturaOpacidadMin = 0.02f
     const val TexturaAtenuada = 0.5f   // banda de textura al 50 % detrás de los titulares (M12, M13)
+    const val QROpacidadVisor = 0.5f   // opacidad del QR de fondo dentro del marco de enfoque (M03)
+    const val VibracionMs = 80L        // «vibra al detectar el código» (F-M03)
 }
 
 /** Sombra 0 4 12 Tinta 18 % (FAB, hoja, tarjeta del evento, burbuja de M03b) expresada como elevación de Compose. */
