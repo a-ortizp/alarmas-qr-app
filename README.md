@@ -13,7 +13,7 @@ Investigación, prototipos y diseño viven en el repositorio de UX: https://gith
 
 ## Cómo correr
 
-Requisitos: JDK 17, Android Studio (Koala o posterior) con Android SDK 36 y un emulador o dispositivo con Android 8+ (minSdk 26); Node 22.23.2 (`nvm use`, ver `apps/web/.nvmrc`) y npm 10.
+Requisitos: JDK 17, Android Studio compatible con AGP 9.4 (si al sincronizar pide actualizar el IDE, actualizarlo) con Android SDK 36 y un emulador o dispositivo con Android 8+ (minSdk 26); Node 22.23.2 (`nvm use`, ver `apps/web/.nvmrc`) y npm 10.
 
 `apps/movil/local.properties` (git-ignorado) debe apuntar a un Android SDK con la plataforma 36 instalada — `sdk.dir=/ruta/al/Android/Sdk` — cuando `ANDROID_HOME` no está exportado en el entorno; Android Studio lo genera solo al abrir `apps/movil`.
 
@@ -37,9 +37,9 @@ npx ng build --configuration production
 | Ámbito | Herramienta | Versión | Dónde se fija |
 |---|---|---|---|
 | Móvil | JDK | 17 | `apps/movil/app/build.gradle.kts` |
-| Móvil | Gradle | 8.14.3 | `apps/movil/gradle/wrapper/gradle-wrapper.properties` |
-| Móvil | Android Gradle Plugin | 8.13.2 | `apps/movil/gradle/libs.versions.toml` |
-| Móvil | Kotlin (+ Compose y serialization) | 2.2.21 | ídem |
+| Móvil | Gradle | 9.6.0 | `apps/movil/gradle/wrapper/gradle-wrapper.properties` |
+| Móvil | Android Gradle Plugin (Kotlin integrado, DSL nuevo) | 9.4.1 | `apps/movil/gradle/libs.versions.toml` |
+| Móvil | Kotlin (plugins Compose y serialization; sin `kotlin-android`, lo integra AGP 9) | 2.2.21 | ídem |
 | Móvil | Jetpack Compose BOM | 2026.06.00 | ídem |
 | Móvil | Navigation 3 | 1.1.7 | ídem |
 | Móvil | Lifecycle / ViewModel | 2.10.0 | ídem |
