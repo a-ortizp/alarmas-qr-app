@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
  * Redibujados a mano sobre la misma anatomía; no son los SVG de Figma, que no se exportan (spec §0.3).
  */
 object Iconos {
-    private fun icono(nombre: String, vararg trazos: PathBuilder.() -> Unit): ImageVector =
+    private fun icono(nombre: String, vararg trazos: PathBuilder.() -> Unit, relleno: (PathBuilder.() -> Unit)? = null): ImageVector =
         ImageVector.Builder(name = nombre, defaultWidth = 24.dp, defaultHeight = 24.dp, viewportWidth = 24f, viewportHeight = 24f).apply {
             trazos.forEach { trazo ->
                 path(
@@ -25,9 +25,15 @@ object Iconos {
                     pathBuilder = trazo,
                 )
             }
+            relleno?.let { r -> path(fill = SolidColor(Color.Black), pathFillType = PathFillType.NonZero, pathBuilder = r) }
         }.build()
 
-    /** Cuatro esquinas del visor + línea de lectura. */
+    /**
+     * Cuatro esquinas del visor + cuadro relleno central. Centro redibujado sobre el marco de Figma («icono ·
+     * escanear», componente 4006:51 del archivo 4nHD4ygcnP33UH0gAhaii5, capturado con `get_screenshot`): el marco
+     * no tiene una línea horizontal en el centro (versión anterior) sino un cuadro relleno de 8×8 con las esquinas
+     * levemente redondeadas, centrado en (12,12) del viewport de 24 (medido por muestreo de píxeles del PNG).
+     */
     val Escanear: ImageVector by lazy {
         icono(
             "escanear",
@@ -35,7 +41,14 @@ object Iconos {
             { moveTo(17f, 3f); horizontalLineTo(19f); curveTo(20.1f, 3f, 21f, 3.9f, 21f, 5f); verticalLineTo(7f) },
             { moveTo(21f, 17f); verticalLineTo(19f); curveTo(21f, 20.1f, 20.1f, 21f, 19f, 21f); horizontalLineTo(17f) },
             { moveTo(7f, 21f); horizontalLineTo(5f); curveTo(3.9f, 21f, 3f, 20.1f, 3f, 19f); verticalLineTo(17f) },
-            { moveTo(7f, 12f); horizontalLineTo(17f) },
+            relleno = {
+                moveTo(9f, 8f); horizontalLineTo(15f)
+                curveTo(15.55f, 8f, 16f, 8.45f, 16f, 9f); verticalLineTo(15f)
+                curveTo(16f, 15.55f, 15.55f, 16f, 15f, 16f); horizontalLineTo(9f)
+                curveTo(8.45f, 16f, 8f, 15.55f, 8f, 15f); verticalLineTo(9f)
+                curveTo(8f, 8.45f, 8.45f, 8f, 9f, 8f)
+                close()
+            },
         )
     }
 

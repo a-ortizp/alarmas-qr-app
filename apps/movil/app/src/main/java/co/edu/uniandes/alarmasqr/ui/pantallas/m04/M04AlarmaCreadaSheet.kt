@@ -44,7 +44,7 @@ fun M04AlarmaCreadaSheet(
 ) {
     val alarma = estado.alarma
     Column(
-        Modifier.fillMaxWidth().padding(start = Espacio.Margen, end = Espacio.Margen, bottom = Espacio.HojaInferior).testTag("pantalla-M04"),
+        Modifier.fillMaxWidth().padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.EntreBloques, bottom = Espacio.HojaInferior).testTag("pantalla-M04"),
         verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

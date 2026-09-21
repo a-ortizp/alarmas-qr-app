@@ -34,7 +34,7 @@ import co.edu.uniandes.alarmasqr.ui.theme.Trazos
 @Composable
 fun M02hAgregarEventoSheet(alEscanear: () -> Unit, alElegirPantallazo: () -> Unit, alCrearAMano: () -> Unit) {
     Column(
-        Modifier.fillMaxWidth().padding(start = Espacio.Margen, end = Espacio.Margen, bottom = Espacio.HojaInferiorCorta).testTag("pantalla-M02h"),
+        Modifier.fillMaxWidth().padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.GapHoja, bottom = Espacio.HojaInferiorCorta).testTag("pantalla-M02h"),
         verticalArrangement = Arrangement.spacedBy(Espacio.GapHoja),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
