@@ -4,7 +4,7 @@ import { Component, input } from '@angular/core';
 @Component({
   selector: 'aq-tarjeta',
   template: `<ng-content />`,
-  host: { '[class.peligro]': "variante() === 'peligro'" },
+  host: { '[attr.data-variante]': 'variante()' },
   styles: `
     :host {
       display: flex;
@@ -16,7 +16,7 @@ import { Component, input } from '@angular/core';
       border: var(--stroke-borde) solid var(--color-borde);
       border-radius: var(--radius-tarjeta);
     }
-    :host(.peligro) {
+    :host([data-variante='peligro']) {
       padding: calc(var(--space-tarjeta-peligro) - var(--stroke-borde));
       border-color: var(--color-destructivo);
     }

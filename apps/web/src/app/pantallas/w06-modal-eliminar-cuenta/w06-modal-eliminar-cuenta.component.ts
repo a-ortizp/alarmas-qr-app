@@ -128,7 +128,7 @@ export class W06ModalEliminarCuentaComponent {
   );
 
   protected conservar(): void {
-    void this.router.navigateByUrl('/perfil');
+    void this.router.navigateByUrl('/perfil', { replaceUrl: true });
   }
 
   protected eliminar(): void {

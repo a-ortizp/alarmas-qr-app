@@ -40,7 +40,7 @@ import { SesionService } from '../../datos/sesion.service';
       display: grid;
       grid-template-columns: var(--size-barra-lateral-web) minmax(0, 1fr);
       grid-template-rows: var(--size-barra-superior-web) minmax(0, 1fr);
-      min-height: 100vh;
+      height: 100vh;
       transition: grid-template-columns var(--motion-transicion);
     }
     .layout.colapsada {
@@ -51,6 +51,7 @@ import { SesionService } from '../../datos/sesion.service';
     }
     .contenido {
       min-width: 0;
+      overflow: auto;
       padding: var(--space-web-contenido-y) var(--space-web-contenido-x);
     }
   `,
@@ -71,7 +72,7 @@ export class AqLayoutAppComponent {
   }
 
   cerrarDialogo(): void {
-    void this.router.navigateByUrl(this.urlConDialogo(null));
+    void this.router.navigateByUrl(this.urlConDialogo(null), { replaceUrl: true });
   }
 
   cerrarSesion(): void {

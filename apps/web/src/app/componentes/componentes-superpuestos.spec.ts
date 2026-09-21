@@ -79,11 +79,11 @@ describe('aq-dialogo-confirmacion', () => {
     const seguro = dialogo.querySelector('[data-accion="seguro"]')!;
     const confirmar = dialogo.querySelector('[data-accion="confirmar"]')!;
     expect(seguro.textContent?.trim()).toBe('Cancelar');
-    expect(seguro.classList).toContain('primario');
-    expect(confirmar.classList).toContain('secundario');
+    expect(seguro.getAttribute('data-variante')).toBe('primario');
+    expect(confirmar.getAttribute('data-variante')).toBe('secundario');
     f.componentInstance.destruye.set(true);
     await f.whenStable();
-    expect(confirmar.classList).toContain('destructivo');
+    expect(confirmar.getAttribute('data-variante')).toBe('destructivo');
   });
 
   it('velo, Escape y «Cancelar» son la acción segura; «Cerrar sesión» confirma', async () => {

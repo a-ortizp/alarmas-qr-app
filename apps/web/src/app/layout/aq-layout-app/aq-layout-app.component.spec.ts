@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '../../app.routes';
@@ -77,6 +78,20 @@ describe('Layout con barra lateral (L09)', () => {
     await estable();
     expect(router.url).toBe('/alarmas');
     expect(raiz.querySelector('aq-dialogo-confirmacion')).toBeNull();
+  });
+
+  it('cerrar el diálogo no agrega entrada al historial: atrás no vuelve a abrirlo', async () => {
+    const { raiz, estable, router } = await abrir('/alarmas');
+    const location = TestBed.inject(Location);
+    (raiz.querySelector('[data-item="cerrar-sesion"]') as HTMLElement).click();
+    await estable();
+    expect(router.url).toBe('/alarmas?dialogo=cerrar-sesion');
+    (raiz.querySelector('[data-velo]') as HTMLElement).click();
+    await estable();
+    expect(location.path()).toBe('/alarmas');
+    location.back();
+    await estable();
+    expect(location.path()).not.toContain('dialogo=cerrar-sesion');
   });
 
   it('«Cerrar sesión» en el diálogo cierra la sesión y vuelve a /login', async () => {

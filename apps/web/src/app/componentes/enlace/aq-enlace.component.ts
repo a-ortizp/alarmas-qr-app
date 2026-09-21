@@ -4,7 +4,7 @@ import { Component, booleanAttribute, input } from '@angular/core';
 @Component({
   selector: 'a[aq-enlace], button[aq-enlace]',
   template: `<ng-content />`,
-  host: { '[class.bloque]': 'bloque()' },
+  host: { '[attr.data-bloque]': "bloque() ? '' : null" },
   styles: `
     :host {
       display: inline-flex;
@@ -20,7 +20,7 @@ import { Component, booleanAttribute, input } from '@angular/core';
       text-decoration: underline;
       cursor: pointer;
     }
-    :host(.bloque) {
+    :host([data-bloque]) {
       width: 100%;
     }
     :host(:focus-visible) {

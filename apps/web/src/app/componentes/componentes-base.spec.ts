@@ -59,10 +59,10 @@ describe('Componentes base L09', () => {
   it('aq-boton aplica variante y ancho completo', async () => {
     const f = await montar();
     const raiz: HTMLElement = f.nativeElement;
-    expect(raiz.querySelector('#primario')!.classList).toContain('primario');
+    expect(raiz.querySelector('#primario')!.getAttribute('data-variante')).toBe('primario');
     const destructivo = raiz.querySelector('#destructivo')!;
-    expect(destructivo.classList).toContain('destructivo');
-    expect(destructivo.classList).toContain('bloque');
+    expect(destructivo.getAttribute('data-variante')).toBe('destructivo');
+    expect(destructivo.getAttribute('data-bloque')).toBe('');
   });
 
   it('aq-enlace es un enlace nativo con su texto', async () => {
@@ -139,7 +139,7 @@ describe('Componentes base L09', () => {
   it('aq-tarjeta peligro y aq-tarjeta-acceso con marca y contenido proyectado', async () => {
     const f = await montar();
     const raiz: HTMLElement = f.nativeElement;
-    expect(raiz.querySelector('#peligro')!.classList).toContain('peligro');
+    expect(raiz.querySelector('#peligro')!.getAttribute('data-variante')).toBe('peligro');
     const acceso = raiz.querySelector('#acceso')!;
     expect(acceso.querySelector('aq-logotipo')).not.toBeNull();
     expect(acceso.textContent).toContain('Alarmas QR');

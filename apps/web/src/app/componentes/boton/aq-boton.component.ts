@@ -7,10 +7,8 @@ export type VarianteBoton = 'primario' | 'secundario' | 'destructivo';
   selector: 'button[aq-boton], a[aq-boton]',
   template: `<ng-content />`,
   host: {
-    '[class.primario]': "variante() === 'primario'",
-    '[class.secundario]': "variante() === 'secundario'",
-    '[class.destructivo]': "variante() === 'destructivo'",
-    '[class.bloque]': 'bloque()',
+    '[attr.data-variante]': 'variante()',
+    '[attr.data-bloque]': "bloque() ? '' : null",
   },
   styles: `
     :host {
@@ -31,21 +29,21 @@ export type VarianteBoton = 'primario' | 'secundario' | 'destructivo';
         background-color var(--motion-transicion),
         opacity var(--motion-transicion);
     }
-    :host(.primario) {
+    :host([data-variante='primario']) {
       background: var(--color-primario);
       color: var(--color-primario-texto);
     }
-    :host(.secundario) {
+    :host([data-variante='secundario']) {
       background: var(--color-blanco);
       color: var(--color-tinta);
       border-color: var(--color-tinta);
     }
-    :host(.destructivo) {
+    :host([data-variante='destructivo']) {
       background: var(--color-blanco);
       color: var(--color-destructivo);
       border-color: var(--color-destructivo);
     }
-    :host(.bloque) {
+    :host([data-bloque]) {
       width: 100%;
     }
     :host(:disabled) {
