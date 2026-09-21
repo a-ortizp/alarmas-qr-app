@@ -320,7 +320,9 @@
       "valor-campo": { "family": "ui", "weight": 400, "size": 15, "lineHeight": 16, "$description": "Valor de CampoTexto (Figma 3:11)" },
       "divisor": { "family": "ui", "weight": 400, "size": 12, "$description": "Texto de Divisor («o continúa con», «mientras tanto»)" },
       "etiqueta-dato": { "family": "ui", "weight": 700, "size": 12, "letterSpacing": "8%", "$description": "Etiqueta de fila de la tarjeta del evento («FECHA», «LUGAR»), M04" },
-      "dato": { "family": "ui", "weight": 400, "size": 13.5, "$description": "Valor de fila de la tarjeta del evento (M04) y sello «✓ verificado»" }
+      "dato": { "family": "ui", "weight": 400, "size": 13.5, "$description": "Valor de fila de la tarjeta del evento (M04) y sello «✓ verificado»" },
+      "pie-acceso": { "family": "ui", "weight": 600, "size": 13, "$description": "Pie de M00a/M00b: «¿Ya tienes cuenta? Inicia sesión»" },
+      "nota-larga": { "family": "ui", "weight": 400, "size": 12, "lineHeight": 17, "$description": "Consentimiento de datos en M00a" }
     }
   },
   "size": {
@@ -443,7 +445,8 @@
       "padding-tarjeta-vertical": 10,
       "padding-tarjeta-evento": 16,
       "antes-boton": 28,
-      "padding-pantalla": [24, 16]
+      "padding-pantalla": [24, 16],
+      "padding-acceso-superior": 28
     },
     "web": {
       "contenido-vertical": 28,

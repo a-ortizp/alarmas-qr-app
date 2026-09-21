@@ -9,8 +9,8 @@ marco) con los ids de `docs/MOCKUPS.md` §5.
 | Código | Marco Figma | Estado |
 |---|---|---|
 | M01 | 3:71 | ok · diferencias: párrafo parte en 3 líneas en vez de 2 (métrica de fuente de Robolectric); ver nota abajo sobre `capturar()` |
-| M00a | 3:2 | pendiente |
-| M00b | 3:37 | pendiente |
+| M00a | 3:2 | ok · diferencias: subtítulo parte en 2 líneas en vez de 1 (métrica de fuente de Robolectric, igual que M01) |
+| M00b | 3:37 | ok · diferencias: campo Correo enfocado con cursor y valor tecleado en Figma; la implementación lo precarga sin foco (aceptado, ver brief) |
 | M02v | 4020:3553 | pendiente |
 | M02 | 3:131 | pendiente |
 | M02h | 4019:3139 | pendiente |

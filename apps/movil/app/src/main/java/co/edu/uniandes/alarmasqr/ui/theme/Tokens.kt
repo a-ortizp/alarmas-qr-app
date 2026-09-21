@@ -91,6 +91,8 @@ object Tipografia {
     val Divisor = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.sp)                 // «o continúa con» · «mientras tanto»
     val EtiquetaDato = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 12.sp, letterSpacing = 0.08.em)   // «FECHA», «LUGAR» (tarjeta del evento, M04)
     val Dato = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.5.sp)                  // valor de fila de la tarjeta del evento y sello «✓ verificado»
+    val PieAcceso = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)             // pie de M00a/M00b: «¿Ya tienes cuenta? Inicia sesión»
+    val NotaLarga = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.sp, lineHeight = 17.sp)   // consentimiento de datos (M00a)
 }
 
 object Tamanos {
@@ -204,6 +206,7 @@ object Espacio {
     val AntesBoton = 28.dp              // espaciador antes de «Comenzar» (M01)
     val PaddingPantallaSuperior = 24.dp // relleno superior de la columna de M01
     val PaddingPantallaInferior = 16.dp // relleno inferior de la columna de M01
+    val PaddingAccesoSuperior = 28.dp   // relleno superior de la columna de M00a/M00b
 }
 
 object Movimiento {
