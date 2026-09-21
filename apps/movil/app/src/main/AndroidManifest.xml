@@ -37,6 +37,9 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
+
+        <!-- F-M10 · recibe el disparo de AlarmManager y publica la notificación de pantalla completa -->
+        <receiver android:name=".alarma.ReceptorAlarma" android:exported="false" />
     </application>
 
 </manifest>

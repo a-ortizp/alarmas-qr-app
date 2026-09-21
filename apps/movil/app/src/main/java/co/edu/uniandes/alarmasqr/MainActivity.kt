@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
+import co.edu.uniandes.alarmasqr.alarma.NotificacionesAlarma
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
 import co.edu.uniandes.alarmasqr.navegacion.NavegacionApp
 import co.edu.uniandes.alarmasqr.navegacion.Pantalla
@@ -24,6 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        NotificacionesAlarma.crearCanal(this)
         val repositorio = RepositorioDataset.desdeAssets(this)
         if (savedInstanceState == null) destinoPendiente.value = destinoDesdeIntent(intent)
         setContent {
@@ -43,6 +45,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        setIntent(intent)
         destinoPendiente.value = destinoDesdeIntent(intent)
     }
 }
