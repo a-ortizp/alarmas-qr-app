@@ -1,0 +1,19 @@
+# Cambios de stack y de CI: exigen la revisión del otro integrante (GitHub no
+# pide revisión al autor del PR, así que siempre revisa el compañero).
+# Tiene efecto cuando la regla de `main` exige «Require review from Code Owners».
+# Los dueños necesitan permiso de escritura en el repositorio.
+
+# Build móvil: versiones (AGP, Gradle, Kotlin, librerías), JDK y banderas de AGP
+/apps/movil/gradle/                    @a-ortizp @mmatallanar-ua
+/apps/movil/gradle.properties          @a-ortizp @mmatallanar-ua
+/apps/movil/*.gradle.kts               @a-ortizp @mmatallanar-ua
+/apps/movil/app/build.gradle.kts       @a-ortizp @mmatallanar-ua
+
+# Build web: dependencias y versión de Node
+/apps/web/package.json                 @a-ortizp @mmatallanar-ua
+/apps/web/package-lock.json            @a-ortizp @mmatallanar-ua
+/apps/web/.nvmrc                       @a-ortizp @mmatallanar-ua
+
+# CI, finales de línea y este archivo
+/.github/                              @a-ortizp @mmatallanar-ua
+/.gitattributes                        @a-ortizp @mmatallanar-ua
