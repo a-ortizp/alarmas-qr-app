@@ -26,6 +26,8 @@ import co.edu.uniandes.alarmasqr.ui.componentes.Logotipo
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
 import co.edu.uniandes.alarmasqr.ui.theme.Espacio
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
+import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
+import androidx.compose.foundation.layout.PaddingValues
 
 /** M00a · Crear cuenta (F-M00a): registro opcional; «Crear cuenta», Google, Outlook e invitado → M02v; pie → M00b. */
 @Composable
@@ -33,9 +35,9 @@ fun M00aRegistroScreen(alCrearCuenta: () -> Unit, alInvitado: () -> Unit, alYaTe
     var correo by rememberSaveable { mutableStateOf("") }
     var contrasena by rememberSaveable { mutableStateOf("") }
     var consentimiento by rememberSaveable { mutableStateOf(false) }
-    Column(
-        modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M00a")
-            .padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingAccesoSuperior, bottom = Espacio.PieEnlace),
+    ColumnaDesplazable(
+        modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M00a"),
+        relleno = PaddingValues(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingAccesoSuperior, bottom = Espacio.PieEnlace),
         verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

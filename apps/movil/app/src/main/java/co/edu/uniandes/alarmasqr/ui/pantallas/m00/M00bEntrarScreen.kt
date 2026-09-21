@@ -26,15 +26,17 @@ import co.edu.uniandes.alarmasqr.ui.componentes.Logotipo
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
 import co.edu.uniandes.alarmasqr.ui.theme.Espacio
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
+import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
+import androidx.compose.foundation.layout.PaddingValues
 
 /** M00b · Iniciar sesión (F-M00b): «Entrar», Google y Outlook → M02; invitado → M02v; pie → M00a. */
 @Composable
 fun M00bEntrarScreen(correoInicial: String, alEntrar: () -> Unit, alInvitado: () -> Unit, alCrearCuenta: () -> Unit, alRecuperar: () -> Unit, modifier: Modifier = Modifier) {
     var correo by rememberSaveable { mutableStateOf(correoInicial) }
     var contrasena by rememberSaveable { mutableStateOf("") }
-    Column(
-        modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M00b")
-            .padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingAccesoSuperior, bottom = Espacio.PieEnlace),
+    ColumnaDesplazable(
+        modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M00b"),
+        relleno = PaddingValues(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingAccesoSuperior, bottom = Espacio.PieEnlace),
         verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

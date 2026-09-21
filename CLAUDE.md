@@ -31,6 +31,7 @@ Fuente de verdad: `packages/tokens/design-tokens.json` v1.12 (2026-09-21: medida
 - **Movimiento**: transiciones de 250 ms ease in-out; mantener presionado el FAB 500 ms abre la hoja; snackbar «Deshacer» de 5 s; respetar `prefers-reduced-motion`.
 - **Textura de módulos QR** solo como banda de 120 pt en M01, M04, M09, M10, M12 y M13.
 - Los estados nunca se comunican solo con color: color + forma o símbolo.
+- **Scroll vertical (móvil):** toda pantalla de columna usa `ColumnaDesplazable` (`ui/componentes/`) en vez de `Column(Modifier.fillMaxSize()…)`, y toda hoja inferior lleva `verticalScroll` en su columna raíz. A 390×844 no cambia nada, y en teléfonos más bajos, en horizontal o con el teclado nada queda cortado. Las listas largas van con `LazyColumn`. Detalle en el README («Scroll vertical en pantallas de columna»); prueba en `PantallasDesplazablesTest`.
 
 ## Navegación
 

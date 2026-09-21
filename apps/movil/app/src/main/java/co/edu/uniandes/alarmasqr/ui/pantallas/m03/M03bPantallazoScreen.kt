@@ -33,14 +33,17 @@ import co.edu.uniandes.alarmasqr.ui.theme.Medidas
 import co.edu.uniandes.alarmasqr.ui.theme.Radios
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
 import co.edu.uniandes.alarmasqr.ui.theme.Trazos
+import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
+import androidx.compose.foundation.layout.PaddingValues
 
 /** M03b · Pantallazo recibido (F-M03): confirmación del QR leído en una imagen compartida; «Continuar» → M04. */
 @Composable
 fun M03bPantallazoScreen(datos: PantallazoRecibido, evento: EventoQR, alVolver: () -> Unit, alContinuar: () -> Unit, alElegirOtra: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M03b")) {
         BarraSuperior("Pantallazo recibido", alVolver = alVolver)
-        Column(
-            Modifier.fillMaxSize().padding(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
+        ColumnaDesplazable(
+            Modifier.fillMaxSize(),
+            relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
             verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

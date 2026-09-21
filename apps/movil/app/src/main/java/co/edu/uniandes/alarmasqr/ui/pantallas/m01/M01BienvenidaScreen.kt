@@ -38,6 +38,8 @@ import co.edu.uniandes.alarmasqr.ui.theme.Medidas
 import co.edu.uniandes.alarmasqr.ui.theme.Radios
 import co.edu.uniandes.alarmasqr.ui.theme.Tamanos
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
+import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
+import androidx.compose.foundation.layout.PaddingValues
 
 /** M01 · Bienvenida (F-M01): onboarding en amarillo pleno; «Comenzar» → M00a, «Conectar luego en Ajustes» → M02v. */
 @Composable
@@ -47,8 +49,9 @@ fun M01BienvenidaScreen(alComenzar: () -> Unit, alConectarLuego: () -> Unit, mod
     var telefono by rememberSaveable { mutableStateOf(false) }
     Box(modifier.fillMaxSize().background(Colores.AmarilloEnergia).testTag("pantalla-M01")) {
         BandaTextura(Modifier.align(Alignment.TopCenter))
-        Column(
-            Modifier.fillMaxSize().padding(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingPantallaSuperior, bottom = Espacio.PaddingPantallaInferior),
+        ColumnaDesplazable(
+            Modifier.fillMaxSize(),
+            relleno = PaddingValues(start = Espacio.Margen, end = Espacio.Margen, top = Espacio.PaddingPantallaSuperior, bottom = Espacio.PaddingPantallaInferior),
             verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
