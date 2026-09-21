@@ -133,23 +133,34 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
         )
     }
     entry<Pantalla.M04>(metadata = HojaInferiorSceneStrategy.hoja()) { clave ->
-        val context = LocalContext.current
-        val programador = remember { ProgramadorAlarmas(context) }
-        val vm = viewModel(key = clave.id) { M04AlarmaCreadaViewModel(repositorio, programador, clave.id) }
-        val estado by vm.estado.collectAsStateWithLifecycle()
-        val pedirNotificaciones = rememberSolicitudPermisoNotificaciones()
-        LaunchedEffect(Unit) { pedirNotificaciones() }
-        M04AlarmaCreadaSheet(
-            estado = estado, mensajes = repositorio.dataset.mensajes,
-            alListo = { pila.reemplazarTodo(Pantalla.M05(clave.id)) },
-            alEditar = { pila.reemplazarCima(Pantalla.M06(clave.id)) },
-            alAbrirDialogo = vm::abrirDialogo,
-            alConservar = vm::cerrarDialogo,
-            alEliminar = { vm.eliminar(); pila.reemplazarTodo(Pantalla.M02) },
-        )
+        // Alcanzable tras la muerte del proceso con la hoja abierta (la pila restaurada trae M04("a-entrega") pero
+        // el repositorio fresco esconde las alarmas esNueva) o vía un intent externo (MainActivity es exportada):
+        // sin esta guarda, `M04AlarmaCreadaViewModel.init` hacía `repositorio.alarma(id) ?: error(...)` y estrellaba
+        // la app. Si la alarma no existe, la hoja se saca sola de la pila y no se crea el ViewModel.
+        if (repositorio.alarma(clave.id) == null) {
+            LaunchedEffect(clave) { pila.removeLastOrNull() }
+        } else {
+            val context = LocalContext.current
+            val programador = remember { ProgramadorAlarmas(context) }
+            val vm = viewModel(key = clave.id) { M04AlarmaCreadaViewModel(repositorio, programador, clave.id) }
+            val estado by vm.estado.collectAsStateWithLifecycle()
+            val pedirNotificaciones = rememberSolicitudPermisoNotificaciones()
+            LaunchedEffect(Unit) { pedirNotificaciones() }
+            M04AlarmaCreadaSheet(
+                estado = estado, mensajes = repositorio.dataset.mensajes,
+                alListo = { pila.reemplazarTodo(Pantalla.M05(clave.id)) },
+                alEditar = { pila.reemplazarCima(Pantalla.M06(clave.id)) },
+                alAbrirDialogo = vm::abrirDialogo,
+                alConservar = vm::cerrarDialogo,
+                alEliminar = { vm.eliminar(); pila.reemplazarTodo(Pantalla.M02) },
+            )
+        }
     }
     entry<Pantalla.M05> { clave ->
-        val vm = viewModel(key = clave.id) { M02InicioViewModel(repositorio, alarmaNueva = clave.id) }
+        val context = LocalContext.current
+        // Programador real: «Deshacer» debe cancelar también la alarma de AlarmManager que M04 dejó armada, no
+        // solo revertir la lista (si no, la alarma «eliminada» seguiría sonando ~1 min después).
+        val vm = viewModel(key = clave.id) { M02InicioViewModel(repositorio, alarmaNueva = clave.id, programador = ProgramadorAlarmas(context)) }
         val estado by vm.estado.collectAsStateWithLifecycle()
         val snackbar = LocalSnackbarApp.current
         val mensajes = repositorio.dataset.mensajes
@@ -159,12 +170,19 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
         LaunchedEffect(clave.id) {
             if (mostrado) return@LaunchedEffect
             mostrado = true
-            // F-M05: «Deshacer (5 s)». Ventana fija de Movimiento.DeshacerMs; al vencer, el snackbar se retira solo.
-            val resultado = withTimeoutOrNull(Movimiento.DeshacerMs) {
-                snackbar.showSnackbar(message = mensajes.alarmaGuardada, actionLabel = mensajes.deshacer, duration = SnackbarDuration.Indefinite)
+            var deshecho = false
+            // finally: si el usuario sale de M05 antes de los 5 s, esta corrutina se cancela (CancellationException)
+            // sin pasar por la rama de abajo; sin el finally, `anterior` del repositorio quedaba con la mutación
+            // pendiente y un «Deshacer» disparado mucho después (p. ej. tras editar en M06 y volver) la revertía.
+            try {
+                // F-M05: «Deshacer (5 s)». Ventana fija de Movimiento.DeshacerMs; al vencer, el snackbar se retira solo.
+                val resultado = withTimeoutOrNull(Movimiento.DeshacerMs) {
+                    snackbar.showSnackbar(message = mensajes.alarmaGuardada, actionLabel = mensajes.deshacer, duration = SnackbarDuration.Indefinite)
+                }
+                if (resultado == SnackbarResult.ActionPerformed) { deshecho = true; vm.deshacer(); pila.reemplazarTodo(Pantalla.M02) }
+            } finally {
+                if (!deshecho) vm.olvidarDeshacer()
             }
-            if (resultado == SnackbarResult.ActionPerformed) { vm.deshacer(); pila.reemplazarTodo(Pantalla.M02) }
-            else if (resultado == null) vm.olvidarDeshacer()
         }
         M02InicioScreen(estado, alTocarAlarma = { pila.irA(Pantalla.M06(it)) }, alCambiarActiva = vm::cambiarActiva, codigo = "M05")
     }

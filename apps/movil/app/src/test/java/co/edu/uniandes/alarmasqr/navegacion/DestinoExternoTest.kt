@@ -19,4 +19,12 @@ class DestinoExternoTest {
         assertNull(destinoDesdeIntent(Intent(Intent.ACTION_MAIN)))
         assertNull(destinoDesdeIntent(null))
     }
+
+    @Test
+    fun `un esquema distinto de alarmasqr no resuelve pantalla, aunque la ruta coincida`() {
+        // MainActivity es exportada y destinoDesdeIntent acepta cualquier intent ACTION_VIEW entrante: sin filtrar
+        // el esquema, un enlace https con la misma ruta abriría M10 igual que la notificación real de la app.
+        assertNull(destinoDesdeIntent(Intent(Intent.ACTION_VIEW, Uri.parse("https://evil/alarma/x/creada"))))
+        assertNull(destinoDesdeIntent(Intent(Intent.ACTION_VIEW, Uri.parse("https://evil/alarma/a-entrega/sonando"))))
+    }
 }
