@@ -12,7 +12,10 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -150,13 +153,18 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
         val estado by vm.estado.collectAsStateWithLifecycle()
         val snackbar = LocalSnackbarApp.current
         val mensajes = repositorio.dataset.mensajes
+        // Ventana de «Deshacer» de una sola vez por alarma guardada: sin esto, volver a M05 (p. ej. desde M06) vuelve
+        // a disparar el efecto y muestra el snackbar de nuevo, dejando deshacer mucho después de los 5 s reales.
+        var mostrado by rememberSaveable(clave.id) { mutableStateOf(false) }
         LaunchedEffect(clave.id) {
+            if (mostrado) return@LaunchedEffect
+            mostrado = true
             // F-M05: «Deshacer (5 s)». Ventana fija de Movimiento.DeshacerMs; al vencer, el snackbar se retira solo.
             val resultado = withTimeoutOrNull(Movimiento.DeshacerMs) {
                 snackbar.showSnackbar(message = mensajes.alarmaGuardada, actionLabel = mensajes.deshacer, duration = SnackbarDuration.Indefinite)
             }
             if (resultado == SnackbarResult.ActionPerformed) { vm.deshacer(); pila.reemplazarTodo(Pantalla.M02) }
-            else if (resultado == null) snackbar.currentSnackbarData?.dismiss()
+            else if (resultado == null) vm.olvidarDeshacer()
         }
         M02InicioScreen(estado, alTocarAlarma = { pila.irA(Pantalla.M06(it)) }, alCambiarActiva = vm::cambiarActiva, codigo = "M05")
     }

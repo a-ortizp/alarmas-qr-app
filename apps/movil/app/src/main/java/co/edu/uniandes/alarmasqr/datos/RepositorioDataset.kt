@@ -53,9 +53,15 @@ class RepositorioDataset(json: String) {
 
     fun eliminar(id: String) = mutar { lista -> lista.filterNot { it.id == id } }
 
-    /** Interruptor de la tarjeta: pausa o reactiva sin afectar «Deshacer» (no pasa por `mutar`). */
+    /**
+     * Interruptor de la tarjeta: pausa o reactiva sin abrir un nuevo nivel de «Deshacer» (no pasa por `mutar`), pero
+     * si hay una mutación pendiente de deshacer (p. ej. M05 con su snackbar de 5 s) el mismo cambio se aplica también
+     * a `anterior`, así «Deshacer» solo revierte esa mutación y no un toque de interruptor hecho mientras tanto.
+     */
     fun cambiarEstado(id: String, pausada: Boolean) {
-        _alarmas.value = _alarmas.value.map { if (it.id == id) it.copy(estado = if (pausada) "pausada" else "activa") else it }
+        val cambio: (Alarma) -> Alarma = { if (it.id == id) it.copy(estado = if (pausada) "pausada" else "activa") else it }
+        _alarmas.value = _alarmas.value.map(cambio)
+        anterior = anterior?.map(cambio)
     }
 
     /** Un solo nivel: revierte la última mutación; una segunda llamada no hace nada (comportamiento del snackbar de 5 s). */
@@ -63,6 +69,9 @@ class RepositorioDataset(json: String) {
         anterior?.let { _alarmas.value = it }
         anterior = null
     }
+
+    /** Cierra la ventana de «Deshacer» sin revertir nada (M05: al vencer los 5 s o al salir de la pantalla). */
+    fun olvidarDeshacer() { anterior = null }
 
     /** Cuerpo de M04d/M06d con {evento}, {fecha} y {hora} rellenos (dataset.meta.notes). */
     fun mensajeEliminar(alarma: Alarma): String = dataset.mensajes.confirmarEliminarCuerpo

@@ -20,7 +20,7 @@ marco) con los ids de `docs/MOCKUPS.md` §5.
 | M03b | 4020:3295 | ok · pixel-perfect (chip «✓ QR detectado», título, burbuja de WhatsApp con «Grupo MISO UX · hoy 8:12 am», el marco de lectura con el QR, «Origen: WhatsApp · compartido con Alarmas QR», «Continuar», «Elegir otra imagen» y la nota final alinean con el marco). Diferencia aceptada: el mensaje parte en «Nos vemos el domingo 30 en» / «SD-703. Escanea para agendar 👇» en vez de «…en SD-703.» / «Escanea…» (métrica de fuente de Robolectric, igual que M01/M00a/M03). Intent de compartir: pendiente de prueba en dispositivo (compartir una imagen desde la galería a «Alarmas QR» no se puede probar en este entorno) |
 | M04 | 4:189 | contenido ok · pantalla completa: Tarea 14 (ver nota M04 abajo) |
 | M04d | 4330:1432 | contenido ok · pantalla completa: Tarea 14 (ver nota M04 abajo) |
-| M05 | 4:223 | ok · diferencias aceptadas: 5ª alarma «Asado del semillero» / LUNES 31 (decisión D3, el marco solo muestra 4); snackbar «Alarma guardada · También en Google Calendar» con «Deshacer · 5 s» sobre el FAB, que es la colocación por defecto del `Scaffold` de Material 3 (el snackbar se ubica siempre encima del FAB cuando hay uno, con un hueco de ~16 dp; el marco los separa 60 dp) — ver nota M05 abajo. La tarjeta «Entrega de proyecto UX» muestra los chips «Nueva» y «✓ Escaneada» juntos (el marco solo muestra «Nueva»): ambos chips vienen de `dataset.json` (`a-entrega.chips`), fuente única de datos que esta tarea no puede tocar; el resto (barra, agrupadores, tarjetas de HOY/MAÑANA, borde Verde Texto de la tarjeta nueva, FAB) alinea con el marco |
+| M05 | 4:223 | ok · diferencias aceptadas: 5ª alarma «Asado del semillero» / LUNES 31 (decisión D3, el marco solo muestra 4); snackbar «Alarma guardada · También en Google Calendar» con «Deshacer · 5 s» sobre el FAB, que es la colocación por defecto del `Scaffold` de Material 3 (el snackbar se ubica siempre encima del FAB cuando hay uno, con un hueco de ~16 dp; el marco los separa 60 dp) — ver nota M05 abajo. La tarjeta «Entrega de proyecto UX» muestra los chips «Nueva» y «✓ Escaneada» juntos (el marco solo muestra «Nueva»): ambos chips vienen de `dataset.json` (`a-entrega.chips`), fuente única de datos que esta tarea no puede tocar. El texto del snackbar parte en «Alarma guardada · También en» / «Google Calendar» (2 líneas) en vez de 1 línea (métrica de fuente de Robolectric, igual que M01/M03b). El resto (barra, agrupadores, tarjetas de HOY/MAÑANA, borde Verde Texto de la tarjeta nueva, FAB) alinea con el marco |
 
 **Nota M01 (Tarea 5, corregida en las rondas 1 y 2 de revisión):** el ayudante `capturar()` de `Verificacion.kt` ya
 no usa `captureToImage()` — esa API cuelga bajo Robolectric en este proyecto (`forceRedraw()` espera hasta 2000 ms
@@ -79,4 +79,19 @@ resultantes, diferencia aceptada en el plan. La tarjeta «Entrega de proyecto UX
 «✓ Escaneada») porque `dataset.json` ya trae ambos en `alarmas[].chips` para `a-entrega` (la entrada `esNueva: true`
 que `agregarDesdeEvento` activa al escanear); el marco solo dibuja «Nueva». `dataset.json` es la única fuente de
 datos simulados (CLAUDE.md, «Datos») y esta tarea no la modifica ni toca `TarjetaAlarma.kt` (fuera del alcance de
-archivos de la Tarea 13), así que se documenta como diferencia aceptada en vez de «corregirse».
+archivos de la Tarea 13), así que se documenta como diferencia aceptada en vez de «corregirse». El texto del
+snackbar (`mensajes.alarmaGuardada`) parte en 2 líneas en `M05.png` («Alarma guardada · También en» / «Google
+Calendar») donde el marco lo deja en 1: es la misma métrica de fuente de Robolectric que ya afecta a M01 y M03b, no
+un defecto de `SnackbarDeshacer.kt`.
+
+**Fix round 1 (revisión de la Tarea 13):** `RepositorioDataset.deshacer()` revertía el snapshot completo de
+`anterior`, y `cambiarEstado` (el interruptor de la tarjeta) mutaba `_alarmas` sin tocar `anterior`; en M05, tocar el
+interruptor de otra alarma durante los 5 s y luego pulsar «Deshacer» revertía también ese toque, no solo el guardado.
+`cambiarEstado` ahora aplica el mismo cambio a `anterior` (cuando existe), así «Deshacer» solo revierte la mutación
+que abrió la ventana. Además, la ventana de «Deshacer» no se cerraba al vencer los 5 s (`anterior` seguía con
+valor), así que volver a entrar a M05 (p. ej. tras editar en M06 y volver) volvía a disparar el efecto y mostraba el
+snackbar de nuevo, permitiendo deshacer mucho después de los 5 s reales; la entrada de M05 en `EntradasApp.kt` ahora
+guarda un `mostrado` (`rememberSaveable(clave.id)`) para mostrar el snackbar una sola vez por alarma, y llama a la
+nueva `RepositorioDataset.olvidarDeshacer()` (vía `M02InicioViewModel.olvidarDeshacer()`) cuando la ventana vence sin
+que se toque «Deshacer», cerrándola de forma explícita. `M05.png`/`M05-figma.png` no cambiaron con este fix (no es un
+cambio visual).

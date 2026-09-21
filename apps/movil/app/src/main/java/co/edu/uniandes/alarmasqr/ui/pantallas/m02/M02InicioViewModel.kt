@@ -30,4 +30,7 @@ class M02InicioViewModel(private val repositorio: RepositorioDataset, private va
     fun cambiarActiva(id: String, activa: Boolean) = repositorio.cambiarEstado(id, pausada = !activa)
 
     fun deshacer() = repositorio.deshacer()
+
+    /** Cierra la ventana de «Deshacer» sin revertir nada (M05: al vencer los 5 s o al salir de la pantalla). */
+    fun olvidarDeshacer() = repositorio.olvidarDeshacer()
 }

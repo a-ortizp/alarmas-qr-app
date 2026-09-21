@@ -36,6 +36,25 @@ class RepositorioDatasetTest {
     }
 
     @Test
+    fun `cambiarEstado durante la ventana de deshacer no se revierte con la alarma guardada`() {
+        val repo = RepositorioDataset(json)
+        repo.agregarDesdeEvento("e-entrega")
+        repo.cambiarEstado("a-gimnasio", pausada = false)
+        repo.deshacer()
+        assertNull(repo.alarma("a-entrega"))
+        assertEquals("activa", repo.alarma("a-gimnasio")?.estado)
+    }
+
+    @Test
+    fun `olvidarDeshacer cierra la ventana sin revertir la mutacion`() {
+        val repo = RepositorioDataset(json)
+        repo.agregarDesdeEvento("e-entrega")
+        repo.olvidarDeshacer()
+        repo.deshacer()
+        assertEquals("a-entrega", repo.alarma("a-entrega")?.id)
+    }
+
+    @Test
     fun `eliminar y deshacer restauran la lista`() {
         val repo = RepositorioDataset(json)
         repo.eliminar("a-tutor")
