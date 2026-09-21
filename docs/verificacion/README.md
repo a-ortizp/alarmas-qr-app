@@ -18,8 +18,8 @@ marco) con los ids de `docs/MOCKUPS.md` §5.
 | M13 | 6:122 | ok · pixel-perfect (sello «!», título, cuerpo, tarjeta «QUÉ DETECTAMOS» con el chip y el código Spline Sans Mono, «Volver a escanear», «Crear el evento a mano» y el enlace subrayado alinean con el marco; banda de textura atenuada al 50 % verificada por muestreo de píxeles, sin diferencias de recorte de línea) |
 | M03 | 4:135 | ok · esquina del marco de enfoque corregida (fix round 1): ahora es un corchete redondeado (tramo recto + arco de 90° de `Medidas.RadioEsquinaEnfoque` = 20 dp, medido contra el marco de Figma por muestreo de píxeles) en vez de los dos segmentos rectos con remate de radio pequeño de la primera versión; comparado a ojo y en zoom contra `M03-figma.png`, el radio y la forma del corchete ya coinciden. Diferencia aceptada: título «Escanear QR» algo más grueso que en Figma (métrica de fuente de Robolectric, igual que M01/M00a). El resto (barra Tinta, chip «Linterna · auto», chip «● Cámara activa», textos del visor, hoja blanca r24 con los dos secundarios y el asa) alinea con el marco. Cámara real: pendiente de prueba en dispositivo (no se puede probar en este entorno) |
 | M03b | 4020:3295 | ok · pixel-perfect (chip «✓ QR detectado», título, burbuja de WhatsApp con «Grupo MISO UX · hoy 8:12 am», el marco de lectura con el QR, «Origen: WhatsApp · compartido con Alarmas QR», «Continuar», «Elegir otra imagen» y la nota final alinean con el marco). Diferencia aceptada: el mensaje parte en «Nos vemos el domingo 30 en» / «SD-703. Escanea para agendar 👇» en vez de «…en SD-703.» / «Escanea…» (métrica de fuente de Robolectric, igual que M01/M00a/M03). Intent de compartir: pendiente de prueba en dispositivo (compartir una imagen desde la galería a «Alarmas QR» no se puede probar en este entorno) |
-| M04 | 4:189 | pendiente |
-| M04d | 4330:1432 | pendiente |
+| M04 | 4:189 | contenido ok · pantalla completa: Tarea 14 (ver nota M04 abajo) |
+| M04d | 4330:1432 | contenido ok · pantalla completa: Tarea 14 (ver nota M04 abajo) |
 | M05 | 4:223 | pendiente |
 
 **Nota M01 (Tarea 5, corregida en las rondas 1 y 2 de revisión):** el ayudante `capturar()` de `Verificacion.kt` ya
@@ -43,3 +43,28 @@ tabulares a 26 sp (Spline Sans Mono Bold) miden ≈ 62 dp, más el gap de 6 dp, 
 en el caso común) pero puede crecer para horas de 5 dígitos como «12:00 pm» — y ambos `Text` (hora y sufijo) llevan
 `maxLines = 1, softWrap = false`. `M02.png` es la salida real tras el arreglo: las cinco tarjetas, incluida
 «12:00 pm», muestran el sufijo en una sola línea.
+
+**Nota M04 (Tarea 12):** `M04-contenido.png` es la hoja `M04AlarmaCreadaSheet` sola (sin el marcador de escena de hoja),
+así que le faltan la asa, la forma r24 de la hoja y el velo Tinta 55 % de `HojaInferiorSceneStrategy` — se compara
+contra `M04-figma.png` (marco 4:189) solo por los bloques internos (título + sello, chip «Datos leídos del QR —
+verifícalos», tarjeta del evento, bloque SONARÁ con 3:15 pm y «Editar», nota de Google Calendar, «Listo» y el enlace
+de descarte), que alinean con el marco. La captura de pantalla completa (con la hoja, el velo y la lista de fondo)
+queda para la Tarea 14, cuando el flujo real las monta desde `EntradasApp`. `M04d.png` **no muestra el diálogo**:
+`DialogoConfirmacion` se abre en su propia ventana Android (`Dialog(...)`, necesaria para cubrir también la hoja
+inferior de M04), y el ayudante `capturar()` solo dibuja el `decorView` de la actividad de prueba (ver comentario de
+`Verificacion.kt`), que es una ventana distinta; `M04d.png` queda entonces idéntico a `M04-contenido.png` (la hoja
+detrás, sin el diálogo). El contenido del diálogo (título, cuerpo con el mensaje de `mensajeEliminar`, «Conservar» y
+«Eliminar») se verificó con `onNodeWithText`/`assertIsDisplayed` en la prueba y se comparó a ojo contra `M04d-figma.png`
+(marco 4330:1432) a partir de esas aserciones y del `DialogoConfirmacion` ya verificado en su propia prueba; la
+captura de píxeles del diálogo mismo también queda para la Tarea 14 (o para una captura dedicada de `DialogoConfirmacion`
+con el diálogo en primer plano). Aparte, se descubrió durante esta tarea que `regla.onNodeWithTag("velo").performClick()`
+—que toca por defecto el centro geométrico de «velo»— falla bajo Robolectric quedando sin efecto cuando el cuerpo del
+diálogo es largo (como el `mensajeEliminar` real), porque ese centro coincide con el diálogo centrado por `Box` y
+Robolectric no enruta el toque sintético al velo sino al diálogo (que lo absorbe); con un cuerpo corto (como en
+`DialogoConfirmacionTest`) el mismo `performClick()` sí funciona. Se comprobó que esto es una limitación conocida de
+Robolectric con toques sintéticos sobre elementos anidados (no un defecto de `DialogoConfirmacion` ni de M04: un
+`performSemanticsAction(SemanticsActions.OnClick)` directo sobre «velo» sí dispara `alSeguro` con el cuerpo largo, y
+un dispositivo real no tiene este problema — véase p. ej. robolectric/robolectric#8420 y #9595 para casos similares).
+`M04AlarmaCreadaSheetTest` toca en su lugar una esquina del velo (`performTouchInput { click(Offset(10f, 10f)) }`),
+claramente fuera del diálogo, para probar el mismo comportamiento («tocar el velo equivale a la acción segura») sin
+depender de esa zona; el comentario en el test documenta la razón.

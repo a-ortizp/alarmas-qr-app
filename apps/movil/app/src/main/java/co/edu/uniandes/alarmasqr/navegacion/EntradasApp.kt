@@ -17,6 +17,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
+import co.edu.uniandes.alarmasqr.alarma.ProgramadorAlarmas
+import co.edu.uniandes.alarmasqr.alarma.rememberSolicitudPermisoNotificaciones
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
 import co.edu.uniandes.alarmasqr.qr.ResultadoQR
 import co.edu.uniandes.alarmasqr.ui.pantallas.m00.M00aRegistroScreen
@@ -29,6 +31,8 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02vEstadoVacio
 import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03EscanerScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03EscanerViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03bPantallazoScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaSheet
+import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
@@ -119,6 +123,22 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             alVolver = { pila.removeLastOrNull() },
             alContinuar = { repositorio.agregarDesdeEvento(datos.eventoDetectado)?.let { pila.reemplazarCima(Pantalla.M04(it.id)) } },
             alElegirOtra = { elegirImagen.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) },
+        )
+    }
+    entry<Pantalla.M04>(metadata = HojaInferiorSceneStrategy.hoja()) { clave ->
+        val context = LocalContext.current
+        val programador = remember { ProgramadorAlarmas(context) }
+        val vm = viewModel(key = clave.id) { M04AlarmaCreadaViewModel(repositorio, programador, clave.id) }
+        val estado by vm.estado.collectAsStateWithLifecycle()
+        val pedirNotificaciones = rememberSolicitudPermisoNotificaciones()
+        LaunchedEffect(Unit) { pedirNotificaciones() }
+        M04AlarmaCreadaSheet(
+            estado = estado, mensajes = repositorio.dataset.mensajes,
+            alListo = { pila.reemplazarTodo(Pantalla.M05(clave.id)) },
+            alEditar = { pila.reemplazarCima(Pantalla.M06(clave.id)) },
+            alAbrirDialogo = vm::abrirDialogo,
+            alConservar = vm::cerrarDialogo,
+            alEliminar = { vm.eliminar(); pila.reemplazarTodo(Pantalla.M02) },
         )
     }
     entry<Pantalla.M13> {

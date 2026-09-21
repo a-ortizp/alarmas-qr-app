@@ -99,6 +99,8 @@ object Tipografia {
     val Codigo = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")   // contenido del QR inválido (M13)
     val EnlaceCorto = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 14.sp)               // «Abrir el enlace bajo mi responsabilidad» (M13); el subrayado lo aplica BotonEnlace
     val Mensaje = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 17.sp)   // mensaje de WhatsApp en la burbuja de M03b
+    val EnlaceDescarte = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Medium, fontSize = 14.sp)               // «No puedo asistir · eliminar alarma» (M04)
+    val MargenSonara = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 17.5.sp)   // margen + trayecto y «Editar» del bloque SONARÁ (M04)
 }
 
 object Tamanos {
@@ -232,6 +234,8 @@ object Espacio {
     val GapVisor = 16.dp                // entre el marco de enfoque y los textos del visor (M03)
     val ChipVisorSuperior = 24.dp       // separación del chip «● Cámara activa» respecto al techo del visor (M03)
     val PaddingMarcoLectura = 8.dp      // relleno interno del marco de lectura alrededor del QR (M03b)
+    val GapSonara = 2.dp                // entre filas del bloque SONARÁ (M04)
+    val GapTitulo = 8.dp                // entre el sello «✓» y «¡Alarma programada!» (M04)
 }
 
 object Movimiento {

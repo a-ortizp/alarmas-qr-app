@@ -344,7 +344,9 @@
       "nota-larga": { "family": "ui", "weight": 400, "size": 12, "lineHeight": 17, "$description": "Consentimiento de datos en M00a" },
       "codigo": { "family": "datos", "weight": 500, "size": 12, "tabular": true, "$description": "Contenido del QR inválido (M13), = hora-ampm" },
       "enlace-corto": { "family": "ui", "weight": 700, "size": 14, "$description": "«Abrir el enlace bajo mi responsabilidad» (M13); el subrayado lo aplica el componente BotonEnlace" },
-      "mensaje": { "family": "ui", "weight": 400, "size": 13, "lineHeight": 17, "$description": "Mensaje de WhatsApp en la burbuja de M03b" }
+      "mensaje": { "family": "ui", "weight": 400, "size": 13, "lineHeight": 17, "$description": "Mensaje de WhatsApp en la burbuja de M03b" },
+      "enlace-descarte": { "family": "ui", "weight": 500, "size": 14, "$description": "Enlace «No puedo asistir · eliminar alarma» de M04 (descarte, Archivo Medium)" },
+      "margen-sonara": { "family": "ui", "weight": 400, "size": 13, "lineHeight": 17.5, "$description": "Margen + trayecto y enlace «Editar» del bloque SONARÁ (M04)" }
     }
   },
   "size": {
@@ -484,7 +486,9 @@
       "antes-acciones": 32,
       "gap-visor": 16,
       "chip-visor-superior": 24,
-      "padding-marco-lectura": 8
+      "padding-marco-lectura": 8,
+      "gap-sonara": 2,
+      "gap-titulo": 8
     },
     "web": {
       "contenido-vertical": 28,
