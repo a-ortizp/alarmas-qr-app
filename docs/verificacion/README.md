@@ -22,11 +22,12 @@ marco) con los ids de `docs/MOCKUPS.md` §5.
 | M04d | 4330:1432 | pendiente |
 | M05 | 4:223 | pendiente |
 
-**Nota M01 (Tarea 5):** `regla.capturar("M01")` de `M01BienvenidaScreenTest` no completa en este entorno (WSL2, Robolectric
-4.16, `compose-ui-test-junit4-android` 1.11.3 vía compose-bom 2026.06.00): `forceRedraw()` espera hasta 2000 ms un
-`ComposeTimeoutException` porque `androidx.compose.ui.test.RobolectricIdlingStrategy_androidKt.hasRobolectricFingerprint()`
-solo se añadió como atajo en `compose-ui-test-android` 1.12.1 (verificado descompilando ambas versiones); subir a esa
-versión exige compileSdk 37 y AGP 9.1.0 (fuera de alcance de esta tarea). El resto de la prueba (textos, alternar
-calendarios, las dos salidas) pasa. El par de `M01.png` / `M01-figma.png` de esta carpeta se generó con una captura
-manual (`View.draw(Canvas)` sobre el `decorView` de la actividad de prueba, sin pasar por `forceRedraw`/`PixelCopy`)
-solo para esta verificación visual puntual; no es la salida de `capturar()` y no reemplaza el ayudante oficial.
+**Nota M01 (Tarea 5, corregida en la ronda 1 de revisión):** el ayudante `capturar()` de `Verificacion.kt` ya no usa
+`captureToImage()` — esa API cuelga bajo Robolectric en este proyecto (`forceRedraw()` espera hasta 2000 ms un
+callback de redibujo real que solo se salta con el atajo `RobolectricIdlingStrategy.hasRobolectricFingerprint()`,
+añadido en `compose-ui-test-junit4-android` 1.12; el `composeBom` fijado aquí resuelve 1.11.3 y subirlo exige
+compileSdk 37 + AGP 9.1.0, fuera de alcance). `capturar()` ahora dibuja el `decorView` de la actividad de prueba
+directamente (`decorView.draw(Canvas)` sobre un `Bitmap`), que sí completa de forma síncrona. `M01.png` es otra vez
+la salida real de `regla.capturar("M01")` dentro de `M01BienvenidaScreenTest` (por eso «Google Calendar» aparece
+marcado: la prueba llama a `capturar()` justo después de alternar esa fila). Diferencia aceptada frente a Figma: el
+párrafo se parte en 3 líneas en vez de 2 (métrica de fuente de Robolectric).
