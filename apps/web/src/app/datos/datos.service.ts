@@ -10,4 +10,6 @@ export class DatosService {
   readonly mensajes = computed(() => this.dataset.value()?.mensajes);
   readonly web = computed(() => this.dataset.value()?.web);
   readonly alarmas = computed(() => this.dataset.value()?.alarmas ?? []);
+  readonly acceso = computed(() => this.dataset.value()?.web.acceso);
+  readonly eliminarCuenta = computed(() => this.dataset.value()?.web.eliminarCuenta);
 }

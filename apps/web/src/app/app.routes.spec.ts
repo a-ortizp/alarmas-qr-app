@@ -1,16 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { provideZonelessChangeDetection } from '@angular/core';
 import { routes } from './app.routes';
 import { PANTALLAS } from './navegacion/pantallas';
+import { proveedoresPrueba } from '../testing/datos-prueba';
 
 describe('rutas de TRAZABILIDAD §2', () => {
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection(), provideRouter(routes)],
-    }),
-  );
+  beforeEach(() => TestBed.configureTestingModule({ providers: proveedoresPrueba(routes) }));
 
   it('declara las 6 páginas con su código', () => {
     expect(PANTALLAS.map((p) => p.codigo)).toEqual(['W00', 'W01', 'W03', 'W04', 'W05', 'W06']);

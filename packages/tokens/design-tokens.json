@@ -2,8 +2,8 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.10",
-    "date": "2026-09-20",
+    "version": "1.12",
+    "date": "2026-09-21",
     "source": "DESIGN_SYSTEM.md v1.10 · STYLE_TILE.md v1.2 · MOCKUPS.md (móvil v1.7, web v1.5)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
     "notes": [
@@ -13,7 +13,9 @@
       "Sobre Tinta el texto secundario va en Gris Borde y el primario es blanco (excepción M10).",
       "Alturas: 52 para toque en móvil (v1.6, revisión de tutores del 2026-09-17; antes 48), 44 para puntero en web; 56 en las acciones de la alarma sonando.",
       "Prevención de errores (v1.7): toda acción destructiva o de salida pasa por un diálogo de confirmación centrado sobre velo Tinta 55 %; la acción segura es el primario amarillo y la que confirma va en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura.",
-      "v1.10 (2026-09-20): medidas móviles de la Persona A tomadas de Figma para el Plan 2 (coral suave, radios de visor/casilla/snackbar, flecha «‹», título de evento, rótulo de opción, chip que se toca, medidas size.movil)."
+      "v1.10 (2026-09-20): medidas móviles de la Persona A tomadas de Figma para el Plan 2 (coral suave, radios de visor/casilla/snackbar, flecha «‹», título de evento, rótulo de opción, chip que se toca, medidas size.movil).",
+      "v1.11 (2026-09-21): medidas web de la Persona A tomadas de Figma para el Plan 3 (tarjeta de acceso 520, modal «Eliminar cuenta» 481 con relleno 22 y título 18, textos y medidas size.web/space.web, sombra del diálogo web, snackbar web 3 s). Campos 48 con etiqueta 12 por regla (Figma 46/11).",
+      "v1.12 (2026-09-21): cortes de ancho web (breakpoint) para la degradación elegante fuera del marco de referencia 1280×820: bajo 1200 la barra lateral se colapsa sola; bajo 1100 las columnas de página (W06) se apilan. A 1280 nada cambia."
     ]
   },
   "color": {
@@ -213,8 +215,20 @@
       "titulo-modal-web": {
         "family": "titulares",
         "weight": 700,
-        "size": 21
+        "size": 18,
+        "$description": "Modal «Eliminar cuenta» (web v1.5, Figma 18; antes 21)"
       },
+      "marca-acceso": { "family": "titulares", "weight": 700, "size": 24 },
+      "titulo-tarjeta-web": { "family": "titulares", "weight": 700, "size": 17 },
+      "cuerpo-web": { "family": "ui", "weight": 400, "size": 14 },
+      "descripcion-web": { "family": "ui", "weight": 400, "size": 13.5 },
+      "rotulo-web": { "family": "ui", "weight": 400, "size": 14.5 },
+      "valor-campo": { "family": "ui", "weight": 400, "size": 15 },
+      "etiqueta-campo": { "family": "ui", "weight": 600, "size": 12, "$description": "Figma 11; nada por debajo de 12 (Plan 3 D3)" },
+      "etiqueta-externa": { "family": "ui", "weight": 600, "size": 13 },
+      "nota-acceso": { "family": "ui", "weight": 400, "size": 13 },
+      "error-campo-web": { "family": "ui", "weight": 400, "size": 12.5, "$description": "Mensaje de error bajo el campo web (W00); interlineado normal como en Figma, a diferencia de nota (1.4)" },
+      "snackbar-web": { "family": "ui", "weight": 600, "size": 14 },
       "titulo-dialogo": {
         "family": "titulares",
         "weight": 600,
@@ -381,10 +395,10 @@
       "height": 104
     },
     "modal-web": {
-      "min": 540,
-      "max": 600
+      "width": 481,
+      "$description": "Modal «Eliminar cuenta» (web v1.5, Figma 481; el DS §7 decía 540–600)"
     },
-    "tarjeta-acceso": 400,
+    "tarjeta-acceso": 520,
     "switch": {
       "width": 42,
       "height": 24
@@ -396,6 +410,12 @@
     "icono-barra-lateral": 20,
     "control-colapsar-menu": 36,
     "tarjeta-formulario-web": 600,
+    "web": {
+      "logo-acceso": 36, "logo-barra": 32, "avatar": 32, "icono-snackbar": 16, "icono-advertencia": 24,
+      "icono-vineta": 16, "pildora-colapsada": 40, "perilla-switch": 18, "tarjeta-perfil": 561,
+      "opacidad-deshabilitado": 0.45,
+      "$description": "Medidas de los mockups web v1.5 medidas en Figma el 2026-09-21 (Plan 3)"
+    },
     "chip-control": 32,
     "chip-control$description": "Chip que se toca («Linterna · auto», M03): 32 pt, relleno lateral 14, radio 16 (móvil v1.7, tutores 2026-09-19); el chip de estado sigue en 20",
     "icono-visor": 48,
@@ -416,6 +436,16 @@
       "accion-snackbar": [110, 26], "modulo-textura": 8, "paso-textura": 14, "etiqueta-dato": 74, "punto-pagina": 6,
       "burbuja": [250, 227],
       "$description": "Medidas de los mockups móviles v1.7 medidas en Figma el 2026-09-20 (Plan 2)"
+    }
+  },
+  "breakpoint": {
+    "web-colapsar-barra": {
+      "$value": 1200,
+      "$description": "Por debajo de este ancho de ventana la barra lateral web se colapsa sola (64); al volver a superarlo se expande. Entre cruces el usuario puede expandir o colapsar con el control. 1280 (marco de Figma) queda por encima: el mockup no cambia."
+    },
+    "web-apilar-columnas": {
+      "$value": 1100,
+      "$description": "Por debajo de este ancho de ventana las páginas con dos columnas (W06: tarjeta Perfil 561 + columna de Privacidad/Eliminación) las apilan en una. Con la barra colapsada el contenido mide ancho − 128; W06 necesita 561 + 18 + 385 (selector segmentado) = 964."
     }
   },
   "radius": {
@@ -499,8 +529,11 @@
         20,
         12
       ],
-      "modal": 24,
-      "entre-indicadores": 14
+      "modal": 22,
+      "entre-indicadores": 14,
+      "tarjeta-acceso": 34, "tarjeta-acceso-gap": 20, "tarjeta": 22, "tarjeta-peligro": 20, "campo-horizontal": 14,
+      "snackbar": [10, 18], "snackbar-borde": 24, "item-barra-lateral": [9, 16], "segmentado": 3,
+      "escala": [2, 4, 8, 10, 12, 16]
     },
     "boton-web-padding": [
       13,
@@ -537,12 +570,17 @@
     "ignorar-relectura": {
       "duration": 2000,
       "$description": "M03 ignora una lectura de QR igual a la última consumida durante esta ventana, para no reabrir M13 en bucle al volver de esa pantalla con el mismo QR inválido frente a la cámara"
+    },
+    "snackbar-web": {
+      "duration": 3000,
+      "$description": "Snackbar web (W00 correo enviado / cuenta eliminada, W06 actualizado): After delay 3 s"
     }
   },
   "elevation": {
     "fab": "0 4px 12px rgba(23, 22, 28, 0.18)",
     "tarjeta-evento": "0 6px 18px rgba(23, 22, 28, 0.10)",
-    "tarjeta": "0 4px 12px rgba(23, 22, 28, 0.18)"
+    "tarjeta": "0 4px 12px rgba(23, 22, 28, 0.18)",
+    "dialogo-web": "0 12px 32px rgba(23, 22, 28, 0.18)"
   },
   "texture": {
     "modulos-qr": {
@@ -562,5 +600,5 @@
     },
     "qr-visor-opacity": 0.5
   },
-  "version": "1.10"
+  "version": "1.12"
 }
