@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
@@ -76,17 +77,27 @@ fun M03EscanerScreen(
     }
 }
 
-/** Marco de enfoque 220 (4:143): cuatro esquinas Amarillo Energía de 40 con trazo 4 y remates redondos; QR de 100 al 50 %. */
+/**
+ * Marco de enfoque 220 (4:135): cuatro esquinas en corchete redondeado — Amarillo Energía, trazo 4
+ * (`Trazos.MarcoEnfoque`), remates y uniones redondas; cada esquina mide `Medidas.EsquinaEnfoque` (40) desde su
+ * vértice a lo largo de cada lado, con un tramo recto y una curva de 90° de radio `Medidas.RadioEsquinaEnfoque`
+ * (20) en la unión (el vértice recto original quedaba demasiado anguloso frente al corchete de Figma). QR de 100
+ * al 50 %.
+ */
 @Composable
 private fun MarcoEnfoque(modifier: Modifier = Modifier) {
     Box(modifier.size(Medidas.MarcoEnfoque), contentAlignment = Alignment.Center) {
         Canvas(Modifier.fillMaxSize()) {
-            val t = size.width; val e = Medidas.EsquinaEnfoque.toPx(); val g = Trazos.MarcoEnfoque.toPx()
+            val t = size.width; val e = Medidas.EsquinaEnfoque.toPx(); val r = Medidas.RadioEsquinaEnfoque.toPx(); val g = Trazos.MarcoEnfoque.toPx()
             val esquinas = Path().apply {
-                moveTo(0f, e); lineTo(0f, 0f); lineTo(e, 0f)
-                moveTo(t - e, 0f); lineTo(t, 0f); lineTo(t, e)
-                moveTo(t, t - e); lineTo(t, t); lineTo(t - e, t)
-                moveTo(e, t); lineTo(0f, t); lineTo(0f, t - e)
+                // superior izquierda
+                moveTo(0f, e); lineTo(0f, r); arcTo(Rect(0f, 0f, 2 * r, 2 * r), 180f, 90f, false); lineTo(e, 0f)
+                // superior derecha
+                moveTo(t - e, 0f); lineTo(t - r, 0f); arcTo(Rect(t - 2 * r, 0f, t, 2 * r), 270f, 90f, false); lineTo(t, e)
+                // inferior derecha
+                moveTo(t, t - e); lineTo(t, t - r); arcTo(Rect(t - 2 * r, t - 2 * r, t, t), 0f, 90f, false); lineTo(t - e, t)
+                // inferior izquierda
+                moveTo(e, t); lineTo(r, t); arcTo(Rect(0f, t - 2 * r, 2 * r, t), 90f, 90f, false); lineTo(0f, t - e)
             }
             drawPath(esquinas, Colores.AmarilloEnergia, style = Stroke(width = g, cap = StrokeCap.Round, join = StrokeJoin.Round))
         }

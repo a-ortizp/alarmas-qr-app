@@ -141,6 +141,7 @@ object Medidas {
     val VisorBienvenida = 170.dp
     val MarcoEnfoque = 220.dp
     val EsquinaEnfoque = 40.dp        // largo de cada esquina del marco de enfoque de M03 (v1.7)
+    val RadioEsquinaEnfoque = 20.dp   // radio del corchete redondeado de cada esquina del marco de enfoque de M03 (4:135)
     val VistaPrevia = 300.dp
     val Numeral = 22.dp
     val Logotipo = 56.dp

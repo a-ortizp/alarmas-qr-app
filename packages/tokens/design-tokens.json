@@ -407,7 +407,7 @@
     "movil": {
       "switch": [44, 26], "icono-fab": 26, "snackbar": 48, "casilla": 20, "icono-fila": 20, "fila-opcion": 36,
       "fila-hoja": 100, "caja-icono": 40, "sello": 30, "sello-grande": 64, "diana": 104, "visor-apagado": 110,
-      "visor-bienvenida": 170, "marco-enfoque": 220, "esquina-enfoque": 40, "vista-previa": 300, "numeral": 22, "logotipo": 56, "enlace": 32,
+      "visor-bienvenida": 170, "marco-enfoque": 220, "esquina-enfoque": 40, "radio-esquina-enfoque": 20, "vista-previa": 300, "numeral": 22, "logotipo": 56, "enlace": 32,
       "boton-atras": 44, "asa": [36, 4], "pildora-nav": [40, 22], "icono-nav": 20, "qr-bienvenida": 84, "qr-visor": 100,
       "qr-pantallazo": 120, "marco-lectura": 136, "indicador-pagina": [22, 6], "perilla": 20, "hora-tarjeta-ancho": 81,
       "accion-snackbar": [110, 26], "modulo-textura": 8, "paso-textura": 14, "etiqueta-dato": 74, "punto-pagina": 6,
