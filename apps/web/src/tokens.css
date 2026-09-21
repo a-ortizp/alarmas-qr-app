@@ -173,6 +173,8 @@
      No se usan dentro de @media (las variables no funcionan ahí): CortesService los lee con getComputedStyle. */
   --breakpoint-web-colapsar-barra: 1200px;   /* bajo este ancho la barra lateral se colapsa sola */
   --breakpoint-web-apilar-columnas: 1100px;  /* bajo este ancho las páginas de dos columnas (W06) se apilan */
+  --breakpoint-web-cajon: 900px;             /* v1.13: bajo este ancho la barra lateral es un cajón que abre ☰ */
+  --breakpoint-web-telefono: 600px;          /* v1.13: bajo este ancho la raíz lleva data-ancho="telefono" */
 
   /* movimiento y elevación */
   --motion-transicion: 250ms ease-in-out;
@@ -180,6 +182,21 @@
   --motion-toque-largo: 500ms;
   --elevation-fab: 0 4px 12px rgba(23, 22, 28, 0.18);
   --elevation-tarjeta-evento: 0 6px 18px rgba(23, 22, 28, 0.10);
+}
+
+/* Teléfono (tokens v1.13, breakpoint-telefono): bajo --breakpoint-web-telefono CortesService pone
+   data-ancho="telefono" en <html> y estos valores reemplazan a los de puntero. Solo medidas: la composición
+   (apilar, cajón) la decide cada componente con las señales de CortesService. */
+:root[data-ancho~="telefono"] {
+  --size-boton-web: 48px;               /* área táctil mínima */
+  --size-segmentado-web: 48px;
+  --size-item-barra-lateral: 48px;
+  --size-control-colapsar-menu: 48px;
+  --space-web-contenido-x: 16px;
+  --space-web-contenido-y: 20px;
+  --space-barra-superior-web: 16px;
+  --space-tarjeta-acceso: 22px;
+  --space-web-bloques: 14px;
 }
 
 /* Superficie Tinta (M03, M10, barra de marca del afiche): el primario es blanco y el secundario Gris Borde */

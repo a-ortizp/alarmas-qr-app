@@ -2,7 +2,7 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.12",
+    "version": "1.13",
     "date": "2026-09-21",
     "source": "DESIGN_SYSTEM.md v1.10 · STYLE_TILE.md v1.2 · MOCKUPS.md (móvil v1.7, web v1.5)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
@@ -15,7 +15,8 @@
       "Prevención de errores (v1.7): toda acción destructiva o de salida pasa por un diálogo de confirmación centrado sobre velo Tinta 55 %; la acción segura es el primario amarillo y la que confirma va en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura.",
       "v1.10 (2026-09-20): medidas móviles de la Persona A tomadas de Figma para el Plan 2 (coral suave, radios de visor/casilla/snackbar, flecha «‹», título de evento, rótulo de opción, chip que se toca, medidas size.movil).",
       "v1.11 (2026-09-21): medidas web de la Persona A tomadas de Figma para el Plan 3 (tarjeta de acceso 520, modal «Eliminar cuenta» 481 con relleno 22 y título 18, textos y medidas size.web/space.web, sombra del diálogo web, snackbar web 3 s). Campos 48 con etiqueta 12 por regla (Figma 46/11).",
-      "v1.12 (2026-09-21): cortes de ancho web (breakpoint) para la degradación elegante fuera del marco de referencia 1280×820: bajo 1200 la barra lateral se colapsa sola; bajo 1100 las columnas de página (W06) se apilan. A 1280 nada cambia."
+      "v1.12 (2026-09-21): cortes de ancho web (breakpoint) para la degradación elegante fuera del marco de referencia 1280×820: bajo 1200 la barra lateral se colapsa sola; bajo 1100 las columnas de página (W06) se apilan. A 1280 nada cambia.",
+      "v1.13 (2026-09-21, rama feature/web-responsive, pendiente de aprobación del profesor): web responsive hasta 360. Bajo 900 (web-cajon) la barra lateral sale del grid y se abre como cajón desde un botón ☰ de la barra superior, sobre velo Tinta 55 %; bajo 600 (web-telefono) los tokens de breakpoint-telefono reemplazan márgenes y alturas: botones y segmentado a 48 (área táctil mínima), contenido y barra superior con margen 16. A 1280 nada cambia."
     ]
   },
   "color": {
@@ -446,7 +447,27 @@
     "web-apilar-columnas": {
       "$value": 1100,
       "$description": "Por debajo de este ancho de ventana las páginas con dos columnas (W06: tarjeta Perfil 561 + columna de Privacidad/Eliminación) las apilan en una. Con la barra colapsada el contenido mide ancho − 128; W06 necesita 561 + 18 + 385 (selector segmentado) = 964."
+    },
+    "web-cajon": {
+      "$value": 900,
+      "$description": "v1.13. Por debajo de este ancho la barra lateral deja el grid (el contenido ocupa todo el ancho) y se abre como cajón de 208 sobre velo Tinta 55 % desde el botón ☰ «Abrir menú» de la barra superior. Escape, el velo, «Cerrar menú» o elegir un ítem lo cierran."
+    },
+    "web-telefono": {
+      "$value": 600,
+      "$description": "v1.13. Por debajo de este ancho la raíz lleva data-ancho=\"telefono\" y rigen los valores de breakpoint-telefono: toque en vez de puntero. Ancho mínimo soportado: 360."
     }
+  },
+  "breakpoint-telefono": {
+    "$description": "v1.13. Valores que reemplazan a sus tokens bajo web-telefono (tokens.css, :root[data-ancho~=\"telefono\"]). Solo cambian medidas; la composición de cada página la decide su componente con CortesService.",
+    "size-boton-web": { "$value": 48, "$description": "Área táctil mínima 48 (en puntero 44)" },
+    "size-segmentado-web": { "$value": 48, "$description": "Área táctil mínima 48 (en puntero 36)" },
+    "size-item-barra-lateral": { "$value": 48, "$description": "Ítems del cajón a 48 (en puntero 38)" },
+    "size-control-colapsar-menu": { "$value": 48, "$description": "☰ y «Cerrar menú» a 48 (en puntero 36)" },
+    "space-web-contenido-x": 16,
+    "space-web-contenido-y": 20,
+    "space-barra-superior-web": 16,
+    "space-tarjeta-acceso": 22,
+    "space-web-bloques": 14
   },
   "radius": {
     "pildora": 999,
