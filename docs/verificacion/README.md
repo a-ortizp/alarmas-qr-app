@@ -13,13 +13,13 @@ marco) con los ids de `docs/MOCKUPS.md` §5.
 | M00b | 3:37 | ok · diferencias: campo Correo enfocado con cursor y valor tecleado en Figma; la implementación lo precarga sin foco (aceptado, ver brief) |
 | M02v | 4020:3553 | ok · pixel-perfect (diana, título, párrafo a 3 líneas y los tres botones alinean con el marco) |
 | M02 | 3:131 | ok · diferencias aceptadas: 5ª alarma «Asado del semillero» / LUNES 31 (decisión D3, el marco solo muestra 4); «evento 6:20 pm» en la tarjeta «Reunión semillero» es el valor de `dataset.json` (fuente única de datos), 10 min distinto del marco. El sufijo am/pm ya no se parte de línea (ver nota abajo) |
-| M02h | 4019:3139 | pendiente (Tarea 14) |
+| M02h | 4019:3139 | ok · pixel-perfect a pantalla completa (Tarea 14: captura del flujo T6, `regla.capturar("M02h")` tras mantener presionado el FAB desde M02 real): la hoja «Agregar evento» compuesta sobre la lista M02 atenuada por el velo Tinta 55 % alinea con el marco (título, primario amarillo «Escanear el QR del evento», los dos secundarios y la nota final). Diferencias aceptadas, iguales que M02: la tarjeta «Reunión semillero» visible al fondo muestra «evento 6:20 pm» (valor de `dataset.json`) en vez de 6:10 pm del marco, con su chip «✓ Escaneada» (también del dataset) asomando en el borde inferior |
 | M12 | 6:87 | ok · pixel-perfect (visor apagado, título a 2 líneas, tarjeta «ACTÍVALA EN 3 PASOS», «Abrir ajustes» y las dos alternativas ancladas abajo alinean con el marco; banda de textura atenuada al 50 % verificada por muestreo de píxeles, sin diferencias de recorte de línea) |
 | M13 | 6:122 | ok · pixel-perfect (sello «!», título, cuerpo, tarjeta «QUÉ DETECTAMOS» con el chip y el código Spline Sans Mono, «Volver a escanear», «Crear el evento a mano» y el enlace subrayado alinean con el marco; banda de textura atenuada al 50 % verificada por muestreo de píxeles, sin diferencias de recorte de línea) |
 | M03 | 4:135 | ok · esquina del marco de enfoque corregida (fix round 1): ahora es un corchete redondeado (tramo recto + arco de 90° de `Medidas.RadioEsquinaEnfoque` = 20 dp, medido contra el marco de Figma por muestreo de píxeles) en vez de los dos segmentos rectos con remate de radio pequeño de la primera versión; comparado a ojo y en zoom contra `M03-figma.png`, el radio y la forma del corchete ya coinciden. Diferencia aceptada: título «Escanear QR» algo más grueso que en Figma (métrica de fuente de Robolectric, igual que M01/M00a). El resto (barra Tinta, chip «Linterna · auto», chip «● Cámara activa», textos del visor, hoja blanca r24 con los dos secundarios y el asa) alinea con el marco. Cámara real: pendiente de prueba en dispositivo (no se puede probar en este entorno) |
 | M03b | 4020:3295 | ok · pixel-perfect (chip «✓ QR detectado», título, burbuja de WhatsApp con «Grupo MISO UX · hoy 8:12 am», el marco de lectura con el QR, «Origen: WhatsApp · compartido con Alarmas QR», «Continuar», «Elegir otra imagen» y la nota final alinean con el marco). Diferencia aceptada: el mensaje parte en «Nos vemos el domingo 30 en» / «SD-703. Escanea para agendar 👇» en vez de «…en SD-703.» / «Escanea…» (métrica de fuente de Robolectric, igual que M01/M00a/M03). Intent de compartir: pendiente de prueba en dispositivo (compartir una imagen desde la galería a «Alarmas QR» no se puede probar en este entorno) |
-| M04 | 4:189 | contenido ok · pantalla completa: Tarea 14 (ver nota M04 abajo) |
-| M04d | 4330:1432 | contenido ok · pantalla completa: Tarea 14 (ver nota M04 abajo) |
+| M04 | 4:189 | ok · pixel-perfect a pantalla completa (Tarea 14: captura del flujo T1, `regla.capturar("M04")` tras leer el QR de `e-entrega` desde M02 real) — ver nota M04 actualizada abajo |
+| M04d | 4330:1432 | ok · pixel-perfect a pantalla completa (Tarea 14: captura del flujo T1, `regla.capturar("M04d-flujo")` con el diálogo «¿Eliminar alarma?» abierto sobre la hoja M04 y la lista M02, copiada como `M04d.png`) — ver nota M04 actualizada abajo |
 | M05 | 4:223 | ok · diferencias aceptadas: 5ª alarma «Asado del semillero» / LUNES 31 (decisión D3, el marco solo muestra 4); snackbar «Alarma guardada · También en Google Calendar» con «Deshacer · 5 s» sobre el FAB, que es la colocación por defecto del `Scaffold` de Material 3 (el snackbar se ubica siempre encima del FAB cuando hay uno, con un hueco de ~16 dp; el marco los separa 60 dp) — ver nota M05 abajo. La tarjeta «Entrega de proyecto UX» muestra los chips «Nueva» y «✓ Escaneada» juntos (el marco solo muestra «Nueva»): ambos chips vienen de `dataset.json` (`a-entrega.chips`), fuente única de datos que esta tarea no puede tocar. El texto del snackbar parte en «Alarma guardada · También en» / «Google Calendar» (2 líneas) en vez de 1 línea (métrica de fuente de Robolectric, igual que M01/M03b). El resto (barra, agrupadores, tarjetas de HOY/MAÑANA, borde Verde Texto de la tarjeta nueva, FAB) alinea con el marco |
 
 **Nota M01 (Tarea 5, corregida en las rondas 1 y 2 de revisión):** el ayudante `capturar()` de `Verificacion.kt` ya
@@ -69,6 +69,22 @@ un dispositivo real no tiene este problema — véase p. ej. robolectric/robolec
 claramente fuera del diálogo, para probar el mismo comportamiento («tocar el velo equivale a la acción segura») sin
 depender de esa zona; el comentario en el test documenta la razón.
 
+**Nota M04 · actualización (Tarea 14):** `capturar()` ahora compone todas las ventanas Android visibles (no solo el
+`decorView` de la actividad de prueba): lee `android.view.WindowManagerGlobal.getInstance().mViews` por reflexión
+(sin shadow público en Robolectric 4.16) y dibuja cada raíz de ventana, en el mismo orden en que Android las agrega
+(que es también su z-order), trasladada a su posición real en pantalla. Con esto, `FlujosPersonaATest` (T1) navega
+por las entradas reales desde M02, llega a M04 vía `agregarDesdeEvento("e-entrega")` y captura `M04.png`: la hoja
+`M04AlarmaCreadaSheet` completa —asa, forma r24, velo Tinta 55 %— compuesta sobre la lista M02 atenuada detrás,
+pixel-perfect contra `M04-figma.png`. La misma prueba abre el diálogo (`eliminar` → `dialogoAbierto`) y captura
+`M04d-flujo.png` (copiada a `docs/verificacion/M04d.png`): el `Dialog` de `DialogoConfirmacion`, con su propio velo
+Tinta 55 % dimiendo también la hoja M04 detrás, aparece ahora en la captura — pixel-perfect contra `M04d-figma.png`
+(marco 4330:1432), incluido el degradado doble (velo de la hoja + velo del diálogo) que ya predecía el marco.
+`M04-contenido.png` y el `M04d.png` anterior (solo contenido, de la Tarea 12) se conservan sin cambios como
+referencia de los bloques internos verificados por aserción; `M04.png`/`M04d.png` en `docs/verificacion/` son ahora
+las capturas de pantalla completa de esta tarea. La limitación de `performClick()` sobre «velo» con un diálogo largo
+(nota original de la Tarea 12, arriba) sigue vigente: no la corrige la compositura multi-ventana, es un problema de
+enrutado de toques sintéticos de Robolectric, no de qué se pinta.
+
 **Nota M05 (Tarea 13):** `M05.png` es la salida real de `regla.capturar("M05")` en `M05GuardadaTest`, montando
 `NavegacionApp` completo con `entradasApp`, así que incluye la barra superior, la lista con la alarma nueva, el
 snackbar y el FAB, y la barra inferior. Se verificó por muestreo de píxeles que el snackbar (fondo Tinta) queda por
@@ -95,3 +111,12 @@ guarda un `mostrado` (`rememberSaveable(clave.id)`) para mostrar el snackbar una
 nueva `RepositorioDataset.olvidarDeshacer()` (vía `M02InicioViewModel.olvidarDeshacer()`) cuando la ventana vence sin
 que se toque «Deshacer», cerrándola de forma explícita. `M05.png`/`M05-figma.png` no cambiaron con este fix (no es un
 cambio visual).
+
+**Nota M02h (Tarea 14):** hasta esta tarea, M02h no tenía captura porque solo existía como composable aislado sin
+una entrada real que la abriera sobre la lista. `FlujosPersonaATest` (T6) monta `entradasApp` desde M02, mantiene
+presionado el FAB 500 ms (`performSemanticsAction(SemanticsActions.OnLongClick)`, ya que Robolectric no simula el
+temporizador real de un toque largo) y captura `M02h.png` con la hoja «Agregar evento» ya compuesta —por el mismo
+`capturar()` multi-ventana de la nota M04 de arriba— sobre la lista M02 atenuada por el velo Tinta 55 %; pixel-perfect
+contra `M02h-figma.png` (marco 4019:3139). Diferencias aceptadas, iguales que M02: la tarjeta «Reunión semillero»
+visible al fondo trae «evento 6:20 pm» de `dataset.json` en vez de 6:10 pm del marco, con su chip «✓ Escaneada»
+(también del dataset) asomando en el borde inferior de la captura.
