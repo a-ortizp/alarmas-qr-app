@@ -5,6 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.VibrationEffect
 import android.os.Vibrator
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -25,6 +28,7 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02hAgregarEventoSheet
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02vEstadoVacio
 import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03EscanerScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03EscanerViewModel
+import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03bPantallazoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
@@ -105,6 +109,16 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             alVolver = { pila.removeLastOrNull() }, alAlternarLinterna = vm::alternarLinterna, alLeer = vm::leer,
             alTocarVisor = vm::simularEventoValido, alTocarVibra = vm::simularInvalido,
             alElegirPantallazo = { pila.reemplazarCima(Pantalla.M03b) }, alCrearAMano = { pila.reemplazarCima(Pantalla.M07) },
+        )
+    }
+    entry<Pantalla.M03b> {
+        val datos = repositorio.dataset.pantallazoRecibido
+        val elegirImagen = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { /* maquetación: la imagen elegida no se lee */ }
+        M03bPantallazoScreen(
+            datos = datos, evento = repositorio.evento(datos.eventoDetectado)!!,
+            alVolver = { pila.removeLastOrNull() },
+            alContinuar = { repositorio.agregarDesdeEvento(datos.eventoDetectado)?.let { pila.reemplazarCima(Pantalla.M04(it.id)) } },
+            alElegirOtra = { elegirImagen.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) },
         )
     }
     entry<Pantalla.M13> {

@@ -98,6 +98,7 @@ object Tipografia {
     val NotaLarga = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.sp, lineHeight = 17.sp)   // consentimiento de datos (M00a)
     val Codigo = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")   // contenido del QR inválido (M13)
     val EnlaceCorto = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 14.sp)               // «Abrir el enlace bajo mi responsabilidad» (M13); el subrayado lo aplica BotonEnlace
+    val Mensaje = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.sp, lineHeight = 17.sp)   // mensaje de WhatsApp en la burbuja de M03b
 }
 
 object Tamanos {
@@ -154,6 +155,7 @@ object Medidas {
     val PasoTextura = 14.dp
     val EtiquetaDato = 74.dp          // ancho fijo de la columna de etiqueta en la tarjeta del evento (M04)
     val PuntoPagina = 6.dp            // punto inactivo y gap del indicador de página (M01)
+    val Burbuja = DpSize(250.dp, 227.dp)   // burbuja de mensaje de WhatsApp con el QR enmarcado (M03b)
 }
 
 object Radios {
@@ -229,6 +231,7 @@ object Espacio {
     val AntesAcciones = 32.dp           // espaciador fijo antes de las acciones de M13
     val GapVisor = 16.dp                // entre el marco de enfoque y los textos del visor (M03)
     val ChipVisorSuperior = 24.dp       // separación del chip «● Cámara activa» respecto al techo del visor (M03)
+    val PaddingMarcoLectura = 8.dp      // relleno interno del marco de lectura alrededor del QR (M03b)
 }
 
 object Movimiento {

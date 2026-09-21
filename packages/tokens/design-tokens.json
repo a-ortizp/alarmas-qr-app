@@ -343,7 +343,8 @@
       "pie-acceso": { "family": "ui", "weight": 600, "size": 13, "$description": "Pie de M00a/M00b: «¿Ya tienes cuenta? Inicia sesión»" },
       "nota-larga": { "family": "ui", "weight": 400, "size": 12, "lineHeight": 17, "$description": "Consentimiento de datos en M00a" },
       "codigo": { "family": "datos", "weight": 500, "size": 12, "tabular": true, "$description": "Contenido del QR inválido (M13), = hora-ampm" },
-      "enlace-corto": { "family": "ui", "weight": 700, "size": 14, "$description": "«Abrir el enlace bajo mi responsabilidad» (M13); el subrayado lo aplica el componente BotonEnlace" }
+      "enlace-corto": { "family": "ui", "weight": 700, "size": 14, "$description": "«Abrir el enlace bajo mi responsabilidad» (M13); el subrayado lo aplica el componente BotonEnlace" },
+      "mensaje": { "family": "ui", "weight": 400, "size": 13, "lineHeight": 17, "$description": "Mensaje de WhatsApp en la burbuja de M03b" }
     }
   },
   "size": {
@@ -411,6 +412,7 @@
       "boton-atras": 44, "asa": [36, 4], "pildora-nav": [40, 22], "icono-nav": 20, "qr-bienvenida": 84, "qr-visor": 100,
       "qr-pantallazo": 120, "marco-lectura": 136, "indicador-pagina": [22, 6], "perilla": 20, "hora-tarjeta-ancho": 81,
       "accion-snackbar": [110, 26], "modulo-textura": 8, "paso-textura": 14, "etiqueta-dato": 74, "punto-pagina": 6,
+      "burbuja": [250, 227],
       "$description": "Medidas de los mockups móviles v1.7 medidas en Figma el 2026-09-20 (Plan 2)"
     }
   },
@@ -481,7 +483,8 @@
       "padding-pasos-vertical": 12,
       "antes-acciones": 32,
       "gap-visor": 16,
-      "chip-visor-superior": 24
+      "chip-visor-superior": 24,
+      "padding-marco-lectura": 8
     },
     "web": {
       "contenido-vertical": 28,
