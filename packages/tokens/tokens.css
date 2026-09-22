@@ -1,4 +1,4 @@
-/* Alarmas QR · Energía puntual · tokens v1.15 (2026-09-22)
+/* Alarmas QR · Energía puntual · tokens v1.16 (2026-09-22)
    Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
    Reglas: un solo amarillo por pantalla (la acción principal); estados activos en Tinta;
    texto ≤ 15 px usa los tonos --color-*-texto; botones 52 px en móvil (48 hasta v1.5) y 44 px en web; radio 14 (20 en el diálogo de confirmación).
@@ -176,6 +176,7 @@
   --size-icono-lupa: 16px;
   --size-paginador-pildora: 30px;
   --size-grafica-barra-alto-max: 96px;
+  --size-grafica-barra-alto-lienzo: 130px;   /* alto fijo del SVG; solo el ancho llena la tarjeta */
   --size-afiche-miniatura: 132px;
   --size-afiche-qr: 72px;
   --size-checkbox: 20px;

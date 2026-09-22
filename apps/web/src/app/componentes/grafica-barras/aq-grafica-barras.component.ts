@@ -19,6 +19,7 @@ interface ColumnaGrafica extends SemanaEscaneo {
     <svg
       class="lienzo"
       [attr.viewBox]="'0 0 ' + columnas().length * 40 + ' 130'"
+      preserveAspectRatio="none"
       role="img"
       aria-label="{{ titulo() }}"
     >
@@ -71,8 +72,9 @@ interface ColumnaGrafica extends SemanaEscaneo {
       color: var(--color-texto-secundario);
     }
     .lienzo {
+      display: block;
       width: 100%;
-      height: auto;
+      height: var(--size-grafica-barra-alto-lienzo);
     }
     .valor {
       font: var(--text-valor-grafica);
