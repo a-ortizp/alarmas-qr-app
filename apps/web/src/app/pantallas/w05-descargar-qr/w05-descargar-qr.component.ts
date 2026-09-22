@@ -165,7 +165,7 @@ import { CortesService } from '../../navegacion/cortes.service';
     }
     .fila-todos {
       justify-content: space-between;
-      border-bottom: var(--stroke-borde) solid var(--color-tinta);
+      border-bottom: var(--stroke-foco) solid var(--color-tinta);
     }
     .grupo-todos {
       display: flex;
