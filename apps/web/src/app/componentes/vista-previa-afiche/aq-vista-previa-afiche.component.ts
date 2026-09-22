@@ -1,17 +1,17 @@
 import { Component, input } from '@angular/core';
-import { AqIconoComponent } from '../icono/aq-icono.component';
+import { AqQrDecorativoComponent } from '../qr-decorativo/aq-qr-decorativo.component';
 
 /** Vista previa del afiche (DS §7 «Tarjeta de afiche QR»): miniatura 132 (marca Tinta + QR 72 + nombre + lema) y bloque de texto con la regla de tamaño mínimo. */
 @Component({
   selector: 'aq-vista-previa-afiche',
-  imports: [AqIconoComponent],
+  imports: [AqQrDecorativoComponent],
   template: `
     <div class="miniatura">
       <div class="marca">
         <span class="punto" aria-hidden="true"></span>
         <span>Alarmas QR</span>
       </div>
-      <aq-icono nombre="qr" class="qr" />
+      <aq-qr-decorativo class="qr" [etiqueta]="nombreEvento()" />
       <span class="nombre-evento">{{ nombreEvento() }}</span>
       <span class="lema">Escanéalo y te avisamos</span>
     </div>

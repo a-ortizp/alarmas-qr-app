@@ -7,9 +7,11 @@ import {
 } from '../../componentes/selector-segmentado/aq-selector-segmentado.component';
 import { AqChipComponent } from '../../componentes/chip/aq-chip.component';
 import { AqVistaPreviaAficheComponent } from '../../componentes/vista-previa-afiche/aq-vista-previa-afiche.component';
+import { AqQrDecorativoComponent } from '../../componentes/qr-decorativo/aq-qr-decorativo.component';
 import { AqBotonComponent } from '../../componentes/boton/aq-boton.component';
 import { AqEnlaceComponent } from '../../componentes/enlace/aq-enlace.component';
 import { DatosService } from '../../datos/datos.service';
+import { formatoFechaHoraCorta } from '../../datos/formato-fecha';
 import { CortesService } from '../../navegacion/cortes.service';
 
 /** W05 · Descargar QR (F-W05): selección de eventos activos, formato PNG/PDF y vista previa del afiche. */
@@ -21,13 +23,19 @@ import { CortesService } from '../../navegacion/cortes.service';
     AqSelectorSegmentadoComponent,
     AqChipComponent,
     AqVistaPreviaAficheComponent,
+    AqQrDecorativoComponent,
     AqBotonComponent,
     AqEnlaceComponent,
   ],
   template: `
     <section class="pagina" data-codigo="W05">
       <a aq-enlace variante="miga" routerLink="/alarmas">‹ Mis alarmas</a>
-      <h1 class="titulo">Descargar QR</h1>
+      <div class="encabezado">
+        <h1 class="titulo">Descargar QR en lote</h1>
+        <p class="subtitulo">
+          Elige los eventos y descarga sus afiches con el QR listo para imprimir.
+        </p>
+      </div>
 
       @if (datos.web(); as web) {
         <div class="fila" [attr.data-apilada]="apilar() ? '' : null">
@@ -44,7 +52,11 @@ import { CortesService } from '../../navegacion/cortes.service';
                   [checked]="seleccionados().has(evento.id)"
                   (change)="alternar(evento.id)"
                 />
-                <span class="nombre">{{ evento.titulo }}</span>
+                <aq-qr-decorativo class="qr-fila" [etiqueta]="evento.titulo" />
+                <span class="datos-evento">
+                  <span class="nombre">{{ evento.titulo }}</span>
+                  <span class="fecha">{{ formatoFecha(evento.fechaHora) }}</span>
+                </span>
                 <aq-chip variante="publicado">Publicado</aq-chip>
               </label>
             }
@@ -79,10 +91,20 @@ import { CortesService } from '../../navegacion/cortes.service';
       flex-direction: column;
       gap: var(--space-12);
     }
+    .encabezado {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
     .titulo {
       margin: 0;
       font: var(--text-h1-web);
       color: var(--color-texto);
+    }
+    .subtitulo {
+      margin: 0;
+      font: var(--text-cuerpo-web);
+      color: var(--color-texto-secundario);
     }
     .fila {
       display: flex;
@@ -119,10 +141,30 @@ import { CortesService } from '../../navegacion/cortes.service';
       accent-color: var(--color-tinta);
       border-radius: var(--radius-casilla);
     }
-    .nombre {
+    .qr-fila {
+      box-sizing: border-box;
+      width: var(--size-qr-miniatura-lista);
+      height: var(--size-qr-miniatura-lista);
+      padding: var(--space-4);
+      border: var(--stroke-borde-fino) solid var(--color-tinta);
+      border-radius: var(--radius-chip-web);
+      background: var(--color-blanco);
+      color: var(--color-tinta);
+    }
+    .datos-evento {
+      display: flex;
+      flex-direction: column;
       flex: 1;
+      min-width: 0;
+      gap: var(--space-2);
+    }
+    .nombre {
       font: var(--text-cuerpo-web);
       color: var(--color-texto);
+    }
+    .fecha {
+      font: var(--text-nota-web);
+      color: var(--color-texto-secundario);
     }
     .contador {
       font: var(--text-nota-web);
@@ -147,6 +189,7 @@ export class W05DescargarQrComponent {
   ];
   protected readonly formato = signal('png');
   protected readonly seleccionados = signal(new Set<string>());
+  protected readonly formatoFecha = formatoFechaHoraCorta;
 
   constructor() {
     effect(() => {
