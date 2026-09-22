@@ -72,6 +72,21 @@ describe('W03 · Detalle Evento', () => {
     expect(pagina.querySelectorAll('tbody tr').length).toBe(0);
   });
 
+  it('una búsqueda sin coincidencias (D4 no aplica: hay 16 asistentes) muestra «Limpiar», no el mensaje de evento sin datos', async () => {
+    const { raiz, estable, router } = await abrir('/eventos/w-partido?q=zzz');
+    const pagina = raiz.querySelector('[data-codigo="W03"]')!;
+    expect(pagina.querySelectorAll('tbody tr').length).toBe(0);
+    expect(pagina.textContent).not.toContain('Aún no hay asistentes registrados');
+    expect(pagina.textContent).toContain('Sin resultados para "zzz"');
+    const limpiar = botonConTexto(pagina as HTMLElement, 'Limpiar');
+    expect(limpiar).toBeTruthy();
+    limpiar.click();
+    await estable();
+    expect(router.url).toBe('/eventos/w-partido');
+    expect(pagina.querySelectorAll('tbody tr').length).toBe(4);
+    expect(pagina.textContent).toContain('Joale7');
+  });
+
   it('«Exportar reporte» navega a W04', async () => {
     const { raiz, estable, router } = await abrir('/eventos/w-partido');
     botonConTexto(raiz, 'Exportar reporte').click();

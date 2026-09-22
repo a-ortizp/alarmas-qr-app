@@ -171,7 +171,7 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
               <p class="resumen-busqueda">
                 Mostrando {{ filas().length }} {{ filas().length === 1 ? 'alarma' : 'alarmas' }} ·
                 filtro: "{{ qActual() }}"
-                <a aq-enlace (click)="irA({ q: null })">Limpiar</a>
+                <button type="button" aq-enlace (click)="irA({ q: null })">Limpiar</button>
               </p>
             }
           } @else {
@@ -183,12 +183,14 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
                   : ''
               "
             >
-              <a
+              <button
+                type="button"
                 aq-boton
                 variante="secundario"
                 (click)="irA({ estado: null, origen: null, q: null })"
-                >Ver todos</a
               >
+                Ver todos
+              </button>
             </aq-estado-vacio>
           }
         </section>

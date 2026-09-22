@@ -73,7 +73,9 @@ import { CortesService } from '../../navegacion/cortes.service';
                     >{{ g.fecha }} · {{ g.formato.toUpperCase() }} · {{ g.rango }}</span
                   >
                 </div>
-                <a aq-enlace (click)="descargarDeNuevo()">Descargar de nuevo</a>
+                <button type="button" aq-enlace (click)="descargarDeNuevo()">
+                  Descargar de nuevo
+                </button>
               </div>
             }
           </aq-tarjeta>

@@ -98,6 +98,11 @@ import { Asistente } from '../../datos/modelos';
                 (cambiar)="irAPagina($event)"
               />
             }
+          } @else if (qActual()) {
+            <p class="sin-asistentes">
+              Sin resultados para "{{ qActual() }}"
+              <button type="button" aq-enlace (click)="buscar('')">Limpiar</button>
+            </p>
           } @else {
             <p class="sin-asistentes">Aún no hay asistentes registrados para este evento.</p>
           }
@@ -158,6 +163,11 @@ import { Asistente } from '../../datos/modelos';
       margin: 0;
       font: var(--text-nota-web);
       color: var(--color-texto-secundario);
+    }
+    .sin-asistentes {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
     }
   `,
 })
