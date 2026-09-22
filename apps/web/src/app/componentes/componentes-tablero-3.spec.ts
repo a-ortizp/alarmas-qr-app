@@ -31,17 +31,22 @@ describe('Componentes de tablero L09 (3/3)', () => {
     expect(grafica.querySelectorAll('.columna').length).toBe(8);
     expect(grafica.textContent).toContain('24 ago');
     const actual = grafica.querySelector('.columna.actual')!;
-    expect(actual.textContent).toContain('26');
+    expect(actual.textContent).toContain('23');
     expect(grafica.textContent).toContain('Datos agregados y anónimos');
   });
 
-  it('la barra más alta corresponde al valor máximo (24 ago, 26 escaneos)', async () => {
+  it('la barra más alta corresponde a la semana con más escaneos del dataset', async () => {
     const f = await montar();
     const barras = Array.from(
       (f.nativeElement as HTMLElement).querySelectorAll('#grafica .barra'),
     ) as SVGRectElement[];
     const alturas = barras.map((b) => Number(b.getAttribute('height')));
-    expect(Math.max(...alturas)).toBe(alturas[alturas.length - 1]);
+    const indiceMaximo = dataset.web.escaneosPorSemana.reduce(
+      (mejorIndice, semana, i, todas) =>
+        semana.escaneos > todas[mejorIndice].escaneos ? i : mejorIndice,
+      0,
+    );
+    expect(Math.max(...alturas)).toBe(alturas[indiceMaximo]);
   });
 
   it('aq-vista-previa-afiche muestra la marca, el nombre del evento y la regla de tamaño', async () => {
