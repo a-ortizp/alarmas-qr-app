@@ -1,7 +1,5 @@
 import { Component, computed, input } from '@angular/core';
 
-const MODULOS_QR = 21;
-const TAMANO_FINDER = 7;
 const MODULOS_TABLERO = 8;
 
 export type VarianteQrDecorativo = 'qr' | 'tablero';
@@ -11,33 +9,35 @@ interface Modulo {
   readonly columna: number;
 }
 
-function esFinder(fila: number, columna: number, filaBase: number, columnaBase: number): boolean {
-  const f = fila - filaBase;
-  const c = columna - columnaBase;
-  if (f < 0 || f >= TAMANO_FINDER || c < 0 || c >= TAMANO_FINDER) return false;
-  if (f === 0 || f === TAMANO_FINDER - 1 || c === 0 || c === TAMANO_FINDER - 1) return true;
-  return f >= 2 && f <= 4 && c >= 2 && c <= 4;
-}
-
-function enZonaFinder(fila: number, columna: number): boolean {
-  const enEsquina = (f: number, c: number) => f < TAMANO_FINDER + 1 && c < TAMANO_FINDER + 1;
-  return (
-    enEsquina(fila, columna) ||
-    enEsquina(fila, MODULOS_QR - 1 - columna) ||
-    enEsquina(MODULOS_QR - 1 - fila, columna)
-  );
-}
+// Patrón exacto del componente «código QR · evento» (Figma 4010:2), extraído módulo a módulo del
+// diseño: 21×21, marcadores de posición y temporización. No codifica datos reales ni es
+// escaneable — es maquetación, «verosímil».
+const FILAS_QR: readonly string[] = [
+  '111111100010001111111',
+  '100000101110001000001',
+  '101110100010001011101',
+  '101110100100001011101',
+  '101110101000001011101',
+  '100000100100101000001',
+  '111111101010101111111',
+  '000000001010000000000',
+  '111100100100111001000',
+  '110001000001111001001',
+  '011101110110101111000',
+  '001010000110111001101',
+  '111010110110111101001',
+  '000000001000100101110',
+  '111111100101101000011',
+  '100000101100111000110',
+  '101110101000011000110',
+  '101110101010000111111',
+  '101110101000111000101',
+  '100000100100111111001',
+  '111111100000010100111',
+];
 
 function moduloQr(fila: number, columna: number): boolean {
-  if (esFinder(fila, columna, 0, 0)) return true;
-  if (esFinder(fila, columna, 0, MODULOS_QR - TAMANO_FINDER)) return true;
-  if (esFinder(fila, columna, MODULOS_QR - TAMANO_FINDER, 0)) return true;
-  if (enZonaFinder(fila, columna)) return false;
-  if (fila === 6 || columna === 6) return (fila + columna) % 2 === 0;
-  // Relleno pseudoaleatorio determinista (sin Math.random): el patrón es siempre el mismo, no
-  // codifica ningún dato real — es maquetación, «verosímil» (Figma 4010:2), no un QR escaneable.
-  const semilla = (fila * 13 + columna * 7 + fila * columna * 3) % 11;
-  return semilla < 5;
+  return FILAS_QR[fila][columna] === '1';
 }
 
 function moduloTablero(fila: number, columna: number): boolean {
@@ -79,12 +79,12 @@ export class AqQrDecorativoComponent {
   readonly etiqueta = input('evento');
   readonly variante = input<VarianteQrDecorativo>('qr');
   protected readonly modulos = computed(() =>
-    this.variante() === 'tablero' ? MODULOS_TABLERO : MODULOS_QR,
+    this.variante() === 'tablero' ? MODULOS_TABLERO : FILAS_QR.length,
   );
 
   protected readonly modulosRellenos = computed<Modulo[]>(() => {
     const tablero = this.variante() === 'tablero';
-    const lado = tablero ? MODULOS_TABLERO : MODULOS_QR;
+    const lado = tablero ? MODULOS_TABLERO : FILAS_QR.length;
     const relleno = tablero ? moduloTablero : moduloQr;
     const celdas: Modulo[] = [];
     for (let fila = 0; fila < lado; fila++) {
