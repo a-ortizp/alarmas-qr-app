@@ -12,4 +12,10 @@ export class DatosService {
   readonly alarmas = computed(() => this.dataset.value()?.alarmas ?? []);
   readonly acceso = computed(() => this.dataset.value()?.web.acceso);
   readonly eliminarCuenta = computed(() => this.dataset.value()?.web.eliminarCuenta);
+  readonly escaneosPorSemana = computed(() => this.dataset.value()?.web.escaneosPorSemana);
+  readonly reporte = computed(() => this.dataset.value()?.web.reporte);
+  readonly descargaQR = computed(() => this.dataset.value()?.web.descargaQR);
+  readonly asistentes = computed(() => this.dataset.value()?.web.asistentes);
+  readonly eventosPasados = computed(() => this.dataset.value()?.web.eventosPasados);
+  readonly filtros = computed(() => this.dataset.value()?.web.filtros);
 }

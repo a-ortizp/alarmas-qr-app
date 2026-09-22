@@ -63,6 +63,63 @@ export interface EventoWeb {
   lugar: string;
 }
 
+export interface SemanaEscaneo {
+  semana: string;
+  etiqueta: string;
+  escaneos: number;
+  actual?: boolean;
+}
+
+export interface Reporte {
+  rangos: string[];
+  rangoPersonalizado: { desde: string; hasta: string };
+  formatos: string[];
+  archivoGenerado: string;
+  nota: string;
+  generados: { archivo: string; fecha: string; formato: string; rango: string }[];
+  retencionDias: number;
+}
+
+export interface DescargaQR {
+  seleccionados: string[];
+  formatos: string[];
+  afiche: { marca: string; lema: string; qrMinimoCm: number; resolucionPng: number };
+}
+
+export interface Asistente {
+  alias: string;
+  escaneo: string;
+  alarma: string;
+  confirmoYaVoy?: boolean;
+  yaVoy?: boolean;
+}
+
+export interface Asistentes {
+  eventoId: string;
+  total: number;
+  mostrados: Asistente[];
+  notaPrivacidad: string;
+  pagina2: Asistente[];
+  porPagina: number;
+  busquedaEjemplo: { consulta: string; resultados: string[] };
+}
+
+export interface EventoPasado {
+  nombre: string;
+  fechaHora: string;
+  origen: string;
+  escaneos: number;
+  alarmasActivas: number;
+  estado: string;
+}
+
+export interface Filtros {
+  estado: string[];
+  origen: string[];
+  borradores: unknown[];
+  busquedaEjemplo: { consulta: string; resultados: string[] };
+}
+
 export interface Acceso {
   correoEjemplo: string;
   errorCredenciales: string;
@@ -92,4 +149,10 @@ export interface DatosWeb {
   };
   acceso: Acceso;
   barraLateral: BarraLateralDatos;
+  escaneosPorSemana: SemanaEscaneo[];
+  reporte: Reporte;
+  descargaQR: DescargaQR;
+  asistentes: Asistentes;
+  eventosPasados: EventoPasado[];
+  filtros: Filtros;
 }
