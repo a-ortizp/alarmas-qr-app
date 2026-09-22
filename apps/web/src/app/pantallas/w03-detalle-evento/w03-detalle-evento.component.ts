@@ -28,7 +28,7 @@ import { Asistente } from '../../datos/modelos';
   ],
   template: `
     <section class="pagina" data-codigo="W03">
-      <a aq-enlace routerLink="/alarmas">‹ Mis alarmas{{ migaEvento() }}</a>
+      <a aq-enlace variante="miga" routerLink="/alarmas">‹ Mis alarmas{{ migaEvento() }}</a>
 
       @if (evento(); as evento) {
         <header class="cabecera">

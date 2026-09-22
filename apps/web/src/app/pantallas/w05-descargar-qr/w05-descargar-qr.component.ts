@@ -26,7 +26,7 @@ import { CortesService } from '../../navegacion/cortes.service';
   ],
   template: `
     <section class="pagina" data-codigo="W05">
-      <a aq-enlace routerLink="/alarmas">‹ Mis alarmas</a>
+      <a aq-enlace variante="miga" routerLink="/alarmas">‹ Mis alarmas</a>
       <h1 class="titulo">Descargar QR</h1>
 
       @if (datos.web(); as web) {

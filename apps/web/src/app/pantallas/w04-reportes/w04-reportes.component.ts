@@ -27,7 +27,7 @@ import { CortesService } from '../../navegacion/cortes.service';
   ],
   template: `
     <section class="pagina" data-codigo="W04" [attr.data-estado]="listo() ? 'listo' : null">
-      <a aq-enlace routerLink="/alarmas">‹ Mis alarmas</a>
+      <a aq-enlace variante="miga" routerLink="/alarmas">‹ Mis alarmas</a>
       <h1 class="titulo">Reportes</h1>
       <p class="subtitulo">Descarga informes con métricas agregadas de tus eventos.</p>
 
