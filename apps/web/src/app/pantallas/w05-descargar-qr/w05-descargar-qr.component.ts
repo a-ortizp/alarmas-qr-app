@@ -105,10 +105,10 @@ import { CortesService } from '../../navegacion/cortes.service';
               </button>
             </div>
           </aq-tarjeta>
-          <aq-vista-previa-afiche
-            class="vista-previa"
-            [nombreEvento]="nombrePrimerSeleccionado()"
-          />
+          <div class="columna-vista-previa">
+            <h2 class="titulo-vista-previa">Vista previa del afiche</h2>
+            <aq-vista-previa-afiche [nombreEvento]="nombrePrimerSeleccionado()" />
+          </div>
         </div>
       }
     </section>
@@ -150,9 +150,17 @@ import { CortesService } from '../../navegacion/cortes.service';
     .fila[data-apilada] .seleccion {
       flex: none;
     }
-    .vista-previa {
+    .columna-vista-previa {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-12);
       flex: 1;
       min-width: 0;
+    }
+    .titulo-vista-previa {
+      margin: 0;
+      font: var(--text-titulo-tarjeta);
+      color: var(--color-texto);
     }
     .fila-todos,
     .fila-evento {

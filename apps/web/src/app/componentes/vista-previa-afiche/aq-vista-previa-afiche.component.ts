@@ -18,9 +18,10 @@ import { AqQrDecorativoComponent } from '../qr-decorativo/aq-qr-decorativo.compo
     <div class="texto">
       <span class="rotulo">VISTA PREVIA DEL AFICHE</span>
       <p class="explicacion">
-        Pieza lista para imprimir con el código QR del evento y la marca de Alarmas QR.
+        Cada QR se descarga como afiche listo para imprimir: marca Alarmas QR, nombre del evento y
+        «Escanéalo y te avisamos». Así el asistente reconoce la pieza y sabe qué pasa al escanear.
       </p>
-      <p class="regla">QR mínimo 4 × 4 cm · PNG a 300 ppp o PDF vectorial</p>
+      <p class="regla">QR mínimo 4 × 4 cm al imprimir · PNG a 300 ppp o PDF vectorial</p>
     </div>
   `,
   styles: `
