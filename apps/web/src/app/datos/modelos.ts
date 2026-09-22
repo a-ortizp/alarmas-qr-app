@@ -59,6 +59,8 @@ export interface EventoWeb {
   origen: string;
   escaneos: number;
   alarmasActivas: number;
+  alarmasEliminadas?: number;
+  confirmaronYaVoy?: number;
   estado: string;
   lugar: string;
 }
