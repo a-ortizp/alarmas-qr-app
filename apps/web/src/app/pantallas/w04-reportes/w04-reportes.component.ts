@@ -139,7 +139,7 @@ import { formatoFechaCorta } from '../../datos/formato-fecha';
     }
     .generados {
       flex: 1;
-      gap: var(--space-12);
+      gap: var(--space-8);
       min-width: 0;
     }
     .grupo-titulo-tarjeta {
@@ -198,7 +198,7 @@ import { formatoFechaCorta } from '../../datos/formato-fecha';
       align-items: center;
       justify-content: space-between;
       gap: var(--space-12);
-      padding: var(--space-12) 0;
+      padding: var(--space-8) 0;
       border-top: var(--stroke-borde-fino) solid var(--color-borde);
     }
     .info {
