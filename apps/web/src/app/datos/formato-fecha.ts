@@ -56,3 +56,11 @@ export function formatoFechaLarga(iso: string): string {
   const fecha = new Date(iso);
   return `${capitalizar(DIAS_LARGO[fecha.getDay()])} ${fecha.getDate()} de ${MESES_LARGO[fecha.getMonth()]} de ${fecha.getFullYear()}`;
 }
+
+/** «31 ago 2026» — lista de reportes generados (W04). Parte el string en vez de usar Date: una
+ * fecha sin hora («2026-08-31») se interpreta como UTC y `getDate()` puede mostrar el día anterior
+ * según la zona horaria del navegador. */
+export function formatoFechaCorta(iso: string): string {
+  const [anio, mes, dia] = iso.split('-').map(Number);
+  return `${dia} ${MESES_ABREV[mes - 1]} ${anio}`;
+}

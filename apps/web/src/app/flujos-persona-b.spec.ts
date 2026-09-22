@@ -40,7 +40,7 @@ describe('Flujos web de la Persona B (TRAZABILIDAD §4 T5)', () => {
     await tocarTexto('Generar y descargar');
     expect(raiz.querySelector('[data-codigo="W04"]')!.getAttribute('data-estado')).toBe('listo');
 
-    await tocarTexto('‹ Mis alarmas');
+    await tocarTexto('‹ Mis alarmas / Reportes');
     expect(router.url).toBe('/alarmas');
 
     await tocarTexto('Descargar QR en lote');

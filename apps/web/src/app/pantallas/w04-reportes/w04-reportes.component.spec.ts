@@ -64,7 +64,7 @@ describe('W04 · Reportes', () => {
 
   it('la miga «‹ Mis alarmas» vuelve a W01', async () => {
     const { raiz, estable, router } = await abrir('/reportes');
-    botonConTexto(raiz, '‹ Mis alarmas').click();
+    botonConTexto(raiz, '‹ Mis alarmas / Reportes').click();
     await estable();
     expect(router.url).toBe('/alarmas');
   });

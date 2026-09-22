@@ -12,6 +12,7 @@ import { AqEnlaceComponent } from '../../componentes/enlace/aq-enlace.component'
 import { SnackbarService } from '../../componentes/snackbar/snackbar.service';
 import { DatosService } from '../../datos/datos.service';
 import { CortesService } from '../../navegacion/cortes.service';
+import { formatoFechaCorta } from '../../datos/formato-fecha';
 
 /** W04 · Reportes (F-W04): tarjeta de formulario (rango + formato) y tarjeta lateral «Reportes generados». */
 @Component({
@@ -27,33 +28,48 @@ import { CortesService } from '../../navegacion/cortes.service';
   ],
   template: `
     <section class="pagina" data-codigo="W04" [attr.data-estado]="listo() ? 'listo' : null">
-      <a aq-enlace variante="miga" routerLink="/alarmas">‹ Mis alarmas</a>
+      <a aq-enlace variante="miga" routerLink="/alarmas">‹ Mis alarmas / Reportes</a>
       <h1 class="titulo">Reportes</h1>
-      <p class="subtitulo">Descarga informes con métricas agregadas de tus eventos.</p>
+      <p class="subtitulo">
+        Genera y descarga reportes consolidados de tus eventos. Solo datos agregados y anónimos (Ley
+        1581).
+      </p>
 
       @if (datos.reporte(); as reporte) {
         <div class="fila" [attr.data-apilada]="apilar() ? '' : null">
           <aq-tarjeta class="formulario">
-            <h2 class="titulo-tarjeta">Exportar reporte consolidado</h2>
+            <div class="grupo-titulo-tarjeta">
+              <h2 class="titulo-tarjeta">Exportar reporte consolidado</h2>
+              <p class="subtitulo-tarjeta">Genera un reporte ejecutivo de tus alarmas</p>
+            </div>
             @if (!listo()) {
-              <aq-selector-segmentado
-                etiqueta="Rango"
-                [opciones]="opcionesRango"
-                [formField]="formulario.rango"
-              />
+              <div class="grupo-campo">
+                <span class="etiqueta-campo">RANGO DE FECHAS</span>
+                <aq-selector-segmentado
+                  etiqueta="Rango"
+                  [opciones]="opcionesRango"
+                  [formField]="formulario.rango"
+                />
+              </div>
               @if (formulario.rango().value() === 'personalizado') {
                 <div class="fechas">
                   <aq-campo etiqueta="DESDE" tipo="text" [formField]="formulario.desde" />
                   <aq-campo etiqueta="HASTA" tipo="text" [formField]="formulario.hasta" />
                 </div>
               }
-              <aq-selector-segmentado
-                etiqueta="Formato"
-                [opciones]="opcionesFormato"
-                [formField]="formulario.formato"
-              />
+              <div class="grupo-campo">
+                <span class="etiqueta-campo">FORMATO DE SALIDA</span>
+                <aq-selector-segmentado
+                  etiqueta="Formato"
+                  [opciones]="opcionesFormato"
+                  [formField]="formulario.formato"
+                />
+              </div>
               <p class="nota">{{ reporte.nota }}</p>
-              <button aq-boton type="button" (click)="generar()">Generar y descargar</button>
+              <div class="acciones">
+                <a aq-boton variante="secundario" routerLink="/alarmas">Cancelar</a>
+                <button aq-boton type="button" (click)="generar()">Generar y descargar</button>
+              </div>
             } @else {
               <p class="resultado">
                 {{ reporte.archivoGenerado }} generado y descargado exitosamente
@@ -64,13 +80,19 @@ import { CortesService } from '../../navegacion/cortes.service';
             }
           </aq-tarjeta>
           <aq-tarjeta class="generados">
-            <h2 class="titulo-tarjeta">Reportes generados</h2>
+            <div class="grupo-titulo-tarjeta">
+              <h2 class="titulo-tarjeta">Reportes generados</h2>
+              <p class="subtitulo-tarjeta">
+                Los últimos reportes quedan disponibles {{ reporte.retencionDias }} días.
+              </p>
+            </div>
             @for (g of reporte.generados; track g.archivo) {
               <div class="fila-reporte">
                 <div class="info">
                   <span class="archivo">{{ g.archivo }}</span>
                   <span class="metadatos"
-                    >{{ g.fecha }} · {{ g.formato.toUpperCase() }} · {{ g.rango }}</span
+                    >{{ formatoFecha(g.fecha) }} · {{ g.formato.toUpperCase() }} ·
+                    {{ textoRango(g.rango) }}</span
                   >
                 </div>
                 <button type="button" aq-enlace (click)="descargarDeNuevo()">
@@ -120,10 +142,29 @@ import { CortesService } from '../../navegacion/cortes.service';
       gap: var(--space-12);
       min-width: 0;
     }
+    .grupo-titulo-tarjeta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
     .titulo-tarjeta {
       margin: 0;
       font: var(--text-titulo-tarjeta-web);
       color: var(--color-texto);
+    }
+    .subtitulo-tarjeta {
+      margin: 0;
+      font: var(--text-nota-web);
+      color: var(--color-texto-secundario);
+    }
+    .grupo-campo {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+    .etiqueta-campo {
+      font: var(--text-rotulo-tabla);
+      color: var(--color-gris-texto);
     }
     .fechas {
       display: flex;
@@ -136,6 +177,11 @@ import { CortesService } from '../../navegacion/cortes.service';
       margin: 0;
       font: var(--text-nota-web);
       color: var(--color-texto-secundario);
+    }
+    .acciones {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-12);
     }
     .resultado {
       margin: 0;
@@ -185,6 +231,11 @@ export class W04ReportesComponent {
     signal({ rango: 'ultimo-mes', formato: 'pdf', desde: '2026-08-01', hasta: '2026-08-31' }),
   );
   protected readonly listo = signal(false);
+  protected readonly formatoFecha = formatoFechaCorta;
+
+  protected textoRango(valor: string): string {
+    return this.opcionesRango.find((o) => o.valor === valor)?.texto ?? valor;
+  }
 
   protected generar(): void {
     this.listo.set(true);
