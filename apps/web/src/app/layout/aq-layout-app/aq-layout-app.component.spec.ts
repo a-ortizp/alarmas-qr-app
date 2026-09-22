@@ -49,6 +49,14 @@ describe('Layout con barra lateral (L09)', () => {
     expect(router.url).toBe('/perfil');
   });
 
+  it('«Mis Alarmas» sigue activo en W03 (/eventos/:id), fuera del árbol de /alarmas', async () => {
+    const { raiz } = await abrir('/eventos/w-partido');
+    const activo = raiz.querySelector('[data-item="mis-alarmas"]')!;
+    expect(activo.classList).toContain('activo');
+    expect(activo.getAttribute('aria-current')).toBe('page');
+    expect(raiz.querySelector('[data-item="reportes"]')!.classList).not.toContain('activo');
+  });
+
   it('colapsar deja solo los iconos, con nombre accesible, y se mantiene al navegar', async () => {
     const { raiz, estable, router } = await abrir('/alarmas');
     const control = raiz.querySelector('[data-control-menu]') as HTMLButtonElement;

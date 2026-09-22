@@ -1,12 +1,18 @@
-import { Component, model, output } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject, model, output } from '@angular/core';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map } from 'rxjs';
 import { AqIconoComponent } from '../icono/aq-icono.component';
-import { ITEM_CERRAR_SESION, ITEMS_BARRA_LATERAL } from '../../navegacion/barra-lateral';
+import {
+  ITEM_CERRAR_SESION,
+  ITEMS_BARRA_LATERAL,
+  ItemBarraLateral,
+} from '../../navegacion/barra-lateral';
 
 /** Barra lateral web (DS comp. 14w, web v1.4): ítems con icono, píldora activa Tinta, colapsable a 64. */
 @Component({
   selector: 'aq-barra-lateral',
-  imports: [RouterLink, RouterLinkActive, AqIconoComponent],
+  imports: [RouterLink, AqIconoComponent],
   template: `
     <nav class="barra" [class.colapsada]="colapsada()" aria-label="Menú principal">
       <button
@@ -22,10 +28,9 @@ import { ITEM_CERRAR_SESION, ITEMS_BARRA_LATERAL } from '../../navegacion/barra-
       @for (item of items; track item.id) {
         <a
           class="item"
+          [class.activo]="esActivo(item)"
           [routerLink]="item.ruta"
-          routerLinkActive="activo"
-          #activo="routerLinkActive"
-          [attr.aria-current]="activo.isActive ? 'page' : null"
+          [attr.aria-current]="esActivo(item) ? 'page' : null"
           [attr.aria-label]="colapsada() ? item.texto : null"
           [attr.title]="colapsada() ? item.texto : null"
           [attr.data-item]="item.id"
@@ -125,8 +130,27 @@ import { ITEM_CERRAR_SESION, ITEMS_BARRA_LATERAL } from '../../navegacion/barra-
   `,
 })
 export class AqBarraLateralComponent {
+  private readonly router = inject(Router);
+
   readonly colapsada = model(false);
   readonly cerrarSesion = output<void>();
   protected readonly items = ITEMS_BARRA_LATERAL;
   protected readonly salida = ITEM_CERRAR_SESION;
+
+  // routerLinkActive por sí solo no alcanza: W03 vive en /eventos/:id, fuera del árbol de /alarmas,
+  // pero sigue siendo parte de la sección «Mis Alarmas» (rutasActivas lo declara explícitamente).
+  private readonly urlActual = toSignal(
+    this.router.events.pipe(
+      filter((evento): evento is NavigationEnd => evento instanceof NavigationEnd),
+      map(() => this.router.url),
+    ),
+    { initialValue: this.router.url },
+  );
+
+  protected esActivo(item: ItemBarraLateral): boolean {
+    const ruta = this.urlActual().split('?')[0];
+    return (item.rutasActivas ?? [item.ruta]).some(
+      (prefijo) => ruta === prefijo || ruta.startsWith(`${prefijo}/`),
+    );
+  }
 }
