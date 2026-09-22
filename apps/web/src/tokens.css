@@ -1,4 +1,4 @@
-/* Alarmas QR · Energía puntual · tokens v1.16 (2026-09-22)
+/* Alarmas QR · Energía puntual · tokens v1.17 (2026-09-22)
    Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
    Reglas: un solo amarillo por pantalla (la acción principal); estados activos en Tinta;
    texto ≤ 15 px usa los tonos --color-*-texto; botones 52 px en móvil (48 hasta v1.5) y 44 px en web; radio 14 (20 en el diálogo de confirmación).
@@ -129,6 +129,7 @@
   /* web · medidas de Figma para la Persona A (Plan 3, v1.11) */
   --text-marca-acceso: 700 24px/normal var(--font-titulares);
   --text-titulo-tarjeta-web: 700 17px/normal var(--font-titulares);
+  --text-titulo-tarjeta-formulario-web: 700 21px/normal var(--font-titulares);
   --text-cuerpo-web: 400 14px/normal var(--font-ui);          /* subtítulos, enlaces, notas, nombre en la barra */
   --text-descripcion-web: 400 13.5px/normal var(--font-ui);   /* descripciones de tarjeta (W06) */
   --text-rotulo-web: 400 14.5px/normal var(--font-ui);        /* rótulos de switch, lista del modal */

@@ -39,7 +39,7 @@ import { formatoFechaCorta } from '../../datos/formato-fecha';
         <div class="fila" [attr.data-apilada]="apilar() ? '' : null">
           <aq-tarjeta class="formulario">
             <div class="grupo-titulo-tarjeta">
-              <h2 class="titulo-tarjeta">Exportar reporte consolidado</h2>
+              <h2 class="titulo-tarjeta-formulario">Exportar reporte consolidado</h2>
               <p class="subtitulo-tarjeta">Genera un reporte ejecutivo de tus alarmas</p>
             </div>
             @if (!listo()) {
@@ -95,7 +95,7 @@ import { formatoFechaCorta } from '../../datos/formato-fecha';
                     {{ textoRango(g.rango) }}</span
                   >
                 </div>
-                <button type="button" aq-enlace (click)="descargarDeNuevo()">
+                <button type="button" aq-enlace variante="fila" (click)="descargarDeNuevo()">
                   Descargar de nuevo
                 </button>
               </div>
@@ -147,9 +147,14 @@ import { formatoFechaCorta } from '../../datos/formato-fecha';
       flex-direction: column;
       gap: var(--space-4);
     }
+    .titulo-tarjeta-formulario {
+      margin: 0;
+      font: var(--text-titulo-tarjeta-formulario-web);
+      color: var(--color-texto);
+    }
     .titulo-tarjeta {
       margin: 0;
-      font: var(--text-titulo-tarjeta-web);
+      font: var(--text-titulo-tarjeta);
       color: var(--color-texto);
     }
     .subtitulo-tarjeta {
