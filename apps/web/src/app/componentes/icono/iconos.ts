@@ -12,7 +12,8 @@ export type NombreIcono =
   | 'persona'
   | 'descarga'
   | 'lupa'
-  | 'info';
+  | 'info'
+  | 'check';
 
 export interface DefinicionIcono {
   /** Lado del viewBox de Figma. */
@@ -143,5 +144,10 @@ export const ICONOS: Record<NombreIcono, DefinicionIcono> = {
       { d: 'M8 5.33333H8.00667' },
       { d: 'M7.33333 7.33333H8V10.6667H8.66667' },
     ],
+  },
+  check: {
+    caja: 16,
+    trazo: T16,
+    formas: [{ d: 'M3.33333 8.66667L6 11.3333L12.6667 4.66667' }],
   },
 };

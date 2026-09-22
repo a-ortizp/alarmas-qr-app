@@ -2,7 +2,7 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.14",
+    "version": "1.15",
     "date": "2026-09-21",
     "source": "DESIGN_SYSTEM.md v1.10 · STYLE_TILE.md v1.2 · MOCKUPS.md (móvil v1.7, web v1.5)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
@@ -17,7 +17,8 @@
       "v1.11 (2026-09-21): medidas web de la Persona A tomadas de Figma para el Plan 3 (tarjeta de acceso 520, modal «Eliminar cuenta» 481 con relleno 22 y título 18, textos y medidas size.web/space.web, sombra del diálogo web, snackbar web 3 s). Campos 48 con etiqueta 12 por regla (Figma 46/11).",
       "v1.12 (2026-09-21): cortes de ancho web (breakpoint) para la degradación elegante fuera del marco de referencia 1280×820: bajo 1200 la barra lateral se colapsa sola; bajo 1100 las columnas de página (W06) se apilan. A 1280 nada cambia.",
       "v1.13 (2026-09-21): medidas de tablero web de la Persona B (Plan 5) — campo de búsqueda (240/260×40), paginador (píldora 30), gráfica de barras (alto máximo 96) y vista previa del afiche (miniatura 132, QR 72); radius.casilla se deriva ahora también a la web (checkbox de W05).",
-      "v1.14 (2026-09-22): miniatura del código QR junto a cada evento de W05 (Figma 4072:187, marco «Descargar QR en lote» 4075:11), 40×40."
+      "v1.14 (2026-09-22): miniatura del código QR junto a cada evento de W05 (Figma 4072:187, marco «Descargar QR en lote» 4075:11), 40×40.",
+      "v1.15 (2026-09-22): casilla de W05 verificada contra Figma (nodo 4075:18/4075:24): radio propio de 6 (radius.casilla-web, distinto del radio 4 de la casilla móvil) y check interior de 12 (size.web.icono-casilla); el «QR» junto a cada evento es en realidad un tablero de 8×8 (nodo «checkerboard» 4091:2), no un patrón con marcadores de posición."
     ]
   },
   "color": {
@@ -433,6 +434,7 @@
       "afiche-miniatura": 132,
       "afiche-qr": 72,
       "checkbox": 20,
+      "icono-casilla": 12,
       "enlace-tabla": [100, 20],
       "qr-miniatura-lista": 40,
       "$description": "Medidas de los mockups web v1.5 medidas en Figma el 2026-09-21 (Plan 3)"
@@ -481,6 +483,7 @@
     "visor-bienvenida": 20,
     "marco-lectura": 10,
     "casilla": 4,
+    "casilla-web": 6,
     "snackbar": 12,
     "caja-icono": 12,
     "modulo": 2,
@@ -621,5 +624,5 @@
     },
     "qr-visor-opacity": 0.5
   },
-  "version": "1.14"
+  "version": "1.15"
 }

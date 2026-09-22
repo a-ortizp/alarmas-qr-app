@@ -1,7 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { ICONOS, NombreIcono } from './iconos';
 
-export type TamanoIcono = 'barra' | 'vineta' | 'advertencia';
+export type TamanoIcono = 'barra' | 'vineta' | 'advertencia' | 'casilla';
 
 /** Icono de línea del DS dibujado con trazados (D12): toma el color del texto que lo rodea. */
 @Component({
@@ -45,6 +45,10 @@ export type TamanoIcono = 'barra' | 'vineta' | 'advertencia';
     :host([data-tamano='advertencia']) {
       width: var(--size-icono-advertencia);
       height: var(--size-icono-advertencia);
+    }
+    :host([data-tamano='casilla']) {
+      width: var(--size-icono-casilla);
+      height: var(--size-icono-casilla);
     }
     svg {
       width: 100%;

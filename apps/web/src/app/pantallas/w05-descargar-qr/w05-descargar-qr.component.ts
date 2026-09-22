@@ -8,6 +8,7 @@ import {
 import { AqChipComponent } from '../../componentes/chip/aq-chip.component';
 import { AqVistaPreviaAficheComponent } from '../../componentes/vista-previa-afiche/aq-vista-previa-afiche.component';
 import { AqQrDecorativoComponent } from '../../componentes/qr-decorativo/aq-qr-decorativo.component';
+import { AqIconoComponent } from '../../componentes/icono/aq-icono.component';
 import { AqBotonComponent } from '../../componentes/boton/aq-boton.component';
 import { AqEnlaceComponent } from '../../componentes/enlace/aq-enlace.component';
 import { DatosService } from '../../datos/datos.service';
@@ -24,6 +25,7 @@ import { CortesService } from '../../navegacion/cortes.service';
     AqChipComponent,
     AqVistaPreviaAficheComponent,
     AqQrDecorativoComponent,
+    AqIconoComponent,
     AqBotonComponent,
     AqEnlaceComponent,
   ],
@@ -41,17 +43,36 @@ import { CortesService } from '../../navegacion/cortes.service';
         <div class="fila" [attr.data-apilada]="apilar() ? '' : null">
           <aq-tarjeta class="seleccion">
             <label class="fila-todos" data-todos>
-              <input type="checkbox" [checked]="todosSeleccionados()" (change)="alternarTodos()" />
+              <span class="casilla" [attr.data-marcada]="todosSeleccionados() ? '' : null">
+                <input
+                  type="checkbox"
+                  class="entrada"
+                  [checked]="todosSeleccionados()"
+                  (change)="alternarTodos()"
+                />
+                @if (todosSeleccionados()) {
+                  <aq-icono nombre="check" tamano="casilla" />
+                }
+              </span>
               <span>Seleccionar todos</span>
               <span class="contador">{{ seleccionados().size }} de {{ web.eventos.length }}</span>
             </label>
             @for (evento of web.eventos; track evento.id) {
               <label class="fila-evento" [attr.data-evento]="evento.id">
-                <input
-                  type="checkbox"
-                  [checked]="seleccionados().has(evento.id)"
-                  (change)="alternar(evento.id)"
-                />
+                <span
+                  class="casilla"
+                  [attr.data-marcada]="seleccionados().has(evento.id) ? '' : null"
+                >
+                  <input
+                    type="checkbox"
+                    class="entrada"
+                    [checked]="seleccionados().has(evento.id)"
+                    (change)="alternar(evento.id)"
+                  />
+                  @if (seleccionados().has(evento.id)) {
+                    <aq-icono nombre="check" tamano="casilla" />
+                  }
+                </span>
                 <aq-qr-decorativo class="qr-fila" [etiqueta]="evento.titulo" />
                 <span class="datos-evento">
                   <span class="nombre">{{ evento.titulo }}</span>
@@ -135,11 +156,30 @@ import { CortesService } from '../../navegacion/cortes.service';
       border-bottom: var(--stroke-borde-fino) solid var(--color-borde);
       cursor: pointer;
     }
-    input[type='checkbox'] {
+    .casilla {
+      position: relative;
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
       width: var(--size-checkbox);
       height: var(--size-checkbox);
-      accent-color: var(--color-tinta);
-      border-radius: var(--radius-casilla);
+      border: var(--stroke-borde-fino) solid var(--color-borde);
+      border-radius: var(--radius-casilla-web);
+      background: var(--color-blanco);
+      color: var(--color-blanco);
+    }
+    .casilla[data-marcada] {
+      border-color: var(--color-tinta);
+      background: var(--color-tinta);
+    }
+    .entrada {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
     }
     .qr-fila {
       box-sizing: border-box;
