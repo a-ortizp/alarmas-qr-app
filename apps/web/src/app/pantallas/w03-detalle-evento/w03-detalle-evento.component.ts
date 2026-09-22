@@ -108,7 +108,7 @@ const ASISTENTES_INVENTADOS: readonly Asistente[] = [
                         fila.alarma === 'activa' ? 'Activa' : 'Eliminada'
                       }}</aq-chip>
                     </td>
-                    <td>—</td>
+                    <td class="centrado">—</td>
                   </tr>
                 }
               </tbody>
@@ -185,6 +185,9 @@ const ASISTENTES_INVENTADOS: readonly Asistente[] = [
     }
     .contenedor-tabla {
       overflow-x: auto;
+    }
+    .centrado {
+      text-align: center;
     }
     .privacidad,
     .sin-asistentes {
