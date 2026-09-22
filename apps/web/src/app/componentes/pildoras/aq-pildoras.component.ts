@@ -5,7 +5,7 @@ export interface OpcionPildora {
   texto: string;
 }
 
-/** Grupo de píldoras de filtro o pestaña (DS §7): 34 de alto, activa Tinta con texto blanco, inactiva Gris Niebla. No es un control de formulario: la página decide qué hacer al elegir (normalmente navegar con un query param). */
+/** Grupo de píldoras de filtro o pestaña (DS §7, Figma 4073:33/4073:40): una sola pista Gris Niebla, segmento activo Tinta con texto blanco. No es un control de formulario: la página decide qué hacer al elegir (normalmente navegar con un query param). */
 @Component({
   selector: 'aq-pildoras',
   template: `
@@ -26,18 +26,23 @@ export interface OpcionPildora {
   styles: `
     .grupo {
       display: flex;
-      gap: var(--space-10);
-      flex-wrap: wrap;
+      box-sizing: border-box;
+      gap: var(--space-2);
+      padding: var(--space-segmentado);
+      border-radius: var(--radius-pildora);
+      background: var(--color-gris-niebla);
     }
     .pildora {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       box-sizing: border-box;
+      flex: 1 0 0;
+      min-width: 0;
       height: var(--size-pildora-filtro);
-      padding: 0 var(--space-16);
       border: none;
       border-radius: var(--radius-pildora);
-      background: var(--color-gris-niebla);
+      background: transparent;
       color: var(--color-texto-secundario);
       font: var(--text-pildora-web);
       cursor: pointer;
