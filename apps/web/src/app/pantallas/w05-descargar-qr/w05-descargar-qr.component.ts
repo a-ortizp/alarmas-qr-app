@@ -31,7 +31,7 @@ import { CortesService } from '../../navegacion/cortes.service';
   ],
   template: `
     <section class="pagina" data-codigo="W05">
-      <a aq-enlace variante="miga" routerLink="/alarmas">‹ Mis alarmas</a>
+      <a aq-enlace variante="miga" routerLink="/alarmas">‹ Mis alarmas / Descargar QR</a>
       <div class="encabezado">
         <h1 class="titulo">Descargar QR en lote</h1>
         <p class="subtitulo">
@@ -43,19 +43,23 @@ import { CortesService } from '../../navegacion/cortes.service';
         <div class="fila" [attr.data-apilada]="apilar() ? '' : null">
           <aq-tarjeta class="seleccion">
             <label class="fila-todos" data-todos>
-              <span class="casilla" [attr.data-marcada]="todosSeleccionados() ? '' : null">
-                <input
-                  type="checkbox"
-                  class="entrada"
-                  [checked]="todosSeleccionados()"
-                  (change)="alternarTodos()"
-                />
-                @if (todosSeleccionados()) {
-                  <aq-icono nombre="check" tamano="casilla" />
-                }
+              <span class="grupo-todos">
+                <span class="casilla" [attr.data-marcada]="todosSeleccionados() ? '' : null">
+                  <input
+                    type="checkbox"
+                    class="entrada"
+                    [checked]="todosSeleccionados()"
+                    (change)="alternarTodos()"
+                  />
+                  @if (todosSeleccionados()) {
+                    <aq-icono nombre="check" tamano="casilla" />
+                  }
+                </span>
+                <span>Seleccionar todos</span>
               </span>
-              <span>Seleccionar todos</span>
-              <span class="contador">{{ seleccionados().size }} de {{ web.eventos.length }}</span>
+              <span class="contador">
+                {{ seleccionados().size }} de {{ web.eventos.length }} seleccionados
+              </span>
             </label>
             @for (evento of web.eventos; track evento.id) {
               <label class="fila-evento" [attr.data-evento]="evento.id">
@@ -81,11 +85,14 @@ import { CortesService } from '../../navegacion/cortes.service';
                 <aq-chip variante="publicado">Publicado</aq-chip>
               </label>
             }
-            <aq-selector-segmentado
-              etiqueta="Formato"
-              [opciones]="opcionesFormato"
-              [(value)]="formato"
-            />
+            <div class="grupo-formato">
+              <span class="etiqueta-formato">FORMATO DE SALIDA</span>
+              <aq-selector-segmentado
+                etiqueta="Formato"
+                [opciones]="opcionesFormato"
+                [(value)]="formato"
+              />
+            </div>
             <div class="acciones">
               <a aq-boton variante="secundario" routerLink="/alarmas">Cancelar</a>
               <button
@@ -156,6 +163,14 @@ import { CortesService } from '../../navegacion/cortes.service';
       border-bottom: var(--stroke-borde-fino) solid var(--color-borde);
       cursor: pointer;
     }
+    .fila-todos {
+      justify-content: space-between;
+    }
+    .grupo-todos {
+      display: flex;
+      align-items: center;
+      gap: var(--space-10);
+    }
     .casilla {
       position: relative;
       display: inline-flex;
@@ -209,6 +224,16 @@ import { CortesService } from '../../navegacion/cortes.service';
     .contador {
       font: var(--text-nota-web);
       color: var(--color-texto-secundario);
+    }
+    .grupo-formato {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+      padding-top: var(--space-8);
+    }
+    .etiqueta-formato {
+      font: var(--text-rotulo-tabla);
+      color: var(--color-gris-texto);
     }
     .acciones {
       display: flex;
