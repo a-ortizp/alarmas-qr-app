@@ -106,7 +106,7 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
           />
           <aq-indicador
             [valor]="web.indicadores.confirmaronYaVoy.valor"
-            etiqueta="Confirmaron «Ya voy»"
+            etiqueta='Confirmaron "Ya voy"'
             [detalle]="web.indicadores.confirmaronYaVoy.detalle"
           />
         </div>

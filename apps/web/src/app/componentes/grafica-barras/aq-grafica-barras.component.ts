@@ -11,7 +11,10 @@ interface ColumnaGrafica extends SemanaEscaneo {
   template: `
     <header class="cabecera">
       <h3 class="titulo">{{ titulo() }}</h3>
-      <span class="periodo">Últimas {{ datos().length }} semanas</span>
+      <span class="periodo"
+        >{{ totalEscaneos() }} escaneos · últimas {{ datos().length }} semanas ·
+        {{ calificador() }}</span
+      >
     </header>
     <svg
       class="lienzo"
@@ -99,6 +102,11 @@ export class AqGraficaBarrasComponent {
   readonly datos = input.required<readonly SemanaEscaneo[]>();
   readonly titulo = input('Escaneos por semana');
   readonly nota = input('Datos agregados y anónimos');
+  readonly calificador = input('eventos propios');
+
+  protected readonly totalEscaneos = computed(() =>
+    this.datos().reduce((suma, semana) => suma + semana.escaneos, 0),
+  );
 
   protected readonly columnas = computed<ColumnaGrafica[]>(() => {
     const valores = this.datos();
