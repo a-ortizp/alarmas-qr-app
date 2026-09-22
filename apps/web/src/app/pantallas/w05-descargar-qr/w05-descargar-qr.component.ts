@@ -186,6 +186,7 @@ import { CortesService } from '../../navegacion/cortes.service';
       width: var(--size-qr-miniatura-lista);
       height: var(--size-qr-miniatura-lista);
       overflow: hidden;
+      border: var(--stroke-borde-fino) solid var(--color-tinta);
       border-radius: var(--radius-chip-web);
       background: var(--color-blanco);
       color: var(--color-tinta);
