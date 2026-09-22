@@ -20,7 +20,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
       box-sizing: border-box;
       height: var(--size-tabla-encabezado);
       padding: 0 var(--space-12);
-      border-bottom: var(--stroke-borde) solid var(--color-tinta);
+      border-bottom: var(--stroke-foco) solid var(--color-tinta);
       font: var(--text-rotulo-tabla);
       letter-spacing: 0.06em;
       text-transform: uppercase;

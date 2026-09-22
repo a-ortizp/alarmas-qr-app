@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 
 export type VarianteChip = 'creada-por-mi' | 'escaneada' | 'publicado' | 'activa' | 'eliminada';
 
-/** Chip web (DS §7 «Chips»): 19–20 de alto, píldora, Archivo Bold 12. Origen: contorno; estado: relleno + contorno (o solo contorno en «Eliminada»). */
+/** Chip web (DS §7 «Chips»): 19–20 de alto, píldora, Archivo Bold 12. Origen «Creada por mí»: contorno; «Escaneada» y estado: relleno + contorno (o solo contorno en «Eliminada»). */
 @Component({
   selector: 'aq-chip',
   template: `<ng-content />`,
@@ -30,11 +30,7 @@ export type VarianteChip = 'creada-por-mi' | 'escaneada' | 'publicado' | 'activa
       border-color: var(--color-tinta);
       color: var(--color-tinta);
     }
-    :host(.escaneada) {
-      background: var(--color-blanco);
-      border-color: var(--color-verde-texto);
-      color: var(--color-verde-texto);
-    }
+    :host(.escaneada),
     :host(.publicado),
     :host(.activa) {
       background: var(--color-verde-fondo);
