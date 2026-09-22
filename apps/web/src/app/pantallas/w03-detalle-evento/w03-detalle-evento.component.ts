@@ -89,13 +89,13 @@ const ASISTENTES_INVENTADOS: readonly Asistente[] = [
 
         @if (filas().length > 0) {
           <div class="contenedor-tabla">
-            <table aq-tabla>
+            <table aq-tabla class="fija">
               <thead>
                 <tr>
-                  <th>Asistente</th>
-                  <th>Fecha de escaneo</th>
-                  <th>Alarma</th>
-                  <th>Confirmó &quot;Ya voy&quot;</th>
+                  <th class="col">Asistente</th>
+                  <th class="col">Fecha de escaneo</th>
+                  <th class="col">Alarma</th>
+                  <th class="col">Confirmó &quot;Ya voy&quot;</th>
                 </tr>
               </thead>
               <tbody>
@@ -185,6 +185,12 @@ const ASISTENTES_INVENTADOS: readonly Asistente[] = [
     }
     .contenedor-tabla {
       overflow-x: auto;
+    }
+    .fija {
+      table-layout: fixed;
+    }
+    .col {
+      width: 25%;
     }
     .centrado {
       text-align: center;
