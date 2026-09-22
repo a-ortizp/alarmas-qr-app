@@ -10,7 +10,8 @@ export type NombreIcono =
   | 'qr'
   | 'calendario'
   | 'persona'
-  | 'descarga';
+  | 'descarga'
+  | 'lupa';
 
 export interface DefinicionIcono {
   /** Lado del viewBox de Figma. */
@@ -120,5 +121,15 @@ export const ICONOS: Record<NombreIcono, DefinicionIcono> = {
     caja: 16,
     trazo: T16,
     formas: [{ d: 'M8 2.66667V10M11.3333 6.66667L8 10L4.66667 6.66667M2.66667 13.3333H13.3333' }],
+  },
+  lupa: {
+    caja: 16,
+    trazo: T16,
+    formas: [
+      {
+        d: 'M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z',
+      },
+      { d: 'M14 14L11.1 11.1' },
+    ],
   },
 };
