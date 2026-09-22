@@ -73,7 +73,7 @@ import { CortesService } from '../../navegacion/cortes.service';
                     <aq-icono nombre="check" tamano="casilla" />
                   }
                 </span>
-                <aq-qr-decorativo class="qr-fila" [etiqueta]="evento.titulo" />
+                <aq-qr-decorativo class="qr-fila" variante="tablero" [etiqueta]="evento.titulo" />
                 <span class="datos-evento">
                   <span class="nombre">{{ evento.titulo }}</span>
                   <span class="fecha">{{ formatoFecha(evento.fechaHora) }}</span>
