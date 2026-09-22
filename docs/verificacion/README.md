@@ -166,3 +166,28 @@ Nota de captura (2026-09-21): `google-chrome --headless=new --window-size=1280,8
 | barra-colapsada | 4357:1868 | ok · pixel-perfect en la barra lateral y la barra superior: control 36×36 en (12, 84), píldoras 40×40 en y = 124, 168, 212, 256 y «Cerrar Sesión» en y = 760, idénticas al marco. El contenido es el marcador W01 de la Persona B. |
 
 Pendiente de decisión (no se corrigió por ser un token compartido del DS): `--text-h1-web` usa interlineado 1.15 (caja de 27.6) y los marcos web usan «normal» (caja de 29), así que el contenido bajo el título de W06 queda 1,4 px más arriba. Cambiarlo afecta también los títulos de W01–W05 de la Persona B.
+
+## Web · Plan 5 (Persona B)
+
+**Pendiente de verificación manual.** El entorno de esta tarea (Tarea 9 del Plan 5) no tiene acceso a las exportaciones de los marcos de Figma ni a un navegador interactivo, así que a diferencia de las filas de arriba (W00/W06, Plan 3) esta tabla **no** trae una comparación pixel-perfect real ni capturas `.png` — solo deja documentado qué revisar y qué diferencias ya están aceptadas por el plan, para que quien haga la verificación manual (con `npx ng serve` + Chrome a 1280×820, comparando cada ruta contra su marco de Figma correspondiente, igual que el procedimiento de la sección de arriba) sepa distinguir una diferencia ya aceptada de un defecto real.
+
+Rutas a verificar, a 1280×820:
+
+| Código | Ruta | Estado |
+|---|---|---|
+| W01 | `/alarmas` | pendiente de verificación manual |
+| W01 | `/alarmas?estado=pasados` | pendiente de verificación manual |
+| W01 | `/alarmas?estado=borradores` | pendiente de verificación manual |
+| W03 | `/eventos/w-partido` | pendiente de verificación manual |
+| W03 | `/eventos/w-partido?pagina=2` | pendiente de verificación manual |
+| W04 | `/reportes` | pendiente de verificación manual |
+| W05 | `/qr` | pendiente de verificación manual |
+
+**Diferencias ya aceptadas por el plan** (no reportar como defecto si se observan):
+
+- **D3 · «Pasados» sin «Ver detalle»:** en `/alarmas?estado=pasados` la columna de acción de la tabla queda vacía — `dataset.json` (`web.eventosPasados`) no trae `id` para esos eventos.
+- **D4 · W03 solo tiene datos completos de asistentes para `w-partido`:** `/eventos/w-partido` es el único id con tabla, búsqueda y paginador con datos reales; cualquier otro evento mostraría la tabla de asistentes en estado vacío (fuera de las rutas a verificar arriba, que ya usan `w-partido`).
+- **D8 · Casilla de selección de W05:** usa `size.movil.casilla` (20) y `radius.casilla` (4) — el DS no mide una casilla dedicada para la web, se reutiliza la medida conceptual del móvil.
+- **D9 · Separación de 20 entre grupos de píldoras (W01):** 10 dentro de un grupo (`--space-10`), 20 entre grupos (`--space-20`, nuevo en tokens v1.13).
+- **Medidas redondeadas al token existente más cercano (Tareas 2–4, Steps 4b/6b):** el relleno horizontal de `aq-indicador` (W01, W03) usa `var(--space-16)` en vez de los 18 que pide el DS (Step 4b de la Tarea 2); el relleno horizontal de `aq-pildoras` (W01) usa `var(--space-16)` en vez de los 14 que pide el DS (Step 6b de la Tarea 2) — ambos por no haber un token de esa medida exacta; anotado como pendiente en el repo de UX en el propio plan. La Tarea 3 (Step 4b, `aq-estado-vacio`) y la Tarea 4 (Step 3b, `aq-grafica-barras`) también reemplazaron una medida en `px` a mano por el token exacto que ya coincidía (16), sin redondeo.
+- **Etiquetas «DESDE» / «HASTA» en mayúsculas (W04, rango personalizado):** el campo usa el texto en mayúsculas tal como quedó escrito en la Tarea 7 del plan; si el marco de Figma las muestra en minúscula/capitalizado, es una diferencia de mayúsculas a documentar, no necesariamente un defecto (mismo criterio que los encabezados de `aq-tabla`, que también van en mayúsculas por diseño, D2 del plan).
