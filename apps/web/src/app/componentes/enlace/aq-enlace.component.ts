@@ -1,11 +1,13 @@
 import { Component, booleanAttribute, input } from '@angular/core';
 
-export type VarianteEnlace = 'enlace' | 'miga';
+export type VarianteEnlace = 'enlace' | 'miga' | 'tabla';
 
 /**
  * Enlace de texto web: Azul Texto 14 subrayado dentro de un marco de 44 (área de puntero igual al
  * botón). La variante «miga» es la miga de pan («‹ Mis alarmas / …», W03/W04/W05): Gris Texto sin
- * subrayado, sin el marco de 44 ni el centrado del enlace normal — ocupa solo su contenido.
+ * subrayado, sin el marco de 44 ni el centrado del enlace normal — ocupa solo su contenido. La
+ * variante «tabla» es «Ver detalle ›» dentro de una fila (Figma 4073:77): 100×20, sin el marco de
+ * 44 que antes inflaba el alto de toda la fila a 68.
  */
 @Component({
   selector: 'a[aq-enlace], button[aq-enlace]',
@@ -40,6 +42,11 @@ export type VarianteEnlace = 'enlace' | 'miga';
       padding: var(--space-2) 0;
       color: var(--color-texto-secundario);
       text-decoration: none;
+    }
+    :host([data-variante='tabla']) {
+      justify-content: flex-start;
+      width: var(--size-enlace-tabla-w);
+      height: var(--size-enlace-tabla-h);
     }
     :host(:focus-visible) {
       outline: var(--stroke-foco) solid var(--color-enlace);

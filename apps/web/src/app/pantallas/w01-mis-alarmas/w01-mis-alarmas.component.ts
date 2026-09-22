@@ -154,7 +154,9 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
                     </td>
                     <td>
                       @if (fila.id) {
-                        <a aq-enlace [routerLink]="['/eventos', fila.id]">Ver detalle ›</a>
+                        <a aq-enlace variante="tabla" [routerLink]="['/eventos', fila.id]"
+                          >Ver detalle ›</a
+                        >
                       }
                     </td>
                   </tr>

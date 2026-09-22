@@ -97,7 +97,9 @@ interface ColumnaGrafica extends SemanaEscaneo {
 export class AqGraficaBarrasComponent {
   readonly datos = input.required<readonly SemanaEscaneo[]>();
   readonly titulo = input('Escaneos por semana');
-  readonly nota = input('Datos agregados y anónimos');
+  readonly nota = input(
+    'La semana actual va en Tinta; las anteriores en Gris Texto. Datos agregados y anónimos.',
+  );
   readonly calificador = input('eventos propios');
 
   protected readonly totalEscaneos = computed(() =>
