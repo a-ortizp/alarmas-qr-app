@@ -33,14 +33,12 @@ import { Asistente } from '../../datos/modelos';
       @if (evento(); as evento) {
         <header class="cabecera">
           <div class="grupo-titulo">
-            <div class="titulo-fila">
-              <h1 class="titulo">{{ evento.titulo }}</h1>
-              @if (evento.estado === 'publicado') {
-                <aq-chip variante="publicado">Publicado</aq-chip>
-              }
-            </div>
+            <h1 class="titulo">{{ evento.titulo }}</h1>
             <p class="subtitulo">{{ subtituloEvento() }}</p>
           </div>
+          @if (evento.estado === 'publicado') {
+            <aq-chip variante="publicado">Publicado</aq-chip>
+          }
           <a aq-boton variante="secundario" routerLink="/reportes">Exportar reporte</a>
         </header>
 
@@ -140,11 +138,6 @@ import { Asistente } from '../../datos/modelos';
       display: flex;
       flex-direction: column;
       gap: var(--space-2);
-    }
-    .titulo-fila {
-      display: flex;
-      align-items: center;
-      gap: var(--space-12);
     }
     .titulo {
       margin: 0;
