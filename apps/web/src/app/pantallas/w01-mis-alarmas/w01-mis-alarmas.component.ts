@@ -9,6 +9,7 @@ import { AqChipComponent, VarianteChip } from '../../componentes/chip/aq-chip.co
 import { AqEstadoVacioComponent } from '../../componentes/estado-vacio/aq-estado-vacio.component';
 import { AqBotonComponent } from '../../componentes/boton/aq-boton.component';
 import { AqEnlaceComponent } from '../../componentes/enlace/aq-enlace.component';
+import { AqIconoComponent } from '../../componentes/icono/aq-icono.component';
 import { SnackbarService } from '../../componentes/snackbar/snackbar.service';
 import { DatosService } from '../../datos/datos.service';
 import { EventoPasado, EventoWeb } from '../../datos/modelos';
@@ -74,14 +75,15 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
     AqEstadoVacioComponent,
     AqBotonComponent,
     AqEnlaceComponent,
+    AqIconoComponent,
   ],
   template: `
     <section class="pagina" data-codigo="W01">
       <header class="cabecera">
         <h1 class="titulo">Mis Alarmas</h1>
         <div class="acciones">
-          <a aq-boton variante="secundario" routerLink="/qr">Descargar QR en lote</a>
           <a aq-boton routerLink="/reportes">Exportar reporte</a>
+          <a aq-boton variante="secundario" routerLink="/qr">Descargar QR en lote</a>
         </div>
       </header>
 
@@ -109,91 +111,97 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
           />
         </div>
 
-        <aq-grafica-barras [datos]="web.escaneosPorSemana" />
-
-        <section class="tablero">
-          <div class="filtros">
-            <aq-pildoras
-              [opciones]="opcionesOrigen"
-              [activo]="origenActual()"
-              (elegir)="irA({ origen: $event })"
-            />
-            <aq-pildoras
-              [opciones]="opcionesEstado"
-              [activo]="estadoActual()"
-              (elegir)="irA({ estado: $event })"
-            />
-          </div>
+        <div class="filtros-busqueda">
           <aq-campo-busqueda
             ancho="w01"
             [value]="qActual()"
             (buscar)="irA({ q: $event || null })"
           />
+          <div class="filtros">
+            <aq-pildoras
+              [opciones]="opcionesEstado"
+              [activo]="estadoActual()"
+              (elegir)="irA({ estado: $event })"
+            />
+            <aq-pildoras
+              [opciones]="opcionesOrigen"
+              [activo]="origenActual()"
+              (elegir)="irA({ origen: $event })"
+            />
+          </div>
+        </div>
 
-          @if (filas().length > 0) {
-            <div class="contenedor-tabla">
-              <table aq-tabla>
-                <thead>
+        @if (filas().length > 0) {
+          <div class="contenedor-tabla">
+            <table aq-tabla>
+              <thead>
+                <tr>
+                  <th>Nombre del evento</th>
+                  <th>Fecha y hora</th>
+                  <th>Origen</th>
+                  <th>Escaneos</th>
+                  <th>Alarmas activas</th>
+                  <th>Estado</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (fila of filas(); track fila.titulo) {
                   <tr>
-                    <th>Evento</th>
-                    <th>Fecha</th>
-                    <th>Origen</th>
-                    <th>Escaneos</th>
-                    <th>Alarmas activas</th>
-                    <th>Estado</th>
-                    <th></th>
+                    <td>{{ fila.titulo }}</td>
+                    <td>{{ fila.fechaHora }}</td>
+                    <td>
+                      <aq-chip [variante]="fila.chipOrigen">{{ fila.textoOrigen }}</aq-chip>
+                    </td>
+                    <td>{{ fila.escaneos }}</td>
+                    <td>{{ fila.alarmasActivas }}</td>
+                    <td>
+                      <aq-chip [variante]="fila.chipEstado">{{ fila.textoEstado }}</aq-chip>
+                    </td>
+                    <td>
+                      @if (fila.id) {
+                        <a aq-enlace [routerLink]="['/eventos', fila.id]">Ver detalle ›</a>
+                      }
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  @for (fila of filas(); track fila.titulo) {
-                    <tr>
-                      <td>{{ fila.titulo }}</td>
-                      <td>{{ fila.fechaHora }}</td>
-                      <td>
-                        <aq-chip [variante]="fila.chipOrigen">{{ fila.textoOrigen }}</aq-chip>
-                      </td>
-                      <td>{{ fila.escaneos }}</td>
-                      <td>{{ fila.alarmasActivas }}</td>
-                      <td>
-                        <aq-chip [variante]="fila.chipEstado">{{ fila.textoEstado }}</aq-chip>
-                      </td>
-                      <td>
-                        @if (fila.id) {
-                          <a aq-enlace [routerLink]="['/eventos', fila.id]">Ver detalle ›</a>
-                        }
-                      </td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
-            </div>
-            @if (qActual()) {
-              <p class="resumen-busqueda">
-                Mostrando {{ filas().length }} {{ filas().length === 1 ? 'alarma' : 'alarmas' }} ·
-                filtro: "{{ qActual() }}"
+                }
+              </tbody>
+            </table>
+          </div>
+          <div class="pie-tabla">
+            <p class="conteo">
+              Mostrando {{ filas().length }} {{ filas().length === 1 ? 'alarma' : 'alarmas' }}
+              @if (qActual()) {
+                · filtro: "{{ qActual() }}"
                 <button type="button" aq-enlace (click)="irA({ q: null })">Limpiar</button>
-              </p>
-            }
-          } @else {
-            <aq-estado-vacio
-              titulo="Sin resultados con estos filtros"
-              [texto]="
-                web.filtros.borradores.length === 0 && estadoActual() === 'borradores'
-                  ? mensajeSinBorradores()
-                  : ''
-              "
+              }
+            </p>
+            <p class="nota-metricas">
+              <aq-icono nombre="info" tamano="vineta" />
+              Las métricas de eventos escaneados pertenecen a su organizador.
+            </p>
+          </div>
+        } @else {
+          <aq-estado-vacio
+            titulo="Sin resultados con estos filtros"
+            [texto]="
+              web.filtros.borradores.length === 0 && estadoActual() === 'borradores'
+                ? mensajeSinBorradores()
+                : ''
+            "
+          >
+            <button
+              type="button"
+              aq-boton
+              variante="secundario"
+              (click)="irA({ estado: null, origen: null, q: null })"
             >
-              <button
-                type="button"
-                aq-boton
-                variante="secundario"
-                (click)="irA({ estado: null, origen: null, q: null })"
-              >
-                Ver todos
-              </button>
-            </aq-estado-vacio>
-          }
-        </section>
+              Ver todos
+            </button>
+          </aq-estado-vacio>
+        }
+
+        <aq-grafica-barras [datos]="web.escaneosPorSemana" />
       }
     </section>
   `,
@@ -224,15 +232,10 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
       flex-wrap: wrap;
       gap: var(--space-web-indicadores);
     }
-    .tablero {
+    .filtros-busqueda {
       display: flex;
       flex-direction: column;
-      gap: var(--space-16);
-      box-sizing: border-box;
-      padding: var(--space-16);
-      border: var(--stroke-borde) solid var(--color-borde);
-      border-radius: var(--radius-tarjeta);
-      background: var(--color-blanco);
+      gap: var(--space-12);
     }
     .filtros {
       display: flex;
@@ -242,7 +245,15 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
     .contenedor-tabla {
       overflow-x: auto;
     }
-    .resumen-busqueda {
+    .pie-tabla {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-12);
+    }
+    .conteo,
+    .nota-metricas {
       margin: 0;
       display: flex;
       align-items: center;

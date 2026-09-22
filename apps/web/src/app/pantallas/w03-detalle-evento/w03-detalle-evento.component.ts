@@ -7,8 +7,13 @@ import { AqChipComponent } from '../../componentes/chip/aq-chip.component';
 import { AqPaginadorComponent } from '../../componentes/paginador/aq-paginador.component';
 import { AqBotonComponent } from '../../componentes/boton/aq-boton.component';
 import { AqEnlaceComponent } from '../../componentes/enlace/aq-enlace.component';
+import { AqIconoComponent } from '../../componentes/icono/aq-icono.component';
 import { DatosService } from '../../datos/datos.service';
 import { Asistente } from '../../datos/modelos';
+
+function capitalizar(texto: string): string {
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
 
 /** W03 · Detalle Evento (F-W03): indicadores del evento y tabla anónima de «Quiénes escanearon» (Ley 1581). */
 @Component({
@@ -22,6 +27,7 @@ import { Asistente } from '../../datos/modelos';
     AqPaginadorComponent,
     AqBotonComponent,
     AqEnlaceComponent,
+    AqIconoComponent,
   ],
   template: `
     <section class="pagina" data-codigo="W03">
@@ -29,12 +35,20 @@ import { Asistente } from '../../datos/modelos';
 
       @if (evento(); as evento) {
         <header class="cabecera">
-          <h1 class="titulo">{{ evento.titulo }}</h1>
+          <div class="grupo-titulo">
+            <div class="titulo-fila">
+              <h1 class="titulo">{{ evento.titulo }}</h1>
+              @if (evento.estado === 'publicado') {
+                <aq-chip variante="publicado">Publicado</aq-chip>
+              }
+            </div>
+            <p class="subtitulo">{{ subtituloEvento() }}</p>
+          </div>
           <a aq-boton variante="secundario" routerLink="/reportes">Exportar reporte</a>
         </header>
 
         <div class="indicadores">
-          <aq-indicador [valor]="evento.escaneos" etiqueta="Escaneos" detalle="Total del evento" />
+          <aq-indicador [valor]="evento.escaneos" etiqueta="Escaneos de QR" detalle="" />
           <aq-indicador
             [valor]="evento.alarmasActivas"
             etiqueta="Alarmas activas"
@@ -46,67 +60,69 @@ import { Asistente } from '../../datos/modelos';
           />
           <aq-indicador
             [valor]="evento.confirmaronYaVoy ?? 0"
-            etiqueta="«Ya voy»"
-            detalle="Personas que avisaron que van en camino"
+            etiqueta='Confirmaron "Ya voy"'
+            detalle=""
           />
         </div>
 
-        <section class="tabla-asistentes">
-          <div class="cabecera-tabla">
-            <h2 class="titulo-tabla">Quiénes escanearon</h2>
-            <aq-campo-busqueda
-              ancho="w03"
-              placeholder="Buscar asistente"
-              [value]="qActual()"
-              (buscar)="buscar($event)"
-            />
-          </div>
+        <div class="cabecera-tabla">
+          <h2 class="titulo-tabla">Quiénes escanearon</h2>
+          <aq-campo-busqueda
+            ancho="w03"
+            placeholder="Buscar asistente"
+            [value]="qActual()"
+            (buscar)="buscar($event)"
+          />
+        </div>
 
-          @if (filas().length > 0) {
-            <div class="contenedor-tabla">
-              <table aq-tabla>
-                <thead>
+        @if (filas().length > 0) {
+          <div class="contenedor-tabla">
+            <table aq-tabla>
+              <thead>
+                <tr>
+                  <th>Asistente</th>
+                  <th>Fecha de escaneo</th>
+                  <th>Alarma</th>
+                  <th>Confirmó &quot;Ya voy&quot;</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (fila of filas(); track fila.alias) {
                   <tr>
-                    <th>Alias</th>
-                    <th>Escaneo</th>
-                    <th>Alarma</th>
-                    <th>«Ya voy»</th>
+                    <td>{{ fila.alias }}</td>
+                    <td>{{ formatoFecha(fila.escaneo) }}</td>
+                    <td>
+                      <aq-chip [variante]="fila.alarma === 'activa' ? 'activa' : 'eliminada'">{{
+                        fila.alarma === 'activa' ? 'Activa' : 'Eliminada'
+                      }}</aq-chip>
+                    </td>
+                    <td>{{ (fila.confirmoYaVoy ?? fila.yaVoy) ? 'Sí' : 'No' }}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  @for (fila of filas(); track fila.alias) {
-                    <tr>
-                      <td>{{ fila.alias }}</td>
-                      <td>{{ formatoFecha(fila.escaneo) }}</td>
-                      <td>
-                        <aq-chip [variante]="fila.alarma === 'activa' ? 'activa' : 'eliminada'">{{
-                          fila.alarma === 'activa' ? 'Activa' : 'Eliminada'
-                        }}</aq-chip>
-                      </td>
-                      <td>{{ (fila.confirmoYaVoy ?? fila.yaVoy) ? 'Sí' : 'No' }}</td>
-                    </tr>
-                  }
-                </tbody>
-              </table>
-            </div>
-            <p class="privacidad">{{ asistentesEvento()?.notaPrivacidad }}</p>
-            @if (!qActual()) {
-              <aq-paginador
-                [texto]="textoPaginador()"
-                [paginaActual]="paginaActual()"
-                [totalPaginas]="2"
-                (cambiar)="irAPagina($event)"
-              />
-            }
-          } @else if (qActual()) {
-            <p class="sin-asistentes">
-              Sin resultados para "{{ qActual() }}"
-              <button type="button" aq-enlace (click)="buscar('')">Limpiar</button>
-            </p>
-          } @else {
-            <p class="sin-asistentes">Aún no hay asistentes registrados para este evento.</p>
+                }
+              </tbody>
+            </table>
+          </div>
+          @if (!qActual()) {
+            <aq-paginador
+              [texto]="textoPaginador()"
+              [paginaActual]="paginaActual()"
+              [totalPaginas]="2"
+              (cambiar)="irAPagina($event)"
+            />
           }
-        </section>
+        } @else if (qActual()) {
+          <p class="sin-asistentes">
+            Sin resultados para "{{ qActual() }}"
+            <button type="button" aq-enlace (click)="buscar('')">Limpiar</button>
+          </p>
+        } @else {
+          <p class="sin-asistentes">Aún no hay asistentes registrados para este evento.</p>
+        }
+
+        <p class="privacidad">
+          <aq-icono nombre="info" tamano="vineta" />
+          {{ notaPrivacidad() }}
+        </p>
       }
     </section>
   `,
@@ -123,25 +139,30 @@ import { Asistente } from '../../datos/modelos';
       flex-wrap: wrap;
       gap: var(--space-12);
     }
+    .grupo-titulo {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .titulo-fila {
+      display: flex;
+      align-items: center;
+      gap: var(--space-12);
+    }
     .titulo {
       margin: 0;
       font: var(--text-h1-web);
       color: var(--color-texto);
     }
+    .subtitulo {
+      margin: 0;
+      font: var(--text-cuerpo-web);
+      color: var(--color-texto-secundario);
+    }
     .indicadores {
       display: flex;
       flex-wrap: wrap;
       gap: var(--space-web-indicadores);
-    }
-    .tabla-asistentes {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-16);
-      box-sizing: border-box;
-      padding: var(--space-16);
-      border: var(--stroke-borde) solid var(--color-borde);
-      border-radius: var(--radius-tarjeta);
-      background: var(--color-blanco);
     }
     .cabecera-tabla {
       display: flex;
@@ -161,13 +182,11 @@ import { Asistente } from '../../datos/modelos';
     .privacidad,
     .sin-asistentes {
       margin: 0;
-      font: var(--text-nota-web);
-      color: var(--color-texto-secundario);
-    }
-    .sin-asistentes {
       display: flex;
       align-items: center;
       gap: var(--space-8);
+      font: var(--text-nota-web);
+      color: var(--color-texto-secundario);
     }
   `,
 })
@@ -188,10 +207,28 @@ export class W03DetalleEventoComponent {
   protected readonly evento = computed(() =>
     this.datos.web()?.eventos.find((e) => e.id === this.id()),
   );
+  protected readonly subtituloEvento = computed(() => {
+    const evento = this.evento();
+    if (!evento) return '';
+    const fecha = new Date(evento.fechaHora);
+    const fechaLarga = capitalizar(
+      new Intl.DateTimeFormat('es-CO', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }).format(fecha),
+    );
+    const hora = new Intl.DateTimeFormat('es-CO', { hour: 'numeric', minute: '2-digit' }).format(
+      fecha,
+    );
+    return [fechaLarga, hora, evento.lugar].filter(Boolean).join(' · ');
+  });
   protected readonly asistentesEvento = computed(() => {
     const asistentes = this.datos.asistentes();
     return asistentes && asistentes.eventoId === this.id() ? asistentes : undefined;
   });
+  protected readonly notaPrivacidad = computed(() => this.datos.asistentes()?.notaPrivacidad ?? '');
   protected readonly paginaActual = computed(() => (this.paginaValor() === '2' ? 2 : 1));
 
   protected readonly filas = computed<Asistente[]>(() => {
