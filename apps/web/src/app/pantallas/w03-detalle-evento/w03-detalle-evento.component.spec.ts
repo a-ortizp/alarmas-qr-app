@@ -56,6 +56,30 @@ describe('W03 · Detalle Evento', () => {
     expect(pagina.textContent).toContain('Vale22');
   });
 
+  it('el paginador llega a 4 páginas (16 asistentes) y «Confirmó "Ya voy"» siempre muestra «—»', async () => {
+    const { raiz, estable, router } = await abrir('/eventos/w-partido');
+    const pagina = raiz.querySelector('[data-codigo="W03"]')!;
+    expect(pagina.textContent).toContain('Mostrando 1–4 de 16 asistentes · 4 por página');
+    expect(
+      Array.from(pagina.querySelectorAll('tbody td:last-child')).every(
+        (td) => td.textContent?.trim() === '—',
+      ),
+    ).toBe(true);
+
+    (
+      Array.from(pagina.querySelectorAll('button')).find(
+        (b) => b.textContent?.trim() === '4',
+      ) as HTMLElement
+    ).click();
+    await estable();
+    expect(router.url).toBe('/eventos/w-partido?pagina=4');
+    expect(pagina.textContent).toContain('Mostrando 13–16 de 16 asistentes · 4 por página');
+    const filas = pagina.querySelectorAll('tbody tr');
+    expect(filas.length).toBe(4);
+    expect(pagina.textContent).toContain('Sofi_B');
+    expect(pagina.textContent).toContain('Dani21');
+  });
+
   it('la búsqueda filtra por alias («Mi» → Mike1008)', async () => {
     const { raiz } = await abrir('/eventos/w-partido?q=Mi');
     const pagina = raiz.querySelector('[data-codigo="W03"]')!;

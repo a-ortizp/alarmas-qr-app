@@ -12,6 +12,23 @@ import { DatosService } from '../../datos/datos.service';
 import { formatoFechaHoraCorta, formatoFechaLarga, formatoHora12 } from '../../datos/formato-fecha';
 import { Asistente } from '../../datos/modelos';
 
+/**
+ * `dataset.json` (asistentes de "w-partido") solo trae 2 páginas (8 de 16 asistentes); las páginas
+ * 3 y 4 se completan aquí con datos inventados, nunca en el dataset (D4 del Plan 5: `dataset.json`
+ * nunca se modifica). La columna «Confirmó "Ya voy"» no se calcula desde estos datos — el mockup la
+ * muestra siempre como «—», así que estas filas no necesitan `confirmoYaVoy`/`yaVoy`.
+ */
+const ASISTENTES_INVENTADOS: readonly Asistente[] = [
+  { alias: 'Fer_22', escaneo: '2026-08-14T09:10:00-05:00', alarma: 'activa' },
+  { alias: 'Caro_R', escaneo: '2026-08-13T20:45:00-05:00', alarma: 'activa' },
+  { alias: 'Tavo9', escaneo: '2026-08-12T16:30:00-05:00', alarma: 'eliminada' },
+  { alias: 'Pao_M', escaneo: '2026-08-11T11:15:00-05:00', alarma: 'activa' },
+  { alias: 'Kata07', escaneo: '2026-08-10T19:00:00-05:00', alarma: 'activa' },
+  { alias: 'Julian.C', escaneo: '2026-08-09T14:20:00-05:00', alarma: 'activa' },
+  { alias: 'Sofi_B', escaneo: '2026-08-08T10:05:00-05:00', alarma: 'eliminada' },
+  { alias: 'Dani21', escaneo: '2026-08-07T21:40:00-05:00', alarma: 'activa' },
+];
+
 /** W03 · Detalle Evento (F-W03): indicadores del evento y tabla anónima de «Quiénes escanearon» (Ley 1581). */
 @Component({
   selector: 'aq-w03-detalle-evento',
@@ -91,7 +108,7 @@ import { Asistente } from '../../datos/modelos';
                         fila.alarma === 'activa' ? 'Activa' : 'Eliminada'
                       }}</aq-chip>
                     </td>
-                    <td>{{ (fila.confirmoYaVoy ?? fila.yaVoy) ? 'Sí' : 'No' }}</td>
+                    <td>—</td>
                   </tr>
                 }
               </tbody>
@@ -101,7 +118,7 @@ import { Asistente } from '../../datos/modelos';
             <aq-paginador
               [texto]="textoPaginador()"
               [paginaActual]="paginaActual()"
-              [totalPaginas]="2"
+              [totalPaginas]="totalPaginas()"
               (cambiar)="irAPagina($event)"
             />
           }
@@ -213,25 +230,47 @@ export class W03DetalleEventoComponent {
     return asistentes && asistentes.eventoId === this.id() ? asistentes : undefined;
   });
   protected readonly notaPrivacidad = computed(() => this.datos.asistentes()?.notaPrivacidad ?? '');
-  protected readonly paginaActual = computed(() => (this.paginaValor() === '2' ? 2 : 1));
+
+  // 16 asistentes · 4 por página = 4 páginas (D4: las páginas 3 y 4 son ASISTENTES_INVENTADOS).
+  protected readonly totalPaginas = computed(() => (this.asistentesEvento() ? 4 : 1));
+  protected readonly paginaActual = computed(() => {
+    const numero = Number(this.paginaValor());
+    return numero >= 1 && numero <= this.totalPaginas() ? numero : 1;
+  });
+
+  private paginaDe(numero: number): readonly Asistente[] {
+    const asistentes = this.asistentesEvento();
+    if (!asistentes) return [];
+    switch (numero) {
+      case 1:
+        return asistentes.mostrados;
+      case 2:
+        return asistentes.pagina2;
+      case 3:
+        return ASISTENTES_INVENTADOS.slice(0, asistentes.porPagina);
+      case 4:
+        return ASISTENTES_INVENTADOS.slice(asistentes.porPagina, asistentes.porPagina * 2);
+      default:
+        return [];
+    }
+  }
 
   protected readonly filas = computed<Asistente[]>(() => {
     const asistentes = this.asistentesEvento();
     if (!asistentes) return [];
     const consulta = this.qActual().trim().toLowerCase();
     if (consulta) {
-      return [...asistentes.mostrados, ...asistentes.pagina2].filter((a) =>
-        a.alias.toLowerCase().includes(consulta),
-      );
+      const todos = [1, 2, 3, 4].flatMap((numero) => this.paginaDe(numero));
+      return todos.filter((a) => a.alias.toLowerCase().includes(consulta));
     }
-    return this.paginaActual() === 2 ? asistentes.pagina2 : asistentes.mostrados;
+    return [...this.paginaDe(this.paginaActual())];
   });
 
   protected readonly textoPaginador = computed(() => {
     const asistentes = this.asistentesEvento();
     if (!asistentes) return '';
-    const desde = this.paginaActual() === 2 ? asistentes.porPagina + 1 : 1;
-    const hasta = this.paginaActual() === 2 ? asistentes.porPagina * 2 : asistentes.porPagina;
+    const desde = (this.paginaActual() - 1) * asistentes.porPagina + 1;
+    const hasta = Math.min(this.paginaActual() * asistentes.porPagina, asistentes.total);
     return `Mostrando ${desde}–${hasta} de ${asistentes.total} asistentes · ${asistentes.porPagina} por página`;
   });
 
