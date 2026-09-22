@@ -12,6 +12,7 @@ import { AqEnlaceComponent } from '../../componentes/enlace/aq-enlace.component'
 import { AqIconoComponent } from '../../componentes/icono/aq-icono.component';
 import { SnackbarService } from '../../componentes/snackbar/snackbar.service';
 import { DatosService } from '../../datos/datos.service';
+import { formatoFechaHoraCorta } from '../../datos/formato-fecha';
 import { EventoPasado, EventoWeb } from '../../datos/modelos';
 
 interface FilaEvento {
@@ -26,18 +27,11 @@ interface FilaEvento {
   textoEstado: string;
 }
 
-const FORMATO_FECHA = new Intl.DateTimeFormat('es-CO', {
-  day: 'numeric',
-  month: 'short',
-  hour: 'numeric',
-  minute: '2-digit',
-});
-
 function aFila(e: EventoWeb): FilaEvento {
   return {
     id: e.id,
     titulo: e.titulo,
-    fechaHora: FORMATO_FECHA.format(new Date(e.fechaHora)),
+    fechaHora: formatoFechaHoraCorta(e.fechaHora),
     chipOrigen: e.origen === 'creada-por-mi' ? 'creada-por-mi' : 'escaneada',
     textoOrigen: e.origen === 'creada-por-mi' ? 'Creada por mí' : '✓ Escaneada',
     escaneos: e.escaneos,
@@ -51,7 +45,7 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
   return {
     id: null,
     titulo: e.nombre,
-    fechaHora: FORMATO_FECHA.format(new Date(e.fechaHora)),
+    fechaHora: formatoFechaHoraCorta(e.fechaHora),
     chipOrigen: e.origen === 'creada-por-mi' ? 'creada-por-mi' : 'escaneada',
     textoOrigen: e.origen === 'creada-por-mi' ? 'Creada por mí' : '✓ Escaneada',
     escaneos: e.escaneos,

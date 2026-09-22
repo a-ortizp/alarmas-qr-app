@@ -9,11 +9,8 @@ import { AqBotonComponent } from '../../componentes/boton/aq-boton.component';
 import { AqEnlaceComponent } from '../../componentes/enlace/aq-enlace.component';
 import { AqIconoComponent } from '../../componentes/icono/aq-icono.component';
 import { DatosService } from '../../datos/datos.service';
+import { formatoFechaHoraCorta, formatoFechaLarga, formatoHora12 } from '../../datos/formato-fecha';
 import { Asistente } from '../../datos/modelos';
-
-function capitalizar(texto: string): string {
-  return texto.charAt(0).toUpperCase() + texto.slice(1);
-}
 
 /** W03 · Detalle Evento (F-W03): indicadores del evento y tabla anónima de «Quiénes escanearon» (Ley 1581). */
 @Component({
@@ -31,7 +28,7 @@ function capitalizar(texto: string): string {
   ],
   template: `
     <section class="pagina" data-codigo="W03">
-      <a aq-enlace routerLink="/alarmas">‹ Mis alarmas</a>
+      <a aq-enlace routerLink="/alarmas">‹ Mis alarmas{{ migaEvento() }}</a>
 
       @if (evento(); as evento) {
         <header class="cabecera">
@@ -207,22 +204,16 @@ export class W03DetalleEventoComponent {
   protected readonly evento = computed(() =>
     this.datos.web()?.eventos.find((e) => e.id === this.id()),
   );
+  protected readonly migaEvento = computed(() => {
+    const evento = this.evento();
+    return evento ? ` / ${evento.titulo}` : '';
+  });
   protected readonly subtituloEvento = computed(() => {
     const evento = this.evento();
     if (!evento) return '';
-    const fecha = new Date(evento.fechaHora);
-    const fechaLarga = capitalizar(
-      new Intl.DateTimeFormat('es-CO', {
-        weekday: 'long',
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      }).format(fecha),
-    );
-    const hora = new Intl.DateTimeFormat('es-CO', { hour: 'numeric', minute: '2-digit' }).format(
-      fecha,
-    );
-    return [fechaLarga, hora, evento.lugar].filter(Boolean).join(' · ');
+    return [formatoFechaLarga(evento.fechaHora), formatoHora12(evento.fechaHora), evento.lugar]
+      .filter(Boolean)
+      .join(' · ');
   });
   protected readonly asistentesEvento = computed(() => {
     const asistentes = this.datos.asistentes();
@@ -251,11 +242,7 @@ export class W03DetalleEventoComponent {
     return `Mostrando ${desde}–${hasta} de ${asistentes.total} asistentes · ${asistentes.porPagina} por página`;
   });
 
-  protected formatoFecha(iso: string): string {
-    return new Intl.DateTimeFormat('es-CO', { day: 'numeric', month: 'short' }).format(
-      new Date(iso),
-    );
-  }
+  protected readonly formatoFecha = formatoFechaHoraCorta;
 
   protected buscar(texto: string): void {
     void this.router.navigate([], {

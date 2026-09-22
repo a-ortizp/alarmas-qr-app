@@ -35,9 +35,9 @@ describe('W03 · Detalle Evento', () => {
     expect(pagina.textContent).not.toContain('@'); // ningún correo
   });
 
-  it('la miga «‹ Mis alarmas» vuelve a W01', async () => {
+  it('la miga «‹ Mis alarmas / Partido Sintética» vuelve a W01', async () => {
     const { raiz, estable, router } = await abrir('/eventos/w-partido');
-    botonConTexto(raiz, '‹ Mis alarmas').click();
+    botonConTexto(raiz, '‹ Mis alarmas / Partido Sintética').click();
     await estable();
     expect(router.url).toBe('/alarmas');
   });
