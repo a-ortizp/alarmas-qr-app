@@ -39,8 +39,8 @@ describe('Componentes de tablero L09 (3/3)', () => {
     const f = await montar();
     const barras = Array.from(
       (f.nativeElement as HTMLElement).querySelectorAll('#grafica .barra'),
-    ) as SVGRectElement[];
-    const alturas = barras.map((b) => Number(b.getAttribute('height')));
+    ) as HTMLElement[];
+    const alturas = barras.map((b) => Number.parseFloat(b.style.height));
     const indiceMaximo = dataset.web.escaneosPorSemana.reduce(
       (mejorIndice, semana, i, todas) =>
         semana.escaneos > todas[mejorIndice].escaneos ? i : mejorIndice,

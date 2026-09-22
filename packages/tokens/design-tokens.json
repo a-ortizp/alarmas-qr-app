@@ -19,7 +19,7 @@
       "v1.13 (2026-09-21): medidas de tablero web de la Persona B (Plan 5) — campo de búsqueda (240/260×40), paginador (píldora 30), gráfica de barras (alto máximo 96) y vista previa del afiche (miniatura 132, QR 72); radius.casilla se deriva ahora también a la web (checkbox de W05).",
       "v1.14 (2026-09-22): miniatura del código QR junto a cada evento de W05 (Figma 4072:187, marco «Descargar QR en lote» 4075:11), 40×40.",
       "v1.15 (2026-09-22): casilla de W05 verificada contra Figma (nodo 4075:18/4075:24): radio propio de 6 (radius.casilla-web, distinto del radio 4 de la casilla móvil) y check interior de 12 (size.web.icono-casilla); el «QR» junto a cada evento es en realidad un tablero de 8×8 (nodo «checkerboard» 4091:2), no un patrón con marcadores de posición.",
-      "v1.16 (2026-09-22): alto fijo del lienzo de la gráfica de barras (grafica-barra-alto-lienzo, 130): el SVG escalaba alto y ancho juntos con el viewBox, así que al llenar el ancho de la tarjeta las barras se veían enormes; ahora solo el ancho llena el contenedor (preserveAspectRatio=\"none\")."
+      "v1.16 (2026-09-22): la gráfica de barras se reconstruye en HTML/CSS en vez de un SVG con viewBox escalado: forzar el ancho a llenar la tarjeta con preserveAspectRatio=\"none\" también deformaba el texto (los ejes x/y ya no compartían escala). Las columnas ahora son flex:1 con la barra topada en --size-grafica-barra-alto-max (96) vía altura en línea, sin depender de ningún viewBox."
     ]
   },
   "color": {
@@ -432,7 +432,6 @@
       "icono-lupa": 16,
       "paginador-pildora": 30,
       "grafica-barra-alto-max": 96,
-      "grafica-barra-alto-lienzo": 130,
       "afiche-miniatura": 132,
       "afiche-qr": 72,
       "checkbox": 20,

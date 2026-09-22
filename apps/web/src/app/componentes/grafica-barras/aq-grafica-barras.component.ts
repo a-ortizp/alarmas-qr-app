@@ -16,34 +16,15 @@ interface ColumnaGrafica extends SemanaEscaneo {
         {{ calificador() }}</span
       >
     </header>
-    <svg
-      class="lienzo"
-      [attr.viewBox]="'0 0 ' + columnas().length * 40 + ' 130'"
-      preserveAspectRatio="none"
-      role="img"
-      aria-label="{{ titulo() }}"
-    >
-      @for (columna of columnas(); track columna.semana; let i = $index) {
-        <g
-          class="columna"
-          [class.actual]="!!columna.actual"
-          [attr.transform]="'translate(' + i * 40 + ',0)'"
-        >
-          <text class="valor" x="20" [attr.y]="94 - columna.alturaPx" text-anchor="middle">
-            {{ columna.escaneos }}
-          </text>
-          <rect
-            class="barra"
-            x="6"
-            [attr.y]="96 - columna.alturaPx"
-            width="28"
-            [attr.height]="columna.alturaPx"
-            rx="4"
-          />
-          <text class="etiqueta" x="20" y="112" text-anchor="middle">{{ columna.etiqueta }}</text>
-        </g>
+    <div class="lienzo" role="img" [attr.aria-label]="titulo()">
+      @for (columna of columnas(); track columna.semana) {
+        <div class="columna" [class.actual]="!!columna.actual">
+          <span class="valor">{{ columna.escaneos }}</span>
+          <div class="barra" [style.height.px]="columna.alturaPx"></div>
+          <span class="etiqueta">{{ columna.etiqueta }}</span>
+        </div>
       }
-    </svg>
+    </div>
     <p class="pie">{{ nota() }}</p>
   `,
   styles: `
@@ -72,26 +53,39 @@ interface ColumnaGrafica extends SemanaEscaneo {
       color: var(--color-texto-secundario);
     }
     .lienzo {
-      display: block;
-      width: 100%;
-      height: var(--size-grafica-barra-alto-lienzo);
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-12);
+    }
+    .columna {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 1 0 0;
+      min-width: 0;
+      gap: var(--space-4);
     }
     .valor {
       font: var(--text-valor-grafica);
-      fill: var(--color-texto);
+      color: var(--color-texto);
     }
     .etiqueta {
       font: var(--text-etiqueta-semana);
-      fill: var(--color-texto-secundario);
+      color: var(--color-texto-secundario);
     }
-    .columna .barra {
-      fill: var(--color-texto-secundario);
+    .barra {
+      box-sizing: border-box;
+      width: 100%;
+      max-height: var(--size-grafica-barra-alto-max);
+      border-radius: var(--radius-barra);
+      background: var(--color-texto-secundario);
     }
     .columna.actual .barra {
-      fill: var(--color-tinta);
+      background: var(--color-tinta);
     }
     .columna.actual .etiqueta {
-      fill: var(--color-tinta);
+      color: var(--color-tinta);
     }
     .pie {
       margin: 0;
