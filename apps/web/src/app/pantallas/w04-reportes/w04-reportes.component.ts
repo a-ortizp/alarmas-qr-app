@@ -149,7 +149,7 @@ import { formatoFechaCorta } from '../../datos/formato-fecha';
     }
     .titulo-tarjeta-formulario {
       margin: 0;
-      font: var(--text-titulo-modal-web);
+      font: var(--text-titulo-tarjeta-formulario-web);
       color: var(--color-texto);
     }
     .titulo-tarjeta {
