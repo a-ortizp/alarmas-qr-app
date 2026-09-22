@@ -38,8 +38,8 @@ export interface OpcionPildora {
       justify-content: center;
       box-sizing: border-box;
       flex: 1 0 0;
-      min-width: 0;
       height: var(--size-pildora-filtro);
+      padding: 0 var(--space-16);
       border: none;
       border-radius: var(--radius-pildora);
       background: transparent;
