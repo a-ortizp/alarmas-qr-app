@@ -127,6 +127,7 @@ object Medidas {
     val Casilla = 20.dp
     val IconoFila = 20.dp
     val FilaOpcion = 36.dp
+    val FilaAjuste = 40.dp             // fila de ajuste (M06, M11): rótulo + switch/«›», contenido centrado (tutores v1.9)
     val FilaHoja = 100.dp
     val CajaIcono = 40.dp
     val Sello = 30.dp
