@@ -41,6 +41,8 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03EscanerViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03bPantallazoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaSheet
 import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaViewModel
+import co.edu.uniandes.alarmasqr.ui.pantallas.m06.M06EditarAlarmaScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m06.M06EditarAlarmaViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
@@ -192,6 +194,24 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             }
         }
         M02InicioScreen(estado, alTocarAlarma = { pila.irA(Pantalla.M06(it)) }, alCambiarActiva = vm::cambiarActiva, codigo = "M05")
+    }
+    entry<Pantalla.M06> { clave ->
+        if (repositorio.alarma(clave.id) == null) {
+            LaunchedEffect(clave) { pila.removeLastOrNull() }
+        } else {
+            val vm = viewModel(key = clave.id) { M06EditarAlarmaViewModel(repositorio, clave.id) }
+            val estado by vm.estado.collectAsStateWithLifecycle()
+            M06EditarAlarmaScreen(
+                estado = estado, mensajes = repositorio.dataset.mensajes, mensajeEliminar = vm.mensajeEliminar, puedeVerCambioOrganizador = vm.puedeVerCambioOrganizador,
+                alVolver = { pila.removeLastOrNull() },
+                alElegirAnticipacion = vm::elegirAnticipacion, alElegirSonido = vm::elegirSonido, alCambiarConfirmar = vm::cambiarConfirmar,
+                alTocarCambioOrganizador = { pila.irA(Pantalla.M09(clave.id)) },
+                alGestionarCalendario = { pila.irA(Pantalla.M02b) },
+                alGuardar = { vm.guardar(); pila.reemplazarTodo(Pantalla.M02) },
+                alAbrirDialogo = vm::abrirDialogo, alConservar = vm::cerrarDialogo,
+                alEliminar = { vm.eliminar(); pila.reemplazarTodo(Pantalla.M02) },
+            )
+        }
     }
     entry<Pantalla.M13> {
         val context = LocalContext.current
