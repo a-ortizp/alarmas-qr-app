@@ -73,6 +73,24 @@ class FlujosPersonaBTest {
     }
 
     @Test
+    fun `M09 al ver alarma vuelve al M06 que ya estaba debajo, sin duplicarlo en la pila`() {
+        // Regresión: `alVerAlarma` reemplazaba la cima de la pila (M09) por un SEGUNDO Pantalla.M06(id), dejando dos
+        // claves M06 idénticas seguidas (rompe el back y arriesga un crash de SaveableStateHolder). Debe hacer pop.
+        repositorio.agregarDesdeEvento("e-entrega")
+        montar(Pantalla.M06("a-entrega"))
+        regla.onNodeWithTag("pantalla-M06").assertIsDisplayed()
+        val tamanoEnM06 = pila.size
+        regla.onNodeWithText("Alarma conectada · Confirmar antes de auto-ajustarse").performClick()
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M09").assertIsDisplayed()
+        assertEquals(tamanoEnM06 + 1, pila.size)
+        regla.onNodeWithTag("ver-alarma").performClick()
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M06").assertIsDisplayed()
+        assertEquals(tamanoEnM06, pila.size)
+    }
+
+    @Test
     fun `T3 crear evento propio y compartir M02 - M02h - M07 - M08`() {
         // M07 y M08 solo se alcanzan por flujo (la hoja M02h las abre con reemplazarCima): no tienen entrada
         // propia fuera de la navegación real, así que su captura de verificación pixel-perfect vive aquí.

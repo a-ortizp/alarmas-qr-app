@@ -117,10 +117,11 @@ class RepositorioDataset(json: String) {
 
     private fun List<Alarma>.ordenadas() = sortedBy { OffsetDateTime.parse(it.eventoInicio) }
 
-    /** Restaura el estado inicial (5 alarmas, sin deshacer pendiente ni permiso pedido); solo para pruebas. */
+    /** Restaura el estado inicial (5 alarmas, sin eventos manuales, sin deshacer pendiente ni permiso pedido); solo para pruebas. */
     @VisibleForTesting
     fun reiniciar() {
         _alarmas.value = iniciales()
+        _eventosQR.value = dataset.eventosQR
         anterior = null
         permisoCamaraPedido = false
     }

@@ -70,4 +70,18 @@ class M06EditarAlarmaScreenTest {
         val vm = montar("a-tutor")
         assertEquals(false, vm.puedeVerCambioOrganizador)
     }
+
+    @Test
+    fun `guardar relee el repositorio y no revierte un cambio del organizador aplicado mientras M06 seguia en la pila`() {
+        // Repro de la M06 retenida por rememberViewModelStoreNavEntryDecorator(): M06("a-entrega") construye su VM
+        // (snapshot de la alarma pre-cambio), M09 aplica el cambio del organizador sobre el MISMO repositorio, y solo
+        // luego M06 (con su VM ya construido, sin recrear) llama a guardar(). Antes de la corrección, guardar()
+        // escribía el snapshot viejo y revertía eventoInicio/suena; ahora debe releer el repositorio primero.
+        repo.agregarDesdeEvento("e-entrega")
+        val vm = M06EditarAlarmaViewModel(repo, "a-entrega")
+        repo.aplicarCambioOrganizador("a-entrega")
+        vm.guardar()
+        assertEquals("2026-08-30T17:30:00-05:00", repo.alarma("a-entrega")?.eventoInicio)
+        assertEquals("2026-08-30T16:45:00-05:00", repo.alarma("a-entrega")?.suena)
+    }
 }

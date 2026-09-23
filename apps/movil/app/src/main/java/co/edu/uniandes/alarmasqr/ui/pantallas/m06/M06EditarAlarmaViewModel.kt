@@ -40,7 +40,9 @@ class M06EditarAlarmaViewModel(private val repositorio: RepositorioDataset, priv
     fun elegirAnticipacion(min: Int) = _estado.update { it.copy(anticipacionMin = min) }
     fun elegirSonido(valor: String) = _estado.update { it.copy(sonido = valor) }
     fun cambiarConfirmar(valor: Boolean) = _estado.update { it.copy(confirmarAntesDeAutoAjustar = valor) }
-    fun guardar() = repositorio.agregar(_estado.value.alarma.copy(anticipacionMin = _estado.value.anticipacionMin))
+    fun guardar() {
+        repositorio.alarma(id)?.let { repositorio.agregar(it.copy(anticipacionMin = _estado.value.anticipacionMin)) }
+    }
     fun abrirDialogo() = _estado.update { it.copy(dialogoAbierto = true) }
     fun cerrarDialogo() = _estado.update { it.copy(dialogoAbierto = false) }
     fun eliminar() { repositorio.eliminar(id); cerrarDialogo() }

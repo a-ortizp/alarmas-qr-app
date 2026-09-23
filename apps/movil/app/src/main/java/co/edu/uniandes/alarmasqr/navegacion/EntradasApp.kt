@@ -269,7 +269,7 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
                 alAceptar = { repositorio.aplicarCambioOrganizador(clave.id); pila.irA(Pantalla.M10(clave.id)) },
                 alMantener = { pila.reemplazarTodo(Pantalla.M02) },
                 alCerrar = { pila.reemplazarTodo(Pantalla.M02) },
-                alVerAlarma = { pila.reemplazarCima(Pantalla.M06(clave.id)) },
+                alVerAlarma = { pila.removeLastOrNull() },
             )
         }
     }

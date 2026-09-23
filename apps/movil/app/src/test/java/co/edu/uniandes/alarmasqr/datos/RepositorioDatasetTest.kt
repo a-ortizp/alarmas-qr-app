@@ -139,4 +139,14 @@ class RepositorioDatasetTest {
         val evento = repo.dataset.eventosQR.let { repo.evento("e-" + alarma.id.removePrefix("a-")) }
         assertEquals("Aún sin escaneos · recién creado", evento?.etiqueta)
     }
+
+    @Test
+    fun `reiniciar tambien limpia los eventosQR creados a mano`() {
+        val repo = RepositorioDataset(json)
+        val alarma = repo.crearAlarmaManual("Cena de fin de año", "2026-08-28T19:00:00-05:00", "Casa de Andrés", null, 30)
+        val eventoId = "e-" + alarma.id.removePrefix("a-")
+        assertEquals(alarma.id, repo.evento(eventoId)?.alarmaId)
+        repo.reiniciar()
+        assertNull(repo.evento(eventoId))
+    }
 }
