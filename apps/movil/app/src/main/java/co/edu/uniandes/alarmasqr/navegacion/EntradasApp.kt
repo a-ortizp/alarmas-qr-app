@@ -50,6 +50,8 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m07.M07CrearEventoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m08.M08CompartirQRScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m09.M09CambioEventoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m10.M10AlarmaSonandoScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m11.M11AjustesScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m11.M11AjustesViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
@@ -287,6 +289,16 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
                 alVerRuta = verRuta,
             )
         }
+    }
+    entry<Pantalla.M11> {
+        val vm = viewModel { M11AjustesViewModel(repositorio) }
+        val estado by vm.estado.collectAsStateWithLifecycle()
+        M11AjustesScreen(
+            estado = estado, mensajes = repositorio.dataset.mensajes,
+            alCambiarNoMolestar = vm::cambiarNoMolestar, alCambiarConfirmarAutoAjustar = vm::cambiarConfirmarAutoAjustar,
+            alAbrirDialogo = vm::abrirDialogo, alConservar = vm::cerrarDialogo,
+            alCerrarSesion = { vm.cerrarDialogo(); pila.reemplazarTodo(Pantalla.M01) },
+        )
     }
     entry<Pantalla.M13> {
         val context = LocalContext.current
