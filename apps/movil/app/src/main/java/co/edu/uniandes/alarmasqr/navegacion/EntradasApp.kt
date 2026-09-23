@@ -48,6 +48,7 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m06.M06EditarAlarmaScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m06.M06EditarAlarmaViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m07.M07CrearEventoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m08.M08CompartirQRScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m09.M09CambioEventoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
@@ -252,6 +253,20 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
                     portapapeles.setPrimaryClip(ClipData.newPlainText("Enlace del QR", evento.codigoQR))
                     alcance.launch { snackbar.showSnackbar(mensajes.enlaceCopiado) }
                 },
+            )
+        }
+    }
+    entry<Pantalla.M09> { clave ->
+        val alarma = repositorio.alarma(clave.id)
+        if (alarma == null) {
+            LaunchedEffect(clave) { pila.reemplazarTodo(Pantalla.M02) }
+        } else {
+            M09CambioEventoScreen(
+                alarma = alarma,
+                alAceptar = { repositorio.aplicarCambioOrganizador(clave.id); pila.irA(Pantalla.M10(clave.id)) },
+                alMantener = { pila.reemplazarTodo(Pantalla.M02) },
+                alCerrar = { pila.reemplazarTodo(Pantalla.M02) },
+                alVerAlarma = { pila.reemplazarCima(Pantalla.M06(clave.id)) },
             )
         }
     }
