@@ -1,4 +1,4 @@
-/* Alarmas QR · Energía puntual · tokens v1.12 (2026-09-21)
+/* Alarmas QR · Energía puntual · tokens v1.19 (2026-09-22)
    Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
    Reglas: un solo amarillo por pantalla (la acción principal); estados activos en Tinta;
    texto ≤ 15 px usa los tonos --color-*-texto; botones 52 px en móvil (48 hasta v1.5) y 44 px en web; radio 14 (20 en el diálogo de confirmación).
@@ -129,6 +129,7 @@
   /* web · medidas de Figma para la Persona A (Plan 3, v1.11) */
   --text-marca-acceso: 700 24px/normal var(--font-titulares);
   --text-titulo-tarjeta-web: 700 17px/normal var(--font-titulares);
+  --text-titulo-tarjeta-formulario-web: 700 20px/normal var(--font-titulares);
   --text-cuerpo-web: 400 14px/normal var(--font-ui);          /* subtítulos, enlaces, notas, nombre en la barra */
   --text-descripcion-web: 400 13.5px/normal var(--font-ui);   /* descripciones de tarjeta (W06) */
   --text-rotulo-web: 400 14.5px/normal var(--font-ui);        /* rótulos de switch, lista del modal */
@@ -168,6 +169,33 @@
   --space-16: 16px;
   --opacity-deshabilitado: 0.45;
   --elevation-dialogo-web: 0 12px 32px rgba(23, 22, 28, 0.18);
+
+  /* web · tablero de la Persona B (Plan 5, v1.13) */
+  --size-campo-busqueda-w01: 240px;
+  --size-campo-busqueda-w03: 260px;
+  --size-campo-busqueda-alto: 40px;
+  --size-icono-lupa: 16px;
+  --size-paginador-pildora: 30px;
+  --size-grafica-barra-alto-max: 96px;
+  --size-afiche-miniatura: 132px;
+  --size-afiche-qr: 72px;
+  --size-checkbox: 20px;
+  --size-enlace-tabla-w: 100px;
+  --size-enlace-tabla-h: 20px;
+  --size-qr-miniatura-lista: 40px;
+  --size-icono-casilla: 12px;
+  --radius-casilla: 4px;
+  --radius-casilla-web: 6px;   /* casilla de W05 (Figma 4075:18/4075:24), distinta del radio 4 de la casilla móvil */
+  --text-titulo-grafica-web: 600 14.5px/normal var(--font-ui);
+  --text-nota-web: 400 13px/normal var(--font-ui);
+  --text-valor-grafica: 700 12px/1 var(--font-datos);
+  --text-etiqueta-semana: 500 11px/1 var(--font-datos);
+  --text-titulo-afiche: 700 10.5px/normal var(--font-titulares);
+  --text-lema-afiche: 400 8.5px/normal var(--font-ui);
+  --text-marca-afiche: 700 9.5px/normal var(--font-ui);
+  --text-rotulo-afiche: 700 11px/normal var(--font-ui);
+  --space-web-estado-vacio: 16px 24px;
+  --space-20: 20px;
 
   /* cortes de ancho web (v1.12): degradación elegante fuera del marco 1280×820.
      No se usan dentro de @media (las variables no funcionan ahí): CortesService los lee con getComputedStyle. */

@@ -10,7 +10,10 @@ export type NombreIcono =
   | 'qr'
   | 'calendario'
   | 'persona'
-  | 'descarga';
+  | 'descarga'
+  | 'lupa'
+  | 'info'
+  | 'check';
 
 export interface DefinicionIcono {
   /** Lado del viewBox de Figma. */
@@ -120,5 +123,31 @@ export const ICONOS: Record<NombreIcono, DefinicionIcono> = {
     caja: 16,
     trazo: T16,
     formas: [{ d: 'M8 2.66667V10M11.3333 6.66667L8 10L4.66667 6.66667M2.66667 13.3333H13.3333' }],
+  },
+  lupa: {
+    caja: 16,
+    trazo: T16,
+    formas: [
+      {
+        d: 'M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z',
+      },
+      { d: 'M14 14L11.1 11.1' },
+    ],
+  },
+  info: {
+    caja: 16,
+    trazo: T16,
+    formas: [
+      {
+        d: 'M8 14.6667C11.6819 14.6667 14.6667 11.6819 14.6667 8C14.6667 4.3181 11.6819 1.33333 8 1.33333C4.3181 1.33333 1.33333 4.3181 1.33333 8C1.33333 11.6819 4.3181 14.6667 8 14.6667Z',
+      },
+      { d: 'M8 5.33333H8.00667' },
+      { d: 'M7.33333 7.33333H8V10.6667H8.66667' },
+    ],
+  },
+  check: {
+    caja: 16,
+    trazo: T16,
+    formas: [{ d: 'M3.33333 8.66667L6 11.3333L12.6667 4.66667' }],
   },
 };

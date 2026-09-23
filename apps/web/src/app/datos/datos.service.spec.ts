@@ -29,4 +29,19 @@ describe('DatosService', () => {
       'cerrar-sesion',
     ]);
   });
+
+  it('expone los datos de tablero de la Persona B (gráfica, reportes, QR, asistentes)', async () => {
+    const servicio = TestBed.inject(DatosService);
+    await cargarDataset();
+    expect(servicio.escaneosPorSemana()?.length).toBe(8);
+    expect(servicio.escaneosPorSemana()?.at(-1)?.actual).toBe(true);
+    expect(servicio.reporte()?.archivoGenerado).toBe('reporte-alarmasqr-ago2026.pdf');
+    expect(servicio.reporte()?.generados.length).toBe(3);
+    expect(servicio.descargaQR()?.seleccionados).toEqual(['w-seminario', 'w-partido']);
+    expect(servicio.asistentes()?.eventoId).toBe('w-partido');
+    expect(servicio.asistentes()?.mostrados.length).toBe(4);
+    expect(servicio.asistentes()?.pagina2.length).toBe(4);
+    expect(servicio.eventosPasados()?.length).toBe(2);
+    expect(servicio.filtros()?.borradores.length).toBe(0);
+  });
 });

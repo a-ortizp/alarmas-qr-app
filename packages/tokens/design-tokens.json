@@ -2,7 +2,7 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.12",
+    "version": "1.19",
     "date": "2026-09-21",
     "source": "DESIGN_SYSTEM.md v1.10 · STYLE_TILE.md v1.2 · MOCKUPS.md (móvil v1.7, web v1.5)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
@@ -15,7 +15,14 @@
       "Prevención de errores (v1.7): toda acción destructiva o de salida pasa por un diálogo de confirmación centrado sobre velo Tinta 55 %; la acción segura es el primario amarillo y la que confirma va en contorno (Coral Texto si destruye, Tinta si solo sale); rótulos de máximo dos palabras; tocar el velo equivale a la acción segura.",
       "v1.10 (2026-09-20): medidas móviles de la Persona A tomadas de Figma para el Plan 2 (coral suave, radios de visor/casilla/snackbar, flecha «‹», título de evento, rótulo de opción, chip que se toca, medidas size.movil).",
       "v1.11 (2026-09-21): medidas web de la Persona A tomadas de Figma para el Plan 3 (tarjeta de acceso 520, modal «Eliminar cuenta» 481 con relleno 22 y título 18, textos y medidas size.web/space.web, sombra del diálogo web, snackbar web 3 s). Campos 48 con etiqueta 12 por regla (Figma 46/11).",
-      "v1.12 (2026-09-21): cortes de ancho web (breakpoint) para la degradación elegante fuera del marco de referencia 1280×820: bajo 1200 la barra lateral se colapsa sola; bajo 1100 las columnas de página (W06) se apilan. A 1280 nada cambia."
+      "v1.12 (2026-09-21): cortes de ancho web (breakpoint) para la degradación elegante fuera del marco de referencia 1280×820: bajo 1200 la barra lateral se colapsa sola; bajo 1100 las columnas de página (W06) se apilan. A 1280 nada cambia.",
+      "v1.13 (2026-09-21): medidas de tablero web de la Persona B (Plan 5) — campo de búsqueda (240/260×40), paginador (píldora 30), gráfica de barras (alto máximo 96) y vista previa del afiche (miniatura 132, QR 72); radius.casilla se deriva ahora también a la web (checkbox de W05).",
+      "v1.14 (2026-09-22): miniatura del código QR junto a cada evento de W05 (Figma 4072:187, marco «Descargar QR en lote» 4075:11), 40×40.",
+      "v1.15 (2026-09-22): casilla de W05 verificada contra Figma (nodo 4075:18/4075:24): radio propio de 6 (radius.casilla-web, distinto del radio 4 de la casilla móvil) y check interior de 12 (size.web.icono-casilla); el «QR» junto a cada evento es en realidad un tablero de 8×8 (nodo «checkerboard» 4091:2), no un patrón con marcadores de posición.",
+      "v1.16 (2026-09-22): la gráfica de barras se reconstruye en HTML/CSS en vez de un SVG con viewBox escalado: forzar el ancho a llenar la tarjeta con preserveAspectRatio=\"none\" también deformaba el texto (los ejes x/y ya no compartían escala). Las columnas ahora son flex:1 con la barra topada en --size-grafica-barra-alto-max (96) vía altura en línea, sin depender de ningún viewBox.",
+      "v1.17 (2026-09-22): título «Exportar reporte consolidado» (W04) no comparte tamaño con «Reportes generados», que en realidad es Archivo 15 (text.titulo-tarjeta, no titulo-tarjeta-web).",
+      "v1.18 (2026-09-22): revierte el tamaño 21 de v1.17 para «Exportar reporte consolidado» — comparación visual directa contra la referencia mostró que se veía demasiado grande — y reutiliza text.titulo-modal-web (Bricolage Bold 18, el mismo del modal «Eliminar cuenta») en vez de mantener un token nuevo de un solo uso.",
+      "v1.19 (2026-09-22): 18 quedó corto para «Exportar reporte consolidado»; text.titulo-tarjeta-formulario-web (Bricolage Bold 20) en vez de seguir reutilizando titulo-modal-web."
     ]
   },
   "color": {
@@ -220,6 +227,7 @@
       },
       "marca-acceso": { "family": "titulares", "weight": 700, "size": 24 },
       "titulo-tarjeta-web": { "family": "titulares", "weight": 700, "size": 17 },
+      "titulo-tarjeta-formulario-web": { "family": "titulares", "weight": 700, "size": 20, "$description": "Título de la tarjeta de formulario, p. ej. «Exportar reporte consolidado» (W04); ajustado tras comparación visual entre 21 (grande) y 18 (corto)." },
       "cuerpo-web": { "family": "ui", "weight": 400, "size": 14 },
       "descripcion-web": { "family": "ui", "weight": 400, "size": 13.5 },
       "rotulo-web": { "family": "ui", "weight": 400, "size": 14.5 },
@@ -360,7 +368,15 @@
       "enlace-corto": { "family": "ui", "weight": 700, "size": 14, "$description": "«Abrir el enlace bajo mi responsabilidad» (M13); el subrayado lo aplica el componente BotonEnlace" },
       "mensaje": { "family": "ui", "weight": 400, "size": 13, "lineHeight": 17, "$description": "Mensaje de WhatsApp en la burbuja de M03b" },
       "enlace-descarte": { "family": "ui", "weight": 500, "size": 14, "$description": "Enlace «No puedo asistir · eliminar alarma» de M04 (descarte, Archivo Medium)" },
-      "margen-sonara": { "family": "ui", "weight": 400, "size": 13, "lineHeight": 17.5, "$description": "Margen + trayecto y enlace «Editar» del bloque SONARÁ (M04)" }
+      "margen-sonara": { "family": "ui", "weight": 400, "size": 13, "lineHeight": 17.5, "$description": "Margen + trayecto y enlace «Editar» del bloque SONARÁ (M04)" },
+      "titulo-grafica-web": { "family": "ui", "weight": 600, "size": 14.5 },
+      "nota-web": { "family": "ui", "weight": 400, "size": 13 },
+      "valor-grafica": { "family": "datos", "weight": 700, "size": 12 },
+      "etiqueta-semana": { "family": "datos", "weight": 500, "size": 11 },
+      "titulo-afiche": { "family": "titulares", "weight": 700, "size": 10.5 },
+      "lema-afiche": { "family": "ui", "weight": 400, "size": 8.5 },
+      "marca-afiche": { "family": "ui", "weight": 700, "size": 9.5 },
+      "rotulo-afiche": { "family": "ui", "weight": 700, "size": 11 }
     }
   },
   "size": {
@@ -414,6 +430,18 @@
       "logo-acceso": 36, "logo-barra": 32, "avatar": 32, "icono-snackbar": 16, "icono-advertencia": 24,
       "icono-vineta": 16, "pildora-colapsada": 40, "perilla-switch": 18, "tarjeta-perfil": 561,
       "opacidad-deshabilitado": 0.45,
+      "campo-busqueda-w01": 240,
+      "campo-busqueda-w03": 260,
+      "campo-busqueda-alto": 40,
+      "icono-lupa": 16,
+      "paginador-pildora": 30,
+      "grafica-barra-alto-max": 96,
+      "afiche-miniatura": 132,
+      "afiche-qr": 72,
+      "checkbox": 20,
+      "icono-casilla": 12,
+      "enlace-tabla": [100, 20],
+      "qr-miniatura-lista": 40,
       "$description": "Medidas de los mockups web v1.5 medidas en Figma el 2026-09-21 (Plan 3)"
     },
     "chip-control": 32,
@@ -460,6 +488,7 @@
     "visor-bienvenida": 20,
     "marco-lectura": 10,
     "casilla": 4,
+    "casilla-web": 6,
     "snackbar": 12,
     "caja-icono": 12,
     "modulo": 2,
@@ -532,8 +561,8 @@
       "modal": 22,
       "entre-indicadores": 14,
       "tarjeta-acceso": 34, "tarjeta-acceso-gap": 20, "tarjeta": 22, "tarjeta-peligro": 20, "campo-horizontal": 14,
-      "snackbar": [10, 18], "snackbar-borde": 24, "item-barra-lateral": [9, 16], "segmentado": 3,
-      "escala": [2, 4, 8, 10, 12, 16]
+      "snackbar": [10, 18], "snackbar-borde": 24, "item-barra-lateral": [9, 16], "segmentado": 3, "estado-vacio": [16, 24],
+      "escala": [2, 4, 8, 10, 12, 16, 20]
     },
     "boton-web-padding": [
       13,
@@ -600,5 +629,5 @@
     },
     "qr-visor-opacity": 0.5
   },
-  "version": "1.12"
+  "version": "1.19"
 }
