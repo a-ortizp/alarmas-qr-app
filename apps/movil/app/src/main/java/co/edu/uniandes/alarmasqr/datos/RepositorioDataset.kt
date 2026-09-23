@@ -35,7 +35,13 @@ class RepositorioDataset(json: String) {
 
     fun alarma(id: String): Alarma? = _alarmas.value.firstOrNull { it.id == id }
 
-    fun evento(id: String): EventoQR? = dataset.eventosQR.firstOrNull { it.id == id }
+    private val _eventosQR = MutableStateFlow(dataset.eventosQR)
+    val eventosQR: StateFlow<List<EventoQR>> = _eventosQR.asStateFlow()
+
+    fun evento(id: String): EventoQR? = _eventosQR.value.firstOrNull { it.id == id }
+
+    /** F-M07: agrega el EventoQR de una alarma creada a mano (hoy `dataset.eventosQR` solo se lee). */
+    fun agregarEvento(evento: EventoQR) { _eventosQR.value = _eventosQR.value.filterNot { it.id == evento.id } + evento }
 
     fun agregar(alarma: Alarma) = mutar { lista -> (lista.filterNot { it.id == alarma.id } + alarma).ordenadas() }
 
@@ -78,6 +84,13 @@ class RepositorioDataset(json: String) {
         .replace("{evento}", alarma.titulo)
         .replace("{fecha}", FormatoHora.fechaCorta(alarma.eventoInicio))
         .replace("{hora}", FormatoHora.horaConSufijo(alarma.eventoInicio))
+
+    /** F-M09: aplica el cambio del organizador (M09 «Aceptar cambio») — no hace nada si la alarma no existe o no tiene `cambioDelOrganizador`. */
+    fun aplicarCambioOrganizador(id: String) {
+        val alarma = alarma(id) ?: return
+        val cambio = alarma.cambioDelOrganizador ?: return
+        agregar(alarma.copy(eventoInicio = cambio.nuevoInicio, suena = cambio.nuevaHoraDeAlarma))
+    }
 
     private fun mutar(cambio: (List<Alarma>) -> List<Alarma>) {
         anterior = _alarmas.value

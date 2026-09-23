@@ -84,4 +84,47 @@ class RepositorioDatasetTest {
             repo.mensajeEliminar(entrega),
         )
     }
+
+    @Test
+    fun `a-entrega ya trae cambioDelOrganizador y alSonar del dataset`() {
+        val repo = RepositorioDataset(json)
+        val entrega = repo.dataset.alarmas.first { it.id == "a-entrega" }
+        val cambio = entrega.cambioDelOrganizador!!
+        assertEquals("2026-08-30T17:30:00-05:00", cambio.nuevoInicio)
+        assertEquals("2026-08-30T16:45:00-05:00", cambio.nuevaHoraDeAlarma)
+        assertEquals("2026-08-30T15:15:00-05:00", cambio.antesSonaba)
+        assertEquals("MISO · UniAndes", cambio.autor)
+        val alSonar = entrega.alSonar!!
+        assertEquals(12, alSonar.salEnMin)
+        assertEquals("moderado", alSonar.traficoActual)
+        assertTrue(alSonar.rutaDisponible)
+        assertNull(repo.dataset.alarmas.first { it.id == "a-tutor" }.cambioDelOrganizador)
+    }
+
+    @Test
+    fun `aplicarCambioOrganizador actualiza eventoInicio y suena de la alarma`() {
+        val repo = RepositorioDataset(json)
+        repo.agregarDesdeEvento("e-entrega")
+        repo.aplicarCambioOrganizador("a-entrega")
+        val actualizada = repo.alarma("a-entrega")!!
+        assertEquals("2026-08-30T17:30:00-05:00", actualizada.eventoInicio)
+        assertEquals("2026-08-30T16:45:00-05:00", actualizada.suena)
+    }
+
+    @Test
+    fun `aplicarCambioOrganizador no hace nada si la alarma no existe o no tiene cambio`() {
+        val repo = RepositorioDataset(json)
+        repo.aplicarCambioOrganizador("a-no-existe")   // no lanza
+        val antes = repo.alarma("a-tutor")
+        repo.aplicarCambioOrganizador("a-tutor")        // sin cambioDelOrganizador: no hace nada
+        assertEquals(antes, repo.alarma("a-tutor"))
+    }
+
+    @Test
+    fun `agregarEvento agrega un EventoQR nuevo, evento lo encuentra`() {
+        val repo = RepositorioDataset(json)
+        assertNull(repo.evento("e-manual-1"))
+        repo.agregarEvento(EventoQR(id = "e-manual-1", alarmaId = "a-manual-1", titulo = "Prueba", codigoQR = "alarmasqr://evento/e-manual-1", escaneos = 0, etiqueta = "Aún sin escaneos · recién creado"))
+        assertEquals("Prueba", repo.evento("e-manual-1")?.titulo)
+    }
 }

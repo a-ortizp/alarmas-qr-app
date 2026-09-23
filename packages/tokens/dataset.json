@@ -1,7 +1,7 @@
 {
   "meta": {
     "name": "Alarmas QR · dataset único de los mockups",
-    "version": "1.2",
+    "version": "1.3",
     "date": "2026-09-19",
     "source": "Mockups Figma v1.6 (móvil) y web v1.5; MOCKUPS.md §3c y §7",
     "hoy": "2026-08-27",
@@ -11,7 +11,8 @@
       "Fechas en agosto de 2026: HOY es jueves 27; la entrega es el domingo 30 y el asado el lunes 31.",
       "Las horas se muestran en formato 12 h con am/pm en Spline Sans Mono.",
       "escaneosPorSemana es un dato ilustrativo de los mockups (suma 128, igual al indicador).",
-      "Los textos de los diálogos de confirmación (v1.1) llevan marcadores {evento}, {fecha} y {hora} que la app rellena con la alarma tocada."
+      "Los textos de los diálogos de confirmación (v1.1) llevan marcadores {evento}, {fecha} y {hora} que la app rellena con la alarma tocada.",
+      "v1.3 (2026-09-23): mensajes.enlaceCopiado para «Copiar enlace» de M08 (Plan 4, móvil de la Persona B). cambioDelOrganizador y alSonar de a-entrega ya estaban desde v1.1/v1.2, sin usar hasta este plan."
     ]
   },
   "usuario": {
@@ -481,6 +482,7 @@
     "deshacer": "Deshacer · 5 s",
     "perfilActualizado": "Perfil actualizado",
     "descargaCompletada": "Descarga completada exitosamente",
+    "enlaceCopiado": "Enlace copiado al portapapeles",
     "cuentaEliminada": "Cuenta eliminada exitosamente",
     "camaraActiva": "Cámara activa",
     "sinAlarmas": "Aún no tienes alarmas",
