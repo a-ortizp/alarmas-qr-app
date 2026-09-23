@@ -49,6 +49,7 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m06.M06EditarAlarmaViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m07.M07CrearEventoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m08.M08CompartirQRScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m09.M09CambioEventoScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m10.M10AlarmaSonandoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
@@ -267,6 +268,23 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
                 alMantener = { pila.reemplazarTodo(Pantalla.M02) },
                 alCerrar = { pila.reemplazarTodo(Pantalla.M02) },
                 alVerAlarma = { pila.reemplazarCima(Pantalla.M06(clave.id)) },
+            )
+        }
+    }
+    entry<Pantalla.M10> { clave ->
+        val context = LocalContext.current
+        val alarma = repositorio.alarma(clave.id)
+        if (alarma == null) {
+            LaunchedEffect(clave) { pila.reemplazarTodo(Pantalla.M02) }
+        } else {
+            val verRuta: (() -> Unit)? = if (alarma.alSonar?.rutaDisponible == true && alarma.lugar != null) {
+                { runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=" + Uri.encode(alarma.lugar)))) } }
+            } else null
+            M10AlarmaSonandoScreen(
+                alarma = alarma,
+                alYaVoy = { pila.reemplazarTodo(Pantalla.M02) },
+                alPosponer = { pila.reemplazarTodo(Pantalla.M02) },
+                alVerRuta = verRuta,
             )
         }
     }
