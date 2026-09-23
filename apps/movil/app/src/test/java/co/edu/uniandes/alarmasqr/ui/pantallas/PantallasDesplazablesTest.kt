@@ -1,21 +1,27 @@
 package co.edu.uniandes.alarmasqr.ui.pantallas
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performScrollTo
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.edu.uniandes.alarmasqr.datos.QRInvalido
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
 import co.edu.uniandes.alarmasqr.ui.pantallas.m00.M00aRegistroScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m00.M00bEntrarScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m01.M01BienvenidaScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02bCalendarioScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02bCalendarioViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02hAgregarEventoSheet
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02vEstadoVacio
 import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03bPantallazoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m04.EstadoAlarmaCreada
 import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaSheet
+import co.edu.uniandes.alarmasqr.ui.pantallas.m11.M11AjustesScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m11.M11AjustesViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.AlarmasQRTheme
@@ -103,5 +109,30 @@ class PantallasDesplazablesTest {
             M04AlarmaCreadaSheet(estado, repo.dataset.mensajes, alListo = {}, alEditar = {}, alAbrirDialogo = {}, alConservar = {}, alEliminar = {})
         }
         alcanzarTexto("No puedo asistir")
+    }
+
+    @Test
+    fun `M02b alcanza la ultima alarma del dia seleccionado en un telefono bajo`() {
+        val vm = M02bCalendarioViewModel(repo)
+        regla.setContent {
+            val estado by vm.estado.collectAsStateWithLifecycle()
+            AlarmasQRTheme { M02bCalendarioScreen(estado, alSeleccionarDia = vm::seleccionarDia, alTocarAlarma = {}, alCambiarActiva = vm::cambiarActiva) }
+        }
+        alcanzarEtiqueta("alarma-a-tutor")
+    }
+
+    @Test
+    fun `M11 alcanza la fila Cerrar sesion en un telefono bajo`() {
+        val vm = M11AjustesViewModel(repo)
+        regla.setContent {
+            val estado by vm.estado.collectAsStateWithLifecycle()
+            AlarmasQRTheme {
+                M11AjustesScreen(
+                    estado = estado, mensajes = repo.dataset.mensajes,
+                    alCambiarNoMolestar = {}, alCambiarConfirmarAutoAjustar = {}, alAbrirDialogo = {}, alConservar = {}, alCerrarSesion = {},
+                )
+            }
+        }
+        alcanzarEtiqueta("cerrar-sesion")
     }
 }
