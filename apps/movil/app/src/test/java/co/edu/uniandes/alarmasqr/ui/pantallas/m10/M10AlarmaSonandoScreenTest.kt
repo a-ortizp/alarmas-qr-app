@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
 import co.edu.uniandes.alarmasqr.ui.QUALIFIERS_MOVIL
+import co.edu.uniandes.alarmasqr.ui.capturar
 import co.edu.uniandes.alarmasqr.ui.theme.AlarmasQRTheme
 import org.junit.Rule
 import org.junit.Test
@@ -32,6 +33,7 @@ class M10AlarmaSonandoScreenTest {
         }
         regla.onNodeWithTag("pantalla-M10").assertIsDisplayed()
         regla.onNodeWithText("Sal en 12 min · tráfico moderado", substring = true).assertIsDisplayed()
+        regla.capturar("M10")
         regla.onNodeWithText("Ver ruta ›").performClick(); assert(ruta)
         regla.onNodeWithTag("ya-voy").performClick(); assert(yaVoy)
     }

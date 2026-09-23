@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
 import co.edu.uniandes.alarmasqr.ui.QUALIFIERS_MOVIL
+import co.edu.uniandes.alarmasqr.ui.capturar
 import co.edu.uniandes.alarmasqr.ui.theme.AlarmasQRTheme
 import org.junit.Rule
 import org.junit.Test
@@ -33,6 +34,7 @@ class M09CambioEventoScreenTest {
         regla.onNodeWithTag("pantalla-M09").assertIsDisplayed()
         regla.onNodeWithText("4:45 pm").assertIsDisplayed()
         regla.onNodeWithText("Antes sonaba 3:15 pm").assertIsDisplayed()
+        regla.capturar("M09")
         regla.onNodeWithTag("aceptar").performClick(); assert(aceptado)
         regla.onNodeWithTag("mantener").performClick(); assert(mantenido)
         regla.onNodeWithTag("cerrar").performClick(); assert(cerrado)

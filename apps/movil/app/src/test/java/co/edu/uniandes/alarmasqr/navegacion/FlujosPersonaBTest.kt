@@ -1,15 +1,19 @@
 package co.edu.uniandes.alarmasqr.navegacion
 
+import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performSemanticsAction
+import androidx.compose.ui.test.performTextInput
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.test.core.app.ApplicationProvider
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
 import co.edu.uniandes.alarmasqr.ui.QUALIFIERS_MOVIL
+import co.edu.uniandes.alarmasqr.ui.capturar
 import co.edu.uniandes.alarmasqr.ui.theme.AlarmasQRTheme
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -66,5 +70,26 @@ class FlujosPersonaBTest {
         regla.waitForIdle()
         regla.onNodeWithTag("pantalla-M02").assertIsDisplayed()
         assertEquals("2026-08-30T17:30:00-05:00", repositorio.alarma("a-entrega")?.eventoInicio)
+    }
+
+    @Test
+    fun `T3 crear evento propio y compartir M02 - M02h - M07 - M08`() {
+        // M07 y M08 solo se alcanzan por flujo (la hoja M02h las abre con reemplazarCima): no tienen entrada
+        // propia fuera de la navegación real, así que su captura de verificación pixel-perfect vive aquí.
+        montar(Pantalla.M02)
+        regla.onNodeWithTag("fab-escanear").performSemanticsAction(SemanticsActions.OnLongClick)
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M02h").assertIsDisplayed()
+        regla.onNodeWithTag("hoja-a-mano").performClick()
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M07").assertIsDisplayed()
+        regla.capturar("M07")
+        regla.onNodeWithTag("titulo").performTextInput("Asado familiar")
+        regla.onNodeWithTag("lugar").performTextInput("Casa de mis papás")
+        regla.onNodeWithTag("guardar").performClick()
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M08").assertIsDisplayed()
+        regla.onNodeWithText("Asado familiar").assertIsDisplayed()
+        regla.capturar("M08")
     }
 }

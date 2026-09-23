@@ -8,6 +8,8 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
+import co.edu.uniandes.alarmasqr.ui.QUALIFIERS_MOVIL
+import co.edu.uniandes.alarmasqr.ui.capturar
 import co.edu.uniandes.alarmasqr.ui.theme.AlarmasQRTheme
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -20,7 +22,7 @@ import org.robolectric.annotation.GraphicsMode
 import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [35])
+@Config(sdk = [35], qualifiers = QUALIFIERS_MOVIL)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class M06EditarAlarmaScreenTest {
     @get:Rule val regla = createComposeRule()
@@ -47,6 +49,7 @@ class M06EditarAlarmaScreenTest {
         montar("a-tutor")
         regla.onNodeWithTag("pantalla-M06").assertIsDisplayed()
         regla.onNodeWithText("Reunión con el tutor").assertIsDisplayed()
+        regla.capturar("M06")
         regla.onNodeWithText("1 h").performClick()
         regla.onNodeWithTag("guardar").performClick()
         assertEquals(60, repo.alarma("a-tutor")?.anticipacionMin)
@@ -57,6 +60,7 @@ class M06EditarAlarmaScreenTest {
         montar("a-gimnasio")
         regla.onNodeWithTag("eliminar").performClick()
         regla.onNodeWithText("¿Eliminar alarma?").assertIsDisplayed()
+        regla.capturar("M06d")
         regla.onNodeWithTag("dialogo-confirmar").performClick()
         assertNull(repo.alarma("a-gimnasio"))
     }

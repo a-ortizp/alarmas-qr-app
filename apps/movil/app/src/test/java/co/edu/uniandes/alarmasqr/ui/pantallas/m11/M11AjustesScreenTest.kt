@@ -11,6 +11,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
 import co.edu.uniandes.alarmasqr.ui.QUALIFIERS_MOVIL
+import co.edu.uniandes.alarmasqr.ui.capturar
 import co.edu.uniandes.alarmasqr.ui.theme.AlarmasQRTheme
 import org.junit.Rule
 import org.junit.Test
@@ -48,7 +49,9 @@ class M11AjustesScreenTest {
         regla.onNodeWithTag("pantalla-M11").assertIsDisplayed()
         regla.onAllNodesWithText("Concedido").onFirst().assertIsDisplayed()   // alarmasExactas y notificaciones: true en dataset.json
         regla.onNodeWithText("Falta").assertIsDisplayed()       // bateriaSinRestricciones: false
+        regla.capturar("M11")
         regla.onNodeWithTag("cerrar-sesion").performClick()
         regla.onNodeWithText("¿Cerrar sesión?").assertIsDisplayed()
+        regla.capturar("M11d")
     }
 }

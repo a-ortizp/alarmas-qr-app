@@ -8,6 +8,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
+import co.edu.uniandes.alarmasqr.ui.QUALIFIERS_MOVIL
+import co.edu.uniandes.alarmasqr.ui.capturar
 import co.edu.uniandes.alarmasqr.ui.theme.AlarmasQRTheme
 import org.junit.Rule
 import org.junit.Test
@@ -18,7 +20,7 @@ import org.robolectric.annotation.GraphicsMode
 import java.io.File
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [35])
+@Config(sdk = [35], qualifiers = QUALIFIERS_MOVIL)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class M02bCalendarioScreenTest {
     @get:Rule val regla = createComposeRule()
@@ -33,6 +35,7 @@ class M02bCalendarioScreenTest {
         }
         regla.onNodeWithTag("pantalla-M02b").assertIsDisplayed()
         regla.onNodeWithText("Reunión con el tutor").assertIsDisplayed()   // 2026-08-27, día precargado de dataset.calendario.diaSeleccionado
+        regla.capturar("M02b")
     }
 
     @Test
