@@ -32,6 +32,8 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m00.M00bEntrarScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m01.M01BienvenidaScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02InicioScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02InicioViewModel
+import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02bCalendarioScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02bCalendarioViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02hAgregarEventoSheet
 import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02vEstadoVacio
 import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03EscanerScreen
@@ -88,6 +90,11 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             alElegirPantallazo = { pila.reemplazarCima(Pantalla.M03b) },
             alCrearAMano = { pila.reemplazarCima(Pantalla.M07) },
         )
+    }
+    entry<Pantalla.M02b> {
+        val vm = viewModel { M02bCalendarioViewModel(repositorio) }
+        val estado by vm.estado.collectAsStateWithLifecycle()
+        M02bCalendarioScreen(estado, alSeleccionarDia = vm::seleccionarDia, alTocarAlarma = { pila.irA(Pantalla.M06(it)) }, alCambiarActiva = vm::cambiarActiva)
     }
     entry<Pantalla.M12> {
         val abrirAjustes = rememberSolicitudPermisoCamara(alTerminar = { pila.reemplazarCima(Pantalla.M03) })
