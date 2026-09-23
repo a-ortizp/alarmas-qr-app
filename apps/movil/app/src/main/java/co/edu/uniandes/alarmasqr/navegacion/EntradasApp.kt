@@ -43,6 +43,7 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaSheet
 import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m06.M06EditarAlarmaScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m06.M06EditarAlarmaViewModel
+import co.edu.uniandes.alarmasqr.ui.pantallas.m07.M07CrearEventoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
@@ -212,6 +213,17 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
                 alEliminar = { vm.eliminar(); pila.reemplazarTodo(Pantalla.M02) },
             )
         }
+    }
+    entry<Pantalla.M07> {
+        M07CrearEventoScreen(
+            alVolver = { pila.removeLastOrNull() },
+            alGuardar = { titulo, lugar, descripcion, anticipacionMin ->
+                val eventoInicio = "${repositorio.hoy.plusDays(1)}T10:00:00-05:00"
+                val alarma = repositorio.crearAlarmaManual(titulo, eventoInicio, lugar, descripcion, anticipacionMin)
+                val eventoId = "e-" + alarma.id.removePrefix("a-")
+                pila.reemplazarCima(Pantalla.M08(eventoId))
+            },
+        )
     }
     entry<Pantalla.M13> {
         val context = LocalContext.current

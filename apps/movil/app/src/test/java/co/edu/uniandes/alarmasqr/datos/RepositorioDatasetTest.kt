@@ -127,4 +127,16 @@ class RepositorioDatasetTest {
         repo.agregarEvento(EventoQR(id = "e-manual-1", alarmaId = "a-manual-1", titulo = "Prueba", codigoQR = "alarmasqr://evento/e-manual-1", escaneos = 0, etiqueta = "Aún sin escaneos · recién creado"))
         assertEquals("Prueba", repo.evento("e-manual-1")?.titulo)
     }
+
+    @Test
+    fun `crearAlarmaManual agrega la alarma y su EventoQR, origen creada-por-mi`() {
+        val repo = RepositorioDataset(json)
+        val alarma = repo.crearAlarmaManual("Cena de fin de año", "2026-08-28T19:00:00-05:00", "Casa de Andrés", null, 30)
+        assertEquals("creada-por-mi", alarma.origen)
+        assertEquals(listOf("Creada por mí"), alarma.chips)
+        assertEquals("2026-08-28T18:30:00-05:00", alarma.suena)
+        assertEquals(alarma.id, repo.alarma(alarma.id)?.id)
+        val evento = repo.dataset.eventosQR.let { repo.evento("e-" + alarma.id.removePrefix("a-")) }
+        assertEquals("Aún sin escaneos · recién creado", evento?.etiqueta)
+    }
 }

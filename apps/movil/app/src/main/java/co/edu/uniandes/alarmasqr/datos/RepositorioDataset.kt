@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Único origen de datos simulados de la app (docs/PLAN_MAQUETACION.md §5). Se carga una vez desde assets/dataset.json
@@ -44,6 +45,23 @@ class RepositorioDataset(json: String) {
     fun agregarEvento(evento: EventoQR) { _eventosQR.value = _eventosQR.value.filterNot { it.id == evento.id } + evento }
 
     fun agregar(alarma: Alarma) = mutar { lista -> (lista.filterNot { it.id == alarma.id } + alarma).ordenadas() }
+
+    /** F-M07: alarma creada a mano + su EventoQR, id por marca de tiempo (única por sesión; no persiste entre reinicios). */
+    fun crearAlarmaManual(titulo: String, eventoInicio: String, lugar: String?, detalle: String?, anticipacionMin: Int): Alarma {
+        val id = "a-manual-" + System.currentTimeMillis()
+        // OffsetDateTime.toString() omite los segundos cuando son :00 (p. ej. "18:30-05:00"); el resto del dataset
+        // siempre trae segundos ("18:30:00-05:00"), así que se formatea explícito para no romper ese formato.
+        val suena = OffsetDateTime.parse(eventoInicio).minusMinutes(anticipacionMin.toLong()).format(formatoIsoConSegundos)
+        val alarma = Alarma(
+            id = id, titulo = titulo, eventoInicio = eventoInicio, suena = suena, lugar = lugar,
+            origen = "creada-por-mi", estado = "activa", anticipacionMin = anticipacionMin, trayectoMin = 0,
+            chips = listOf("Creada por mí"), detalle = detalle,
+        )
+        agregar(alarma)
+        val eventoId = "e-" + id.removePrefix("a-")
+        agregarEvento(EventoQR(id = eventoId, alarmaId = id, titulo = titulo, codigoQR = "alarmasqr://evento/$eventoId", escaneos = 0, etiqueta = "Aún sin escaneos · recién creado"))
+        return alarma
+    }
 
     /**
      * Crea la alarma del evento leído (M03 → M04): toma la alarma del dataset que apunta el evento, la marca
@@ -109,6 +127,7 @@ class RepositorioDataset(json: String) {
 
     companion object {
         private val formato = Json { ignoreUnknownKeys = true }
+        private val formatoIsoConSegundos = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssxxx")
 
         @Volatile private var instancia: RepositorioDataset? = null
 
