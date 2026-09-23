@@ -110,6 +110,8 @@ data class EventoQR(
 data class Mensajes(
     val alarmaGuardada: String,
     val deshacer: String,
+    val descargaCompletada: String,
+    val enlaceCopiado: String,
     val camaraActiva: String,
     val sinAlarmas: String,
     val sinAlarmasDetalle: String,

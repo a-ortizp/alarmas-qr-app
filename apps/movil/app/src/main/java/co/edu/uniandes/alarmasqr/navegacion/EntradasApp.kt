@@ -1,5 +1,7 @@
 package co.edu.uniandes.alarmasqr.navegacion
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -14,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
@@ -44,9 +47,11 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m06.M06EditarAlarmaScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m06.M06EditarAlarmaViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m07.M07CrearEventoScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m08.M08CompartirQRScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m13.M13QRInvalidoScreen
 import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 
 /**
@@ -224,6 +229,31 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
                 pila.reemplazarCima(Pantalla.M08(eventoId))
             },
         )
+    }
+    entry<Pantalla.M08> { clave ->
+        val evento = repositorio.evento(clave.id)
+        if (evento == null) {
+            LaunchedEffect(clave) { pila.removeLastOrNull() }
+        } else {
+            val context = LocalContext.current
+            val snackbar = LocalSnackbarApp.current
+            val mensajes = repositorio.dataset.mensajes
+            val alcance = rememberCoroutineScope()
+            M08CompartirQRScreen(
+                evento = evento,
+                alVolver = { pila.removeLastOrNull() },
+                alCompartir = {
+                    val intent = Intent(Intent.ACTION_SEND).apply { type = "text/plain"; putExtra(Intent.EXTRA_TEXT, evento.codigoQR) }
+                    context.startActivity(Intent.createChooser(intent, "Compartir QR"))
+                },
+                alDescargar = { alcance.launch { snackbar.showSnackbar(mensajes.descargaCompletada) } },
+                alCopiarEnlace = {
+                    val portapapeles = context.getSystemService(ClipboardManager::class.java)
+                    portapapeles.setPrimaryClip(ClipData.newPlainText("Enlace del QR", evento.codigoQR))
+                    alcance.launch { snackbar.showSnackbar(mensajes.enlaceCopiado) }
+                },
+            )
+        }
     }
     entry<Pantalla.M13> {
         val context = LocalContext.current
