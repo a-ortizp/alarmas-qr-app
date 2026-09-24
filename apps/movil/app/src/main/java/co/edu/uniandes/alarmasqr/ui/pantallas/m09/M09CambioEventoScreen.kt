@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import co.edu.uniandes.alarmasqr.datos.Alarma
 import co.edu.uniandes.alarmasqr.datos.CambioDelOrganizador
 import co.edu.uniandes.alarmasqr.datos.FormatoHora
+import co.edu.uniandes.alarmasqr.ui.componentes.BandaTextura
 import co.edu.uniandes.alarmasqr.ui.componentes.BarraSuperior
 import co.edu.uniandes.alarmasqr.ui.componentes.BotonPrimario
 import co.edu.uniandes.alarmasqr.ui.componentes.BotonSecundario
@@ -37,6 +38,7 @@ import co.edu.uniandes.alarmasqr.ui.componentes.VarianteChip
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
 import co.edu.uniandes.alarmasqr.ui.theme.Espacio
 import co.edu.uniandes.alarmasqr.ui.theme.Medidas
+import co.edu.uniandes.alarmasqr.ui.theme.Movimiento
 import co.edu.uniandes.alarmasqr.ui.theme.Radios
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
 import co.edu.uniandes.alarmasqr.ui.theme.Trazos
@@ -51,25 +53,28 @@ fun M09CambioEventoScreen(alarma: Alarma, alAceptar: () -> Unit, alMantener: () 
     val cambio = requireNotNull(alarma.cambioDelOrganizador) { "M09 requiere una alarma con cambioDelOrganizador" }
     Column(modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M09")) {
         BarraSuperior("Cambio en tu evento", accion = { BotonCerrar(onClick = alCerrar) })
-        ColumnaDesplazable(
-            Modifier.fillMaxSize(),
-            relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
-            verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
-        ) {
-            ChipEstado("Notificación push · hace 2 min", VarianteChip.Notificacion)
-            Text(
-                "“${alarma.titulo}” cambió de hora", style = Tipografia.H1, color = Colores.Tinta,
-                modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = alVerAlarma).testTag("ver-alarma"),
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapDivisor), verticalAlignment = Alignment.CenterVertically) {
-                Text("Cambio hecho por ${cambio.autor}", style = Tipografia.Etiqueta, color = Colores.GrisTexto)
-                ChipEstado("✓ verificado", VarianteChip.Escaneada)
+        Box(Modifier.fillMaxSize()) {
+            BandaTextura(Modifier.align(Alignment.TopCenter), opacidad = Movimiento.TexturaAtenuada)
+            ColumnaDesplazable(
+                Modifier.fillMaxSize(),
+                relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
+                verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
+            ) {
+                ChipEstado("Notificación push · hace 2 min", VarianteChip.Notificacion)
+                Text(
+                    "“${alarma.titulo}” cambió de hora", style = Tipografia.H2, color = Colores.Tinta,
+                    modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = alVerAlarma).testTag("ver-alarma"),
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapDivisor), verticalAlignment = Alignment.CenterVertically) {
+                    Text("Cambio hecho por ${cambio.autor}", style = Tipografia.Etiqueta, color = Colores.GrisTexto)
+                    ChipEstado("✓ verificado", VarianteChip.Escaneada)
+                }
+                TarjetaAntesAhora(alarma, cambio)
+                TarjetaSonara(alarma, cambio)
+                Spacer(Modifier.height(Espacio.EntreBloques))
+                BotonPrimario("Aceptar cambio", onClick = alAceptar, modifier = Modifier.testTag("aceptar"))
+                BotonSecundario("Mantener alarma", onClick = alMantener, modifier = Modifier.testTag("mantener"))
             }
-            TarjetaAntesAhora(alarma, cambio)
-            TarjetaSonara(alarma, cambio)
-            Spacer(Modifier.height(Espacio.EntreBloques))
-            BotonPrimario("Aceptar cambio", onClick = alAceptar, modifier = Modifier.testTag("aceptar"))
-            BotonSecundario("Mantener alarma", onClick = alMantener, modifier = Modifier.testTag("mantener"))
         }
     }
 }
