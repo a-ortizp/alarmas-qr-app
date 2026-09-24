@@ -247,7 +247,7 @@ Lecciones: `frame.clone()` de un marco con punto de inicio duplica el punto de i
 Construir las pantallas contra los marcos sacó a la luz detalles que los mockups deberían corregir. Ninguno
 cambia una decisión de diseño: son el marco y el código diciéndose cosas distintas. Están ordenados por archivo.
 
-### 9.1 · Mockups móviles (`4nHD4ygcnP33UH0gAhaii5`, página `02 · Móvil`)
+### 9.1 · Mockups móviles (`4nHD4ygcnP33UH0gAhaii5`, página `02 · Móvil`) — **aplicados el 2026-09-24**
 
 | # | Marco | Qué corregir | Por qué |
 |---|---|---|---|
@@ -265,12 +265,23 @@ cambia una decisión de diseño: son el marco y el código diciéndose cosas dis
 | 7 | Switches de W06 `4072:233` | El estado apagado se dibuja en Gris Borde | Un apagado en gris se lee como deshabilitado; el sistema lo pide en contorno Tinta 1.5 (DS v1.13) |
 | 8 | Marca de la barra lateral | El logotipo va en amarillo, junto al botón primario amarillo de la misma pantalla | Regla del sistema: un solo elemento amarillo por pantalla. Si la marca se queda amarilla, es una excepción que hay que documentar en §6 |
 
-Los nodos exactos, ya localizados en el archivo: M04 hora `4016:2885`, M09 hora `4016:2888`, M03 «vibra…» `4:180`
-(hoy `#B9B7BF`), M05 chip «Nueva» `4:242` (falta el segundo chip), M03b capas `4020:3449` y `4020:3453`.
+**Los cuatro ajustes móviles quedaron aplicados el 2026-09-24**, con estos nodos:
 
-**Estado: pendientes de aplicar.** La sesión que los documentó (2026-09-24) tiene el archivo en **modo solo lectura**
-(asiento *View* en el equipo MISO-UX), así que se anotaron en vez de aplicarse. Los números 5 a 8 tocan además
-páginas construidas por mmatallanar-ua, que se acuerdan con él antes de cambiarlas.
+- **1 · sufijo am/pm** — `4016:2885` (M04) y `4016:2888` (M09) pasan de un solo tramo Bold 52 a tres: número Bold 52,
+  espacio Medium 24 y sufijo **Medium 28**, exactamente el tratamiento que la hora heroica de M10 (`6:7`) ya tenía.
+  Nota: en la app el sufijo va al mismo peso que el número, no en Medium, porque a ese tamaño Android necesita el
+  peso sintetizado para igualar el trazo del marco (ver el Design System v1.12); es la misma diferencia de
+  renderizado que explica el 900 de los tokens, no un cambio de diseño.
+- **2 · gris de M03** — `4:180` pasa de `#B9B7BF` suelto a **Gris Borde `#DAD8D2`**.
+- **3 · chips de M05** — la columna de la tarjeta recién guardada (`4:238`) gana una fila de auto-layout `chips`
+  (`4510:1465`, gap 6) con el chip «Nueva» que ya existía (`4:241`) y un clon del «✓ Escaneada» de la tarjeta de
+  «Reunión semillero» (`4510:1466`). La tarjeta mide igual que antes: 165 de los 177 disponibles.
+- **4 · nombres de capa de M03b** — `4020:3449` y `4020:3453` se renombran con su contenido real.
+
+**Los números 5 a 8 (web) siguen pendientes:** tocan páginas construidas por mmatallanar-ua y se acuerdan con él
+antes de cambiarlas.
+
+`Mockups_Figma_Movil.pdf` queda pendiente de reexportar (páginas de M03, M03b, M04, M05 y M09).
 
 **No hay nada que corregir sobre el peso de las horas grandes:** la familia «Spline Sans Mono» publicada en el
 archivo no tiene estilo Black, y el 900 del Design System v1.12 es un valor de implementación para que Android
