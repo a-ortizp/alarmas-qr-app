@@ -2,8 +2,8 @@
   "$schema": "https://design-tokens.github.io/community-group/format/",
   "meta": {
     "name": "Alarmas QR · Energía puntual",
-    "version": "1.19",
-    "date": "2026-09-21",
+    "version": "1.20",
+    "date": "2026-09-24",
     "source": "DESIGN_SYSTEM.md v1.10 · STYLE_TILE.md v1.2 · MOCKUPS.md (móvil v1.7, web v1.5)",
     "figma": "https://www.figma.com/design/lHYLJJIbltBS5Joo850iks",
     "notes": [
@@ -22,7 +22,8 @@
       "v1.16 (2026-09-22): la gráfica de barras se reconstruye en HTML/CSS en vez de un SVG con viewBox escalado: forzar el ancho a llenar la tarjeta con preserveAspectRatio=\"none\" también deformaba el texto (los ejes x/y ya no compartían escala). Las columnas ahora son flex:1 con la barra topada en --size-grafica-barra-alto-max (96) vía altura en línea, sin depender de ningún viewBox.",
       "v1.17 (2026-09-22): título «Exportar reporte consolidado» (W04) no comparte tamaño con «Reportes generados», que en realidad es Archivo 15 (text.titulo-tarjeta, no titulo-tarjeta-web).",
       "v1.18 (2026-09-22): revierte el tamaño 21 de v1.17 para «Exportar reporte consolidado» — comparación visual directa contra la referencia mostró que se veía demasiado grande — y reutiliza text.titulo-modal-web (Bricolage Bold 18, el mismo del modal «Eliminar cuenta») en vez de mantener un token nuevo de un solo uso.",
-      "v1.19 (2026-09-22): 18 quedó corto para «Exportar reporte consolidado»; text.titulo-tarjeta-formulario-web (Bricolage Bold 20) en vez de seguir reutilizando titulo-modal-web."
+      "v1.19 (2026-09-22): 18 quedó corto para «Exportar reporte consolidado»; text.titulo-tarjeta-formulario-web (Bricolage Bold 20) en vez de seguir reutilizando titulo-modal-web.",
+      "v1.20 (2026-09-24): hora-protagonista y hora-sonara (con el sufijo am/pm de la hora heroica) pasan de 700 a 900. «Datos» es una fuente variable y el eje wght de su instancia Bold se ve más delgado de lo esperado a 52 y 96; al pedir un peso que la familia no tiene, Android sintetiza trazo extra sobre el Bold real en vez de solo escogerlo, que es lo que el mockup muestra en M09/M10 (revisión de tutores del 2026-09-24). La hora en tarjeta (26) y el am/pm de la tarjeta (12) siguen en 700 y 500: a ese tamaño el Bold real sí coincide. Pendiente de replicar en el repo de UX."
     ]
   },
   "color": {
@@ -153,17 +154,17 @@
     "scale": {
       "hora-protagonista": {
         "family": "datos",
-        "weight": 700,
+        "weight": 900,
         "size": 96,
         "tabular": true,
-        "$description": "M10 alarma sonando; sufijo pm 28, dígitos tabulares"
+        "$description": "M10 alarma sonando; sufijo pm 28 al mismo peso, dígitos tabulares (v1.20: 900, antes 700)"
       },
       "hora-sonara": {
         "family": "datos",
-        "weight": 700,
+        "weight": 900,
         "size": 52,
         "tabular": true,
-        "$description": "Bloques «Sonará» M04 / M09; etiqueta 12 encima, dígitos tabulares"
+        "$description": "Bloques «Sonará» M04 / M09; etiqueta 12 encima, dígitos tabulares (v1.20: 900, antes 700)"
       },
       "hora-tarjeta": {
         "family": "datos",
@@ -629,5 +630,5 @@
     },
     "qr-visor-opacity": 0.5
   },
-  "version": "1.19"
+  "version": "1.20"
 }
