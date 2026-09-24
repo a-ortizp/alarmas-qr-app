@@ -50,6 +50,9 @@ fun M07CrearEventoScreen(
     var lugar by rememberSaveable { mutableStateOf("") }
     var descripcion by rememberSaveable { mutableStateOf("") }
     var anticipacionMin by rememberSaveable { mutableStateOf(30) }
+    // Validación inline de UF-M07.1: el título es el único campo obligatorio. El error aparece al intentar guardar
+    // (no mientras se escribe, que sería regañar antes de tiempo) y se apaga en cuanto el campo deja de estar vacío.
+    var faltaTitulo by rememberSaveable { mutableStateOf(false) }
 
     Column(modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M07")) {
         BarraSuperior("Nuevo evento", alVolver = alVolver)
@@ -58,10 +61,19 @@ fun M07CrearEventoScreen(
             relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
             verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
         ) {
-            CampoTexto(titulo, { titulo = it }, etiqueta = "Título", modifier = Modifier.testTag("titulo"))
+            Column(verticalArrangement = Arrangement.spacedBy(Espacio.GapCampo)) {
+                CampoTexto(
+                    titulo,
+                    { titulo = it; if (it.isNotBlank()) faltaTitulo = false },
+                    etiqueta = "Título", error = faltaTitulo, modifier = Modifier.testTag("titulo"),
+                )
+                if (faltaTitulo) {
+                    Text("Escribe un título para el evento.", style = Tipografia.Etiqueta, color = Colores.CoralTexto, modifier = Modifier.testTag("error-titulo"))
+                }
+            }
             Row(horizontalArrangement = Arrangement.spacedBy(Espacio.Medianil)) {
                 CampoTexto("Mañana", {}, etiqueta = "Fecha", modifier = Modifier.weight(1f).testTag("fecha"))
-                CampoTexto("10:00 am", {}, etiqueta = "Hora", modifier = Modifier.weight(1f).testTag("hora"))
+                CampoTexto("10:00 am", {}, etiqueta = "Hora", estiloValor = Tipografia.ValorCampoHora, modifier = Modifier.weight(1f).testTag("hora"))
             }
             CampoTexto(lugar, { lugar = it }, etiqueta = "Lugar (opcional)", modifier = Modifier.testTag("lugar"))
             CampoTexto(descripcion, { descripcion = it }, etiqueta = "Descripción (opcional)", lineas = 3, modifier = Modifier.testTag("descripcion"))
@@ -74,7 +86,10 @@ fun M07CrearEventoScreen(
             Spacer(Modifier.weight(1f))
             BotonPrimario(
                 "Guardar y crear QR",
-                onClick = { alGuardar(titulo, lugar.ifBlank { null }, descripcion.ifBlank { null }, anticipacionMin) },
+                onClick = {
+                    if (titulo.isBlank()) faltaTitulo = true
+                    else alGuardar(titulo, lugar.ifBlank { null }, descripcion.ifBlank { null }, anticipacionMin)
+                },
                 modifier = Modifier.testTag("guardar"),
             )
         }

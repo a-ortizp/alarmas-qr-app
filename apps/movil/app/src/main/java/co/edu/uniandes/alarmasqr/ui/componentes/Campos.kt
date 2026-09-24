@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -38,16 +39,21 @@ import co.edu.uniandes.alarmasqr.ui.theme.Trazos
  * DS comp. 06 «Campo de texto» (v1.1): etiqueta dentro del contorno en Archivo SemiBold 12 Gris Texto y mayúsculas,
  * valor Archivo 15, altura 48, radio 12, borde 1.5 Gris Borde; con foco borde 2 Tinta (mockup M00b). La pista de
  * formato («tucorreo@ejemplo.com») se muestra en Gris Medio cuando el valor está vacío.
+ *
+ * [estiloValor] cambia la tipografía del valor (M07 escribe la hora en «Datos» con dígitos tabulares) y [error]
+ * dibuja el estado de error del componente: borde 2 en Coral Texto. El mensaje de la validación lo pone quien
+ * llama, debajo del campo, para no cambiar el alto del control.
  */
 @Composable
 fun CampoTexto(
     valor: String, alCambiar: (String) -> Unit, etiqueta: String, modifier: Modifier = Modifier,
     pista: String = "", contrasena: Boolean = false, lineas: Int = 1,
+    estiloValor: TextStyle = Tipografia.ValorCampo, error: Boolean = false,
 ) {
     val interaccion = remember { MutableInteractionSource() }
     val enfocado by interaccion.collectIsFocusedAsState()
-    val borde = if (enfocado) Trazos.Foco else Trazos.Borde
-    val colorBorde = if (enfocado) Colores.Tinta else Colores.GrisBorde
+    val borde = if (enfocado || error) Trazos.Foco else Trazos.Borde
+    val colorBorde = when { error -> Colores.CoralTexto; enfocado -> Colores.Tinta; else -> Colores.GrisBorde }
     val alto = if (lineas <= 1) Tamanos.Campo else Tamanos.Campo + Espacio.LineaCampoExtra * (lineas - 1)
     BasicTextField(
         value = valor,
@@ -55,7 +61,7 @@ fun CampoTexto(
         modifier = modifier.fillMaxWidth().height(alto),
         singleLine = lineas <= 1,
         interactionSource = interaccion,
-        textStyle = Tipografia.ValorCampo.copy(color = Colores.Tinta),
+        textStyle = estiloValor.copy(color = Colores.Tinta),
         cursorBrush = SolidColor(Colores.Tinta),
         visualTransformation = if (contrasena) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = KeyboardOptions(keyboardType = if (contrasena) KeyboardType.Password else KeyboardType.Email),
@@ -67,7 +73,7 @@ fun CampoTexto(
             ) {
                 Text(etiqueta.uppercase(), style = Tipografia.EtiquetaCampo, color = Colores.GrisTexto)
                 Box {
-                    if (valor.isEmpty()) Text(pista, style = Tipografia.ValorCampo, color = Colores.GrisMedio)
+                    if (valor.isEmpty()) Text(pista, style = estiloValor, color = Colores.GrisMedio)
                     campo()
                 }
             }

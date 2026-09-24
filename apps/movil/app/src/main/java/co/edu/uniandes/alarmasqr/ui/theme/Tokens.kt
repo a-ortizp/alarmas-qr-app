@@ -94,6 +94,9 @@ object Tipografia {
     val Opcion = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 14.sp)                    // fila de opción (M01)
     val ChipControl = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.SemiBold, fontSize = 12.sp)          // «Linterna · auto»
     val ValorCampo = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 15.sp, lineHeight = 16.sp)   // valor de CampoTexto (Figma 3:11)
+    // Mismo tamaño del valor de campo, pero en «Datos» con dígitos tabulares: toda hora del prototipo va en Spline
+    // Sans Mono, también cuando vive dentro de un campo (M07 «Hora»).
+    val ValorCampoHora = ValorCampo.copy(fontFamily = Fuentes.Datos, fontFeatureSettings = "tnum")
     val Divisor = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 12.sp)                 // «o continúa con» · «mientras tanto»
     val EtiquetaDato = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Bold, fontSize = 12.sp, letterSpacing = 0.08.em)   // «FECHA», «LUGAR» (tarjeta del evento, M04)
     val Dato = TextStyle(fontFamily = Fuentes.Ui, fontWeight = FontWeight.Normal, fontSize = 13.5.sp)                  // valor de fila de la tarjeta del evento y sello «✓ verificado»
