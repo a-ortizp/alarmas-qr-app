@@ -98,7 +98,7 @@ class RepositorioDatasetTest {
         assertEquals(12, alSonar.salEnMin)
         assertEquals("moderado", alSonar.traficoActual)
         assertTrue(alSonar.rutaDisponible)
-        assertNull(repo.dataset.alarmas.first { it.id == "a-tutor" }.cambioDelOrganizador)
+        assertNull(repo.dataset.alarmas.first { it.id == "a-gimnasio" }.cambioDelOrganizador)
     }
 
     @Test
@@ -109,6 +109,20 @@ class RepositorioDatasetTest {
         assertEquals("2026-08-28T18:30:00-05:00", cambio.nuevaHoraDeAlarma)
         assertEquals("2026-08-28T18:00:00-05:00", cambio.antesSonaba)
         assertEquals("Semillero UX", cambio.autor)
+    }
+
+    @Test
+    fun `a-tutor (creada por mi) tambien trae cambioDelOrganizador y alSonar, no solo las escaneadas`() {
+        val repo = RepositorioDataset(json)
+        val tutor = repo.dataset.alarmas.first { it.id == "a-tutor" }
+        assertEquals("creada-por-mi", tutor.origen)
+        val cambio = tutor.cambioDelOrganizador!!
+        assertEquals("2026-08-27T08:15:00-05:00", cambio.nuevoInicio)
+        assertEquals("Prof. Andrea Ríos", cambio.autor)
+        val alSonar = tutor.alSonar!!
+        assertEquals(10, alSonar.salEnMin)
+        assertEquals("2026-08-27T07:55:00-05:00", alSonar.llegaA)
+        assertNull(repo.dataset.alarmas.first { it.id == "a-gimnasio" }.alSonar)   // sin lugar: no tiene sentido simularlo
     }
 
     @Test
@@ -125,9 +139,9 @@ class RepositorioDatasetTest {
     fun `aplicarCambioOrganizador no hace nada si la alarma no existe o no tiene cambio`() {
         val repo = RepositorioDataset(json)
         repo.aplicarCambioOrganizador("a-no-existe")   // no lanza
-        val antes = repo.alarma("a-tutor")
-        repo.aplicarCambioOrganizador("a-tutor")        // sin cambioDelOrganizador: no hace nada
-        assertEquals(antes, repo.alarma("a-tutor"))
+        val antes = repo.alarma("a-gimnasio")
+        repo.aplicarCambioOrganizador("a-gimnasio")     // sin cambioDelOrganizador: no hace nada
+        assertEquals(antes, repo.alarma("a-gimnasio"))
     }
 
     @Test

@@ -90,8 +90,14 @@ class M06EditarAlarmaScreenTest {
 
     @Test
     fun `sin cambioDelOrganizador la fila de alarma conectada no navega`() {
-        val vm = montar("a-tutor")
+        val vm = montar("a-gimnasio")   // sin lugar, sin organizador: la única sin cambioDelOrganizador simulado
         assertEquals(false, vm.puedeVerCambioOrganizador)
+    }
+
+    @Test
+    fun `a-tutor (creada por mi, no escaneada) tambien puede ver el cambio del organizador`() {
+        val vm = montar("a-tutor")
+        assertEquals(true, vm.puedeVerCambioOrganizador)
     }
 
     @Test
