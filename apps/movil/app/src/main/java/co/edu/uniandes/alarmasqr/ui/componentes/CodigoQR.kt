@@ -41,7 +41,10 @@ fun CodigoQR(contenido: String, tamano: Dp, modifier: Modifier = Modifier) {
 }
 
 private fun generarQR(contenido: String, px: Int): ImageBitmap {
-    val matriz = QRCodeWriter().encode(contenido, BarcodeFormat.QR_CODE, px, px, mapOf(EncodeHintType.MARGIN to 1, EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.M))
+    // Corrección de errores baja (L, no M): con el contenido corto de esta app (alarmasqr://evento/…) alcanza para
+    // la versión de QR más chica posible, con módulos grandes como en los mockups — sigue siendo un QR real y
+    // escaneable por M03 (ML Kit), no una imagen decorativa.
+    val matriz = QRCodeWriter().encode(contenido, BarcodeFormat.QR_CODE, px, px, mapOf(EncodeHintType.MARGIN to 1, EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.L))
     val tinta = Colores.Tinta.toArgb()
     val blanco = Colores.Blanco.toArgb()
     val pixeles = IntArray(px * px) { i -> if (matriz[i % px, i / px]) tinta else blanco }
