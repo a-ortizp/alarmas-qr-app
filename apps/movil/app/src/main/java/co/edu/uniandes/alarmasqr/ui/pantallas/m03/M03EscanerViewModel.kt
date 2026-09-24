@@ -17,6 +17,12 @@ data class EstadoEscaner(val linterna: Boolean = false, val resultado: Resultado
  * [ahora] es inyectable para poder probar la ventana de [Movimiento.IgnorarRelecturaMs] sin depender del reloj real.
  */
 class M03EscanerViewModel(private val repositorio: RepositorioDataset, private val ahora: () -> Long = System::currentTimeMillis) : ViewModel() {
+    init {
+        // Entrar a escanear un evento nuevo también apaga el resaltado de «recién creada/escaneada» de la alarma
+        // anterior (mismo criterio simple que M02InicioViewModel/M06EditarAlarmaViewModel).
+        repositorio.limpiarRecienCreadas()
+    }
+
     private val _estado = MutableStateFlow(EstadoEscaner())
     val estado: StateFlow<EstadoEscaner> = _estado.asStateFlow()
 

@@ -2,7 +2,10 @@ package co.edu.uniandes.alarmasqr.ui.componentes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
@@ -10,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
@@ -30,6 +34,9 @@ enum class VarianteChip(val fondo: Color, val borde: Color?, val texto: Color) {
     Nueva(Colores.Tinta, null, Colores.Blanco),
     Coral(Colores.CoralSuave, Colores.CoralTexto, Colores.CoralTexto),
     Suave(Colores.AmarilloSuave, null, Colores.Tinta),
+    AlertaTexto(Color.Transparent, Colores.CoralTexto, Colores.CoralTexto),  // «Revisar» (M11, permiso del sistema faltante)
+    Notificacion(Colores.GrisNiebla, null, Colores.GrisTexto),               // «Notificación push · hace N min» (M09)
+    AlarmaEvento(Color.Transparent, Colores.CoralAlarma, Colores.CoralAlarma), // «● Alarma de evento» (M10, sobre Tinta)
 }
 
 @Composable
@@ -67,4 +74,33 @@ fun ChipControl(texto: String, activo: Boolean, onClick: () -> Unit, modifier: M
             .padding(horizontal = Espacio.PaddingChipControl),
         contentAlignment = Alignment.Center,
     ) { Text(texto, style = Tipografia.ChipControl, color = color, maxLines = 1) }
+}
+
+/**
+ * Selector segmentado (M06 ANTICIPACIÓN/SONIDO, M02b «Lista/Mes»): una sola pista Gris Niebla en píldora con el
+ * segmento activo relleno Tinta flotando adentro — a diferencia de [ChipControl], que dibuja cada opción como una
+ * píldora independiente con su propio contorno. El ancho lo decide quien llama (p. ej. `fillMaxWidth()` en M06,
+ * `width(IntrinsicSize.Min)` para la pista compacta de M02b); [modificadorSegmento] deja marcar un segmento puntual
+ * (`testTag`) sin exponer la fila interna.
+ */
+@Composable
+fun SelectorSegmentado(
+    opciones: List<Pair<String, Boolean>>, alElegir: (Int) -> Unit, modifier: Modifier = Modifier,
+    modificadorSegmento: (Int) -> Modifier = { Modifier },
+) {
+    Row(
+        modifier.background(Colores.GrisNiebla, Radios.Pildora).padding(Espacio.PistaSegmento),
+        horizontalArrangement = Arrangement.spacedBy(Espacio.PistaSegmento),
+    ) {
+        opciones.forEachIndexed { i, (texto, activo) ->
+            Box(
+                Modifier.weight(1f).height(Tamanos.ChipControl).clip(Radios.Pildora)
+                    .background(if (activo) Colores.Tinta else Color.Transparent)
+                    .clickable(role = Role.Button, onClick = { alElegir(i) })
+                    .then(modificadorSegmento(i))
+                    .padding(horizontal = Espacio.PaddingChipControl),
+                contentAlignment = Alignment.Center,
+            ) { Text(texto, style = Tipografia.ChipControl, color = if (activo) Colores.Blanco else Colores.Tinta, maxLines = 1) }
+        }
+    }
 }

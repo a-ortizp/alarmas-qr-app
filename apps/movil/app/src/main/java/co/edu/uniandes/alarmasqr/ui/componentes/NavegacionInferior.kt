@@ -5,8 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
@@ -46,9 +49,15 @@ private val pestanas = listOf(
  */
 @Composable
 fun NavegacionInferior(activa: Pantalla, alCambiar: (Pantalla) -> Unit, modifier: Modifier = Modifier) {
+    // El inset real de WindowInsets.navigationBars (edge-to-edge) puede ser bastante alto (barra de 3 botones);
+    // topado a Espacio.Medianil para un respiro chico en vez del hueco completo, sin volver a pegar la barra
+    // al borde (el toque no depende de esto: el gesto de inicio solo intercepta el deslizar, no el toque).
+    val margenInferior = minOf(WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(), Espacio.Medianil)
     Row(
-        modifier.fillMaxWidth().height(Tamanos.NavegacionInferior).background(Colores.Blanco)
+        modifier.fillMaxWidth().background(Colores.Blanco)
             .drawBehind { val y = Trazos.Borde.toPx() / 2; drawLine(Colores.GrisBorde, Offset(0f, y), Offset(size.width, y), Trazos.Borde.toPx()) }
+            .padding(bottom = margenInferior)
+            .height(Tamanos.NavegacionInferior)
             .padding(horizontal = Espacio.PaddingNavegacion),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

@@ -22,6 +22,7 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
 import co.edu.uniandes.alarmasqr.ui.theme.Espacio
@@ -32,19 +33,25 @@ import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
 import co.edu.uniandes.alarmasqr.ui.theme.Trazos
 
 /**
- * DS comp. 01 «Botón primario»: píldora de 52, Amarillo Energía con texto Tinta. Es el único amarillo de la
- * pantalla; [sobreAmarillo] es la variante de M01 (relleno Tinta, texto blanco) porque el fondo ya es amarillo.
+ * DS comp. 01 «Botón primario»: píldora de 52 (o [alto], p. ej. 56 en M10), Amarillo Energía con texto Tinta. Es el
+ * único amarillo de la pantalla. [sobreAmarillo] es la variante de M01 (relleno Tinta, texto blanco) porque el
+ * fondo ya es amarillo; [sobreTinta] es la excepción de M10 (relleno blanco, texto Tinta) porque «sobre Tinta el
+ * primario es blanco» (DESIGN_SYSTEM.md, design-tokens.json). Los dos son mutuamente excluyentes en la práctica
+ * (una pantalla no combina ambos fondos), pero no se valida: quien llama decide cuál aplica.
  */
 @Composable
-fun BotonPrimario(texto: String, onClick: () -> Unit, modifier: Modifier = Modifier, sobreAmarillo: Boolean = false, habilitado: Boolean = true) {
+fun BotonPrimario(
+    texto: String, onClick: () -> Unit, modifier: Modifier = Modifier,
+    sobreAmarillo: Boolean = false, sobreTinta: Boolean = false, habilitado: Boolean = true, alto: Dp = Tamanos.Boton,
+) {
     Button(
         onClick = onClick,
         enabled = habilitado,
-        modifier = modifier.fillMaxWidth().height(Tamanos.Boton),
+        modifier = modifier.fillMaxWidth().height(alto),
         shape = Radios.Pildora,
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (sobreAmarillo) Colores.Tinta else Colores.AmarilloEnergia,
-            contentColor = if (sobreAmarillo) Colores.Blanco else Colores.Tinta,
+            containerColor = when { sobreTinta -> Colores.Blanco; sobreAmarillo -> Colores.Tinta; else -> Colores.AmarilloEnergia },
+            contentColor = when { sobreTinta -> Colores.Tinta; sobreAmarillo -> Colores.Blanco; else -> Colores.Tinta },
             disabledContainerColor = Colores.GrisNiebla,
             disabledContentColor = Colores.GrisTexto,
         ),
@@ -52,13 +59,13 @@ fun BotonPrimario(texto: String, onClick: () -> Unit, modifier: Modifier = Modif
     ) { Text(texto, style = Tipografia.Boton) }
 }
 
-/** DS comp. 02 «Botón secundario»: contorno 1.5 Tinta (o blanco sobre Tinta, comp. 32), texto del mismo color. */
+/** DS comp. 02 «Botón secundario»: contorno 1.5 Tinta (o blanco sobre Tinta, comp. 32), texto del mismo color; alto 52 (o [alto]). */
 @Composable
-fun BotonSecundario(texto: String, onClick: () -> Unit, modifier: Modifier = Modifier, sobreTinta: Boolean = false) {
+fun BotonSecundario(texto: String, onClick: () -> Unit, modifier: Modifier = Modifier, sobreTinta: Boolean = false, alto: Dp = Tamanos.Boton) {
     val color = if (sobreTinta) Colores.Blanco else Colores.Tinta
     OutlinedButton(
         onClick = onClick,
-        modifier = modifier.fillMaxWidth().height(Tamanos.Boton),
+        modifier = modifier.fillMaxWidth().height(alto),
         shape = Radios.Pildora,
         border = BorderStroke(Trazos.Borde, color),
         colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.Transparent, contentColor = color),

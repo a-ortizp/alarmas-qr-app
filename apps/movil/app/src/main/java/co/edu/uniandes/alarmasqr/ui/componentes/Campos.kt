@@ -40,16 +40,20 @@ import co.edu.uniandes.alarmasqr.ui.theme.Trazos
  * formato («tucorreo@ejemplo.com») se muestra en Gris Medio cuando el valor está vacío.
  */
 @Composable
-fun CampoTexto(valor: String, alCambiar: (String) -> Unit, etiqueta: String, modifier: Modifier = Modifier, pista: String = "", contrasena: Boolean = false) {
+fun CampoTexto(
+    valor: String, alCambiar: (String) -> Unit, etiqueta: String, modifier: Modifier = Modifier,
+    pista: String = "", contrasena: Boolean = false, lineas: Int = 1,
+) {
     val interaccion = remember { MutableInteractionSource() }
     val enfocado by interaccion.collectIsFocusedAsState()
     val borde = if (enfocado) Trazos.Foco else Trazos.Borde
     val colorBorde = if (enfocado) Colores.Tinta else Colores.GrisBorde
+    val alto = if (lineas <= 1) Tamanos.Campo else Tamanos.Campo + Espacio.LineaCampoExtra * (lineas - 1)
     BasicTextField(
         value = valor,
         onValueChange = alCambiar,
-        modifier = modifier.fillMaxWidth().height(Tamanos.Campo),
-        singleLine = true,
+        modifier = modifier.fillMaxWidth().height(alto),
+        singleLine = lineas <= 1,
         interactionSource = interaccion,
         textStyle = Tipografia.ValorCampo.copy(color = Colores.Tinta),
         cursorBrush = SolidColor(Colores.Tinta),
@@ -57,7 +61,7 @@ fun CampoTexto(valor: String, alCambiar: (String) -> Unit, etiqueta: String, mod
         keyboardOptions = KeyboardOptions(keyboardType = if (contrasena) KeyboardType.Password else KeyboardType.Email),
         decorationBox = { campo ->
             Column(
-                Modifier.fillMaxWidth().height(Tamanos.Campo).background(Colores.Blanco, Radios.Campo).border(borde, colorBorde, Radios.Campo)
+                Modifier.fillMaxWidth().height(alto).background(Colores.Blanco, Radios.Campo).border(borde, colorBorde, Radios.Campo)
                     .padding(horizontal = Espacio.Medianil, vertical = Espacio.PaddingCampoVertical),
                 verticalArrangement = Arrangement.spacedBy(Espacio.GapCampo),
             ) {

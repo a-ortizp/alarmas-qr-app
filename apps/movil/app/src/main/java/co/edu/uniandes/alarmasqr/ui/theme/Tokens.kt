@@ -60,9 +60,12 @@ object Fuentes {
 }
 
 object Tipografia {
-    val HoraProtagonista = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 96.sp, lineHeight = 96.sp, fontFeatureSettings = "tnum")
-    val HoraProtagonistaSufijo = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 28.sp, fontFeatureSettings = "tnum")
-    val HoraSonara = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 52.sp, lineHeight = 52.sp, fontFeatureSettings = "tnum")
+    // Black (900), no Bold (700): «Datos» es una fuente variable y el eje wght de su instancia Bold se ve más
+    // delgado de lo esperado en las horas grandes; al pedir un peso que la familia no tiene, Android sintetiza
+    // trazo extra sobre el Bold real en vez de solo escogerlo (revisión de tutores del 2026-09-24: M09/M10).
+    val HoraProtagonista = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Black, fontSize = 96.sp, lineHeight = 96.sp, fontFeatureSettings = "tnum")
+    val HoraProtagonistaSufijo = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Black, fontSize = 28.sp, fontFeatureSettings = "tnum")
+    val HoraSonara = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Black, fontSize = 52.sp, lineHeight = 52.sp, fontFeatureSettings = "tnum")
     val HoraTarjeta = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 26.sp, lineHeight = 26.sp, fontFeatureSettings = "tnum")
     val HoraAmPm = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")
     val H1 = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 28.sp, lineHeight = 32.sp)
@@ -127,6 +130,7 @@ object Medidas {
     val Casilla = 20.dp
     val IconoFila = 20.dp
     val FilaOpcion = 36.dp
+    val FilaAjuste = 40.dp             // fila de ajuste (M06, M11): rótulo + switch/«›», contenido centrado (tutores v1.9)
     val FilaHoja = 100.dp
     val CajaIcono = 40.dp
     val Sello = 30.dp
@@ -157,7 +161,9 @@ object Medidas {
     val PasoTextura = 14.dp
     val EtiquetaDato = 74.dp          // ancho fijo de la columna de etiqueta en la tarjeta del evento (M04)
     val PuntoPagina = 6.dp            // punto inactivo y gap del indicador de página (M01)
+    val MarcaDia = DpSize(14.dp, 3.dp) // marca de «día con alarmas» bajo el número, M02b (mockups v1.8)
     val Burbuja = DpSize(250.dp, 227.dp)   // burbuja de mensaje de WhatsApp con el QR enmarcado (M03b)
+    val QRAyuda = 44.dp                    // QR ilustrativo de la tarjeta «se genera al guardar» (M07)
 }
 
 object Radios {
@@ -236,6 +242,9 @@ object Espacio {
     val PaddingMarcoLectura = 8.dp      // relleno interno del marco de lectura alrededor del QR (M03b)
     val GapSonara = 2.dp                // entre filas del bloque SONARÁ (M04)
     val GapTitulo = 8.dp                // entre el sello «✓» y «¡Alarma programada!» (M04)
+    val AntesSeccion = 16.dp             // aire superior de un encabezado de sección (M06, M11; tutores 2026-09-17: «16 px de aire superior»)
+    val PistaSegmento = 3.dp             // relleno del track del SelectorSegmentado (M06 ANTICIPACIÓN/SONIDO, M02b «Lista/Mes»)
+    val LineaCampoExtra = 20.dp          // alto adicional por línea de un `CampoTexto` multilínea (M07 «Descripción»)
 }
 
 object Movimiento {

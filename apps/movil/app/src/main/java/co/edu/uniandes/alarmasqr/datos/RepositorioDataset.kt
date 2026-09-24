@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Único origen de datos simulados de la app (docs/PLAN_MAQUETACION.md §5). Se carga una vez desde assets/dataset.json
@@ -35,9 +36,32 @@ class RepositorioDataset(json: String) {
 
     fun alarma(id: String): Alarma? = _alarmas.value.firstOrNull { it.id == id }
 
-    fun evento(id: String): EventoQR? = dataset.eventosQR.firstOrNull { it.id == id }
+    private val _eventosQR = MutableStateFlow(dataset.eventosQR)
+    val eventosQR: StateFlow<List<EventoQR>> = _eventosQR.asStateFlow()
+
+    fun evento(id: String): EventoQR? = _eventosQR.value.firstOrNull { it.id == id }
+
+    /** F-M07: agrega el EventoQR de una alarma creada a mano (hoy `dataset.eventosQR` solo se lee). */
+    fun agregarEvento(evento: EventoQR) { _eventosQR.value = _eventosQR.value.filterNot { it.id == evento.id } + evento }
 
     fun agregar(alarma: Alarma) = mutar { lista -> (lista.filterNot { it.id == alarma.id } + alarma).ordenadas() }
+
+    /** F-M07: alarma creada a mano + su EventoQR, id por marca de tiempo (única por sesión; no persiste entre reinicios). */
+    fun crearAlarmaManual(titulo: String, eventoInicio: String, lugar: String?, detalle: String?, anticipacionMin: Int): Alarma {
+        val id = "a-manual-" + System.currentTimeMillis()
+        // OffsetDateTime.toString() omite los segundos cuando son :00 (p. ej. "18:30-05:00"); el resto del dataset
+        // siempre trae segundos ("18:30:00-05:00"), así que se formatea explícito para no romper ese formato.
+        val suena = OffsetDateTime.parse(eventoInicio).minusMinutes(anticipacionMin.toLong()).format(formatoIsoConSegundos)
+        val alarma = Alarma(
+            id = id, titulo = titulo, eventoInicio = eventoInicio, suena = suena, lugar = lugar,
+            origen = "creada-por-mi", estado = "activa", anticipacionMin = anticipacionMin, trayectoMin = 0,
+            esNueva = true, chips = listOf("Nueva", "Creada por mí"), detalle = detalle,
+        )
+        agregar(alarma)
+        val eventoId = "e-" + id.removePrefix("a-")
+        agregarEvento(EventoQR(id = eventoId, alarmaId = id, titulo = titulo, codigoQR = "alarmasqr://evento/$eventoId", escaneos = 0, etiqueta = "Aún sin escaneos · recién creado"))
+        return alarma
+    }
 
     /**
      * Crea la alarma del evento leído (M03 → M04): toma la alarma del dataset que apunta el evento, la marca
@@ -52,6 +76,17 @@ class RepositorioDataset(json: String) {
     }
 
     fun eliminar(id: String) = mutar { lista -> lista.filterNot { it.id == id } }
+
+    /**
+     * Apaga `esNueva` y quita el chip «Nueva» de toda alarma que lo tenga — la confirmación visual de «se acaba
+     * de crear/escanear» (borde verde + chip) es de una sola vista: M02InicioViewModel la llama al construirse
+     * para M02 (no para M05, la pantalla de confirmación en sí), así que la próxima vez que se entra a la lista
+     * ya no aparece resaltada. No pasa por `mutar`: no es una mutación que «Deshacer» deba poder revertir.
+     */
+    fun limpiarRecienCreadas() {
+        if (_alarmas.value.none { it.esNueva }) return
+        _alarmas.value = _alarmas.value.map { if (it.esNueva) it.copy(esNueva = false, chips = it.chips.filterNot { c -> c == "Nueva" }) else it }
+    }
 
     /**
      * Interruptor de la tarjeta: pausa o reactiva sin abrir un nuevo nivel de «Deshacer» (no pasa por `mutar`), pero
@@ -79,6 +114,13 @@ class RepositorioDataset(json: String) {
         .replace("{fecha}", FormatoHora.fechaCorta(alarma.eventoInicio))
         .replace("{hora}", FormatoHora.horaConSufijo(alarma.eventoInicio))
 
+    /** F-M09: aplica el cambio del organizador (M09 «Aceptar cambio») — no hace nada si la alarma no existe o no tiene `cambioDelOrganizador`. */
+    fun aplicarCambioOrganizador(id: String) {
+        val alarma = alarma(id) ?: return
+        val cambio = alarma.cambioDelOrganizador ?: return
+        agregar(alarma.copy(eventoInicio = cambio.nuevoInicio, suena = cambio.nuevaHoraDeAlarma))
+    }
+
     private fun mutar(cambio: (List<Alarma>) -> List<Alarma>) {
         anterior = _alarmas.value
         _alarmas.value = cambio(_alarmas.value)
@@ -86,16 +128,18 @@ class RepositorioDataset(json: String) {
 
     private fun List<Alarma>.ordenadas() = sortedBy { OffsetDateTime.parse(it.eventoInicio) }
 
-    /** Restaura el estado inicial (5 alarmas, sin deshacer pendiente ni permiso pedido); solo para pruebas. */
+    /** Restaura el estado inicial (5 alarmas, sin eventos manuales, sin deshacer pendiente ni permiso pedido); solo para pruebas. */
     @VisibleForTesting
     fun reiniciar() {
         _alarmas.value = iniciales()
+        _eventosQR.value = dataset.eventosQR
         anterior = null
         permisoCamaraPedido = false
     }
 
     companion object {
         private val formato = Json { ignoreUnknownKeys = true }
+        private val formatoIsoConSegundos = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssxxx")
 
         @Volatile private var instancia: RepositorioDataset? = null
 

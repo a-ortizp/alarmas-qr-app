@@ -53,6 +53,16 @@ data class Permisos(val alarmasExactas: Boolean, val notificaciones: Boolean, va
 
 @Serializable data class Organizador(val nombre: String, val verificado: Boolean = false)
 
+@Serializable data class CambioDelOrganizador(
+    val nuevoInicio: String,
+    val nuevaHoraDeAlarma: String,
+    val antesSonaba: String,
+    val autor: String,
+    val motivo: String,
+)
+
+@Serializable data class AlSonar(val salEnMin: Int, val traficoActual: String, val rutaDisponible: Boolean, val llegaA: String? = null)
+
 @Serializable
 data class Alarma(
     val id: String,
@@ -72,6 +82,9 @@ data class Alarma(
     val etiquetaEvento: String? = null,
     val organizador: Organizador? = null,
     val detalle: String? = null,
+    val cambioDelOrganizador: CambioDelOrganizador? = null,
+    val alSonar: AlSonar? = null,
+    val notas: String? = null,
 ) {
     val pausada: Boolean get() = estado == "pausada"
 }
@@ -98,6 +111,8 @@ data class EventoQR(
 data class Mensajes(
     val alarmaGuardada: String,
     val deshacer: String,
+    val descargaCompletada: String,
+    val enlaceCopiado: String,
     val camaraActiva: String,
     val sinAlarmas: String,
     val sinAlarmasDetalle: String,

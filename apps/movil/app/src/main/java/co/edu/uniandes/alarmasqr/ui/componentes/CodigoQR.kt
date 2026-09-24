@@ -16,6 +16,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.toArgb
@@ -41,7 +42,10 @@ fun CodigoQR(contenido: String, tamano: Dp, modifier: Modifier = Modifier) {
 }
 
 private fun generarQR(contenido: String, px: Int): ImageBitmap {
-    val matriz = QRCodeWriter().encode(contenido, BarcodeFormat.QR_CODE, px, px, mapOf(EncodeHintType.MARGIN to 1, EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.M))
+    // Corrección de errores baja (L, no M): con el contenido corto de esta app (alarmasqr://evento/…) alcanza para
+    // la versión de QR más chica posible, con módulos grandes como en los mockups — sigue siendo un QR real y
+    // escaneable por M03 (ML Kit), no una imagen decorativa.
+    val matriz = QRCodeWriter().encode(contenido, BarcodeFormat.QR_CODE, px, px, mapOf(EncodeHintType.MARGIN to 1, EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.L))
     val tinta = Colores.Tinta.toArgb()
     val blanco = Colores.Blanco.toArgb()
     val pixeles = IntArray(px * px) { i -> if (matriz[i % px, i / px]) tinta else blanco }
@@ -68,6 +72,28 @@ fun DianaQR(tamano: Dp, modifier: Modifier = Modifier, color: Color = Colores.Ti
 fun Logotipo(modifier: Modifier = Modifier) {
     Box(modifier.size(Medidas.Logotipo).background(Colores.AmarilloEnergia, Radios.Tarjeta), contentAlignment = Alignment.Center) {
         DianaQR(tamano = Medidas.Logotipo * 0.6f, color = Colores.Tinta, acento = Colores.Blanco)
+    }
+}
+
+/** «ilustración · alarma sonando»: reloj con ondas de sonido a los lados (M10, pantalla completa). */
+@Composable
+fun IconoAlarmaSonando(tamano: Dp, modifier: Modifier = Modifier) {
+    Canvas(modifier.size(tamano)) {
+        val t = size.width
+        val centro = Offset(t / 2f, t / 2f)
+        val radioReloj = t * 0.30f
+        val trazoReloj = t * 0.07f
+        drawCircle(Colores.Blanco, radioReloj, centro, style = Stroke(trazoReloj))
+        drawLine(Colores.Blanco, centro, Offset(centro.x, centro.y - radioReloj * 0.55f), strokeWidth = trazoReloj * 0.7f, cap = StrokeCap.Round)
+        drawLine(Colores.Blanco, centro, Offset(centro.x + radioReloj * 0.4f, centro.y), strokeWidth = trazoReloj * 0.7f, cap = StrokeCap.Round)
+        val trazoOnda = t * 0.06f
+        listOf(1, 2).forEach { i ->
+            val r = radioReloj + i * t * 0.08f
+            val cuadro = Size(r * 2, r * 2)
+            val esquina = Offset(centro.x - r, centro.y - r)
+            drawArc(Colores.CoralAlarma, startAngle = -35f, sweepAngle = 70f, useCenter = false, topLeft = esquina, size = cuadro, style = Stroke(trazoOnda, cap = StrokeCap.Round))
+            drawArc(Colores.CoralAlarma, startAngle = 145f, sweepAngle = 70f, useCenter = false, topLeft = esquina, size = cuadro, style = Stroke(trazoOnda, cap = StrokeCap.Round))
+        }
     }
 }
 
