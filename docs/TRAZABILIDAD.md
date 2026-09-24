@@ -28,7 +28,7 @@ Convenciones:
 | M05 | Guardada + deshacer | F-M05 | `/inicio` (con snackbar) | `PantallaInicio` + `SnackbarDeshacer` | «Deshacer · 5 s» revierte · tarjeta nueva → M06 |
 | M06 | Detalle y edición | F-M06 | `/alarma/:id` | `PantallaEditarAlarma` | «Guardar cambios» → M02 · «Eliminar alarma» → diálogo M06d («Conservar» / velo cierra · «Eliminar» → M02) · fila «Cambios del organizador» → M09 ⏩ · «Gestionar en el calendario» → M02b |
 | M07 | Crear evento a mano | F-M07 | `/evento/nuevo` | `PantallaCrearEvento` | «Guardar y crear QR» → M08 |
-| M08 | QR del evento | F-M08 | `/evento/:id/qr` | `PantallaCompartirQR` | Se llega solo desde M07 · «Compartir por WhatsApp» → hoja del SO · «Correo» / «Más» → apps del SO · «Descargar PNG/PDF» y «Copiar enlace» → snackbar · «‹» → M05 (confirmación de la alarma recién creada, ver `NAVEGACION.md` §7) |
+| M08 | QR del evento | F-M08 | `/evento/:id/qr` | `PantallaCompartirQR` | Se llega solo desde M07 · «Compartir por WhatsApp» → hoja del SO · «Correo» / «Más» → apps del SO · «Descargar PNG/PDF» y «Copiar enlace» → snackbar · «‹» → M05 en la app (confirmación de la alarma recién creada); el prototipo va a M02, el mismo hub |
 | M09 | Cambio del organizador | F-M09 | `/alarma/:id/cambio` | `PantallaCambioEvento` | «Aceptar cambio» → M10 ⏩ · «Mantener alarma» / «×» → M02 · título → M06 · «×» al margen derecho de la barra (v1.7) |
 | M10 | Alarma sonando | F-M10 | `/alarma/:id/sonando` (pantalla completa) | `PantallaAlarmaSonando` | «Ya voy» / «Posponer 10 min» → M02 · «Ver ruta ›» → mapas del SO |
 | M11 | Ajustes | F-M11 | `/ajustes` | `PantallaAjustes` | Alarmas → M02 · fila «Cerrar sesión» → diálogo M11d («Cancelar» / velo cierra · «Cerrar sesión» → M01) |

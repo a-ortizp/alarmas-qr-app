@@ -241,3 +241,37 @@ Lecciones: `frame.clone()` de un marco con punto de inicio duplica el punto de i
 - **2026-09-08 · v1.1** — Pasos 1–5 del plan de la crítica Impeccable (ver §3b): M10 con dos acciones, M09/M04 con la hora como héroe, hoja «Agregar evento» + FAB extendido, nuevas M02v y M03b, formato 12 h y dataset único, botones de 48 pt. 19 pantallas, 67 conexiones. PDF regenerado.
 
 - **2026-09-07 · v1** — 16 pantallas móviles re-estilizadas con «Energía puntual» sobre el duplicado de los wireframes; página `00 · Recursos gráficos` con 2 texturas, 8 ilustraciones y 10 íconos; Smart Animate en las 59 conexiones; `Mockups_Figma_Movil.pdf`.
+
+## 9 · Ajustes pendientes en los marcos (2026-09-24, detectados al maquetar)
+
+Construir las pantallas contra los marcos sacó a la luz detalles que los mockups deberían corregir. Ninguno
+cambia una decisión de diseño: son el marco y el código diciéndose cosas distintas. Están ordenados por archivo.
+
+### 9.1 · Mockups móviles (`4nHD4ygcnP33UH0gAhaii5`, página `02 · Móvil`)
+
+| # | Marco | Qué corregir | Por qué |
+|---|---|---|---|
+| 1 | M04 `4:189` y M09 `5:195` | El bloque «Sonará» dibuja la hora y el sufijo am/pm en un solo tramo de 52; deberían ser **dos estilos** (sufijo Medium más pequeño, en la misma línea) | Es la regla de horas del propio sistema, que el resto de las pantallas sí sigue (decisión D7 del Plan 2) |
+| 2 | M03 `4:135` | «vibra al detectar el código» usa `#B9B7BF` suelto; debería ser el **Gris Borde** del sistema sobre Tinta | Ningún color se escribe a mano fuera de la paleta (decisión D8 del Plan 2) |
+| 3 | M05 `4:223` | La tarjeta nueva «Entrega de proyecto UX» muestra solo el chip «Nueva»; debería mostrar **«Nueva» y «✓ Escaneada»** juntos | `dataset.json` es la fuente única de datos y trae los dos chips en `a-entrega.chips` |
+| 4 | M03b `4020:3295` | Dos capas tienen nombres viejos: «Encontramos un QR de event…» contiene «QR de evento detectado en tu pantallazo», y «Nos vemos el viernes 30 en…» contiene «…el domingo 30…» | Manda el contenido; los nombres de capa confunden al leer el archivo |
+
+### 9.2 · Mockups web (`4nHD4ygcnP33UH0gAhaii5`, página `03 · Web`)
+
+| # | Marco | Qué corregir | Por qué |
+|---|---|---|---|
+| 5 | W00 correo enviado `4362:449` | El snackbar aparece descentrado | El resto de los avisos de la web van centrados |
+| 6 | W00 con snackbar `4362:449` y cuenta eliminada `4072:1878` | Falta el enlace «¿Olvidaste tu contraseña?» que sí tiene W00 | Son clones de W00 con un aviso encima; no deberían perder un control |
+| 7 | Switches de W06 `4072:233` | El estado apagado se dibuja en Gris Borde | Un apagado en gris se lee como deshabilitado; el sistema lo pide en contorno Tinta 1.5 (DS v1.13) |
+| 8 | Marca de la barra lateral | El logotipo va en amarillo, junto al botón primario amarillo de la misma pantalla | Regla del sistema: un solo elemento amarillo por pantalla. Si la marca se queda amarilla, es una excepción que hay que documentar en §6 |
+
+Los nodos exactos, ya localizados en el archivo: M04 hora `4016:2885`, M09 hora `4016:2888`, M03 «vibra…» `4:180`
+(hoy `#B9B7BF`), M05 chip «Nueva» `4:242` (falta el segundo chip), M03b capas `4020:3449` y `4020:3453`.
+
+**Estado: pendientes de aplicar.** La sesión que los documentó (2026-09-24) tiene el archivo en **modo solo lectura**
+(asiento *View* en el equipo MISO-UX), así que se anotaron en vez de aplicarse. Los números 5 a 8 tocan además
+páginas construidas por mmatallanar-ua, que se acuerdan con él antes de cambiarlas.
+
+**No hay nada que corregir sobre el peso de las horas grandes:** la familia «Spline Sans Mono» publicada en el
+archivo no tiene estilo Black, y el 900 del Design System v1.12 es un valor de implementación para que Android
+reproduzca el trazo que el marco ya muestra en Bold.

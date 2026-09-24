@@ -181,29 +181,28 @@ Prototipo publicado (abre en W00, un solo punto de inicio «Inicio» `4072:1861`
 
 ## 7 · Sincronía con el código (2026-09-24)
 
-`docs/` es una **copia** del repositorio de UX y describe el **prototipo de Figma**; `apps/` es la maquetación
-construida. Cuando los dos no coinciden, el orden de precedencia que sigue el equipo es:
+La maquetación vive en `alejortizp/alarmas-qr-app` (Kotlin + Compose y Angular) y copia `docs/` de este
+repositorio. Al construir las pantallas aparecieron frases de esta documentación que ningún mockup respalda. El
+orden de precedencia que sigue el equipo es:
 
-1. **Los mockups de Figma** (`MOCKUPS.md` §5 y el archivo `4nHD4ygcnP33UH0gAhaii5`) — mandan sobre todo lo demás.
-2. **`TRAZABILIDAD.md` §1**, que es la tabla pantalla → ruta → destinos que el código implementa literalmente.
+1. **Los mockups de Figma** (`MOCKUPS.md` §5, archivo `4nHD4ygcnP33UH0gAhaii5`) — mandan sobre todo lo demás.
+2. **`handoff/TRAZABILIDAD.md`**, la tabla pantalla → ruta → destinos que el código implementa literalmente.
 3. Este documento y `FUNCIONALIDADES.md`, que describen el recorrido y el contrato funcional.
 
-Si una frase de este documento contradice un marco de Figma, **el que se corrige es el documento**, primero en el
-repositorio de UX y después volviendo a copiar `docs/`. Esta tabla registra las divergencias ya resueltas, para que
-nadie vuelva a implementar contra una frase que no corresponde a ningún mockup:
+Si una frase contradice un marco de Figma, **se corrige la frase**. Esta tabla deja registradas las divergencias
+ya resueltas, para que nadie vuelva a implementar contra un texto que no corresponde a ningún mockup:
 
-| Divergencia | Qué decía el documento | Qué manda | Estado |
+| Divergencia | Qué decía el documento | Qué manda | Resolución |
 |---|---|---|---|
-| **M06 → M08 «Compartir»** | El mermaid de §3 dibujaba esa arista y F-M08 hablaba del QR de «cualquier alarma guardada» | El marco 5:2 de M06 **no tiene ningún control de compartir**, y TRAZABILIDAD §1 tampoco lo lista | Arista retirada del mermaid (2026-09-24). A M08 solo se llega desde M07 «Guardar y crear QR». Pendiente de replicar en el repo de UX |
-| **M08 «‹»** | TRAZABILIDAD §1 dice «‹» → M02 | El código vuelve a **M05** (la misma confirmación del flujo de escaneo) para que la alarma recién creada a mano también se vea resaltada una vez | Decisión de código, documentada aquí y en el KDoc de la entrada M08. Pendiente de reflejar en TRAZABILIDAD |
-| **M02b · selector «Lista / Mes»** | No aparece en TRAZABILIDAD §1, y §6 decisión (c) dice que no se agregan elementos nuevos | El marco 4:2 de M02b **sí dibuja** el selector segmentado en la barra superior | Implementado como en el mockup; «Lista» vuelve a M02. Pendiente de añadir la fila en TRAZABILIDAD |
-| **M04 «Editar»** | La fila M04 de TRAZABILIDAD solo lista «Listo» → M05 y el descarte → M04d | El bloque «Sonará» del marco de M04 trae el enlace «Editar», y F-M04 habla del aviso calculado «editable» | Implementado: «Editar» → M06. Pendiente de añadir el destino en TRAZABILIDAD |
-| **M07 · validación** | UF-M07.1 pedía «validación inline» sin decir sobre qué campo | El título es el único campo obligatorio del marco 5:60 | Implementado: «Guardar y crear QR» no crea nada con el título vacío y el campo toma el estado de error del DS |
-| **Filas de ajuste de 40 pt** | DS §5 v1.6 (comentario 8 de los tutores) fija filas de 40 | La regla de área táctil mínima de 48 del mismo DS | Manda la accesibilidad: la fila que **navega** mide 48; la que solo lleva un switch se queda en 40 |
-| **Peso de las horas grandes** | DS §7 y `design-tokens.json` decían Bold 700 | El trazo de los marcos M09/M10 solo se reproduce en Android pidiendo 900 | Token y DS actualizados a 900 (`design-tokens.json` v1.20, DS v1.12). Pendiente de replicar en el repo de UX |
+| **M06 → M08 «Compartir»** | El mermaid de §3 dibujaba esa arista y F-M08 hablaba del QR de «cualquier alarma guardada» | El marco `5:2` de M06 **no tiene ningún control de compartir** (verificado nodo por nodo) y TRAZABILIDAD tampoco lo lista | Arista retirada del mermaid y F-M08 reescrito. A M08 solo se llega desde M07 «Guardar y crear QR» |
+| **M08 «‹»** | TRAZABILIDAD decía «‹» → M02 | El código vuelve a **M05**, la misma confirmación del flujo de escaneo, para que la alarma recién creada a mano también se vea resaltada una vez | Documentado en TRAZABILIDAD; el prototipo puede seguir yendo a M02, que es el mismo hub |
+| **M02b · selector «Lista / Mes»** | No aparecía en TRAZABILIDAD, y la decisión (c) de §6 dice que no se agregan elementos nuevos | El marco `4:2` de M02b **sí dibuja** el selector segmentado en la barra superior | Fila de TRAZABILIDAD completada; el selector es del mockup, no un invento del código |
+| **M04 «Editar»** | La fila M04 de TRAZABILIDAD solo listaba «Listo» → M05 y el descarte → M04d | El bloque «Sonará» del marco de M04 trae el enlace «Editar», y F-M04 habla del aviso calculado «editable» | Destino «Editar» → M06 añadido a TRAZABILIDAD |
+| **M07 · validación** | UF-M07.1 pedía «validación inline» sin decir sobre qué campo | El título es el único campo obligatorio del marco `5:60` | Precisado en la tabla de §1: con el título vacío no se crea nada |
+| **Filas de ajuste de 40 pt** | La revisión de tutores del 2026-09-17 fijó filas de ajuste de 40 (comentario 8) | La regla de área táctil mínima de 48 del mismo Design System | Manda la accesibilidad: en la app la fila que **navega** mide 48 y la que solo lleva un switch se queda en 40. Los mockups no cambian |
+| **Peso de las horas grandes** | DS §7 y `design-tokens.json` decían Bold 700 | El trazo que muestran los marcos de M09 y M10 solo se reproduce en Android pidiendo 900 | Design System v1.12 y tokens v1.20 en 900 |
 
-**Recorridos del prototipo (⏩) tal como quedaron en la app:** el visor de M03 y «vibra al detectar el código»
-simulan la lectura del QR; «Abrir ajustes» de M12 pide el permiso real; la fila «Confirmar antes de auto-ajustarse»
-de M06 abre M09 **solo en las alarmas que traen un cambio del organizador en `dataset.json`** (`a-entrega`,
-`a-semillero`, `a-tutor`), porque no hay un push real que simular en las demás; y «Aceptar cambio» de M09 lleva a
-M10, el salto temporal a la hora del aviso.
+**Disparadores ⏩ tal como quedaron en la app:** el visor de M03 y «vibra al detectar el código» simulan la lectura
+del QR; «Abrir ajustes» de M12 pide el permiso real de cámara; la fila «Confirmar antes de auto-ajustarse» de M06
+abre M09 **solo en las alarmas que traen un cambio del organizador en `dataset.json`** (`a-entrega`, `a-semillero`
+y `a-tutor`), porque en las demás no hay push que simular; y «Aceptar cambio» de M09 lleva a M10.

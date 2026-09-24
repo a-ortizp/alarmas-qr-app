@@ -341,7 +341,9 @@ Doce pantallas de `apps/movil` pixel-perfect contra Figma, con cámara y alarma 
 
 **Verificación pixel-perfect:** cada pantalla tiene su pareja `<código>.png` / `<código>-figma.png` en `docs/verificacion/`, con el estado de la comparación y las diferencias aceptadas — ver `docs/verificacion/README.md`.
 
-**Notas para el repositorio de UX** (`https://github.com/alejortizp/alarmas-qr-ux`, no se pueden abrir desde aquí):
+**Notas para el repositorio de UX** (`https://github.com/alejortizp/alarmas-qr-ux`). **Llevadas el 2026-09-24** a la
+rama `feature/sincronizacion-plan4` de ese repositorio, como `MOCKUPS.md` §9: quedan como ajustes pendientes en los
+marcos de Figma, con el id de cada nodo.
 
 - D7: el bloque «Sonará» de M04 debería dibujar la hora y el sufijo am/pm en dos estilos separados (Medium más pequeño), no en un solo tramo como el mockup actual.
 - D8: «vibra al detectar el código» (M03) debería usar el gris de texto secundario del DS (`gris.texto` / Gris Borde) sobre Tinta, no el `#B9B7BF` suelto del mockup.
@@ -392,7 +394,8 @@ A 1280 los dos cortes quedan por encima, así que las capturas de `docs/verifica
 - Error de credenciales por foco ⏩ (D8).
 - Switch apagado en contorno Tinta (D9).
 
-**Pendiente en el repo de UX:**
+**Llevado al repo de UX el 2026-09-24** (rama `feature/sincronizacion-plan4`): las dos primeras filas son ahora el
+Design System v1.13 y las tres últimas, `MOCKUPS.md` §9.2.
 - DS §7, filas «Tarjeta de acceso» (400 → 520) y «Diálogo modal» (540–600 con miga + ✕ → 481 sin miga, título 18).
 - La regla de CLAUDE.md sobre la fila de cabecera del modal.
 - Los marcos de W00 con snackbar sin el enlace «¿Olvidaste tu contraseña?».
