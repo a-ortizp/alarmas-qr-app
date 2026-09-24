@@ -80,12 +80,14 @@ describe('W03 · Detalle Evento', () => {
     expect(pagina.textContent).toContain('Dani21');
   });
 
-  it('la búsqueda filtra por alias («Mi» → Mike1008)', async () => {
+  it('la búsqueda filtra por alias («Mi» → Mike1008) y muestra el resumen con «Limpiar»', async () => {
     const { raiz } = await abrir('/eventos/w-partido?q=Mi');
     const pagina = raiz.querySelector('[data-codigo="W03"]')!;
     const filas = pagina.querySelectorAll('tbody tr');
     expect(filas.length).toBe(1);
     expect(pagina.textContent).toContain('Mike1008');
+    expect(pagina.textContent).toContain('Mostrando 1 de 16 asistentes · filtro: "Mi"');
+    expect(botonConTexto(pagina as HTMLElement, 'Limpiar')).toBeTruthy();
   });
 
   it('un evento sin datos de asistentes (D4) muestra los indicadores y la tabla vacía', async () => {

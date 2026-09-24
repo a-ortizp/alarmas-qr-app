@@ -41,7 +41,7 @@ describe('W04 · Reportes', () => {
     expect(raiz.querySelector('[data-codigo="W04"]')!.textContent).toContain('DESDE');
   });
 
-  it('«Generar y descargar» muestra el estado Listo con el archivo generado y «Generar de nuevo» reinicia', async () => {
+  it('«Generar y descargar» muestra el estado Listo con el archivo generado, campos visibles y «Generar de nuevo» lo mantiene', async () => {
     const { raiz, estable } = await abrir('/reportes');
     botonConTexto(raiz, 'Generar y descargar').click();
     await estable();
@@ -50,9 +50,11 @@ describe('W04 · Reportes', () => {
     expect(pagina.textContent).toContain(
       `${dataset.web.reporte.archivoGenerado} generado y descargado exitosamente`,
     );
+    expect(pagina.textContent).toContain('RANGO DE FECHAS');
+    expect(pagina.textContent).toContain('FORMATO DE SALIDA');
     botonConTexto(raiz, 'Generar de nuevo').click();
     await estable();
-    expect(pagina.getAttribute('data-estado')).toBeNull();
+    expect(pagina.getAttribute('data-estado')).toBe('listo');
   });
 
   it('«Descargar de nuevo» de un reporte ya generado muestra el snackbar de descarga', async () => {
