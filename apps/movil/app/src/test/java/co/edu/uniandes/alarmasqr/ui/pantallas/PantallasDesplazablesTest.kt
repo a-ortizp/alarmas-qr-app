@@ -20,6 +20,7 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m02.M02vEstadoVacio
 import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03bPantallazoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m04.EstadoAlarmaCreada
 import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaSheet
+import co.edu.uniandes.alarmasqr.ui.pantallas.m07.M07CrearEventoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m11.M11AjustesScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m11.M11AjustesViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
@@ -109,6 +110,12 @@ class PantallasDesplazablesTest {
             M04AlarmaCreadaSheet(estado, repo.dataset.mensajes, alListo = {}, alEditar = {}, alAbrirDialogo = {}, alConservar = {}, alEliminar = {})
         }
         alcanzarTexto("No puedo asistir")
+    }
+
+    @Test
+    fun `M07 alcanza «Guardar y crear QR», anclado abajo con Spacer(weight)`() {
+        montar { M07CrearEventoScreen(alVolver = {}, alGuardar = { _, _, _, _ -> }) }
+        alcanzarEtiqueta("guardar")
     }
 
     @Test
