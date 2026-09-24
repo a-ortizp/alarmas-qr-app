@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
@@ -47,8 +48,12 @@ private val pestanas = listOf(
 @Composable
 fun NavegacionInferior(activa: Pantalla, alCambiar: (Pantalla) -> Unit, modifier: Modifier = Modifier) {
     Row(
-        modifier.fillMaxWidth().height(Tamanos.NavegacionInferior).background(Colores.Blanco)
+        // navigationBarsPadding() DESPUÉS del fondo/borde (para que cubran también el hueco) y ANTES de la altura
+        // fija de 64: sin esto, con edge-to-edge la barra queda pegada a la barra de gestos del teléfono.
+        modifier.fillMaxWidth().background(Colores.Blanco)
             .drawBehind { val y = Trazos.Borde.toPx() / 2; drawLine(Colores.GrisBorde, Offset(0f, y), Offset(size.width, y), Trazos.Borde.toPx()) }
+            .navigationBarsPadding()
+            .height(Tamanos.NavegacionInferior)
             .padding(horizontal = Espacio.PaddingNavegacion),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

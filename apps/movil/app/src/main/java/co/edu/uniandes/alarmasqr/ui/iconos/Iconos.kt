@@ -73,50 +73,60 @@ object Iconos {
         )
     }
 
+    /** Calendario de pared: dos anillos de argolla arriba, línea de encabezado y una fecha marcada (rellena). */
     val Calendario: ImageVector by lazy {
         icono(
             "calendario",
-            { moveTo(5f, 4f); horizontalLineTo(19f); curveTo(20.1f, 4f, 21f, 4.9f, 21f, 6f); verticalLineTo(20f); curveTo(21f, 21.1f, 20.1f, 22f, 19f, 22f); horizontalLineTo(5f); curveTo(3.9f, 22f, 3f, 21.1f, 3f, 20f); verticalLineTo(6f); curveTo(3f, 4.9f, 3.9f, 4f, 5f, 4f); close() },
-            { moveTo(16f, 2f); verticalLineTo(6f) },
-            { moveTo(8f, 2f); verticalLineTo(6f) },
-            { moveTo(3f, 10f); horizontalLineTo(21f) },
+            { moveTo(6f, 6f); horizontalLineTo(18f); curveTo(19.1f, 6f, 20f, 6.9f, 20f, 8f); verticalLineTo(19f); curveTo(20f, 20.1f, 19.1f, 21f, 18f, 21f); horizontalLineTo(6f); curveTo(4.9f, 21f, 4f, 20.1f, 4f, 19f); verticalLineTo(8f); curveTo(4f, 6.9f, 4.9f, 6f, 6f, 6f); close() },
+            { moveTo(4f, 10f); horizontalLineTo(20f) },
+            {
+                moveTo(9.6f, 5f)
+                curveTo(9.6f, 5.88f, 8.88f, 6.6f, 8f, 6.6f)
+                curveTo(7.12f, 6.6f, 6.4f, 5.88f, 6.4f, 5f)
+                curveTo(6.4f, 4.12f, 7.12f, 3.4f, 8f, 3.4f)
+                curveTo(8.88f, 3.4f, 9.6f, 4.12f, 9.6f, 5f)
+                close()
+            },
+            {
+                moveTo(17.6f, 5f)
+                curveTo(17.6f, 5.88f, 16.88f, 6.6f, 16f, 6.6f)
+                curveTo(15.12f, 6.6f, 14.4f, 5.88f, 14.4f, 5f)
+                curveTo(14.4f, 4.12f, 15.12f, 3.4f, 16f, 3.4f)
+                curveTo(16.88f, 3.4f, 17.6f, 4.12f, 17.6f, 5f)
+                close()
+            },
             relleno = {
-                // grilla de 6 módulos (3×2), como el «día con alarmas» del resto del DS.
-                listOf(6.5f to 13f, 11f to 13f, 15.5f to 13f, 6.5f to 17f, 11f to 17f, 15.5f to 17f).forEach { (x, y) ->
-                    moveTo(x, y); horizontalLineTo(x + 2.2f); verticalLineTo(y + 2.2f); horizontalLineTo(x); close()
-                }
+                // fecha marcada, esquina inferior izquierda del cuerpo.
+                moveTo(7f, 13f); horizontalLineTo(11f)
+                curveTo(11.55f, 13f, 12f, 13.45f, 12f, 14f); verticalLineTo(17f)
+                curveTo(12f, 17.55f, 11.55f, 18f, 11f, 18f); horizontalLineTo(7f)
+                curveTo(6.45f, 18f, 6f, 17.55f, 6f, 17f); verticalLineTo(14f)
+                curveTo(6f, 13.45f, 6.45f, 13f, 7f, 13f)
+                close()
             },
         )
     }
 
-    /** Engranaje: dos círculos concéntricos (aprox. Bézier ×4, como [Alarma]) + ocho dientes radiales. */
+    /** Engranaje «flor» de ocho puntas (zigzag con uniones redondeadas) con un aro central. */
     val Ajustes: ImageVector by lazy {
         icono(
             "ajustes",
             {
-                moveTo(19f, 12f)
-                curveTo(19f, 15.86f, 15.86f, 19f, 12f, 19f)
-                curveTo(8.14f, 19f, 5f, 15.86f, 5f, 12f)
-                curveTo(5f, 8.14f, 8.14f, 5f, 12f, 5f)
-                curveTo(15.86f, 5f, 19f, 8.14f, 19f, 12f)
+                moveTo(21.3f, 12f)
+                lineTo(18.1f, 14.53f); lineTo(18.58f, 18.58f); lineTo(14.53f, 18.1f); lineTo(12f, 21.3f)
+                lineTo(9.47f, 18.1f); lineTo(5.42f, 18.58f); lineTo(5.9f, 14.53f); lineTo(2.7f, 12f)
+                lineTo(5.9f, 9.47f); lineTo(5.42f, 5.42f); lineTo(9.47f, 5.9f); lineTo(12f, 2.7f)
+                lineTo(14.53f, 5.9f); lineTo(18.58f, 5.42f); lineTo(18.1f, 9.47f); lineTo(21.3f, 12f)
                 close()
             },
             {
-                moveTo(14.5f, 12f)
-                curveTo(14.5f, 13.38f, 13.38f, 14.5f, 12f, 14.5f)
-                curveTo(10.62f, 14.5f, 9.5f, 13.38f, 9.5f, 12f)
-                curveTo(9.5f, 10.62f, 10.62f, 9.5f, 12f, 9.5f)
-                curveTo(13.38f, 9.5f, 14.5f, 10.62f, 14.5f, 12f)
+                moveTo(15.2f, 12f)
+                curveTo(15.2f, 13.77f, 13.77f, 15.2f, 12f, 15.2f)
+                curveTo(10.23f, 15.2f, 8.8f, 13.77f, 8.8f, 12f)
+                curveTo(8.8f, 10.23f, 10.23f, 8.8f, 12f, 8.8f)
+                curveTo(13.77f, 8.8f, 15.2f, 10.23f, 15.2f, 12f)
                 close()
             },
-            { moveTo(19f, 12f); lineTo(21.3f, 12f) },
-            { moveTo(16.95f, 16.95f); lineTo(18.58f, 18.58f) },
-            { moveTo(12f, 19f); lineTo(12f, 21.3f) },
-            { moveTo(7.05f, 16.95f); lineTo(5.42f, 18.58f) },
-            { moveTo(5f, 12f); lineTo(2.7f, 12f) },
-            { moveTo(7.05f, 7.05f); lineTo(5.42f, 5.42f) },
-            { moveTo(12f, 5f); lineTo(12f, 2.7f) },
-            { moveTo(16.95f, 7.05f); lineTo(18.58f, 5.42f) },
         )
     }
 
