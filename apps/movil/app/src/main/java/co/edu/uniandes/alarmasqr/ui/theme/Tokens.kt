@@ -160,6 +160,7 @@ object Medidas {
     val PuntoPagina = 6.dp            // punto inactivo y gap del indicador de página (M01)
     val MarcaDia = DpSize(14.dp, 3.dp) // marca de «día con alarmas» bajo el número, M02b (mockups v1.8)
     val Burbuja = DpSize(250.dp, 227.dp)   // burbuja de mensaje de WhatsApp con el QR enmarcado (M03b)
+    val QRAyuda = 44.dp                    // QR ilustrativo de la tarjeta «se genera al guardar» (M07)
 }
 
 object Radios {
@@ -240,6 +241,7 @@ object Espacio {
     val GapTitulo = 8.dp                // entre el sello «✓» y «¡Alarma programada!» (M04)
     val AntesSeccion = 16.dp             // aire superior de un encabezado de sección (M06, M11; tutores 2026-09-17: «16 px de aire superior»)
     val PistaSegmento = 3.dp             // relleno del track del SelectorSegmentado (M06 ANTICIPACIÓN/SONIDO, M02b «Lista/Mes»)
+    val LineaCampoExtra = 20.dp          // alto adicional por línea de un `CampoTexto` multilínea (M07 «Descripción»)
 }
 
 object Movimiento {

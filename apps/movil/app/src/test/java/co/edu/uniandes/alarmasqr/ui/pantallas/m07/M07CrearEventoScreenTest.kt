@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import co.edu.uniandes.alarmasqr.ui.QUALIFIERS_MOVIL
 import co.edu.uniandes.alarmasqr.ui.theme.AlarmasQRTheme
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -16,7 +17,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [35])
+@Config(sdk = [35], qualifiers = QUALIFIERS_MOVIL)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class M07CrearEventoScreenTest {
     @get:Rule val regla = createComposeRule()
