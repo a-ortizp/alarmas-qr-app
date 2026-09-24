@@ -32,7 +32,9 @@ class M10AlarmaSonandoScreenTest {
             AlarmasQRTheme { M10AlarmaSonandoScreen(entrega, alYaVoy = { yaVoy = true }, alPosponer = {}, alVerRuta = { ruta = true }) }
         }
         regla.onNodeWithTag("pantalla-M10").assertIsDisplayed()
-        regla.onNodeWithText("Sal en 12 min · tráfico moderado", substring = true).assertIsDisplayed()
+        regla.onNodeWithText("Entrega de proyecto UX").assertIsDisplayed()
+        regla.onNodeWithText("Hoy · evento 4:00 pm · Aula SD-703").assertIsDisplayed()
+        regla.onNodeWithText("Sal en 12 min · con el tráfico actual llegas 5:22 pm").assertIsDisplayed()
         regla.capturar("M10")
         regla.onNodeWithText("Ver ruta ›").performClick(); assert(ruta)
         regla.onNodeWithTag("ya-voy").performClick(); assert(yaVoy)

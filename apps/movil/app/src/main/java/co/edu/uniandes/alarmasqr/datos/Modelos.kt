@@ -61,7 +61,7 @@ data class Permisos(val alarmasExactas: Boolean, val notificaciones: Boolean, va
     val motivo: String,
 )
 
-@Serializable data class AlSonar(val salEnMin: Int, val traficoActual: String, val rutaDisponible: Boolean)
+@Serializable data class AlSonar(val salEnMin: Int, val traficoActual: String, val rutaDisponible: Boolean, val llegaA: String? = null)
 
 @Serializable
 data class Alarma(

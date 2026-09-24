@@ -36,6 +36,7 @@ enum class VarianteChip(val fondo: Color, val borde: Color?, val texto: Color) {
     Suave(Colores.AmarilloSuave, null, Colores.Tinta),
     AlertaTexto(Color.Transparent, Colores.CoralTexto, Colores.CoralTexto),  // «Revisar» (M11, permiso del sistema faltante)
     Notificacion(Colores.GrisNiebla, null, Colores.GrisTexto),               // «Notificación push · hace N min» (M09)
+    AlarmaEvento(Color.Transparent, Colores.CoralAlarma, Colores.CoralAlarma), // «● Alarma de evento» (M10, sobre Tinta)
 }
 
 @Composable
