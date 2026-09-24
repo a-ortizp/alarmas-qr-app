@@ -217,7 +217,8 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             M06EditarAlarmaScreen(
                 estado = estado, mensajes = repositorio.dataset.mensajes, mensajeEliminar = vm.mensajeEliminar, puedeVerCambioOrganizador = vm.puedeVerCambioOrganizador,
                 alVolver = { pila.removeLastOrNull() },
-                alElegirAnticipacion = vm::elegirAnticipacion, alElegirSonido = vm::elegirSonido, alCambiarConfirmar = vm::cambiarConfirmar,
+                alElegirAnticipacion = vm::elegirAnticipacion, alCambiarSumarTrayecto = vm::cambiarSumarTrayecto,
+                alElegirSonido = vm::elegirSonido, alCambiarRespetarNoMolestar = vm::cambiarRespetarNoMolestar, alCambiarConfirmar = vm::cambiarConfirmar,
                 alTocarCambioOrganizador = { pila.irA(Pantalla.M09(clave.id)) },
                 alGestionarCalendario = { pila.irA(Pantalla.M02b) },
                 alGuardar = { vm.guardar(); pila.reemplazarTodo(Pantalla.M02) },

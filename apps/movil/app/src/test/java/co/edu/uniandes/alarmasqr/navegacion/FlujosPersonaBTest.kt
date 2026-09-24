@@ -60,7 +60,7 @@ class FlujosPersonaBTest {
         repositorio.agregarDesdeEvento("e-entrega")
         montar(Pantalla.M06("a-entrega"))
         regla.onNodeWithTag("pantalla-M06").assertIsDisplayed()
-        regla.onNodeWithText("Alarma conectada · Confirmar antes de auto-ajustarse").performClick()
+        regla.onNodeWithText("Confirmar antes de auto-ajustarse").performClick()
         regla.waitForIdle()
         regla.onNodeWithTag("pantalla-M09").assertIsDisplayed()
         regla.onNodeWithTag("aceptar").performClick()
@@ -80,7 +80,7 @@ class FlujosPersonaBTest {
         montar(Pantalla.M06("a-entrega"))
         regla.onNodeWithTag("pantalla-M06").assertIsDisplayed()
         val tamanoEnM06 = pila.size
-        regla.onNodeWithText("Alarma conectada · Confirmar antes de auto-ajustarse").performClick()
+        regla.onNodeWithText("Confirmar antes de auto-ajustarse").performClick()
         regla.waitForIdle()
         regla.onNodeWithTag("pantalla-M09").assertIsDisplayed()
         assertEquals(tamanoEnM06 + 1, pila.size)

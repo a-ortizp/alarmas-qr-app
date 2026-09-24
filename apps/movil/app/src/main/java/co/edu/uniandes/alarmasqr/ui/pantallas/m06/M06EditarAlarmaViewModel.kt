@@ -10,25 +10,35 @@ import kotlinx.coroutines.flow.update
 
 data class EstadoEditarAlarma(
     val alarma: Alarma,
+    val chipOrigen: String?,
     val anticipacionMin: Int,
+    val sumarTrayecto: Boolean,
     val sonido: String,
+    val respetarNoMolestar: Boolean,
+    val posponerMin: Int,
     val confirmarAntesDeAutoAjustar: Boolean,
     val dialogoAbierto: Boolean = false,
 )
 
 /**
- * F-M06: personalización por alarma. Solo `anticipacionMin` existe en el modelo `Alarma`; `sonido` y
- * `confirmarAntesDeAutoAjustar` son estado de UI que arranca desde `usuario.ajustes` (no hay campo por alarma en el
- * dataset para ellos — «Guardar cambios» solo persiste la anticipación, consistente con la maquetación).
+ * F-M06: personalización por alarma. Solo `anticipacionMin` existe en el modelo `Alarma`; el resto de los ajustes
+ * (`sumarTrayecto`, `sonido`, `respetarNoMolestar`, `posponerMin`, `confirmarAntesDeAutoAjustar`) son estado de UI
+ * que arranca desde `usuario.ajustes` (no hay campo por alarma en el dataset para ellos — «Guardar cambios» solo
+ * persiste la anticipación, consistente con la maquetación).
  */
 class M06EditarAlarmaViewModel(private val repositorio: RepositorioDataset, private val id: String) : ViewModel() {
     private val original = repositorio.alarma(id) ?: error("Alarma $id no existe")
+    private val ajustes = repositorio.dataset.usuario.ajustes
     private val _estado = MutableStateFlow(
         EstadoEditarAlarma(
             alarma = original,
+            chipOrigen = original.chips.firstOrNull { it != "Nueva" },
             anticipacionMin = original.anticipacionMin,
-            sonido = repositorio.dataset.usuario.ajustes.sonidoPorDefecto,
-            confirmarAntesDeAutoAjustar = repositorio.dataset.usuario.ajustes.confirmarAntesDeAutoAjustar,
+            sumarTrayecto = ajustes.sumarTrayectoDesdeUbicacionHabitual,
+            sonido = ajustes.sonidoPorDefecto,
+            respetarNoMolestar = ajustes.respetarNoMolestar,
+            posponerMin = ajustes.posponerPorDefectoMin,
+            confirmarAntesDeAutoAjustar = ajustes.confirmarAntesDeAutoAjustar,
         ),
     )
     val estado: StateFlow<EstadoEditarAlarma> = _estado.asStateFlow()
@@ -38,7 +48,9 @@ class M06EditarAlarmaViewModel(private val repositorio: RepositorioDataset, priv
     val puedeVerCambioOrganizador: Boolean = original.cambioDelOrganizador != null
 
     fun elegirAnticipacion(min: Int) = _estado.update { it.copy(anticipacionMin = min) }
+    fun cambiarSumarTrayecto(valor: Boolean) = _estado.update { it.copy(sumarTrayecto = valor) }
     fun elegirSonido(valor: String) = _estado.update { it.copy(sonido = valor) }
+    fun cambiarRespetarNoMolestar(valor: Boolean) = _estado.update { it.copy(respetarNoMolestar = valor) }
     fun cambiarConfirmar(valor: Boolean) = _estado.update { it.copy(confirmarAntesDeAutoAjustar = valor) }
     fun guardar() {
         repositorio.alarma(id)?.let { repositorio.agregar(it.copy(anticipacionMin = _estado.value.anticipacionMin)) }

@@ -1,35 +1,45 @@
 package co.edu.uniandes.alarmasqr.ui.pantallas.m06
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
+import co.edu.uniandes.alarmasqr.datos.Alarma
+import co.edu.uniandes.alarmasqr.datos.FormatoHora
 import co.edu.uniandes.alarmasqr.datos.Mensajes
 import co.edu.uniandes.alarmasqr.ui.componentes.BarraSuperior
 import co.edu.uniandes.alarmasqr.ui.componentes.BotonEnlace
 import co.edu.uniandes.alarmasqr.ui.componentes.BotonPrimario
 import co.edu.uniandes.alarmasqr.ui.componentes.ChipControl
+import co.edu.uniandes.alarmasqr.ui.componentes.ChipEstado
 import co.edu.uniandes.alarmasqr.ui.componentes.ColorEnlace
 import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
 import co.edu.uniandes.alarmasqr.ui.componentes.DialogoConfirmacion
 import co.edu.uniandes.alarmasqr.ui.componentes.FilaAjuste
 import co.edu.uniandes.alarmasqr.ui.componentes.Interruptor
+import co.edu.uniandes.alarmasqr.ui.componentes.varianteDeChip
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
 import co.edu.uniandes.alarmasqr.ui.theme.Espacio
+import co.edu.uniandes.alarmasqr.ui.theme.Radios
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
+import co.edu.uniandes.alarmasqr.ui.theme.Trazos
 
-/** M06 · Editar alarma (F-M06): sin miga de pan (MOCKUPS.md §7 paso 1). «Eliminar alarma» abre M06d. */
+/** M06 · Editar alarma (F-M06): «‹ Editar alarma» con flecha (mockups v1.8). «Eliminar alarma» abre M06d. */
 @Composable
 fun M06EditarAlarmaScreen(
     estado: EstadoEditarAlarma, mensajes: Mensajes, mensajeEliminar: String, puedeVerCambioOrganizador: Boolean,
-    alVolver: () -> Unit, alElegirAnticipacion: (Int) -> Unit, alElegirSonido: (String) -> Unit, alCambiarConfirmar: (Boolean) -> Unit,
+    alVolver: () -> Unit, alElegirAnticipacion: (Int) -> Unit, alCambiarSumarTrayecto: (Boolean) -> Unit,
+    alElegirSonido: (String) -> Unit, alCambiarRespetarNoMolestar: (Boolean) -> Unit, alCambiarConfirmar: (Boolean) -> Unit,
     alTocarCambioOrganizador: () -> Unit, alGestionarCalendario: () -> Unit, alGuardar: () -> Unit,
     alAbrirDialogo: () -> Unit, alConservar: () -> Unit, alEliminar: () -> Unit,
     modifier: Modifier = Modifier,
@@ -41,13 +51,19 @@ fun M06EditarAlarmaScreen(
             relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
             verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
         ) {
-            Text(estado.alarma.titulo, style = Tipografia.H2, color = Colores.Tinta)
+            TarjetaResumenAlarma(estado.alarma, estado.chipOrigen)
             SelectorAnticipacion(estado.anticipacionMin, alElegirAnticipacion)
+            FilaAjuste("Sumar trayecto desde mi ubicación") { Interruptor(estado.sumarTrayecto, alCambiarSumarTrayecto) }
             SelectorSonido(estado.sonido, alElegirSonido)
-            FilaAjuste("Alarma conectada · Confirmar antes de auto-ajustarse", alTocarFila = if (puedeVerCambioOrganizador) alTocarCambioOrganizador else null) {
-                Interruptor(estado.confirmarAntesDeAutoAjustar, alCambiarConfirmar)
+            FilaAjuste("Respetar \"No molestar\"") { Interruptor(estado.respetarNoMolestar, alCambiarRespetarNoMolestar) }
+            FilaAjuste("Posponer") { ValorConChevron("${estado.posponerMin} min") }
+            SeccionAjuste("CAMBIOS DEL ORGANIZADOR") {
+                FilaAjuste("Confirmar antes de auto-ajustarse", alTocarFila = if (puedeVerCambioOrganizador) alTocarCambioOrganizador else null) {
+                    Interruptor(estado.confirmarAntesDeAutoAjustar, alCambiarConfirmar)
+                }
             }
-            BotonEnlace("Gestionar en el calendario", onClick = alGestionarCalendario, color = ColorEnlace.Azul)
+            estado.alarma.notas?.let { TarjetaNotas(it) }
+            FilaAjuste("Gestionar en el calendario", alTocarFila = alGestionarCalendario) { IconoChevron() }
             BotonPrimario("Guardar cambios", onClick = alGuardar, modifier = Modifier.testTag("guardar"))
             BotonEnlace("Eliminar alarma", onClick = alAbrirDialogo, color = ColorEnlace.Coral, modifier = Modifier.testTag("eliminar"))
         }
@@ -61,6 +77,66 @@ fun M06EditarAlarmaScreen(
     }
 }
 
+/** «hora suena» + título + «fecha corta · evento h:mm» + chip de origen (sin «Nueva»: no aporta nada al editar). */
+@Composable
+private fun TarjetaResumenAlarma(alarma: Alarma, chipOrigen: String?, modifier: Modifier = Modifier) {
+    Row(
+        modifier.fillMaxWidth().clip(Radios.Tarjeta).background(Colores.Blanco).border(Trazos.Borde, Colores.GrisBorde, Radios.Tarjeta)
+            .padding(horizontal = Espacio.PaddingTarjetaEvento, vertical = Espacio.PaddingTarjeta),
+        horizontalArrangement = Arrangement.spacedBy(Espacio.GapFila),
+    ) {
+        Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapHoraSufijo)) {
+            Text(FormatoHora.hora(alarma.suena), style = Tipografia.HoraSonara, color = Colores.Tinta, modifier = Modifier.alignByBaseline())
+            Text(FormatoHora.sufijo(alarma.suena), style = Tipografia.HoraProtagonistaSufijo, color = Colores.Tinta, modifier = Modifier.alignByBaseline())
+        }
+        Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoTarjeta)) {
+            Text(alarma.titulo, style = Tipografia.TituloEvento, color = Colores.Tinta)
+            Text(subtituloEvento(alarma), style = Tipografia.Etiqueta, color = Colores.GrisTexto)
+            chipOrigen?.let { ChipEstado(it, varianteDeChip(it)) }
+        }
+    }
+}
+
+/** «dom 30 · evento 4:00 pm»: sin el lugar (a diferencia de `FormatoHora.lineaEvento`), la tarjeta de M06 no lo repite. */
+private fun subtituloEvento(alarma: Alarma): String {
+    val etiqueta = alarma.etiquetaEvento ?: "evento"
+    return "${FormatoHora.fechaCorta(alarma.eventoInicio)} · $etiqueta ${FormatoHora.horaConSufijo(alarma.eventoInicio)}"
+}
+
+@Composable
+private fun SeccionAjuste(titulo: String, modifier: Modifier = Modifier, contenido: @Composable () -> Unit) {
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
+        Text(titulo, style = Tipografia.H3, color = Colores.GrisTexto)
+        contenido()
+    }
+}
+
+/** Recuadro de solo lectura con la misma anatomía que `CampoTexto` (etiqueta + valor, radio 12): M06 no persiste notas. */
+@Composable
+private fun TarjetaNotas(texto: String, modifier: Modifier = Modifier) {
+    Column(
+        modifier.fillMaxWidth().background(Colores.Blanco, Radios.Campo).border(Trazos.Borde, Colores.GrisBorde, Radios.Campo)
+            .padding(horizontal = Espacio.Medianil, vertical = Espacio.PaddingCampoVertical),
+        verticalArrangement = Arrangement.spacedBy(Espacio.GapCampo),
+    ) {
+        Text("NOTAS", style = Tipografia.EtiquetaCampo, color = Colores.GrisTexto)
+        Text(texto, style = Tipografia.ValorCampo, color = Colores.Tinta)
+    }
+}
+
+@Composable
+private fun ValorConChevron(texto: String, modifier: Modifier = Modifier) {
+    Row(modifier, horizontalArrangement = Arrangement.spacedBy(Espacio.GapFila)) {
+        Text(texto, style = Tipografia.Etiqueta, color = Colores.GrisTexto)
+        IconoChevron()
+    }
+}
+
+@Composable
+private fun IconoChevron(modifier: Modifier = Modifier) {
+    Text("›", style = Tipografia.Chevron, color = Colores.GrisTexto, modifier = modifier)
+}
+
 private val OPCIONES_ANTICIPACION = listOf(10, 30, 60)
 private fun etiquetaAnticipacion(min: Int) = if (min < 60) "$min min" else "1 h"
 
@@ -71,7 +147,7 @@ private fun SelectorAnticipacion(seleccionado: Int, alElegir: (Int) -> Unit, mod
         Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapChips)) {
             OPCIONES_ANTICIPACION.forEach { min -> ChipControl(etiquetaAnticipacion(min), activo = seleccionado == min, onClick = { alElegir(min) }) }
             // «Otro»: representa el valor actual cuando no es 10/30/60; sin selector de minutos personalizado (maquetación).
-            ChipControl("Otro · ${seleccionado} min", activo = seleccionado !in OPCIONES_ANTICIPACION, onClick = {})
+            ChipControl("Otro", activo = seleccionado !in OPCIONES_ANTICIPACION, onClick = {})
         }
     }
 }

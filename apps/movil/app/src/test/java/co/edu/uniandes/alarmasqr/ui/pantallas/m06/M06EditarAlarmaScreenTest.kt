@@ -4,6 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -35,7 +37,8 @@ class M06EditarAlarmaScreenTest {
             AlarmasQRTheme {
                 M06EditarAlarmaScreen(
                     estado = estado, mensajes = repo.dataset.mensajes, mensajeEliminar = vm.mensajeEliminar, puedeVerCambioOrganizador = vm.puedeVerCambioOrganizador,
-                    alVolver = {}, alElegirAnticipacion = vm::elegirAnticipacion, alElegirSonido = vm::elegirSonido, alCambiarConfirmar = vm::cambiarConfirmar,
+                    alVolver = {}, alElegirAnticipacion = vm::elegirAnticipacion, alCambiarSumarTrayecto = vm::cambiarSumarTrayecto,
+                    alElegirSonido = vm::elegirSonido, alCambiarRespetarNoMolestar = vm::cambiarRespetarNoMolestar, alCambiarConfirmar = vm::cambiarConfirmar,
                     alTocarCambioOrganizador = {}, alGestionarCalendario = {}, alGuardar = vm::guardar,
                     alAbrirDialogo = vm::abrirDialogo, alConservar = vm::cerrarDialogo, alEliminar = vm::eliminar,
                 )
@@ -45,14 +48,29 @@ class M06EditarAlarmaScreenTest {
     }
 
     @Test
-    fun `muestra el titulo de la alarma y guarda la anticipacion elegida`() {
+    fun `muestra el titulo, la hora, el chip de origen y guarda la anticipacion elegida`() {
         montar("a-tutor")
         regla.onNodeWithTag("pantalla-M06").assertIsDisplayed()
         regla.onNodeWithText("Reunión con el tutor").assertIsDisplayed()
+        regla.onNodeWithText("7:30").assertIsDisplayed()   // hora en la que suena, no la del evento (8:00)
+        regla.onNodeWithText("Creada por mí").assertIsDisplayed()
         regla.capturar("M06")
         regla.onNodeWithText("1 h").performClick()
         regla.onNodeWithTag("guardar").performClick()
         assertEquals(60, repo.alarma("a-tutor")?.anticipacionMin)
+    }
+
+    @Test
+    fun `a-entrega muestra el chip Escaneada sin Nueva y sus notas`() {
+        repo.agregarDesdeEvento("e-entrega")
+        montar("a-entrega")
+        regla.onNodeWithText("3:15").assertIsDisplayed()
+        regla.onNodeWithText("✓ Escaneada").assertIsDisplayed()
+        regla.onNodeWithText("Nueva").assertDoesNotExist()   // no aporta nada al editar (F-M06)
+        regla.onNodeWithText("dom 30 · evento 4:00 pm").assertIsDisplayed()
+        regla.onNodeWithText("NOTAS").assertIsDisplayed()
+        regla.onNodeWithText("Llevar maqueta impresa").assertIsDisplayed()
+        regla.onAllNodesWithText("10 min").onFirst().assertIsDisplayed()   // el chip de ANTICIPACIÓN y «Posponer» comparten el texto
     }
 
     @Test

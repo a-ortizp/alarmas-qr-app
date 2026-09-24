@@ -84,6 +84,7 @@ data class Alarma(
     val detalle: String? = null,
     val cambioDelOrganizador: CambioDelOrganizador? = null,
     val alSonar: AlSonar? = null,
+    val notas: String? = null,
 ) {
     val pausada: Boolean get() = estado == "pausada"
 }
