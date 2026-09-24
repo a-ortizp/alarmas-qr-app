@@ -40,4 +40,21 @@ class M07CrearEventoScreenTest {
         regla.onNodeWithTag("guardar").performClick()
         assertEquals(Triple("Asado familiar", "Casa de mis papás", 60), guardado)
     }
+
+    /** UF-M07.1: el título es obligatorio y la validación es inline, no un evento creado a medias. */
+    @Test
+    fun `guardar sin titulo no crea nada y muestra la validacion, que se apaga al escribir`() {
+        var guardados = 0
+        regla.setContent {
+            AlarmasQRTheme { M07CrearEventoScreen(alVolver = {}, alGuardar = { _, _, _, _ -> guardados++ }) }
+        }
+        regla.onNodeWithTag("guardar").performClick()
+        assertEquals(0, guardados)
+        regla.onNodeWithTag("error-titulo").assertIsDisplayed()
+
+        regla.onNodeWithTag("titulo").performTextInput("Asado familiar")
+        regla.onNodeWithTag("error-titulo").assertDoesNotExist()
+        regla.onNodeWithTag("guardar").performClick()
+        assertEquals(1, guardados)
+    }
 }
