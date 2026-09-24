@@ -51,9 +51,9 @@ fun M10AlarmaSonandoScreen(alarma: Alarma, alYaVoy: () -> Unit, alPosponer: () -
         ) {
             IconoAlarmaSonando(tamano = Medidas.SelloGrande)
             ChipEstado("● Alarma de evento", VarianteChip.AlarmaEvento)
-            Row {
-                Text(FormatoHora.hora(alarma.suena), style = Tipografia.HoraProtagonista, color = Colores.AmarilloEnergia)
-                Text(FormatoHora.sufijo(alarma.suena), style = Tipografia.HoraProtagonistaSufijo, color = Colores.AmarilloEnergia)
+            Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapHoraSufijo)) {
+                Text(FormatoHora.hora(alarma.suena), style = Tipografia.HoraProtagonista, color = Colores.AmarilloEnergia, modifier = Modifier.alignByBaseline())
+                Text(FormatoHora.sufijo(alarma.suena), style = Tipografia.HoraProtagonistaSufijo, color = Colores.AmarilloEnergia, modifier = Modifier.alignByBaseline())
             }
             Text(alarma.titulo, style = Tipografia.H2, color = Colores.Blanco, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
             Text(subtituloEvento(alarma), style = Tipografia.Etiqueta, color = Colores.GrisBorde, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
@@ -90,7 +90,7 @@ private fun TarjetaTrafico(alSonar: AlSonar, alVerRuta: (() -> Unit)?, modifier:
             append("Sal en ${alSonar.salEnMin} min")
             alSonar.llegaA?.let { append(" · con el tráfico actual llegas ${FormatoHora.horaConSufijo(it)}") }
         }
-        Text(texto, style = Tipografia.Cuerpo, color = Colores.Tinta, textAlign = TextAlign.Center)
+        Text(texto, style = Tipografia.Etiqueta, color = Colores.Tinta, textAlign = TextAlign.Center)
         if (alSonar.rutaDisponible && alVerRuta != null) BotonEnlace("Ver ruta ›", onClick = alVerRuta, color = ColorEnlace.Tinta)
     }
 }

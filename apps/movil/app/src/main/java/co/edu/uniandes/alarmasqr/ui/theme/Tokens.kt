@@ -60,9 +60,12 @@ object Fuentes {
 }
 
 object Tipografia {
-    val HoraProtagonista = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 96.sp, lineHeight = 96.sp, fontFeatureSettings = "tnum")
+    // Black (900), no Bold (700): «Datos» es una fuente variable y el eje wght de su instancia Bold se ve más
+    // delgado de lo esperado en las horas grandes; al pedir un peso que la familia no tiene, Android sintetiza
+    // trazo extra sobre el Bold real en vez de solo escogerlo (revisión de tutores del 2026-09-24: M09/M10).
+    val HoraProtagonista = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Black, fontSize = 96.sp, lineHeight = 96.sp, fontFeatureSettings = "tnum")
     val HoraProtagonistaSufijo = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 28.sp, fontFeatureSettings = "tnum")
-    val HoraSonara = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 52.sp, lineHeight = 52.sp, fontFeatureSettings = "tnum")
+    val HoraSonara = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Black, fontSize = 52.sp, lineHeight = 52.sp, fontFeatureSettings = "tnum")
     val HoraTarjeta = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Bold, fontSize = 26.sp, lineHeight = 26.sp, fontFeatureSettings = "tnum")
     val HoraAmPm = TextStyle(fontFamily = Fuentes.Datos, fontWeight = FontWeight.Medium, fontSize = 12.sp, fontFeatureSettings = "tnum")
     val H1 = TextStyle(fontFamily = Fuentes.Titulares, fontWeight = FontWeight.Bold, fontSize = 28.sp, lineHeight = 32.sp)
