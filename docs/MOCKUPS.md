@@ -256,14 +256,14 @@ cambia una decisión de diseño: son el marco y el código diciéndose cosas dis
 | 3 | M05 `4:223` | La tarjeta nueva «Entrega de proyecto UX» muestra solo el chip «Nueva»; debería mostrar **«Nueva» y «✓ Escaneada»** juntos | `dataset.json` es la fuente única de datos y trae los dos chips en `a-entrega.chips` |
 | 4 | M03b `4020:3295` | Dos capas tienen nombres viejos: «Encontramos un QR de event…» contiene «QR de evento detectado en tu pantallazo», y «Nos vemos el viernes 30 en…» contiene «…el domingo 30…» | Manda el contenido; los nombres de capa confunden al leer el archivo |
 
-### 9.2 · Mockups web (`4nHD4ygcnP33UH0gAhaii5`, página `03 · Web`)
+### 9.2 · Mockups web (`4nHD4ygcnP33UH0gAhaii5`, página `03 · Web`) — **cerrados el 2026-09-24**
 
 | # | Marco | Qué corregir | Por qué |
 |---|---|---|---|
 | 5 | W00 correo enviado `4362:449` | El snackbar aparece descentrado | El resto de los avisos de la web van centrados |
 | 6 | W00 con snackbar `4362:449` y cuenta eliminada `4072:1878` | Falta el enlace «¿Olvidaste tu contraseña?» que sí tiene W00 | Son clones de W00 con un aviso encima; no deberían perder un control |
-| 7 | Switches de W06 `4072:233` | El estado apagado se dibuja en Gris Borde | Un apagado en gris se lee como deshabilitado; el sistema lo pide en contorno Tinta 1.5 (DS v1.13) |
-| 8 | Marca de la barra lateral | El logotipo va en amarillo, junto al botón primario amarillo de la misma pantalla | Regla del sistema: un solo elemento amarillo por pantalla. Si la marca se queda amarilla, es una excepción que hay que documentar en §6 |
+| 7 | Switches de W06 `4072:233` | **Nada que corregir en el marco.** Los seis switches de la página están encendidos: el estado apagado no se dibuja en ninguna pantalla | Lo que faltaba era definirlo: Design System v1.14 lo fija en píldora blanca con contorno Tinta 1.5 y perilla a la izquierda |
+| 8 | Marca de la barra superior `4072:29` | **El logotipo se queda amarillo.** La regla del amarillo cuenta acciones, y el logotipo no es un control | Excepción documentada en el Design System v1.14 en vez de reestilizar la marca en todos los marcos |
 
 **Los cuatro ajustes móviles quedaron aplicados el 2026-09-24**, con estos nodos:
 
@@ -278,10 +278,18 @@ cambia una decisión de diseño: son el marco y el código diciéndose cosas dis
   «Reunión semillero» (`4510:1466`). La tarjeta mide igual que antes: 165 de los 177 disponibles.
 - **4 · nombres de capa de M03b** — `4020:3449` y `4020:3453` se renombran con su contenido real.
 
-**Los números 5 a 8 (web) siguen pendientes:** tocan páginas construidas por mmatallanar-ua y se acuerdan con él
-antes de cambiarlas.
+**Los cuatro de la web quedaron cerrados el 2026-09-24**, con el visto bueno del dueño del repositorio:
 
-`Mockups_Figma_Movil.pdf` queda pendiente de reexportar (páginas de M03, M03b, M04, M05 y M09).
+- **5 · aviso descentrado** — el aviso de «correo enviado» (`4362:467`, 459 de ancho) estaba en x=509, heredado del
+  clon de «cuenta eliminada», donde ese mismo valor sí centra un aviso de 262. Ahora va en x=410,5, centrado de verdad.
+- **6 · enlace perdido** — los dos clones de W00 recuperan `enlace · recuperar contraseña` (`4513:467` en «correo
+  enviado» y `4513:469` en «cuenta eliminada»), clonado del W00 original. Las dos tarjetas vuelven a medir 520×439,
+  como la de origen, y el auto-layout del marco las recentra solo.
+- **7 y 8** — no eran defectos de los marcos sino huecos del documento; se resolvieron en el Design System v1.14.
+
+`Mockups_Figma_Movil.pdf` se reexportó el mismo día: seis páginas nuevas (M03b, M03, M04, **M04d**, M05 y M09)
+empalmadas con pypdf sobre las 22 originales, con el índice reconstruido. M04d entra en la lista porque su fondo es
+un clon de M04 con su propia copia de la hora, que también hubo que separar (`4330:1516`).
 
 **No hay nada que corregir sobre el peso de las horas grandes:** la familia «Spline Sans Mono» publicada en el
 archivo no tiene estilo Black, y el 900 del Design System v1.12 es un valor de implementación para que Android
