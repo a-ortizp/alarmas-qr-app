@@ -91,6 +91,23 @@ class FlujosPersonaBTest {
     }
 
     @Test
+    fun `eliminar desde M06 no deja la pila vacia`() {
+        // Regresión: `alEliminar` hacía pila.reemplazarTodo(M02) mientras la guarda de «alarma inexistente» de esta
+        // misma entrada (para cuando M06 se alcanza tras la muerte del proceso) también le hacía pop a la pila en la
+        // recomposición siguiente, dejándola vacía → «NavDisplay backstack cannot be empty» (estrella la app; visto
+        // en el emulador, no solo en teoría).
+        montar(Pantalla.M06("a-gimnasio"))
+        regla.onNodeWithTag("pantalla-M06").assertIsDisplayed()
+        regla.onNodeWithTag("eliminar").performClick()
+        regla.waitForIdle()
+        regla.onNodeWithTag("dialogo-confirmar").performClick()
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M02").assertIsDisplayed()
+        assertEquals(1, pila.size)
+        assertEquals(null, repositorio.alarma("a-gimnasio"))
+    }
+
+    @Test
     fun `T3 crear evento propio y compartir M02 - M02h - M07 - M08`() {
         // M07 y M08 solo se alcanzan por flujo (la hoja M02h las abre con reemplazarCima): no tienen entrada
         // propia fuera de la navegación real, así que su captura de verificación pixel-perfect vive aquí.

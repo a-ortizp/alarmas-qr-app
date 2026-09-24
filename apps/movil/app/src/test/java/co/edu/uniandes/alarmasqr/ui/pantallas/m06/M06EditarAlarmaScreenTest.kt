@@ -9,6 +9,7 @@ import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import co.edu.uniandes.alarmasqr.datos.RepositorioDataset
 import co.edu.uniandes.alarmasqr.ui.QUALIFIERS_MOVIL
 import co.edu.uniandes.alarmasqr.ui.capturar
@@ -39,6 +40,7 @@ class M06EditarAlarmaScreenTest {
                     estado = estado, mensajes = repo.dataset.mensajes, mensajeEliminar = vm.mensajeEliminar, puedeVerCambioOrganizador = vm.puedeVerCambioOrganizador,
                     alVolver = {}, alElegirAnticipacion = vm::elegirAnticipacion, alCambiarSumarTrayecto = vm::cambiarSumarTrayecto,
                     alElegirSonido = vm::elegirSonido, alCambiarRespetarNoMolestar = vm::cambiarRespetarNoMolestar, alCambiarConfirmar = vm::cambiarConfirmar,
+                    alCambiarNotas = vm::cambiarNotas,
                     alTocarCambioOrganizador = {}, alGestionarCalendario = {}, alGuardar = vm::guardar,
                     alAbrirDialogo = vm::abrirDialogo, alConservar = vm::cerrarDialogo, alEliminar = vm::eliminar,
                 )
@@ -54,10 +56,13 @@ class M06EditarAlarmaScreenTest {
         regla.onNodeWithText("Reunión con el tutor").assertIsDisplayed()
         regla.onNodeWithText("7:30").assertIsDisplayed()   // hora en la que suena, no la del evento (8:00)
         regla.onNodeWithText("Creada por mí").assertIsDisplayed()
+        regla.onNodeWithText("NOTAS").assertIsDisplayed()   // siempre visible, aunque la alarma no tenga notas todavía
         regla.capturar("M06")
         regla.onNodeWithText("1 h").performClick()
+        regla.onNodeWithTag("notas").performTextInput("Llevar el portátil")
         regla.onNodeWithTag("guardar").performClick()
         assertEquals(60, repo.alarma("a-tutor")?.anticipacionMin)
+        assertEquals("Llevar el portátil", repo.alarma("a-tutor")?.notas)
     }
 
     @Test

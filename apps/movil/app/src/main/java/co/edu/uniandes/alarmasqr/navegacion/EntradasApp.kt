@@ -159,8 +159,11 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
         // el repositorio fresco esconde las alarmas esNueva) o vía un intent externo (MainActivity es exportada):
         // sin esta guarda, `M04AlarmaCreadaViewModel.init` hacía `repositorio.alarma(id) ?: error(...)` y estrellaba
         // la app. Si la alarma no existe, la hoja se saca sola de la pila y no se crea el ViewModel.
+        // El `pila.lastOrNull() == clave` evita una segunda pila.removeLastOrNull() cuando esta recomposición llega
+        // DESPUÉS de que «Eliminar alarma» ya reemplazó toda la pila (M04d → M02): sin él, esta guarda le hace pop
+        // a M02 también y la pila queda vacía → «NavDisplay backstack cannot be empty» (estrella la app).
         if (repositorio.alarma(clave.id) == null) {
-            LaunchedEffect(clave) { pila.removeLastOrNull() }
+            LaunchedEffect(clave) { if (pila.lastOrNull() == clave) pila.removeLastOrNull() }
         } else {
             val context = LocalContext.current
             val programador = remember { ProgramadorAlarmas(context) }
@@ -209,8 +212,10 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
         M02InicioScreen(estado, alTocarAlarma = { pila.irA(Pantalla.M06(it)) }, alCambiarActiva = vm::cambiarActiva, codigo = "M05")
     }
     entry<Pantalla.M06> { clave ->
+        // Mismo cuidado que M04: si esta recomposición llega después de que «Eliminar alarma» ya reemplazó la pila
+        // con M02 (M06d → alEliminar), no le hace pop a M02 también (pila vacía → crash de NavDisplay).
         if (repositorio.alarma(clave.id) == null) {
-            LaunchedEffect(clave) { pila.removeLastOrNull() }
+            LaunchedEffect(clave) { if (pila.lastOrNull() == clave) pila.removeLastOrNull() }
         } else {
             val vm = viewModel(key = clave.id) { M06EditarAlarmaViewModel(repositorio, clave.id) }
             val estado by vm.estado.collectAsStateWithLifecycle()
@@ -219,6 +224,7 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
                 alVolver = { pila.removeLastOrNull() },
                 alElegirAnticipacion = vm::elegirAnticipacion, alCambiarSumarTrayecto = vm::cambiarSumarTrayecto,
                 alElegirSonido = vm::elegirSonido, alCambiarRespetarNoMolestar = vm::cambiarRespetarNoMolestar, alCambiarConfirmar = vm::cambiarConfirmar,
+                alCambiarNotas = vm::cambiarNotas,
                 alTocarCambioOrganizador = { pila.irA(Pantalla.M09(clave.id)) },
                 alGestionarCalendario = { pila.irA(Pantalla.M02b) },
                 alGuardar = { vm.guardar(); pila.reemplazarTodo(Pantalla.M02) },
@@ -242,7 +248,7 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
         val evento = repositorio.evento(clave.id)
         val alarma = evento?.let { repositorio.alarma(it.alarmaId) }
         if (evento == null || alarma == null) {
-            LaunchedEffect(clave) { pila.removeLastOrNull() }
+            LaunchedEffect(clave) { if (pila.lastOrNull() == clave) pila.removeLastOrNull() }
         } else {
             val context = LocalContext.current
             val snackbar = LocalSnackbarApp.current

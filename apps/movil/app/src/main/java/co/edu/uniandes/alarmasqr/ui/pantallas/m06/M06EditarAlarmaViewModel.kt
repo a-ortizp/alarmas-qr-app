@@ -17,6 +17,7 @@ data class EstadoEditarAlarma(
     val respetarNoMolestar: Boolean,
     val posponerMin: Int,
     val confirmarAntesDeAutoAjustar: Boolean,
+    val notas: String,
     val dialogoAbierto: Boolean = false,
 )
 
@@ -39,6 +40,7 @@ class M06EditarAlarmaViewModel(private val repositorio: RepositorioDataset, priv
             respetarNoMolestar = ajustes.respetarNoMolestar,
             posponerMin = ajustes.posponerPorDefectoMin,
             confirmarAntesDeAutoAjustar = ajustes.confirmarAntesDeAutoAjustar,
+            notas = original.notas ?: "",
         ),
     )
     val estado: StateFlow<EstadoEditarAlarma> = _estado.asStateFlow()
@@ -52,8 +54,11 @@ class M06EditarAlarmaViewModel(private val repositorio: RepositorioDataset, priv
     fun elegirSonido(valor: String) = _estado.update { it.copy(sonido = valor) }
     fun cambiarRespetarNoMolestar(valor: Boolean) = _estado.update { it.copy(respetarNoMolestar = valor) }
     fun cambiarConfirmar(valor: Boolean) = _estado.update { it.copy(confirmarAntesDeAutoAjustar = valor) }
+    fun cambiarNotas(valor: String) = _estado.update { it.copy(notas = valor) }
     fun guardar() {
-        repositorio.alarma(id)?.let { repositorio.agregar(it.copy(anticipacionMin = _estado.value.anticipacionMin)) }
+        repositorio.alarma(id)?.let {
+            repositorio.agregar(it.copy(anticipacionMin = _estado.value.anticipacionMin, notas = _estado.value.notas.ifBlank { null }))
+        }
     }
     fun abrirDialogo() = _estado.update { it.copy(dialogoAbierto = true) }
     fun cerrarDialogo() = _estado.update { it.copy(dialogoAbierto = false) }

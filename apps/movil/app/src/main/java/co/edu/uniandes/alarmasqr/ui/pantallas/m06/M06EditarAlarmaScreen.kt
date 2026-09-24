@@ -20,6 +20,7 @@ import co.edu.uniandes.alarmasqr.datos.Mensajes
 import co.edu.uniandes.alarmasqr.ui.componentes.BarraSuperior
 import co.edu.uniandes.alarmasqr.ui.componentes.BotonEnlace
 import co.edu.uniandes.alarmasqr.ui.componentes.BotonPrimario
+import co.edu.uniandes.alarmasqr.ui.componentes.CampoTexto
 import co.edu.uniandes.alarmasqr.ui.componentes.ChipEstado
 import co.edu.uniandes.alarmasqr.ui.componentes.ColorEnlace
 import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
@@ -40,6 +41,7 @@ fun M06EditarAlarmaScreen(
     estado: EstadoEditarAlarma, mensajes: Mensajes, mensajeEliminar: String, puedeVerCambioOrganizador: Boolean,
     alVolver: () -> Unit, alElegirAnticipacion: (Int) -> Unit, alCambiarSumarTrayecto: (Boolean) -> Unit,
     alElegirSonido: (String) -> Unit, alCambiarRespetarNoMolestar: (Boolean) -> Unit, alCambiarConfirmar: (Boolean) -> Unit,
+    alCambiarNotas: (String) -> Unit,
     alTocarCambioOrganizador: () -> Unit, alGestionarCalendario: () -> Unit, alGuardar: () -> Unit,
     alAbrirDialogo: () -> Unit, alConservar: () -> Unit, alEliminar: () -> Unit,
     modifier: Modifier = Modifier,
@@ -62,10 +64,10 @@ fun M06EditarAlarmaScreen(
                     Interruptor(estado.confirmarAntesDeAutoAjustar, alCambiarConfirmar)
                 }
             }
-            estado.alarma.notas?.let { TarjetaNotas(it) }
+            CampoTexto(estado.notas, alCambiarNotas, etiqueta = "Notas", lineas = 2, modifier = Modifier.testTag("notas"))
             FilaAjuste("Gestionar en el calendario", alTocarFila = alGestionarCalendario) { IconoChevron() }
             BotonPrimario("Guardar cambios", onClick = alGuardar, modifier = Modifier.testTag("guardar"))
-            BotonEnlace("Eliminar alarma", onClick = alAbrirDialogo, color = ColorEnlace.Coral, modifier = Modifier.testTag("eliminar"))
+            BotonEnlace("Eliminar alarma", onClick = alAbrirDialogo, color = ColorEnlace.Coral, modifier = Modifier.fillMaxWidth().testTag("eliminar"))
         }
     }
     if (estado.dialogoAbierto) {
@@ -86,8 +88,8 @@ private fun TarjetaResumenAlarma(alarma: Alarma, chipOrigen: String?, modifier: 
         horizontalArrangement = Arrangement.spacedBy(Espacio.GapFila),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapHoraSufijo)) {
-            Text(FormatoHora.hora(alarma.suena), style = Tipografia.HoraSonara, color = Colores.Tinta, modifier = Modifier.alignByBaseline())
-            Text(FormatoHora.sufijo(alarma.suena), style = Tipografia.HoraProtagonistaSufijo, color = Colores.Tinta, modifier = Modifier.alignByBaseline())
+            Text(FormatoHora.hora(alarma.suena), style = Tipografia.HoraTarjeta, color = Colores.Tinta, modifier = Modifier.alignByBaseline())
+            Text(FormatoHora.sufijo(alarma.suena), style = Tipografia.HoraAmPm, color = Colores.Tinta, modifier = Modifier.alignByBaseline())
         }
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoTarjeta)) {
             Text(alarma.titulo, style = Tipografia.TituloEvento, color = Colores.Tinta)
@@ -108,19 +110,6 @@ private fun SeccionAjuste(titulo: String, modifier: Modifier = Modifier, conteni
     Column(modifier.fillMaxWidth().padding(top = Espacio.AntesSeccion), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
         Text(titulo, style = Tipografia.H3, color = Colores.GrisTexto)
         contenido()
-    }
-}
-
-/** Recuadro de solo lectura con la misma anatomía que `CampoTexto` (etiqueta + valor, radio 12): M06 no persiste notas. */
-@Composable
-private fun TarjetaNotas(texto: String, modifier: Modifier = Modifier) {
-    Column(
-        modifier.fillMaxWidth().background(Colores.Blanco, Radios.Campo).border(Trazos.Borde, Colores.GrisBorde, Radios.Campo)
-            .padding(horizontal = Espacio.Medianil, vertical = Espacio.PaddingCampoVertical),
-        verticalArrangement = Arrangement.spacedBy(Espacio.GapCampo),
-    ) {
-        Text("NOTAS", style = Tipografia.EtiquetaCampo, color = Colores.GrisTexto)
-        Text(texto, style = Tipografia.ValorCampo, color = Colores.Tinta)
     }
 }
 
