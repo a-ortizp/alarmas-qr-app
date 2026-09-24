@@ -81,6 +81,13 @@ sealed interface Pantalla : NavKey {
     @Serializable data object M07 : Pantalla {
         override val codigo = "M07"; override val ruta = "evento/nuevo"; override val titulo = "Crear evento a mano"; override val funcionalidad = "F-M07"
     }
+    /**
+     * Solo se llega desde M07 («Guardar y crear QR»), no desde M06: el marco 5:2 de los mockups no dibuja ningún
+     * control de compartir en M06 y `docs/TRAZABILIDAD.md` tampoco lo lista, así que manda el mockup. El mermaid de
+     * `docs/NAVEGACION.md` §3 sí traza `M06 -->|"Compartir"| M08`, y F-M08 habla del QR de «cualquier alarma
+     * guardada»: las dos frases contradicen al mockup y a TRAZABILIDAD.
+     * Nota pendiente: quitar esa arista del mermaid (o dibujar la fila en el marco de M06) en el repo de UX.
+     */
     @Serializable data class M08(val id: String) : Pantalla {
         override val codigo = "M08"; override val ruta = "evento/$id/qr"; override val titulo = "QR del evento"; override val funcionalidad = "F-M08"
     }
