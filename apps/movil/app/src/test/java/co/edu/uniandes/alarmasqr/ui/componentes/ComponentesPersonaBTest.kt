@@ -2,6 +2,7 @@ package co.edu.uniandes.alarmasqr.ui.componentes
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.test.assertHeightIsEqualTo
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -57,5 +58,14 @@ class ComponentesPersonaBTest {
             AlarmasQRTheme { FilaAjuste("No molestar") { Text("control") } }
         }
         regla.onNodeWithText("No molestar").assertIsDisplayed()
+    }
+
+    /** El rótulo que navega es el objetivo táctil de la fila y no puede quedarse en los 40 pt del mockup. */
+    @Test
+    fun `el rotulo tocable de FilaAjuste llega al area tactil minima`() {
+        regla.setContent {
+            AlarmasQRTheme { FilaAjuste("Cerrar sesión", alTocarFila = {}) { Text("›") } }
+        }
+        regla.onNodeWithText("Cerrar sesión").assertHeightIsEqualTo(Tamanos.AreaTactilMinima)
     }
 }
