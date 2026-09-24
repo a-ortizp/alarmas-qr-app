@@ -2,13 +2,16 @@ package co.edu.uniandes.alarmasqr.ui.pantallas.m09
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -19,9 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import co.edu.uniandes.alarmasqr.datos.Alarma
 import co.edu.uniandes.alarmasqr.datos.CambioDelOrganizador
 import co.edu.uniandes.alarmasqr.datos.FormatoHora
@@ -54,15 +57,17 @@ fun M09CambioEventoScreen(alarma: Alarma, alAceptar: () -> Unit, alMantener: () 
             verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
         ) {
             ChipEstado("Notificación push · hace 2 min", VarianteChip.Notificacion)
-            TextButton(onClick = alVerAlarma, contentPadding = PaddingValues(0.dp), modifier = Modifier.testTag("ver-alarma")) {
-                Text("“${alarma.titulo}” cambió de hora", style = Tipografia.H1, color = Colores.Tinta)
-            }
+            Text(
+                "“${alarma.titulo}” cambió de hora", style = Tipografia.H1, color = Colores.Tinta,
+                modifier = Modifier.fillMaxWidth().clickable(role = Role.Button, onClick = alVerAlarma).testTag("ver-alarma"),
+            )
             Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapDivisor), verticalAlignment = Alignment.CenterVertically) {
                 Text("Cambio hecho por ${cambio.autor}", style = Tipografia.Etiqueta, color = Colores.GrisTexto)
                 ChipEstado("✓ verificado", VarianteChip.Escaneada)
             }
             TarjetaAntesAhora(alarma, cambio)
             TarjetaSonara(alarma, cambio)
+            Spacer(Modifier.height(Espacio.EntreBloques))
             BotonPrimario("Aceptar cambio", onClick = alAceptar, modifier = Modifier.testTag("aceptar"))
             BotonSecundario("Mantener alarma", onClick = alMantener, modifier = Modifier.testTag("mantener"))
         }
