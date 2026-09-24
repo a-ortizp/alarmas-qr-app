@@ -2,7 +2,11 @@ package co.edu.uniandes.alarmasqr.ui.componentes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
@@ -10,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
@@ -68,4 +73,26 @@ fun ChipControl(texto: String, activo: Boolean, onClick: () -> Unit, modifier: M
             .padding(horizontal = Espacio.PaddingChipControl),
         contentAlignment = Alignment.Center,
     ) { Text(texto, style = Tipografia.ChipControl, color = color, maxLines = 1) }
+}
+
+/**
+ * Selector segmentado (M06 ANTICIPACIÓN/SONIDO, M02b «Lista/Mes»): una sola pista Gris Niebla en píldora con el
+ * segmento activo relleno Tinta flotando adentro — a diferencia de [ChipControl], que dibuja cada opción como una
+ * píldora independiente con su propio contorno.
+ */
+@Composable
+fun SelectorSegmentado(opciones: List<Pair<String, Boolean>>, alElegir: (Int) -> Unit, modifier: Modifier = Modifier) {
+    Row(
+        modifier.fillMaxWidth().background(Colores.GrisNiebla, Radios.Pildora).padding(Espacio.PistaSegmento),
+        horizontalArrangement = Arrangement.spacedBy(Espacio.PistaSegmento),
+    ) {
+        opciones.forEachIndexed { i, (texto, activo) ->
+            Box(
+                Modifier.weight(1f).height(Tamanos.ChipControl).clip(Radios.Pildora)
+                    .background(if (activo) Colores.Tinta else Color.Transparent)
+                    .clickable(role = Role.Button, onClick = { alElegir(i) }),
+                contentAlignment = Alignment.Center,
+            ) { Text(texto, style = Tipografia.ChipControl, color = if (activo) Colores.Blanco else Colores.Tinta, maxLines = 1) }
+        }
+    }
 }

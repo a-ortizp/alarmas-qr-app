@@ -238,6 +238,8 @@ object Espacio {
     val PaddingMarcoLectura = 8.dp      // relleno interno del marco de lectura alrededor del QR (M03b)
     val GapSonara = 2.dp                // entre filas del bloque SONARÁ (M04)
     val GapTitulo = 8.dp                // entre el sello «✓» y «¡Alarma programada!» (M04)
+    val AntesSeccion = 16.dp             // aire superior de un encabezado de sección (M06, M11; tutores 2026-09-17: «16 px de aire superior»)
+    val PistaSegmento = 3.dp             // relleno del track del SelectorSegmentado (M06 ANTICIPACIÓN/SONIDO, M02b «Lista/Mes»)
 }
 
 object Movimiento {

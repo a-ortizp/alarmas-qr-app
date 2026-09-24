@@ -20,13 +20,13 @@ import co.edu.uniandes.alarmasqr.datos.Mensajes
 import co.edu.uniandes.alarmasqr.ui.componentes.BarraSuperior
 import co.edu.uniandes.alarmasqr.ui.componentes.BotonEnlace
 import co.edu.uniandes.alarmasqr.ui.componentes.BotonPrimario
-import co.edu.uniandes.alarmasqr.ui.componentes.ChipControl
 import co.edu.uniandes.alarmasqr.ui.componentes.ChipEstado
 import co.edu.uniandes.alarmasqr.ui.componentes.ColorEnlace
 import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
 import co.edu.uniandes.alarmasqr.ui.componentes.DialogoConfirmacion
 import co.edu.uniandes.alarmasqr.ui.componentes.FilaAjuste
 import co.edu.uniandes.alarmasqr.ui.componentes.Interruptor
+import co.edu.uniandes.alarmasqr.ui.componentes.SelectorSegmentado
 import co.edu.uniandes.alarmasqr.ui.componentes.varianteDeChip
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
 import co.edu.uniandes.alarmasqr.ui.theme.Espacio
@@ -49,7 +49,7 @@ fun M06EditarAlarmaScreen(
         ColumnaDesplazable(
             Modifier.fillMaxSize(),
             relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
-            verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
+            verticalArrangement = Arrangement.spacedBy(Espacio.GapTarjeta),
         ) {
             TarjetaResumenAlarma(estado.alarma, estado.chipOrigen)
             SelectorAnticipacion(estado.anticipacionMin, alElegirAnticipacion)
@@ -105,7 +105,7 @@ private fun subtituloEvento(alarma: Alarma): String {
 
 @Composable
 private fun SeccionAjuste(titulo: String, modifier: Modifier = Modifier, contenido: @Composable () -> Unit) {
-    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
+    Column(modifier.fillMaxWidth().padding(top = Espacio.AntesSeccion), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
         Text(titulo, style = Tipografia.H3, color = Colores.GrisTexto)
         contenido()
     }
@@ -144,11 +144,9 @@ private fun etiquetaAnticipacion(min: Int) = if (min < 60) "$min min" else "1 h"
 private fun SelectorAnticipacion(seleccionado: Int, alElegir: (Int) -> Unit, modifier: Modifier = Modifier) {
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
         Text("ANTICIPACIÓN", style = Tipografia.H3, color = Colores.GrisTexto)
-        Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapChips)) {
-            OPCIONES_ANTICIPACION.forEach { min -> ChipControl(etiquetaAnticipacion(min), activo = seleccionado == min, onClick = { alElegir(min) }) }
-            // «Otro»: representa el valor actual cuando no es 10/30/60; sin selector de minutos personalizado (maquetación).
-            ChipControl("Otro", activo = seleccionado !in OPCIONES_ANTICIPACION, onClick = {})
-        }
+        // «Otro»: representa el valor actual cuando no es 10/30/60; sin selector de minutos personalizado (maquetación).
+        val opciones = OPCIONES_ANTICIPACION.map { etiquetaAnticipacion(it) to (seleccionado == it) } + ("Otro" to (seleccionado !in OPCIONES_ANTICIPACION))
+        SelectorSegmentado(opciones, alElegir = { i -> OPCIONES_ANTICIPACION.getOrNull(i)?.let(alElegir) })
     }
 }
 
@@ -158,8 +156,7 @@ private val OPCIONES_SONIDO = listOf("sonar" to "Sonar", "vibrar" to "Vibrar", "
 private fun SelectorSonido(seleccionado: String, alElegir: (String) -> Unit, modifier: Modifier = Modifier) {
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
         Text("SONIDO", style = Tipografia.H3, color = Colores.GrisTexto)
-        Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapChips)) {
-            OPCIONES_SONIDO.forEach { (valor, texto) -> ChipControl(texto, activo = seleccionado == valor, onClick = { alElegir(valor) }) }
-        }
+        val opciones = OPCIONES_SONIDO.map { (valor, texto) -> texto to (seleccionado == valor) }
+        SelectorSegmentado(opciones, alElegir = { i -> alElegir(OPCIONES_SONIDO[i].first) })
     }
 }
