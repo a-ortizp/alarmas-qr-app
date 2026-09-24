@@ -44,11 +44,15 @@ class M11AjustesScreenTest {
     }
 
     @Test
-    fun `muestra los permisos del dataset y abre el dialogo de cerrar sesion`() {
+    fun `muestra los ajustes por defecto, los permisos del dataset y abre el dialogo de cerrar sesion`() {
         montar()
         regla.onNodeWithTag("pantalla-M11").assertIsDisplayed()
-        regla.onAllNodesWithText("Concedido").onFirst().assertIsDisplayed()   // alarmasExactas y notificaciones: true en dataset.json
-        regla.onNodeWithText("Falta").assertIsDisplayed()       // bateriaSinRestricciones: false
+        regla.onNodeWithText("30 min").assertIsDisplayed()   // anticipacionPorDefectoMin del dataset
+        regla.onNodeWithText("Google Calendar").assertIsDisplayed()
+        regla.onNodeWithText("Gestionar mis datos (Ley 1581)").assertIsDisplayed()
+        regla.onAllNodesWithText("✓ activo").onFirst().assertIsDisplayed()   // alarmasExactas y notificaciones: true en dataset.json
+        regla.onNodeWithText("Revisar").assertIsDisplayed()       // bateriaSinRestricciones: false
+        regla.onNodeWithText("Sin este permiso, Android puede silenciar la alarma en segundo plano.").assertIsDisplayed()
         regla.capturar("M11")
         regla.onNodeWithTag("cerrar-sesion").performClick()
         regla.onNodeWithText("¿Cerrar sesión?").assertIsDisplayed()

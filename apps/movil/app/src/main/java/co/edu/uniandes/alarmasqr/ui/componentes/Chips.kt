@@ -30,6 +30,7 @@ enum class VarianteChip(val fondo: Color, val borde: Color?, val texto: Color) {
     Nueva(Colores.Tinta, null, Colores.Blanco),
     Coral(Colores.CoralSuave, Colores.CoralTexto, Colores.CoralTexto),
     Suave(Colores.AmarilloSuave, null, Colores.Tinta),
+    AlertaTexto(Color.Transparent, Colores.CoralTexto, Colores.CoralTexto),  // «Revisar» (M11, permiso del sistema faltante)
 }
 
 @Composable

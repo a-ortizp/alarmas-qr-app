@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,12 +13,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.style.TextAlign
 import co.edu.uniandes.alarmasqr.datos.Mensajes
 import co.edu.uniandes.alarmasqr.ui.componentes.BarraSuperior
+import co.edu.uniandes.alarmasqr.ui.componentes.ChipEstado
 import co.edu.uniandes.alarmasqr.ui.componentes.ColumnaDesplazable
 import co.edu.uniandes.alarmasqr.ui.componentes.DialogoConfirmacion
 import co.edu.uniandes.alarmasqr.ui.componentes.FilaAjuste
 import co.edu.uniandes.alarmasqr.ui.componentes.Interruptor
+import co.edu.uniandes.alarmasqr.ui.componentes.VarianteChip
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
 import co.edu.uniandes.alarmasqr.ui.theme.Espacio
 import co.edu.uniandes.alarmasqr.ui.theme.Tipografia
@@ -30,24 +34,33 @@ fun M11AjustesScreen(
     alAbrirDialogo: () -> Unit, alConservar: () -> Unit, alCerrarSesion: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val ajustes = estado.ajustes
     Column(modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M11")) {
         BarraSuperior("Ajustes")
         ColumnaDesplazable(Modifier.fillMaxSize(), relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton)) {
-            SeccionAjustes("NOTIFICACIONES") {
-                FilaAjuste("No molestar") { Interruptor(estado.ajustes.respetarNoMolestar, alCambiarNoMolestar) }
-                FilaAjuste("Confirmar antes de auto-ajustar") { Interruptor(estado.ajustes.confirmarAntesDeAutoAjustar, alCambiarConfirmarAutoAjustar) }
+            SeccionAjustes("ALARMAS") {
+                FilaAjuste("Anticipación por defecto") { ValorConChevron("${ajustes.anticipacionPorDefectoMin} min") }
+                FilaAjuste("Sonido predeterminado") { ValorConChevron(etiquetaSonido(ajustes.sonidoPorDefecto)) }
+                FilaAjuste("Posponer predeterminado") { ValorConChevron("${ajustes.posponerPorDefectoMin} min") }
+                FilaAjuste("Respetar \"No molestar\" (vibrar)") { Interruptor(ajustes.respetarNoMolestar, alCambiarNoMolestar) }
+                FilaAjuste("Confirmar reajustes del organizador") { Interruptor(ajustes.confirmarAntesDeAutoAjustar, alCambiarConfirmarAutoAjustar) }
             }
-            SeccionAjustes("PERMISOS") {
-                FilaAjuste("Alarmas exactas") { EstadoPermiso(estado.ajustes.permisos.alarmasExactas) }
-                FilaAjuste("Notificaciones") { EstadoPermiso(estado.ajustes.permisos.notificaciones) }
-                FilaAjuste("Batería sin restricciones") { EstadoPermiso(estado.ajustes.permisos.bateriaSinRestricciones) }
+            SeccionAjustes("PERMISOS DEL SISTEMA") {
+                FilaPermiso("Alarmas exactas", ajustes.permisos.alarmasExactas, "Sin este permiso, la alarma puede sonar tarde o no sonar.")
+                FilaPermiso("Notificaciones", ajustes.permisos.notificaciones, "Sin este permiso, no verás el aviso de la alarma.")
+                FilaPermiso("Batería sin restricciones", ajustes.permisos.bateriaSinRestricciones, "Sin este permiso, Android puede silenciar la alarma en segundo plano.")
             }
             SeccionAjustes("CALENDARIOS") {
-                FilaAjuste("Vinculados: ${estado.ajustes.calendariosVinculados.joinToString()}") { }
+                ajustes.calendariosVinculados.forEach { id -> FilaAjuste(nombreCalendario(id)) { ValorConChevron("Conectado") } }
             }
-            SeccionAjustes("CUENTA") {
-                FilaAjuste("Cerrar sesión", alTocarFila = alAbrirDialogo, modifier = Modifier.testTag("cerrar-sesion")) { }
+            SeccionAjustes("CUENTA Y DATOS") {
+                FilaAjuste("Gestionar mis datos (Ley 1581)") { IconoChevron() }
+                FilaAjuste("Cerrar sesión", alTocarFila = alAbrirDialogo, modifier = Modifier.testTag("cerrar-sesion")) { IconoChevron() }
             }
+            Text(
+                "Alarmas QR · versión 1.0 · prototipo", style = Tipografia.Nota, color = Colores.GrisTexto, textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth().padding(top = Espacio.EntreBloques),
+            )
         }
     }
     if (estado.dialogoAbierto) {
@@ -67,7 +80,44 @@ private fun SeccionAjustes(titulo: String, modifier: Modifier = Modifier, conten
     }
 }
 
+/** Fila de permiso con su píldora de estado; la advertencia solo se dibuja cuando falta (F-M11: «con advertencia si falta alguno»). */
+@Composable
+private fun FilaPermiso(etiqueta: String, concedido: Boolean, advertencia: String, modifier: Modifier = Modifier) {
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
+        FilaAjuste(etiqueta) { EstadoPermiso(concedido) }
+        if (!concedido) Text(advertencia, style = Tipografia.Nota, color = Colores.GrisTexto)
+    }
+}
+
 @Composable
 private fun EstadoPermiso(concedido: Boolean, modifier: Modifier = Modifier) {
-    Text(if (concedido) "Concedido" else "Falta", style = Tipografia.Etiqueta, color = if (concedido) Colores.VerdeTexto else Colores.CoralTexto, modifier = modifier)
+    if (concedido) ChipEstado("✓ activo", VarianteChip.Escaneada, modifier) else ChipEstado("Revisar", VarianteChip.AlertaTexto, modifier)
+}
+
+@Composable
+private fun ValorConChevron(texto: String, modifier: Modifier = Modifier) {
+    Row(modifier, horizontalArrangement = Arrangement.spacedBy(Espacio.GapFila)) {
+        Text(texto, style = Tipografia.Etiqueta, color = Colores.GrisTexto)
+        IconoChevron()
+    }
+}
+
+@Composable
+private fun IconoChevron(modifier: Modifier = Modifier) {
+    Text("›", style = Tipografia.Chevron, color = Colores.GrisTexto, modifier = modifier)
+}
+
+private fun etiquetaSonido(valor: String) = when (valor) {
+    "sonar" -> "Sonar"
+    "vibrar" -> "Vibrar"
+    "silencio" -> "Silencio"
+    else -> valor
+}
+
+/** F-M11: «Conexión opcional de Google Calendar, Outlook/Teams o calendario del teléfono» (FUNCIONALIDADES.md F-M02). */
+private fun nombreCalendario(id: String) = when (id) {
+    "google" -> "Google Calendar"
+    "outlook" -> "Outlook/Teams"
+    "telefono" -> "Calendario del teléfono"
+    else -> id
 }
