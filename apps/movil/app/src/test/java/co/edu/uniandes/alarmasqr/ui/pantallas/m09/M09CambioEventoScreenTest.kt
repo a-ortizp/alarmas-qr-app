@@ -32,8 +32,14 @@ class M09CambioEventoScreenTest {
             AlarmasQRTheme { M09CambioEventoScreen(entrega, alAceptar = { aceptado = true }, alMantener = { mantenido = true }, alCerrar = { cerrado = true }, alVerAlarma = {}) }
         }
         regla.onNodeWithTag("pantalla-M09").assertIsDisplayed()
-        regla.onNodeWithText("4:45 pm").assertIsDisplayed()
-        regla.onNodeWithText("Antes sonaba 3:15 pm").assertIsDisplayed()
+        regla.onNodeWithText("Notificación push · hace 2 min").assertIsDisplayed()
+        regla.onNodeWithText("“Entrega de proyecto UX” cambió de hora").assertIsDisplayed()
+        regla.onNodeWithText("Cambio hecho por MISO · UniAndes").assertIsDisplayed()
+        regla.onNodeWithText("✓ verificado").assertIsDisplayed()
+        regla.onNodeWithText("dom 30 · 4:00 pm").assertIsDisplayed()   // ANTES: evento sin el cambio
+        regla.onNodeWithText("dom 30 · 5:30 pm · Aula SD-703, Universidad").assertIsDisplayed()   // AHORA
+        regla.onNodeWithText("4:45").assertIsDisplayed()   // hora y sufijo en Text separados, como en M06/M04
+        regla.onNodeWithText("30 min de margen + trayecto · antes sonaba 3:15 pm").assertIsDisplayed()
         regla.capturar("M09")
         regla.onNodeWithTag("aceptar").performClick(); assert(aceptado)
         regla.onNodeWithTag("mantener").performClick(); assert(mantenido)

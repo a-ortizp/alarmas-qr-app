@@ -1,7 +1,7 @@
 {
   "meta": {
     "name": "Alarmas QR · dataset único de los mockups",
-    "version": "1.4",
+    "version": "1.5",
     "date": "2026-09-19",
     "source": "Mockups Figma v1.6 (móvil) y web v1.5; MOCKUPS.md §3c y §7",
     "hoy": "2026-08-27",
@@ -13,7 +13,8 @@
       "escaneosPorSemana es un dato ilustrativo de los mockups (suma 128, igual al indicador).",
       "Los textos de los diálogos de confirmación (v1.1) llevan marcadores {evento}, {fecha} y {hora} que la app rellena con la alarma tocada.",
       "v1.3 (2026-09-23): mensajes.enlaceCopiado para «Copiar enlace» de M08 (Plan 4, móvil de la Persona B). cambioDelOrganizador y alSonar de a-entrega ya estaban desde v1.1/v1.2, sin usar hasta este plan.",
-      "v1.4 (2026-09-23): alarma.notas (a-entrega: «Llevar maqueta impresa»), campo opcional nuevo para «NOTAS» de M06 (revisión visual de Plan 4)."
+      "v1.4 (2026-09-23): alarma.notas (a-entrega: «Llevar maqueta impresa»), campo opcional nuevo para «NOTAS» de M06 (revisión visual de Plan 4).",
+      "v1.5 (2026-09-24): alarma.cambioDelOrganizador simulado también en a-semillero (Semillero UX adelanta 30 min la reunión virtual), para que M09 no dependa de una sola alarma de ejemplo."
     ]
   },
   "usuario": {
@@ -104,6 +105,13 @@
       "organizador": {
         "nombre": "Semillero UX",
         "verificado": true
+      },
+      "cambioDelOrganizador": {
+        "nuevoInicio": "2026-08-28T18:50:00-05:00",
+        "nuevaHoraDeAlarma": "2026-08-28T18:30:00-05:00",
+        "antesSonaba": "2026-08-28T18:00:00-05:00",
+        "autor": "Semillero UX",
+        "motivo": "Cambio de hora de la reunión virtual"
       }
     },
     {

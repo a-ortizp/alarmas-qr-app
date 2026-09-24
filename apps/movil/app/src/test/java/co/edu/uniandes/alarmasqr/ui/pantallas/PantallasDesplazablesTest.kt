@@ -21,6 +21,7 @@ import co.edu.uniandes.alarmasqr.ui.pantallas.m03.M03bPantallazoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m04.EstadoAlarmaCreada
 import co.edu.uniandes.alarmasqr.ui.pantallas.m04.M04AlarmaCreadaSheet
 import co.edu.uniandes.alarmasqr.ui.pantallas.m07.M07CrearEventoScreen
+import co.edu.uniandes.alarmasqr.ui.pantallas.m09.M09CambioEventoScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m11.M11AjustesScreen
 import co.edu.uniandes.alarmasqr.ui.pantallas.m11.M11AjustesViewModel
 import co.edu.uniandes.alarmasqr.ui.pantallas.m12.M12PermisoCamaraScreen
@@ -116,6 +117,13 @@ class PantallasDesplazablesTest {
     fun `M07 alcanza «Guardar y crear QR», anclado abajo con Spacer(weight)`() {
         montar { M07CrearEventoScreen(alVolver = {}, alGuardar = { _, _, _, _ -> }) }
         alcanzarEtiqueta("guardar")
+    }
+
+    @Test
+    fun `M09 alcanza «Mantener alarma» en un telefono bajo`() {
+        val entrega = repo.dataset.alarmas.first { it.id == "a-entrega" }
+        montar { M09CambioEventoScreen(entrega, alAceptar = {}, alMantener = {}, alCerrar = {}, alVerAlarma = {}) }
+        alcanzarEtiqueta("mantener")
     }
 
     @Test

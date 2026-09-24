@@ -102,6 +102,16 @@ class RepositorioDatasetTest {
     }
 
     @Test
+    fun `a-semillero tambien trae cambioDelOrganizador, para que M09 no dependa de una sola alarma de ejemplo`() {
+        val repo = RepositorioDataset(json)
+        val cambio = repo.dataset.alarmas.first { it.id == "a-semillero" }.cambioDelOrganizador!!
+        assertEquals("2026-08-28T18:50:00-05:00", cambio.nuevoInicio)
+        assertEquals("2026-08-28T18:30:00-05:00", cambio.nuevaHoraDeAlarma)
+        assertEquals("2026-08-28T18:00:00-05:00", cambio.antesSonaba)
+        assertEquals("Semillero UX", cambio.autor)
+    }
+
+    @Test
     fun `aplicarCambioOrganizador actualiza eventoInicio y suena de la alarma`() {
         val repo = RepositorioDataset(json)
         repo.agregarDesdeEvento("e-entrega")
