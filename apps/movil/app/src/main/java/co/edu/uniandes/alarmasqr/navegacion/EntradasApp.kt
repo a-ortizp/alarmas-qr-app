@@ -268,9 +268,11 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             }
             M08CompartirQRScreen(
                 evento = evento, alarma = alarma,
-                // TRAZABILIDAD.md: «‹» → M02, siempre — no removeLastOrNull(), que desde M02v (primer uso, sin
-                // alarmas) volvía al estado vacío en vez de la lista real con la alarma recién creada.
-                alVolver = { pila.reemplazarTodo(Pantalla.M02) },
+                // Pasa por M05 (la misma pantalla de confirmación del flujo de escaneo, con «Alarma guardada ·
+                // Deshacer»), no M02 directo: así la alarma recién creada a mano también se ve resaltada la
+                // primera vez, igual que una escaneada — antes iba directo a M02 y nunca se veía resaltada.
+                // reemplazarTodo (no removeLastOrNull) también evita volver a M02v si M07 se abrió desde ahí.
+                alVolver = { pila.reemplazarTodo(Pantalla.M05(alarma.id)) },
                 alCompartirWhatsApp = ::compartirWhatsApp,
                 alCompartirCorreo = ::compartirCorreo,
                 alCompartirMas = ::compartirGenerico,

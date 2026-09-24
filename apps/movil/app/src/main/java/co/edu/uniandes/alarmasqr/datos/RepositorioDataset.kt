@@ -55,7 +55,7 @@ class RepositorioDataset(json: String) {
         val alarma = Alarma(
             id = id, titulo = titulo, eventoInicio = eventoInicio, suena = suena, lugar = lugar,
             origen = "creada-por-mi", estado = "activa", anticipacionMin = anticipacionMin, trayectoMin = 0,
-            chips = listOf("Creada por mí"), detalle = detalle,
+            esNueva = true, chips = listOf("Nueva", "Creada por mí"), detalle = detalle,
         )
         agregar(alarma)
         val eventoId = "e-" + id.removePrefix("a-")
@@ -76,6 +76,17 @@ class RepositorioDataset(json: String) {
     }
 
     fun eliminar(id: String) = mutar { lista -> lista.filterNot { it.id == id } }
+
+    /**
+     * Apaga `esNueva` y quita el chip «Nueva» de toda alarma que lo tenga — la confirmación visual de «se acaba
+     * de crear/escanear» (borde verde + chip) es de una sola vista: M02InicioViewModel la llama al construirse
+     * para M02 (no para M05, la pantalla de confirmación en sí), así que la próxima vez que se entra a la lista
+     * ya no aparece resaltada. No pasa por `mutar`: no es una mutación que «Deshacer» deba poder revertir.
+     */
+    fun limpiarRecienCreadas() {
+        if (_alarmas.value.none { it.esNueva }) return
+        _alarmas.value = _alarmas.value.map { if (it.esNueva) it.copy(esNueva = false, chips = it.chips.filterNot { c -> c == "Nueva" }) else it }
+    }
 
     /**
      * Interruptor de la tarjeta: pausa o reactiva sin abrir un nuevo nivel de «Deshacer» (no pasa por `mutar`), pero

@@ -108,10 +108,10 @@ class FlujosPersonaBTest {
     }
 
     @Test
-    fun `M08 «‹» siempre lleva a M02, no a M02v aunque se haya llegado por el estado vacio`() {
-        // Regresión: alVolver hacía removeLastOrNull(); si M07 se abre desde M02v (primer uso, sin alarmas, con
-        // irA en vez de reemplazarCima), la pila quedaba en [M02v, M08] y el back volvía a la pantalla vacía en
-        // vez de a la lista real, escondiendo la alarma recién creada (TRAZABILIDAD.md: M08 «‹» → M02).
+    fun `crear a mano resalta la alarma en M05 y el resaltado desaparece en la siguiente visita a M02`() {
+        // «‹» de M08 pasa por M05 (no M02 directo): la misma pantalla de confirmación con borde verde + chip
+        // «Nueva» que ya usa el flujo de escaneo, para que crear una alarma a mano se confirme igual. reemplazarTodo
+        // (no removeLastOrNull) también evita volver a M02v si M07 se abrió desde ahí (regresión anterior).
         montar(Pantalla.M02v)
         regla.onNodeWithTag("vacio-a-mano").performClick()
         regla.waitForIdle()
@@ -122,8 +122,14 @@ class FlujosPersonaBTest {
         regla.onNodeWithTag("pantalla-M08").assertIsDisplayed()
         regla.onNodeWithTag("atras").performClick()
         regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M05").assertIsDisplayed()
+        regla.onNodeWithText("Primer evento").assertIsDisplayed()
+        regla.onNodeWithText("Nueva").assertIsDisplayed()   // recién creada: resaltada esta primera vez
+        regla.onNodeWithTag("nav-M02").performClick()        // vuelve a «Alarmas» por la barra inferior
+        regla.waitForIdle()
         regla.onNodeWithTag("pantalla-M02").assertIsDisplayed()
         regla.onNodeWithText("Primer evento").assertIsDisplayed()
+        regla.onNodeWithText("Nueva").assertDoesNotExist()   // ya se vio una vez: no se vuelve a resaltar
     }
 
     @Test

@@ -157,11 +157,24 @@ class RepositorioDatasetTest {
         val repo = RepositorioDataset(json)
         val alarma = repo.crearAlarmaManual("Cena de fin de año", "2026-08-28T19:00:00-05:00", "Casa de Andrés", null, 30)
         assertEquals("creada-por-mi", alarma.origen)
-        assertEquals(listOf("Creada por mí"), alarma.chips)
+        assertEquals(true, alarma.esNueva)
+        assertEquals(listOf("Nueva", "Creada por mí"), alarma.chips)
         assertEquals("2026-08-28T18:30:00-05:00", alarma.suena)
         assertEquals(alarma.id, repo.alarma(alarma.id)?.id)
         val evento = repo.dataset.eventosQR.let { repo.evento("e-" + alarma.id.removePrefix("a-")) }
         assertEquals("Aún sin escaneos · recién creado", evento?.etiqueta)
+    }
+
+    @Test
+    fun `limpiarRecienCreadas apaga esNueva y quita el chip Nueva de todas las alarmas recien creadas`() {
+        val repo = RepositorioDataset(json)
+        val manual = repo.crearAlarmaManual("Cena de fin de año", "2026-08-28T19:00:00-05:00", "Casa de Andrés", null, 30)
+        repo.agregarDesdeEvento("e-entrega")
+        repo.limpiarRecienCreadas()
+        assertEquals(false, repo.alarma(manual.id)?.esNueva)
+        assertEquals(listOf("Creada por mí"), repo.alarma(manual.id)?.chips)
+        assertEquals(false, repo.alarma("a-entrega")?.esNueva)
+        assertEquals(false, repo.alarma("a-entrega")?.chips?.contains("Nueva"))
     }
 
     @Test

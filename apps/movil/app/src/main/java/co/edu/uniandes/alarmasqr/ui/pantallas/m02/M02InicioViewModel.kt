@@ -33,6 +33,13 @@ class M02InicioViewModel(
     private val alarmaNueva: String? = null,
     private val programador: Programador? = null,
 ) : ViewModel() {
+    init {
+        // M05 (alarmaNueva != null) es justo la pantalla de confirmación: no le apaga el resaltado a la alarma
+        // que la trajo aquí. La entrada plana de M02 sí — así la próxima vez que se entra a la lista (desde otra
+        // pestaña o tras volver de compartir el QR) la alarma ya se ve como cualquier otra.
+        if (alarmaNueva == null) repositorio.limpiarRecienCreadas()
+    }
+
     val estado: StateFlow<EstadoInicio> = repositorio.alarmas
         .map { EstadoInicio(agruparPorDia(it, repositorio.hoy), alarmaNueva) }
         .stateIn(viewModelScope, SharingStarted.Eagerly, EstadoInicio(agruparPorDia(repositorio.alarmas.value, repositorio.hoy), alarmaNueva))
