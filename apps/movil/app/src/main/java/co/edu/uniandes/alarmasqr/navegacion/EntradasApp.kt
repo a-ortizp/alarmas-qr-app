@@ -268,7 +268,9 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
             }
             M08CompartirQRScreen(
                 evento = evento, alarma = alarma,
-                alVolver = { pila.removeLastOrNull() },
+                // TRAZABILIDAD.md: «‹» → M02, siempre — no removeLastOrNull(), que desde M02v (primer uso, sin
+                // alarmas) volvía al estado vacío en vez de la lista real con la alarma recién creada.
+                alVolver = { pila.reemplazarTodo(Pantalla.M02) },
                 alCompartirWhatsApp = ::compartirWhatsApp,
                 alCompartirCorreo = ::compartirCorreo,
                 alCompartirMas = ::compartirGenerico,

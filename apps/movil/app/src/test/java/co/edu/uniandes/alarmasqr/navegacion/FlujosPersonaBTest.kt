@@ -108,6 +108,25 @@ class FlujosPersonaBTest {
     }
 
     @Test
+    fun `M08 «‹» siempre lleva a M02, no a M02v aunque se haya llegado por el estado vacio`() {
+        // Regresión: alVolver hacía removeLastOrNull(); si M07 se abre desde M02v (primer uso, sin alarmas, con
+        // irA en vez de reemplazarCima), la pila quedaba en [M02v, M08] y el back volvía a la pantalla vacía en
+        // vez de a la lista real, escondiendo la alarma recién creada (TRAZABILIDAD.md: M08 «‹» → M02).
+        montar(Pantalla.M02v)
+        regla.onNodeWithTag("vacio-a-mano").performClick()
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M07").assertIsDisplayed()
+        regla.onNodeWithTag("titulo").performTextInput("Primer evento")
+        regla.onNodeWithTag("guardar").performClick()
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M08").assertIsDisplayed()
+        regla.onNodeWithTag("atras").performClick()
+        regla.waitForIdle()
+        regla.onNodeWithTag("pantalla-M02").assertIsDisplayed()
+        regla.onNodeWithText("Primer evento").assertIsDisplayed()
+    }
+
+    @Test
     fun `T3 crear evento propio y compartir M02 - M02h - M07 - M08`() {
         // M07 y M08 solo se alcanzan por flujo (la hoja M02h las abre con reemplazarCima): no tienen entrada
         // propia fuera de la navegación real, así que su captura de verificación pixel-perfect vive aquí.
