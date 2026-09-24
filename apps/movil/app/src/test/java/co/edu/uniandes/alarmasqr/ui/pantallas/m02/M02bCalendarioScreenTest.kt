@@ -26,29 +26,47 @@ class M02bCalendarioScreenTest {
     @get:Rule val regla = createComposeRule()
     private val repo = RepositorioDataset(File("src/main/assets/dataset.json").readText())
 
-    @Test
-    fun `muestra el dia seleccionado del dataset y sus alarmas`() {
-        val vm = M02bCalendarioViewModel(repo)
+    private fun montar(vm: M02bCalendarioViewModel = M02bCalendarioViewModel(repo), alVerLista: () -> Unit = {}): M02bCalendarioViewModel {
         regla.setContent {
             val estado by vm.estado.collectAsStateWithLifecycle()
-            AlarmasQRTheme { M02bCalendarioScreen(estado, alSeleccionarDia = vm::seleccionarDia, alTocarAlarma = {}, alCambiarActiva = vm::cambiarActiva) }
+            AlarmasQRTheme {
+                M02bCalendarioScreen(
+                    estado, alSeleccionarDia = vm::seleccionarDia, alTocarAlarma = {}, alCambiarActiva = vm::cambiarActiva,
+                    alMesAnterior = vm::mesAnterior, alMesSiguiente = vm::mesSiguiente, alVerLista = alVerLista,
+                )
+            }
         }
+        return vm
+    }
+
+    @Test
+    fun `muestra el mes y el dia seleccionado del dataset con sus alarmas`() {
+        montar()
         regla.onNodeWithTag("pantalla-M02b").assertIsDisplayed()
+        regla.onNodeWithText("Agosto 2026").assertIsDisplayed()
+        regla.onNodeWithText("JUE 27 · 2 ALARMAS").assertIsDisplayed()
         regla.onNodeWithText("Reunión con el tutor").assertIsDisplayed()   // 2026-08-27, día precargado de dataset.calendario.diaSeleccionado
         regla.capturar("M02b")
     }
 
     @Test
     fun `tocar un dia distinto cambia las alarmas mostradas`() {
-        val vm = M02bCalendarioViewModel(repo)
-        regla.setContent {
-            val estado by vm.estado.collectAsStateWithLifecycle()
-            AlarmasQRTheme { M02bCalendarioScreen(estado, alSeleccionarDia = vm::seleccionarDia, alTocarAlarma = {}, alCambiarActiva = vm::cambiarActiva) }
-        }
-        // 2026-08-30 solo tiene a-entrega (esNueva=true): es el molde del flujo de escaneo T1 (dataset.eventosQR
-        // e-entrega → a-entrega), fuera de repositorio.alarmas hasta escanear, igual que en M02. 2026-08-31 tiene
-        // una alarma confirmada (a-asado) con el mismo conteo (1) en dataset.calendario.diasConAlarmas.
+        montar()
+        // 2026-08-31 tiene una alarma confirmada (a-asado), fuera del rango de dataset.calendario.diasConAlarmas
+        // (ya no se usa: el conteo ahora se deriva en vivo de RepositorioDataset.alarmas).
         regla.onNodeWithTag("dia-2026-08-31").performClick()
         regla.onNodeWithText("Asado del semillero").assertIsDisplayed()
+    }
+
+    @Test
+    fun `las flechas del mes navegan y tocar Lista dispara el cambio de vista`() {
+        var listaTocada = false
+        montar(alVerLista = { listaTocada = true })
+        regla.onNodeWithTag("mes-siguiente").performClick()
+        regla.onNodeWithText("Septiembre 2026").assertIsDisplayed()
+        regla.onNodeWithTag("mes-anterior").performClick()
+        regla.onNodeWithText("Agosto 2026").assertIsDisplayed()
+        regla.onNodeWithTag("boton-lista").performClick()
+        assert(listaTocada)
     }
 }

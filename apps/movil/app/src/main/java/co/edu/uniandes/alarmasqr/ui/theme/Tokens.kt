@@ -158,6 +158,7 @@ object Medidas {
     val PasoTextura = 14.dp
     val EtiquetaDato = 74.dp          // ancho fijo de la columna de etiqueta en la tarjeta del evento (M04)
     val PuntoPagina = 6.dp            // punto inactivo y gap del indicador de página (M01)
+    val MarcaDia = DpSize(14.dp, 3.dp) // marca de «día con alarmas» bajo el número, M02b (mockups v1.8)
     val Burbuja = DpSize(250.dp, 227.dp)   // burbuja de mensaje de WhatsApp con el QR enmarcado (M03b)
 }
 

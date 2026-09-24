@@ -106,7 +106,10 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
     entry<Pantalla.M02b> {
         val vm = viewModel { M02bCalendarioViewModel(repositorio) }
         val estado by vm.estado.collectAsStateWithLifecycle()
-        M02bCalendarioScreen(estado, alSeleccionarDia = vm::seleccionarDia, alTocarAlarma = { pila.irA(Pantalla.M06(it)) }, alCambiarActiva = vm::cambiarActiva)
+        M02bCalendarioScreen(
+            estado, alSeleccionarDia = vm::seleccionarDia, alTocarAlarma = { pila.irA(Pantalla.M06(it)) }, alCambiarActiva = vm::cambiarActiva,
+            alMesAnterior = vm::mesAnterior, alMesSiguiente = vm::mesSiguiente, alVerLista = { pila.irAPestana(Pantalla.M02) },
+        )
     }
     entry<Pantalla.M12> {
         val abrirAjustes = rememberSolicitudPermisoCamara(alTerminar = { pila.reemplazarCima(Pantalla.M03) })
