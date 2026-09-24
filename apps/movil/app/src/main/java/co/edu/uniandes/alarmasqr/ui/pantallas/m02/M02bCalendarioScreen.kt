@@ -106,7 +106,9 @@ private fun RejillaMes(dias: List<DiaCalendario>, seleccionado: LocalDate, alSel
 
 @Composable
 private fun CeldaDia(dia: DiaCalendario, seleccionado: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-    val colorTexto = when { seleccionado -> Colores.Blanco; dia.enMes -> Colores.Tinta; else -> Colores.GrisBorde }
+    // Los días de relleno del mes vecino van en Gris Texto, no en Gris Borde: a 15 sp sobre blanco el texto pide
+    // un tono AA, y la excepción del Gris Borde como texto secundario solo vale sobre Tinta (DS §6).
+    val colorTexto = when { seleccionado -> Colores.Blanco; dia.enMes -> Colores.Tinta; else -> Colores.GrisTexto }
     val colorMarca = if (seleccionado) Colores.Blanco else Colores.GrisMedio
     Column(
         modifier.clip(Radios.Tarjeta)
