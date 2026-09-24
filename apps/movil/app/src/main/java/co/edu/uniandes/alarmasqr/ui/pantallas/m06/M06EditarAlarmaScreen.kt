@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
@@ -86,6 +87,7 @@ private fun TarjetaResumenAlarma(alarma: Alarma, chipOrigen: String?, modifier: 
         modifier.fillMaxWidth().clip(Radios.Tarjeta).background(Colores.Blanco).border(Trazos.Borde, Colores.GrisBorde, Radios.Tarjeta)
             .padding(horizontal = Espacio.PaddingTarjetaEvento, vertical = Espacio.PaddingTarjeta),
         horizontalArrangement = Arrangement.spacedBy(Espacio.GapFila),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapHoraSufijo)) {
             Text(FormatoHora.hora(alarma.suena), style = Tipografia.HoraTarjeta, color = Colores.Tinta, modifier = Modifier.alignByBaseline())
