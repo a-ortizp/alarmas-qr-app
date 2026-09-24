@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,7 +36,11 @@ fun M11AjustesScreen(
     val ajustes = estado.ajustes
     Column(modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M11")) {
         BarraSuperior("Ajustes")
-        ColumnaDesplazable(Modifier.fillMaxSize(), relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton)) {
+        ColumnaDesplazable(
+            Modifier.fillMaxSize(),
+            relleno = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),
+            verticalArrangement = Arrangement.spacedBy(Espacio.EntreBloques),
+        ) {
             SeccionAjustes("ALARMAS") {
                 FilaAjuste("Anticipación por defecto") { ValorConChevron("${ajustes.anticipacionPorDefectoMin} min") }
                 FilaAjuste("Sonido predeterminado") { ValorConChevron(etiquetaSonido(ajustes.sonidoPorDefecto)) }
@@ -59,7 +62,7 @@ fun M11AjustesScreen(
             }
             Text(
                 "Alarmas QR · versión 1.0 · prototipo", style = Tipografia.Nota, color = Colores.GrisTexto, textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth().padding(top = Espacio.EntreBloques),
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -74,7 +77,7 @@ fun M11AjustesScreen(
 
 @Composable
 private fun SeccionAjustes(titulo: String, modifier: Modifier = Modifier, contenido: @Composable ColumnScope.() -> Unit) {
-    Column(modifier.fillMaxWidth().padding(top = Espacio.EntreBloques), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
+    Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
         Text(titulo, style = Tipografia.H3, color = Colores.GrisTexto)
         contenido()
     }
