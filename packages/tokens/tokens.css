@@ -1,4 +1,4 @@
-/* Alarmas QR · Energía puntual · tokens v1.19 (2026-09-22)
+/* Alarmas QR · Energía puntual · tokens v1.20 (2026-09-24)
    Derivado de design-tokens.json. Fuente de verdad: DESIGN_SYSTEM.md.
    Reglas: un solo amarillo por pantalla (la acción principal); estados activos en Tinta;
    texto ≤ 15 px usa los tonos --color-*-texto; botones 52 px en móvil (48 hasta v1.5) y 44 px en web; radio 14 (20 en el diálogo de confirmación).
@@ -43,8 +43,9 @@
   --font-ui: 'Archivo', 'Segoe UI', system-ui, sans-serif;
   --font-datos: 'Spline Sans Mono', ui-monospace, 'SFMono-Regular', monospace;
 
-  --text-hora-protagonista: 700 96px/1 var(--font-datos);
-  --text-hora-sonara: 700 52px/1 var(--font-datos);
+  /* 900 desde design-tokens v1.20 (ninguna pantalla web los usa hoy; se mantienen en espejo del token) */
+  --text-hora-protagonista: 900 96px/1 var(--font-datos);
+  --text-hora-sonara: 900 52px/1 var(--font-datos);
   --text-hora-tarjeta: 700 26px/1 var(--font-datos);
   --text-hora-ampm: 500 12px/1 var(--font-datos);
   --text-indicador-web: 700 24px/1.1 var(--font-datos);

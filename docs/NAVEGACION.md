@@ -14,7 +14,7 @@ Exportables: `Mapa_Navegacion_Movil.pdf` y `Mapa_Sitio_Web.pdf` (raíz).
 | UF-M03.1 | Escanear con cámara | 3 + 2 desvíos | M02 → M03 → M04 · desvíos M12, M13 | Vibración al detectar, linterna automática, marco guía |
 | UF-M03.2 | Importar pantallazo | 4 | M02/M03 → galería (SO) → M04 · desvío M13 | «No se pudo leer» si el QR no es legible |
 | UF-M04.1 | Revisar alarma programada | 2 | M04 → M05 | «Guardada automáticamente», snackbar «Alarma guardada · También en Google Calendar» |
-| UF-M07.1 | Crear alarma propia + QR | 3 | M02 → M07 → M05 (opcional M08) | Validación inline, «Alarma y QR creados» |
+| UF-M07.1 | Crear alarma propia + QR | 3 | M02 → M07 → M08 | Validación inline del título (obligatorio); el QR del evento se genera al guardar |
 | UF-M10.1 | Atender la alarma | 2 | M10 → app de mapas (SO) | Sonido o vibración según «No molestar», «Sal en X min», re-aviso a los 5 min |
 | UF-M12.1 | Conceder permiso de cámara | 3 | M12 → ajustes del SO → M03 | Por qué se pide el permiso, estado del permiso al volver |
 
@@ -56,7 +56,6 @@ M04 -->|"Listo · snackbar guardada"| M05["M05 · Inicio · confirmación<br>+ D
 M02 -->|"+ Nueva alarma"| M07["M07 · Nueva alarma propia"]:::mvp
 M07 -->|"QR creado"| M08["M08 · Compartir QR"]:::pantalla
 M02 -->|"Tocar una alarma"| M06["M06 · Detalle y ajuste"]:::pantalla
-M06 -->|"Compartir"| M08
 M06 -.->|"⏩ Alarma conectada ·<br>simula el push"| M09
 M02 -->|"Ajustes"| M11["M11 · Ajustes"]:::pantalla
 PUSH(["Push · cambio del evento"]):::sys -.-> M09["M09 · Cambio en el evento"]:::pantalla
@@ -179,3 +178,32 @@ Prototipo publicado (abre en W00, un solo punto de inicio «Inicio» `4072:1861`
 | 11 | W03 Detalle | «2» / «›» del paginador · tocar «Buscar asistente» · «Exportar reporte» | **W03 (página 2)** · **W03 (búsqueda de asistente)** · W04 | Paginación, búsqueda y exportación desde el detalle (F-W03, F-W04) |
 
 **Áreas de toque (web v1.1, 2026-09-14):** ya no hay conexiones sobre texto: «Ver detalle ›» cuelga de su marco, la fila de cabecera de cada modal (miga + «✕») es un solo control que cierra → W01 y la miga de W03 tiene su propio marco. Detalle en `MOCKUPS.md` §7.4.
+
+## 7 · Sincronía con el código (2026-09-24)
+
+`docs/` es una **copia** del repositorio de UX y describe el **prototipo de Figma**; `apps/` es la maquetación
+construida. Cuando los dos no coinciden, el orden de precedencia que sigue el equipo es:
+
+1. **Los mockups de Figma** (`MOCKUPS.md` §5 y el archivo `4nHD4ygcnP33UH0gAhaii5`) — mandan sobre todo lo demás.
+2. **`TRAZABILIDAD.md` §1**, que es la tabla pantalla → ruta → destinos que el código implementa literalmente.
+3. Este documento y `FUNCIONALIDADES.md`, que describen el recorrido y el contrato funcional.
+
+Si una frase de este documento contradice un marco de Figma, **el que se corrige es el documento**, primero en el
+repositorio de UX y después volviendo a copiar `docs/`. Esta tabla registra las divergencias ya resueltas, para que
+nadie vuelva a implementar contra una frase que no corresponde a ningún mockup:
+
+| Divergencia | Qué decía el documento | Qué manda | Estado |
+|---|---|---|---|
+| **M06 → M08 «Compartir»** | El mermaid de §3 dibujaba esa arista y F-M08 hablaba del QR de «cualquier alarma guardada» | El marco 5:2 de M06 **no tiene ningún control de compartir**, y TRAZABILIDAD §1 tampoco lo lista | Arista retirada del mermaid (2026-09-24). A M08 solo se llega desde M07 «Guardar y crear QR». Pendiente de replicar en el repo de UX |
+| **M08 «‹»** | TRAZABILIDAD §1 dice «‹» → M02 | El código vuelve a **M05** (la misma confirmación del flujo de escaneo) para que la alarma recién creada a mano también se vea resaltada una vez | Decisión de código, documentada aquí y en el KDoc de la entrada M08. Pendiente de reflejar en TRAZABILIDAD |
+| **M02b · selector «Lista / Mes»** | No aparece en TRAZABILIDAD §1, y §6 decisión (c) dice que no se agregan elementos nuevos | El marco 4:2 de M02b **sí dibuja** el selector segmentado en la barra superior | Implementado como en el mockup; «Lista» vuelve a M02. Pendiente de añadir la fila en TRAZABILIDAD |
+| **M04 «Editar»** | La fila M04 de TRAZABILIDAD solo lista «Listo» → M05 y el descarte → M04d | El bloque «Sonará» del marco de M04 trae el enlace «Editar», y F-M04 habla del aviso calculado «editable» | Implementado: «Editar» → M06. Pendiente de añadir el destino en TRAZABILIDAD |
+| **M07 · validación** | UF-M07.1 pedía «validación inline» sin decir sobre qué campo | El título es el único campo obligatorio del marco 5:60 | Implementado: «Guardar y crear QR» no crea nada con el título vacío y el campo toma el estado de error del DS |
+| **Filas de ajuste de 40 pt** | DS §5 v1.6 (comentario 8 de los tutores) fija filas de 40 | La regla de área táctil mínima de 48 del mismo DS | Manda la accesibilidad: la fila que **navega** mide 48; la que solo lleva un switch se queda en 40 |
+| **Peso de las horas grandes** | DS §7 y `design-tokens.json` decían Bold 700 | El trazo de los marcos M09/M10 solo se reproduce en Android pidiendo 900 | Token y DS actualizados a 900 (`design-tokens.json` v1.20, DS v1.12). Pendiente de replicar en el repo de UX |
+
+**Recorridos del prototipo (⏩) tal como quedaron en la app:** el visor de M03 y «vibra al detectar el código»
+simulan la lectura del QR; «Abrir ajustes» de M12 pide el permiso real; la fila «Confirmar antes de auto-ajustarse»
+de M06 abre M09 **solo en las alarmas que traen un cambio del organizador en `dataset.json`** (`a-entrega`,
+`a-semillero`, `a-tutor`), porque no hay un push real que simular en las demás; y «Aceptar cambio» de M09 lleva a
+M10, el salto temporal a la hora del aviso.

@@ -21,14 +21,14 @@ Convenciones:
 | M02v | Inicio · sin alarmas (primer uso) | F-M02 | `/inicio` (estado vacío) | `PantallaInicio` con `EstadoVacio` | «Escanear QR del evento» → M12 ⏩ · «Elegir pantallazo» → M03b · «Crear el evento a mano» → M07 |
 | M02 | Inicio · lista | F-M02 | `/inicio` | `PantallaInicio` | FAB toque → M12 ⏩ (primer uso) o M03 · FAB mantener → M02h · tarjeta → M06 · Calendario → M02b · Ajustes → M11 |
 | M02h | Agregar evento (hoja) | F-M02 | `/inicio/agregar` (hoja modal) | `HojaAgregarEvento` | «Escanear el QR» → M12 ⏩ / M03 · «Elegir pantallazo» → M03b · «Crear a mano» → M07 |
-| M02b | Vista calendario | F-M02 | `/calendario` | `PantallaCalendario` | tarjeta → M06 · FAB igual que M02 · Alarmas → M02 |
+| M02b | Vista calendario | F-M02 | `/calendario` | `PantallaCalendario` | tarjeta → M06 · FAB igual que M02 · Alarmas → M02 · selector «Lista / Mes» de la barra superior (marco 4:2): «Lista» → M02 |
 | M03b | Pantallazo recibido | F-M03 | `/pantallazo` | `PantallaPantallazoRecibido` | «Continuar» → M04 · «Elegir otra imagen» → galería |
 | M03 | Escáner dual | F-M03 | `/escanear` | `PantallaEscaner` | QR detectado → M04 · QR inválido → M13 · «Elegir pantallazo» → M03b · «Crear el evento a mano» → M07 · «Linterna · auto» = control de 32 en la barra (`ChipControl`, v1.7) |
-| M04 | Alarma creada | F-M04 | `/alarma/:id/creada` | `PantallaAlarmaCreada` | «Listo» → M05 · «No puedo asistir · eliminar» → diálogo M04d («Conservar» / velo cierra · «Eliminar» → M02) |
+| M04 | Alarma creada | F-M04 | `/alarma/:id/creada` | `PantallaAlarmaCreada` | «Listo» → M05 · «Editar» (enlace del bloque SONARÁ) → M06 · «No puedo asistir · eliminar» → diálogo M04d («Conservar» / velo cierra · «Eliminar» → M02) |
 | M05 | Guardada + deshacer | F-M05 | `/inicio` (con snackbar) | `PantallaInicio` + `SnackbarDeshacer` | «Deshacer · 5 s» revierte · tarjeta nueva → M06 |
 | M06 | Detalle y edición | F-M06 | `/alarma/:id` | `PantallaEditarAlarma` | «Guardar cambios» → M02 · «Eliminar alarma» → diálogo M06d («Conservar» / velo cierra · «Eliminar» → M02) · fila «Cambios del organizador» → M09 ⏩ · «Gestionar en el calendario» → M02b |
 | M07 | Crear evento a mano | F-M07 | `/evento/nuevo` | `PantallaCrearEvento` | «Guardar y crear QR» → M08 |
-| M08 | QR del evento | F-M08 | `/evento/:id/qr` | `PantallaCompartirQR` | «Compartir por WhatsApp» → hoja del SO · «‹» → M02 |
+| M08 | QR del evento | F-M08 | `/evento/:id/qr` | `PantallaCompartirQR` | Se llega solo desde M07 · «Compartir por WhatsApp» → hoja del SO · «Correo» / «Más» → apps del SO · «Descargar PNG/PDF» y «Copiar enlace» → snackbar · «‹» → M05 (confirmación de la alarma recién creada, ver `NAVEGACION.md` §7) |
 | M09 | Cambio del organizador | F-M09 | `/alarma/:id/cambio` | `PantallaCambioEvento` | «Aceptar cambio» → M10 ⏩ · «Mantener alarma» / «×» → M02 · título → M06 · «×» al margen derecho de la barra (v1.7) |
 | M10 | Alarma sonando | F-M10 | `/alarma/:id/sonando` (pantalla completa) | `PantallaAlarmaSonando` | «Ya voy» / «Posponer 10 min» → M02 · «Ver ruta ›» → mapas del SO |
 | M11 | Ajustes | F-M11 | `/ajustes` | `PantallaAjustes` | Alarmas → M02 · fila «Cerrar sesión» → diálogo M11d («Cancelar» / velo cierra · «Cerrar sesión» → M01) |

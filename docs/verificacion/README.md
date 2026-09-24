@@ -17,6 +17,8 @@ correspondiente. Estas nueve capturas se regeneraron el 2026-09-24 tras los redi
 (con `./gradlew testDebugUnitTest` y copiadas desde `apps/movil/app/build/verificacion/`), y sus filas describen lo
 que se ve en esa versión.
 
+**Ajustes del 2026-09-24 (posteriores a la fusión del Plan 4):** M02b, M06, M06d, M07, M08, M11 y M11d se volvieron a capturar después de cuatro correcciones que cambian píxeles — los días del mes vecino de M02b pasan de Gris Borde a Gris Texto; las filas de ajuste que navegan (M06 «Gestionar en el calendario», M11 «Cerrar sesión» y las de los diálogos detrás) miden 48 en vez de 40 por el área táctil mínima; la hora de M07 va en Spline Sans Mono; y el peso de las horas grandes subió a Black. Nota sobre M08: el QR del evento **nunca sale igual dos veces**, porque `crearAlarmaManual` arma el id con `System.currentTimeMillis()` y el contenido del QR cambia en cada corrida; su captura solo se compara por estructura, no píxel a píxel.
+
 | Código | Marco Figma | Estado |
 |---|---|---|
 | M01 | 3:71 | ok · diferencias: párrafo parte en 3 líneas en vez de 2 (métrica de fuente de Robolectric); ver nota abajo sobre `capturar()` |

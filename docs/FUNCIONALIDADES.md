@@ -61,7 +61,9 @@ Documento de referencia del prototipo de baja fidelidad (mockups en `mockups/`).
 - **El código QR se genera automáticamente al guardar** ("Guardar y crear QR").
 
 ### F-M08 · Difusión y descarga de QR por alarma — pantalla M08
-- Visualización del QR de **cualquier alarma guardada (propia o escaneada)**.
+- Visualización del QR de **un evento propio**, creado a mano en M07. Hasta el 2026-09-24 esta línea decía
+  «cualquier alarma guardada (propia o escaneada)», pero el marco 5:2 de M06 no tiene control de compartir y una
+  alarma escaneada es de un evento ajeno, del que el asistente no difunde el QR (ver `NAVEGACION.md` §7).
 - Compartir por WhatsApp, correo o redes; descargar como imagen (PNG/PDF); copiar enlace; contador de escaneos.
 
 ### F-M09 · Sincronización push y reajuste por cambios — pantalla M09
