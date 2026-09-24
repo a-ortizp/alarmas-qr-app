@@ -101,6 +101,17 @@ class M06EditarAlarmaScreenTest {
     }
 
     @Test
+    fun `entrar a editar cualquier alarma apaga el resaltado de otra alarma recien creada`() {
+        repo.agregarDesdeEvento("e-entrega")
+        assertEquals(true, repo.alarma("a-entrega")?.esNueva)
+
+        montar("a-tutor")   // se entra a editar OTRA alarma, no a-entrega
+
+        assertEquals(false, repo.alarma("a-entrega")?.esNueva)
+        assertEquals(false, repo.alarma("a-entrega")?.chips?.contains("Nueva"))
+    }
+
+    @Test
     fun `guardar relee el repositorio y no revierte un cambio del organizador aplicado mientras M06 seguia en la pila`() {
         // Repro de la M06 retenida por rememberViewModelStoreNavEntryDecorator(): M06("a-entrega") construye su VM
         // (snapshot de la alarma pre-cambio), M09 aplica el cambio del organizador sobre el MISMO repositorio, y solo

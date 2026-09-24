@@ -54,4 +54,15 @@ class M03EscanerViewModelTest {
         vm.leer(repo.evento("e-entrega")!!.codigoQR)
         assertEquals(ResultadoQR.EventoDetectado("e-entrega"), vm.estado.value.resultado)
     }
+
+    @Test
+    fun `entrar a escanear apaga el resaltado de la alarma recien creada anterior`() {
+        val manual = repo.crearAlarmaManual("Cena", "2026-08-28T19:00:00-05:00", null, null, 30)
+        assertEquals(true, repo.alarma(manual.id)?.esNueva)
+
+        M03EscanerViewModel(repo)
+
+        assertEquals(false, repo.alarma(manual.id)?.esNueva)
+        assertEquals(false, repo.alarma(manual.id)?.chips?.contains("Nueva"))
+    }
 }

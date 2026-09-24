@@ -28,6 +28,12 @@ data class EstadoEditarAlarma(
  * persiste la anticipación, consistente con la maquetación).
  */
 class M06EditarAlarmaViewModel(private val repositorio: RepositorioDataset, private val id: String) : ViewModel() {
+    init {
+        // Entrar a editarla también cuenta como «ya la vi»: apaga el resaltado de «recién creada/escaneada» de
+        // cualquier alarma que lo tenga, no solo esta (mismo criterio simple que M02InicioViewModel).
+        repositorio.limpiarRecienCreadas()
+    }
+
     private val original = repositorio.alarma(id) ?: error("Alarma $id no existe")
     private val ajustes = repositorio.dataset.usuario.ajustes
     private val _estado = MutableStateFlow(
