@@ -97,7 +97,10 @@ en Linux/macOS. Con cualquiera de ellos, dentro de `apps/web` basta `fnm use` o 
 1. Abrir la pestaña **Releases** de este repositorio y descargar el `alarmas-qr-vX.Y.Z.apk` de la última versión.
 2. En el celular, permitir «instalar apps de origen desconocido» para el navegador o el gestor de archivos.
 3. Abrir el archivo e instalar. Con el celular conectado por USB también sirve `adb install -r alarmas-qr-vX.Y.Z.apk`.
-4. La app pide **permiso de cámara** (pantalla M12) y, en Android 13+, **permiso de notificaciones** la primera vez
+4. Si en ese teléfono ya estaba instalada una compilación de desarrollo de la app, Android rechaza la instalación
+   con «signatures do not match»: cada máquina firma con su propio keystore de depuración. Se desinstala la anterior
+   y se vuelve a instalar. En un teléfono donde nunca estuvo, no pasa.
+5. La app pide **permiso de cámara** (pantalla M12) y, en Android 13+, **permiso de notificaciones** la primera vez
    que se programa una alarma. Sin el de notificaciones la alarma no se ve ni se oye (ver el Paso 5).
 
 Si todavía no hay ninguna Release, el APK se genera con el Paso 4 o etiquetando una versión (Paso 6).
