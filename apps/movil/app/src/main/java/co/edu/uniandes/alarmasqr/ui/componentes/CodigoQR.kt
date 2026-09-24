@@ -81,14 +81,14 @@ fun IconoAlarmaSonando(tamano: Dp, modifier: Modifier = Modifier) {
     Canvas(modifier.size(tamano)) {
         val t = size.width
         val centro = Offset(t / 2f, t / 2f)
-        val radioReloj = t * 0.22f
-        val trazoReloj = t * 0.05f
+        val radioReloj = t * 0.30f
+        val trazoReloj = t * 0.07f
         drawCircle(Colores.Blanco, radioReloj, centro, style = Stroke(trazoReloj))
         drawLine(Colores.Blanco, centro, Offset(centro.x, centro.y - radioReloj * 0.55f), strokeWidth = trazoReloj * 0.7f, cap = StrokeCap.Round)
         drawLine(Colores.Blanco, centro, Offset(centro.x + radioReloj * 0.4f, centro.y), strokeWidth = trazoReloj * 0.7f, cap = StrokeCap.Round)
-        val trazoOnda = t * 0.045f
+        val trazoOnda = t * 0.06f
         listOf(1, 2).forEach { i ->
-            val r = radioReloj + i * t * 0.16f
+            val r = radioReloj + i * t * 0.08f
             val cuadro = Size(r * 2, r * 2)
             val esquina = Offset(centro.x - r, centro.y - r)
             drawArc(Colores.CoralAlarma, startAngle = -35f, sweepAngle = 70f, useCenter = false, topLeft = esquina, size = cuadro, style = Stroke(trazoOnda, cap = StrokeCap.Round))
