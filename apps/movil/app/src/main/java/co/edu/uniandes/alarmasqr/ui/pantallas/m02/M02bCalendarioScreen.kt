@@ -5,12 +5,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -23,7 +25,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import co.edu.uniandes.alarmasqr.ui.componentes.BarraSuperior
-import co.edu.uniandes.alarmasqr.ui.componentes.ChipControl
+import co.edu.uniandes.alarmasqr.ui.componentes.SelectorSegmentado
 import co.edu.uniandes.alarmasqr.ui.componentes.TarjetaAlarma
 import co.edu.uniandes.alarmasqr.ui.theme.Colores
 import co.edu.uniandes.alarmasqr.ui.theme.Espacio
@@ -44,8 +46,12 @@ fun M02bCalendarioScreen(
 ) {
     Column(modifier.fillMaxSize().background(Colores.Blanco).testTag("pantalla-M02b")) {
         BarraSuperior("Mis alarmas") {
-            ChipControl("Lista", activo = false, onClick = alVerLista, modifier = Modifier.testTag("boton-lista"))
-            ChipControl("Mes", activo = true, onClick = {})
+            SelectorSegmentado(
+                opciones = listOf("Lista" to false, "Mes" to true),
+                alElegir = { i -> if (i == 0) alVerLista() },
+                modifier = Modifier.width(IntrinsicSize.Min),
+                modificadorSegmento = { i -> if (i == 0) Modifier.testTag("boton-lista") else Modifier },
+            )
         }
         LazyColumn(
             contentPadding = PaddingValues(horizontal = Espacio.Margen, vertical = Espacio.PaddingBoton),

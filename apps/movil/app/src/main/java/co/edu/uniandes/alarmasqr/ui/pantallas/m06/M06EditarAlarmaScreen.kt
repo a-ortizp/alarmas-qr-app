@@ -137,7 +137,7 @@ private fun SelectorAnticipacion(seleccionado: Int, alElegir: (Int) -> Unit, mod
         Text("ANTICIPACIÓN", style = Tipografia.H3, color = Colores.GrisTexto)
         // «Otro»: representa el valor actual cuando no es 10/30/60; sin selector de minutos personalizado (maquetación).
         val opciones = OPCIONES_ANTICIPACION.map { etiquetaAnticipacion(it) to (seleccionado == it) } + ("Otro" to (seleccionado !in OPCIONES_ANTICIPACION))
-        SelectorSegmentado(opciones, alElegir = { i -> OPCIONES_ANTICIPACION.getOrNull(i)?.let(alElegir) })
+        SelectorSegmentado(opciones, alElegir = { i -> OPCIONES_ANTICIPACION.getOrNull(i)?.let(alElegir) }, modifier = Modifier.fillMaxWidth())
     }
 }
 
@@ -148,6 +148,6 @@ private fun SelectorSonido(seleccionado: String, alElegir: (String) -> Unit, mod
     Column(modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
         Text("SONIDO", style = Tipografia.H3, color = Colores.GrisTexto)
         val opciones = OPCIONES_SONIDO.map { (valor, texto) -> texto to (seleccionado == valor) }
-        SelectorSegmentado(opciones, alElegir = { i -> alElegir(OPCIONES_SONIDO[i].first) })
+        SelectorSegmentado(opciones, alElegir = { i -> alElegir(OPCIONES_SONIDO[i].first) }, modifier = Modifier.fillMaxWidth())
     }
 }

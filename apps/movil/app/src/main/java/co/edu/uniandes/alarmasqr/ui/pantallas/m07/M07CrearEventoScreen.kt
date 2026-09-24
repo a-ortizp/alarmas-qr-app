@@ -67,7 +67,7 @@ fun M07CrearEventoScreen(
             Column(verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoHoja)) {
                 Text("ANTICIPACIÓN", style = Tipografia.H3, color = Colores.GrisTexto)
                 val opciones = OPCIONES_ANTICIPACION.map { etiquetaAnticipacion(it) to (anticipacionMin == it) } + ("Otro" to (anticipacionMin !in OPCIONES_ANTICIPACION))
-                SelectorSegmentado(opciones, alElegir = { i -> OPCIONES_ANTICIPACION.getOrNull(i)?.let { anticipacionMin = it } })
+                SelectorSegmentado(opciones, alElegir = { i -> OPCIONES_ANTICIPACION.getOrNull(i)?.let { anticipacionMin = it } }, modifier = Modifier.fillMaxWidth())
             }
             TarjetaQRAutomatico()
             BotonPrimario(

@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
@@ -78,19 +77,25 @@ fun ChipControl(texto: String, activo: Boolean, onClick: () -> Unit, modifier: M
 /**
  * Selector segmentado (M06 ANTICIPACIÓN/SONIDO, M02b «Lista/Mes»): una sola pista Gris Niebla en píldora con el
  * segmento activo relleno Tinta flotando adentro — a diferencia de [ChipControl], que dibuja cada opción como una
- * píldora independiente con su propio contorno.
+ * píldora independiente con su propio contorno. El ancho lo decide quien llama (p. ej. `fillMaxWidth()` en M06,
+ * `width(IntrinsicSize.Min)` para la pista compacta de M02b); [modificadorSegmento] deja marcar un segmento puntual
+ * (`testTag`) sin exponer la fila interna.
  */
 @Composable
-fun SelectorSegmentado(opciones: List<Pair<String, Boolean>>, alElegir: (Int) -> Unit, modifier: Modifier = Modifier) {
+fun SelectorSegmentado(
+    opciones: List<Pair<String, Boolean>>, alElegir: (Int) -> Unit, modifier: Modifier = Modifier,
+    modificadorSegmento: (Int) -> Modifier = { Modifier },
+) {
     Row(
-        modifier.fillMaxWidth().background(Colores.GrisNiebla, Radios.Pildora).padding(Espacio.PistaSegmento),
+        modifier.background(Colores.GrisNiebla, Radios.Pildora).padding(Espacio.PistaSegmento),
         horizontalArrangement = Arrangement.spacedBy(Espacio.PistaSegmento),
     ) {
         opciones.forEachIndexed { i, (texto, activo) ->
             Box(
                 Modifier.weight(1f).height(Tamanos.ChipControl).clip(Radios.Pildora)
                     .background(if (activo) Colores.Tinta else Color.Transparent)
-                    .clickable(role = Role.Button, onClick = { alElegir(i) }),
+                    .clickable(role = Role.Button, onClick = { alElegir(i) })
+                    .then(modificadorSegmento(i)),
                 contentAlignment = Alignment.Center,
             ) { Text(texto, style = Tipografia.ChipControl, color = if (activo) Colores.Blanco else Colores.Tinta, maxLines = 1) }
         }
