@@ -108,7 +108,7 @@ const ASISTENTES_INVENTADOS: readonly Asistente[] = [
                         fila.alarma === 'activa' ? 'Activa' : 'Eliminada'
                       }}</aq-chip>
                     </td>
-                    <td class="centrado">—</td>
+                    <td class="confirmo">—</td>
                   </tr>
                 }
               </tbody>
@@ -121,6 +121,14 @@ const ASISTENTES_INVENTADOS: readonly Asistente[] = [
               [totalPaginas]="totalPaginas()"
               (cambiar)="irAPagina($event)"
             />
+          } @else {
+            <div class="pie-busqueda">
+              <p class="conteo">
+                Mostrando {{ filas().length }} de {{ asistentesEvento()?.total }} asistentes ·
+                filtro: "{{ qActual() }}"
+              </p>
+              <button type="button" aq-enlace (click)="buscar('')">Limpiar</button>
+            </div>
           }
         } @else if (qActual()) {
           <p class="sin-asistentes">
@@ -192,8 +200,8 @@ const ASISTENTES_INVENTADOS: readonly Asistente[] = [
     .col {
       width: 25%;
     }
-    .centrado {
-      text-align: center;
+    .confirmo {
+      padding-left: calc(var(--space-20) + var(--space-20));
     }
     .privacidad,
     .sin-asistentes {
@@ -201,6 +209,19 @@ const ASISTENTES_INVENTADOS: readonly Asistente[] = [
       display: flex;
       align-items: center;
       gap: var(--space-8);
+      font: var(--text-nota-web);
+      color: var(--color-texto-secundario);
+    }
+    .pie-busqueda {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-12);
+      padding-top: var(--space-12);
+    }
+    .pie-busqueda .conteo {
+      margin: 0;
       font: var(--text-nota-web);
       color: var(--color-texto-secundario);
     }

@@ -17,6 +17,7 @@ export type VarianteBoton = 'primario' | 'secundario' | 'destructivo';
       justify-content: center;
       gap: var(--space-8);
       box-sizing: border-box;
+      appearance: none;
       height: var(--size-boton-web);
       padding: var(--space-boton-web);
       border: var(--stroke-borde) solid transparent;

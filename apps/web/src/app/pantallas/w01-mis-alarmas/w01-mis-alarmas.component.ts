@@ -130,20 +130,20 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
             <table aq-tabla>
               <thead>
                 <tr>
-                  <th>Nombre del evento</th>
-                  <th>Fecha y hora</th>
-                  <th>Origen</th>
-                  <th>Escaneos</th>
-                  <th>Alarmas activas</th>
-                  <th>Estado</th>
-                  <th></th>
+                  <th class="col">Nombre del evento</th>
+                  <th class="col">Fecha y hora</th>
+                  <th class="col">Origen</th>
+                  <th class="col">Escaneos</th>
+                  <th class="col">Alarmas activas</th>
+                  <th class="col">Estado</th>
+                  <th class="ajustada"></th>
                 </tr>
               </thead>
               <tbody>
                 @for (fila of filas(); track fila.titulo) {
                   <tr>
                     <td>{{ fila.titulo }}</td>
-                    <td>{{ fila.fechaHora }}</td>
+                    <td class="nowrap">{{ fila.fechaHora }}</td>
                     <td>
                       <aq-chip [variante]="fila.chipOrigen">{{ fila.textoOrigen }}</aq-chip>
                     </td>
@@ -240,6 +240,17 @@ function pasadoAFila(e: EventoPasado): FilaEvento {
     }
     .contenedor-tabla {
       overflow-x: auto;
+    }
+    .col {
+      width: 15%;
+      white-space: nowrap;
+    }
+    .ajustada {
+      width: 1%;
+      white-space: nowrap;
+    }
+    .nowrap {
+      white-space: nowrap;
     }
     .pie-tabla {
       display: flex;

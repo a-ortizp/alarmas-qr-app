@@ -42,42 +42,42 @@ import { formatoFechaCorta } from '../../datos/formato-fecha';
               <h2 class="titulo-tarjeta-formulario">Exportar reporte consolidado</h2>
               <p class="subtitulo-tarjeta">Genera un reporte ejecutivo de tus alarmas</p>
             </div>
-            @if (!listo()) {
-              <div class="grupo-campo">
-                <span class="etiqueta-campo">RANGO DE FECHAS</span>
-                <aq-selector-segmentado
-                  etiqueta="Rango"
-                  [opciones]="opcionesRango"
-                  [formField]="formulario.rango"
-                />
+            <div class="grupo-campo">
+              <span class="etiqueta-campo">RANGO DE FECHAS</span>
+              <aq-selector-segmentado
+                etiqueta="Rango"
+                [opciones]="opcionesRango"
+                [formField]="formulario.rango"
+              />
+            </div>
+            @if (formulario.rango().value() === 'personalizado') {
+              <div class="fechas">
+                <aq-campo etiqueta="DESDE" tipo="text" [formField]="formulario.desde" />
+                <aq-campo etiqueta="HASTA" tipo="text" [formField]="formulario.hasta" />
               </div>
-              @if (formulario.rango().value() === 'personalizado') {
-                <div class="fechas">
-                  <aq-campo etiqueta="DESDE" tipo="text" [formField]="formulario.desde" />
-                  <aq-campo etiqueta="HASTA" tipo="text" [formField]="formulario.hasta" />
-                </div>
-              }
-              <div class="grupo-campo">
-                <span class="etiqueta-campo">FORMATO DE SALIDA</span>
-                <aq-selector-segmentado
-                  etiqueta="Formato"
-                  [opciones]="opcionesFormato"
-                  [formField]="formulario.formato"
-                />
-              </div>
-              <p class="nota">{{ reporte.nota }}</p>
-              <div class="acciones">
-                <a aq-boton variante="secundario" routerLink="/alarmas">Cancelar</a>
-                <button aq-boton type="button" (click)="generar()">Generar y descargar</button>
-              </div>
-            } @else {
-              <p class="resultado">
-                {{ reporte.archivoGenerado }} generado y descargado exitosamente
-              </p>
-              <button aq-boton variante="secundario" type="button" (click)="listo.set(false)">
-                Generar de nuevo
-              </button>
             }
+            <div class="grupo-campo">
+              <span class="etiqueta-campo">FORMATO DE SALIDA</span>
+              <aq-selector-segmentado
+                etiqueta="Formato"
+                [opciones]="opcionesFormato"
+                [formField]="formulario.formato"
+              />
+            </div>
+            <p class="nota">{{ reporte.nota }}</p>
+            @if (listo()) {
+              <p class="resultado">
+                ✓ {{ reporte.archivoGenerado }} generado y descargado exitosamente
+              </p>
+            }
+            <div class="acciones">
+              <a aq-boton variante="secundario" routerLink="/alarmas">Cancelar</a>
+              @if (!listo()) {
+                <button aq-boton type="button" (click)="generar()">Generar y descargar</button>
+              } @else {
+                <button aq-boton type="button" (click)="generar()">Generar de nuevo</button>
+              }
+            </div>
           </aq-tarjeta>
           <aq-tarjeta class="generados">
             <div class="grupo-titulo-tarjeta">
@@ -190,8 +190,12 @@ import { formatoFechaCorta } from '../../datos/formato-fecha';
     }
     .resultado {
       margin: 0;
+      box-sizing: border-box;
+      padding: var(--space-12) var(--space-16);
+      border: var(--stroke-borde) solid var(--color-borde);
+      border-radius: var(--radius-campo);
       font: var(--text-cuerpo-web);
-      color: var(--color-exito);
+      color: var(--color-texto);
     }
     .fila-reporte {
       display: flex;
