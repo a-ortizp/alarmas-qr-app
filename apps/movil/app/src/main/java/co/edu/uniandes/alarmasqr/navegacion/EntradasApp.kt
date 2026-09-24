@@ -240,21 +240,34 @@ fun EntryProviderScope<NavKey>.entradasApp(pila: NavBackStack<NavKey>, repositor
     }
     entry<Pantalla.M08> { clave ->
         val evento = repositorio.evento(clave.id)
-        if (evento == null) {
+        val alarma = evento?.let { repositorio.alarma(it.alarmaId) }
+        if (evento == null || alarma == null) {
             LaunchedEffect(clave) { pila.removeLastOrNull() }
         } else {
             val context = LocalContext.current
             val snackbar = LocalSnackbarApp.current
             val mensajes = repositorio.dataset.mensajes
             val alcance = rememberCoroutineScope()
+            fun compartirGenerico() {
+                val intent = Intent(Intent.ACTION_SEND).apply { type = "text/plain"; putExtra(Intent.EXTRA_TEXT, evento.codigoQR) }
+                context.startActivity(Intent.createChooser(intent, "Compartir QR"))
+            }
+            fun compartirWhatsApp() {
+                val intent = Intent(Intent.ACTION_SEND).apply { type = "text/plain"; putExtra(Intent.EXTRA_TEXT, evento.codigoQR); setPackage("com.whatsapp") }
+                runCatching { context.startActivity(intent) }.onFailure { compartirGenerico() }
+            }
+            fun compartirCorreo() {
+                val intent = Intent(Intent.ACTION_SEND).apply { type = "message/rfc822"; putExtra(Intent.EXTRA_SUBJECT, evento.titulo); putExtra(Intent.EXTRA_TEXT, evento.codigoQR) }
+                runCatching { context.startActivity(intent) }.onFailure { compartirGenerico() }
+            }
             M08CompartirQRScreen(
-                evento = evento,
+                evento = evento, alarma = alarma,
                 alVolver = { pila.removeLastOrNull() },
-                alCompartir = {
-                    val intent = Intent(Intent.ACTION_SEND).apply { type = "text/plain"; putExtra(Intent.EXTRA_TEXT, evento.codigoQR) }
-                    context.startActivity(Intent.createChooser(intent, "Compartir QR"))
-                },
-                alDescargar = { alcance.launch { snackbar.showSnackbar(mensajes.descargaCompletada) } },
+                alCompartirWhatsApp = ::compartirWhatsApp,
+                alCompartirCorreo = ::compartirCorreo,
+                alCompartirMas = ::compartirGenerico,
+                alDescargarPNG = { alcance.launch { snackbar.showSnackbar(mensajes.descargaCompletada) } },
+                alDescargarPDF = { alcance.launch { snackbar.showSnackbar(mensajes.descargaCompletada) } },
                 alCopiarEnlace = {
                     val portapapeles = context.getSystemService(ClipboardManager::class.java)
                     portapapeles.setPrimaryClip(ClipData.newPlainText("Enlace del QR", evento.codigoQR))

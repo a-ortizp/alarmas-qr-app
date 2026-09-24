@@ -120,4 +120,37 @@ object Iconos {
             { moveTo(11f, 18f); horizontalLineTo(13f) },
         )
     }
+
+    /** Burbuja de chat con cola (M08, canal «WhatsApp»: solo la forma genérica, sin el logo de la marca). */
+    val Chat: ImageVector by lazy {
+        icono(
+            "chat",
+            {
+                moveTo(5f, 4f); horizontalLineTo(19f); curveTo(20.1f, 4f, 21f, 4.9f, 21f, 6f); verticalLineTo(14f)
+                curveTo(21f, 15.1f, 20.1f, 16f, 19f, 16f); horizontalLineTo(8f); lineTo(5f, 20f); verticalLineTo(16f)
+                curveTo(3.9f, 16f, 3f, 15.1f, 3f, 14f); verticalLineTo(6f); curveTo(3f, 4.9f, 3.9f, 4f, 5f, 4f); close()
+            },
+        )
+    }
+
+    /** Sobre (M08, canal «Correo»; misma anatomía que [Outlook], con su propio nombre por el uso). */
+    val Correo: ImageVector by lazy {
+        icono(
+            "correo",
+            { moveTo(5f, 5f); horizontalLineTo(19f); curveTo(20.1f, 5f, 21f, 5.9f, 21f, 7f); verticalLineTo(17f); curveTo(21f, 18.1f, 20.1f, 19f, 19f, 19f); horizontalLineTo(5f); curveTo(3.9f, 19f, 3f, 18.1f, 3f, 17f); verticalLineTo(7f); curveTo(3f, 5.9f, 3.9f, 5f, 5f, 5f); close() },
+            { moveTo(3f, 7f); lineTo(12f, 13f); lineTo(21f, 7f) },
+        )
+    }
+
+    /** Tres nodos conectados (M08, canal «Más»: hoja de compartir del sistema). */
+    val Compartir: ImageVector by lazy {
+        icono(
+            "compartir",
+            { moveTo(18f, 8f); curveTo(19.66f, 8f, 21f, 6.66f, 21f, 5f); curveTo(21f, 3.34f, 19.66f, 2f, 18f, 2f); curveTo(16.34f, 2f, 15f, 3.34f, 15f, 5f); curveTo(15f, 6.66f, 16.34f, 8f, 18f, 8f); close() },
+            { moveTo(6f, 15f); curveTo(7.66f, 15f, 9f, 13.66f, 9f, 12f); curveTo(9f, 10.34f, 7.66f, 9f, 6f, 9f); curveTo(4.34f, 9f, 3f, 10.34f, 3f, 12f); curveTo(3f, 13.66f, 4.34f, 15f, 6f, 15f); close() },
+            { moveTo(18f, 22f); curveTo(19.66f, 22f, 21f, 20.66f, 21f, 19f); curveTo(21f, 17.34f, 19.66f, 16f, 18f, 16f); curveTo(16.34f, 16f, 15f, 17.34f, 15f, 19f); curveTo(15f, 20.66f, 16.34f, 22f, 18f, 22f); close() },
+            { moveTo(8.5f, 10.5f); lineTo(15.5f, 6.5f) },
+            { moveTo(8.5f, 13.5f); lineTo(15.5f, 17.5f) },
+        )
+    }
 }
