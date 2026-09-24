@@ -46,6 +46,7 @@ class M02bCalendarioScreenTest {
         regla.onNodeWithText("Agosto 2026").assertIsDisplayed()
         regla.onNodeWithText("JUE 27 · 2 ALARMAS").assertIsDisplayed()
         regla.onNodeWithText("Reunión con el tutor").assertIsDisplayed()   // 2026-08-27, día precargado de dataset.calendario.diaSeleccionado
+        regla.onNodeWithText("Creada por mí").assertDoesNotExist()   // a-tutor trae ese chip, oculto aquí (mostrarChips = false)
         regla.capturar("M02b")
     }
 

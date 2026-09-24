@@ -37,9 +37,11 @@ fun AgrupadorDia(texto: String, modifier: Modifier = Modifier) {
  * línea (columna de ancho mínimo `HoraTarjetaAncho`, sin ajuste de línea, para que crezca con horas de 5 dígitos
  * como «12:00 pm» sin partir el sufijo), título Archivo Bold 15, «evento h:mm · lugar» 13 Gris Texto, chips debajo
  * y el interruptor a la derecha. Pausada: sin fondo (tutores v1.6), todo en Gris Texto e interruptor apagado.
+ * [mostrarChips] = false oculta «Creada por mí»/«✓ Escaneada»/«Nueva» (M02b: el origen del evento no aporta nada
+ * al elegir un día en el calendario).
  */
 @Composable
-fun TarjetaAlarma(alarma: Alarma, onClick: () -> Unit, alCambiarActiva: (Boolean) -> Unit, modifier: Modifier = Modifier) {
+fun TarjetaAlarma(alarma: Alarma, onClick: () -> Unit, alCambiarActiva: (Boolean) -> Unit, modifier: Modifier = Modifier, mostrarChips: Boolean = true) {
     val principal = if (alarma.pausada) Colores.GrisTexto else Colores.Tinta
     val borde = if (alarma.esNueva) Trazos.Foco else Trazos.Borde
     val colorBorde = if (alarma.esNueva) Colores.VerdeTexto else Colores.GrisBorde
@@ -57,7 +59,7 @@ fun TarjetaAlarma(alarma: Alarma, onClick: () -> Unit, alCambiarActiva: (Boolean
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(Espacio.GapTextoTarjeta)) {
             Text(alarma.titulo, style = Tipografia.TituloTarjeta, color = principal)
             Text(FormatoHora.lineaEvento(alarma), style = Tipografia.Etiqueta, color = Colores.GrisTexto)
-            if (alarma.chips.isNotEmpty()) {
+            if (mostrarChips && alarma.chips.isNotEmpty()) {
                 Row(horizontalArrangement = Arrangement.spacedBy(Espacio.GapChips)) {
                     alarma.chips.forEach { ChipEstado(it, varianteDeChip(it)) }
                 }

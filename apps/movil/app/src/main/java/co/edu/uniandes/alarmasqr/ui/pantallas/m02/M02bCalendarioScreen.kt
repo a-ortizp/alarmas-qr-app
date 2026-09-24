@@ -58,7 +58,7 @@ fun M02bCalendarioScreen(
             } else {
                 item(key = "etiqueta-dia") { Text(estado.etiquetaDiaSeleccionado, style = Tipografia.H3, color = Colores.GrisTexto) }
                 items(estado.alarmasDelDia, key = { "alarma-${it.id}" }) { alarma ->
-                    TarjetaAlarma(alarma, onClick = { alTocarAlarma(alarma.id) }, alCambiarActiva = { alCambiarActiva(alarma.id, it) })
+                    TarjetaAlarma(alarma, onClick = { alTocarAlarma(alarma.id) }, alCambiarActiva = { alCambiarActiva(alarma.id, it) }, mostrarChips = false)
                 }
             }
         }
