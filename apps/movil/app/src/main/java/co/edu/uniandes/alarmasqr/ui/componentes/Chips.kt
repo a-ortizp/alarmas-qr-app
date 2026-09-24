@@ -95,7 +95,8 @@ fun SelectorSegmentado(
                 Modifier.weight(1f).height(Tamanos.ChipControl).clip(Radios.Pildora)
                     .background(if (activo) Colores.Tinta else Color.Transparent)
                     .clickable(role = Role.Button, onClick = { alElegir(i) })
-                    .then(modificadorSegmento(i)),
+                    .then(modificadorSegmento(i))
+                    .padding(horizontal = Espacio.PaddingChipControl),
                 contentAlignment = Alignment.Center,
             ) { Text(texto, style = Tipografia.ChipControl, color = if (activo) Colores.Blanco else Colores.Tinta, maxLines = 1) }
         }
