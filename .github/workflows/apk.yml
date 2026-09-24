@@ -30,6 +30,19 @@ jobs:
           packages: 'platform-tools platforms;android-36 build-tools;36.0.0'
       - uses: gradle/actions/setup-gradle@v5
       - run: chmod +x gradlew
+      # La firma de release hereda del keystore de depuración, y ese archivo lo genera Android Studio (o el
+      # primer assembleDebug) en la máquina de cada quien: un runner recién creado no lo tiene y
+      # validateSigningRelease falla con «Keystore file ~/.android/debug.keystore not found». Se crea aquí con
+      # las credenciales fijas que Android usa siempre para depuración (android/androiddebugkey), públicas y
+      # sin valor de seguridad: el APK queda firmado para instalar en un celular de prueba, no para Play.
+      - name: Crear el keystore de depuración
+        run: |
+          mkdir -p ~/.android
+          keytool -genkeypair -v -keystore ~/.android/debug.keystore \
+            -storepass android -keypass android -alias androiddebugkey \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Android Debug,O=Android,C=US"
+        working-directory: .
       - name: Compilar APK de release
         run: ./gradlew assembleRelease --no-daemon
       - name: Renombrar con la versión
