@@ -13,7 +13,7 @@ android {
         minSdk = 26           // fuentes variables y canales de notificación
         targetSdk = 36
         versionCode = 1
-        versionName = "0.1.0"
+        versionName = "1.0.0"   // entrega de la maquetación · tag v1.0.0
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
     }
