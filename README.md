@@ -11,6 +11,68 @@ Alarmas QR crea alarmas escaneando el código QR de un evento, sin digitar fecha
 
 Investigación, prototipos y diseño viven en el repositorio de UX: https://github.com/alejortizp/alarmas-qr-ux. Una copia curada está en `docs/`.
 
+## Entrega · qué se entrega y dónde
+
+| Qué | Dónde |
+|---|---|
+| Código de las dos aplicaciones | <https://github.com/a-ortizp/alarmas-qr-app> · repositorio **público**, se clona sin credenciales |
+| APK instalable | [Release v1.0.0](https://github.com/a-ortizp/alarmas-qr-app/releases/tag/v1.0.0) → `alarmas-qr-v1.0.0.apk` (descarga directa, 39 MB) |
+| Cómo validarlo | La «Guía para el tutor» de abajo, paso a paso |
+
+El APK declara `minSdkVersion 26`, así que se instala en Android 8 en adelante — por encima del API 27 pedido — y
+trae las cuatro arquitecturas (`arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`), de modo que sirve tanto en un celular
+real como en un emulador.
+
+### Cobertura de pantallas
+
+Las **22 pantallas móviles** de los mockups están construidas y son navegables; ninguna quedó como marcador.
+
+| Código | Pantalla | Cómo se llega |
+|---|---|---|
+| M01 | Bienvenida | Pantalla inicial de la app |
+| M00a · M00b | Crear cuenta · Iniciar sesión | «Comenzar» desde M01, y «Ya tengo cuenta» entre ellas |
+| M02v | Inicio sin alarmas | Tras crear la cuenta o entrar como invitado |
+| M02 | Mis alarmas (hub) | Pestaña «Alarmas» de la barra inferior |
+| M02h | Agregar evento (hoja) | Mantener presionado el FAB medio segundo |
+| M02b | Vista calendario | Pestaña «Calendario» |
+| M12 | Permiso de cámara | Primer toque del FAB «Escanear» |
+| M03 | Escáner QR | Tras conceder el permiso en M12 |
+| M03b | Pantallazo recibido | «Elegir pantallazo» en la hoja M02h |
+| M13 | QR sin evento | Tocar «vibra al detectar el código» en M03 |
+| M04 · M04d | Alarma programada (hoja) · ¿Eliminar alarma? | Al leer un QR válido · «No puedo asistir» dentro de M04 |
+| M05 | Guardada + Deshacer | «Listo» en M04 |
+| M06 · M06d | Editar alarma · ¿Eliminar alarma? | Tocar cualquier alarma de la lista · «Eliminar alarma» dentro de M06 |
+| M07 | Crear evento a mano | «Crear a mano» en la hoja M02h |
+| M08 | QR del evento | «Guardar y crear QR» en M07 |
+| M09 | Cambio en tu evento | Fila «Confirmar antes de auto-ajustarse» en M06 (simula el push del organizador) |
+| M10 | La alarma suena | «Aceptar cambio» en M09, o la notificación real de la alarma |
+| M11 · M11d | Ajustes · ¿Cerrar sesión? | Pestaña «Ajustes» · fila «Cerrar sesión» |
+
+Las **7 páginas web** cubren los ocho códigos W00–W07 de los mockups. Dos no son páginas propias, por decisión de
+los mockups web v1.5: **W02** (mis eventos) vive dentro de W01 como pestañas, filtros y buscador, y **W07**
+(eliminar cuenta) es el modal sobre W06. Cada estado de la tabla completa está en `docs/TRAZABILIDAD.md` §2.
+
+| Código | Página | Ruta |
+|---|---|---|
+| W00 | Inicio de sesión, con error de credenciales y recuperar contraseña | `/login` · `/login/recuperar` |
+| W01 · W02 | Mis Alarmas: indicadores, gráfica, pestañas, filtros y buscador | `/alarmas` |
+| W03 | Detalle del evento, con la tabla anónima de asistentes | `/eventos/:id` |
+| W04 | Reportes | `/reportes` |
+| W05 | Descargar QR en lote | `/qr` |
+| W06 | Ajustes de perfil | `/perfil` |
+| W07 | Modal «Eliminar cuenta» | `/perfil/eliminar` |
+
+### Componentes interactivos
+
+Los controles responden de verdad, sin backend detrás: los switches cambian de estado, los selectores segmentados
+(anticipación, sonido, Lista/Mes, formato PNG/PDF) marcan su opción, las pestañas y los filtros cambian la lista,
+el buscador filtra al presionar Enter, el paginador avanza, las casillas se marcan y los diálogos de confirmación
+abren y cierran. Lo que no existe es la capa de servidor: no hay cuentas ni persistencia, los datos salen de
+`dataset.json` y al cerrar la app todo vuelve al estado inicial. Las descargas y los envíos muestran su aviso de
+confirmación sin generar el archivo, salvo compartir por WhatsApp o correo desde M08, que sí abre la app del
+sistema. Las únicas capacidades reales son la cámara con lectura de QR (M03) y la alarma que suena con la app
+cerrada (M10).
+
 ## Guía para el tutor · cómo validar la entrega
 
 Esta guía va en orden: lo más rápido primero. Cada paso dice qué se debe ver, para poder marcarlo como correcto.
