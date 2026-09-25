@@ -35,9 +35,18 @@ jobs:
       # validateSigningRelease falla con «Keystore file ~/.android/debug.keystore not found». Se crea aquí con
       # las credenciales fijas que Android usa siempre para depuración (android/androiddebugkey), públicas y
       # sin valor de seguridad: el APK queda firmado para instalar en un celular de prueba, no para Play.
+      # El keystore sale del secreto DEBUG_KEYSTORE_BASE64 (mismas credenciales) para que todas las versiones
+      # tengan la misma firma y cada APK se instale como actualización del anterior; sin el secreto (p. ej. en
+      # un fork) se genera uno nuevo y el APK solo se instala tras desinstalar la versión previa.
       - name: Crear el keystore de depuración
+        env:
+          DEBUG_KEYSTORE_BASE64: ${{ secrets.DEBUG_KEYSTORE_BASE64 }}
         run: |
           mkdir -p ~/.android
+          if [ -n "$DEBUG_KEYSTORE_BASE64" ]; then
+            echo "$DEBUG_KEYSTORE_BASE64" | base64 -d > ~/.android/debug.keystore
+            exit 0
+          fi
           keytool -genkeypair -v -keystore ~/.android/debug.keystore \
             -storepass android -keypass android -alias androiddebugkey \
             -keyalg RSA -keysize 2048 -validity 10000 \
