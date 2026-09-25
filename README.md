@@ -16,7 +16,7 @@ Investigación, prototipos y diseño viven en el repositorio de UX: https://gith
 | Qué | Dónde |
 |---|---|
 | Código de las dos aplicaciones | <https://github.com/a-ortizp/alarmas-qr-app> · repositorio **público**, se clona sin credenciales |
-| APK instalable | [Release v1.0.0](https://github.com/a-ortizp/alarmas-qr-app/releases/tag/v1.0.0) → `alarmas-qr-v1.0.0.apk` (descarga directa, 39 MB) |
+| APK instalable | [Release v1.0.2](https://github.com/a-ortizp/alarmas-qr-app/releases/tag/v1.0.2) → `alarmas-qr-v1.0.2.apk` (descarga directa, 39 MB) |
 | Cómo validarlo | La «Guía para el tutor» de abajo, paso a paso |
 
 El APK declara `minSdkVersion 26`, así que se instala en Android 8 en adelante — por encima del API 27 pedido — y
@@ -100,7 +100,10 @@ en Linux/macOS. Con cualquiera de ellos, dentro de `apps/web` basta `fnm use` o 
 4. Si en ese teléfono ya estaba instalada una compilación de desarrollo de la app, Android rechaza la instalación
    con «signatures do not match»: cada máquina firma con su propio keystore de depuración. Se desinstala la anterior
    y se vuelve a instalar. En un teléfono donde nunca estuvo, no pasa.
-5. La app pide **permiso de cámara** (pantalla M12) y, en Android 13+, **permiso de notificaciones** la primera vez
+5. Desde la v1.0.2 todas las Releases se firman con la misma clave (ver el Paso 6), así que cada APK nuevo se
+   instala encima del anterior como actualización y conserva las alarmas. Si el teléfono tiene la v1.0.0 o la v1.0.1,
+   cada una firmada con una clave distinta, hay que desinstalarla una última vez antes de instalar la v1.0.2.
+6. La app pide **permiso de cámara** (pantalla M12) y, en Android 13+, **permiso de notificaciones** la primera vez
    que se programa una alarma. Sin el de notificaciones la alarma no se ve ni se oye (ver el Paso 5).
 
 Si todavía no hay ninguna Release, el APK se genera con el Paso 4 o etiquetando una versión (Paso 6).
@@ -171,7 +174,9 @@ cd apps/movil
 En PowerShell o CMD el comando es `.\gradlew.bat assembleDebug`. Si Gradle no encuentra el SDK, crear
 `apps/movil/local.properties` con `sdk.dir=C\:\\Users\\<usuario>\\AppData\\Local\\Android\\Sdk`; Android Studio lo
 genera solo al abrir la carpeta. El APK de release se firma con el **keystore de depuración**, suficiente para
-instalarlo en un celular de prueba, pero no para publicar en Google Play.
+instalarlo en un celular de prueba, pero no para publicar en Google Play. Compilado a mano usa el
+`~/.android/debug.keystore` de ese computador, no la clave fija de las Releases (Paso 6): por eso no se instala
+encima de un APK descargado de una Release, ni al revés.
 
 ### Paso 5 · Comprobar que la alarma suena con la app cerrada
 
@@ -192,11 +197,29 @@ Las alarmas **no sobreviven a un reinicio** del celular: reprogramarlas tras el 
 El APK de las Releases lo compila GitHub Actions al empujar un tag de versión:
 
 ```bash
-git tag v1.0.0
-git push origin v1.0.0
+git tag v1.0.2
+git push origin v1.0.2
 ```
 
-`.github/workflows/apk.yml` compila `assembleRelease` y publica la Release con `alarmas-qr-v1.0.0.apk` adjunto. En
+Antes del tag se sube `versionCode` y `versionName` en `apps/movil/app/build.gradle.kts`: Android solo instala una
+actualización con un `versionCode` mayor. `.github/workflows/apk.yml` compila `assembleRelease` y publica la Release
+con `alarmas-qr-v1.0.2.apk` adjunto.
+
+**Firma fija.** El flujo firma el APK con un keystore guardado en el secreto del repositorio `DEBUG_KEYSTORE_BASE64`
+(el archivo en base64, con las credenciales estándar de depuración `android` / `androiddebugkey`), así que todas las
+Releases desde la v1.0.2 comparten firma (huella SHA-256 `9B:B9:87:3F:…:57:BE:4F:EE`) y se instalan como
+actualización. Qué implica:
+
+- GitHub guarda el secreto cifrado y no lo muestra en los registros; no hay copia local. Si se borra o se
+  reemplaza, la Release siguiente tendrá otra firma y los teléfonos deberán desinstalar la app una vez.
+- Las contraseñas son públicas: la protección depende de que el archivo no se filtre. Quien lo tuviera podría
+  firmar un APK que se instale como actualización de Alarmas QR. Sirve para celulares de prueba, no para Google Play.
+- Sin el secreto (por ejemplo, en un fork) el flujo genera una clave nueva en cada ejecución, como antes de la v1.0.2.
+- Para reemplazarlo: `keytool -genkeypair -keystore alarmas-qr.keystore -storepass android -keypass android
+  -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"` y luego
+  `base64 -w0 alarmas-qr.keystore | gh secret set DEBUG_KEYSTORE_BASE64`.
+
+En
 cada pull request corre además `.github/workflows/ci.yml`: lint y pruebas de las dos apps, build de producción de la
 web y una comprobación de que `dataset.json` y `tokens.css` son idénticos en móvil, web y `packages/tokens`.
 
@@ -270,6 +293,7 @@ Versión corta; los detalles y qué debe verse están en «Guía para el tutor»
 1. Descargar el `.apk` de la última **Release** de este repositorio.
 2. En el celular, permitir «instalar apps de origen desconocido» para el navegador o gestor de archivos.
 3. Abrir el archivo e instalar. Alternativa con el celular conectado: `adb install -r alarmas-qr-vX.Y.Z.apk`.
+   Desde la v1.0.2 cada versión se instala encima de la anterior; la v1.0.0 y la v1.0.1 se desinstalan primero.
 4. Al primer uso la app pide permiso de cámara (M12) y de alarmas exactas (M11, Android 12+). La alarma debe sonar con la app cerrada.
 
 ## Estructura
