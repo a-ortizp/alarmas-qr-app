@@ -1,7 +1,5 @@
 # Alarmas QR · aplicaciones
 
-> `README.md` del repositorio de código. Stack decidido el 2026-09-16: **Kotlin + Jetpack Compose** (móvil) y **Angular + TypeScript** (web); ver `docs/PLAN_MAQUETACION.md` §1.
-
 Alarmas QR crea alarmas escaneando el código QR de un evento, sin digitar fecha, hora ni nombre. Este repositorio contiene la **maquetación** de sus dos aplicaciones: pantallas navegables con datos simulados, sin backend.
 
 | Aplicación | Qué es | Pantallas | Entregable |
