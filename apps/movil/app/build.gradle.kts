@@ -12,8 +12,8 @@ android {
         applicationId = "co.edu.uniandes.alarmasqr"
         minSdk = 26           // fuentes variables y canales de notificación
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0.0"   // entrega de la maquetación · tag v1.0.0
+        versionCode = 2
+        versionName = "1.0.1"   // tag v1.0.1: navegación inferior sobre la barra de 3 botones
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
     }
