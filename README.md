@@ -318,8 +318,6 @@ docs/                documentación UX copiada del repo de UX (ver abajo)
 
 Cada pantalla conserva su código de los mockups. La tabla pantalla → funcionalidad → ruta → componente está en `docs/TRAZABILIDAD.md`; las funcionalidades en `docs/FUNCIONALIDADES.md` (F-Mxx / F-Wxx) y los recorridos en `docs/NAVEGACION.md` §6 y §6b.
 
-Convenciones de git: una rama por pantalla o flujo (`feature/M06-editar-alarma`), PR pequeño revisado por el otro integrante, mensaje de commit con el código de pantalla al inicio («M06: selector de anticipación»).
-
 ## Notas técnicas
 
 **Scroll vertical en pantallas de columna (móvil):** los mockups miden 390×844. Para que en un teléfono más bajo, en
@@ -365,7 +363,6 @@ mano un color, un `rgb()`/`rgba()` o una medida en `px` (incluida una `@media` c
 | `MOCKUPS.md` | Decisiones de diseño y medidas web (§7) |
 | `Mockups_Figma_Movil.pdf` · `Mockups_Figma_Web.pdf` · `Design_System_Alarmas_QR.pdf` | Referencia visual sin depender de Figma |
 | `USER_FLOWS.md` · `CONCLUSIONES_PRUEBAS.md` | Flujos para pruebas y el porqué de las decisiones |
-| `PLAN_MAQUETACION.md` | Plan y reparto acordados |
 
 ## Equipo
 
