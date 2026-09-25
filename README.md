@@ -9,6 +9,39 @@ Alarmas QR crea alarmas escaneando el código QR de un evento, sin digitar fecha
 
 Investigación, prototipos y diseño viven en el repositorio de UX: https://github.com/alejortizp/alarmas-qr-ux. Una copia curada está en `docs/`.
 
+## Inicio rápido
+
+### Ejecutar la app móvil
+
+**Opción A · instalar el APK (lo más rápido, solo necesita el celular)**
+
+1. Descargar el `.apk` de la última [Release](https://github.com/a-ortizp/alarmas-qr-app/releases/tag/v1.0.2) de este repositorio.
+2. En el celular (Android 8+), permitir «instalar apps de origen desconocido» para el navegador o el gestor de archivos.
+3. Abrir el archivo e instalar.
+
+**Opción B · compilar y correr desde el código (necesita JDK 17, Android Studio Quail · 2026.1.4 y el SDK de Android 36)**
+
+```bash
+# apps/movil · abrir la carpeta apps/movil en Android Studio (no la raíz del repo), Gradle sync y Run ▶
+cd apps/movil
+./gradlew installDebug   # o abrir apps/movil en Android Studio y darle Run ▶
+```
+
+Detalles y validación paso a paso en «Guía para el tutor», Pasos 1, 3 y 4, más abajo.
+
+### Ejecutar la app web
+
+Necesita Node 22.23.2 (o 24/26) y npm.
+
+```bash
+cd apps/web
+fnm use            # o nvm use · fija Node 22.23.2 desde .nvmrc
+npm install         # o `npm ci` para instalar las dependencias exactas del lockfile
+npx ng serve         # queda escuchando en http://localhost:4200
+```
+
+Abrir <http://localhost:4200> con la ventana maximizada o en 1280×820 o más. Las credenciales de `/login` son de mentira: cualquier texto entra. Detalles en «Guía para el tutor», Paso 2, más abajo.
+
 ## Entrega · qué se entrega y dónde
 
 | Qué | Dónde |
@@ -82,7 +115,7 @@ No hay backend ni cuentas reales: todos los datos salen de `dataset.json`, idén
 |---|---|
 | Instalar la app en un celular Android | Solo el celular (Android 8+). Nada más: el APK se descarga de la Release |
 | Ver la app web | Node **22.23.2** (o 24/26) y npm |
-| Abrir y compilar el proyecto móvil | JDK 17 y Android Studio con el SDK de Android 36. Gradle se descarga solo |
+| Abrir y compilar el proyecto móvil | JDK 17 y Android Studio Quail · 2026.1.4 con el SDK de Android 36. Gradle se descarga solo |
 
 **Sobre Node:** Angular 22 exige Node 22.22.3 o superior y se niega a arrancar con Node 20. La versión exacta está
 fijada en `apps/web/.nvmrc`. Si la máquina tiene otra, lo cómodo es un gestor de versiones que la cambie por
@@ -132,9 +165,19 @@ las páginas de dos columnas se apilan). Las credenciales son de mentira: cualqu
 
 El flujo T5 de `docs/TRAZABILIDAD.md` es exactamente el recorrido 1 → 6. Para detener el servidor: `Ctrl+C`.
 
+**Generar el build de producción del front** (sin levantar el servidor de desarrollo):
+
+```bash
+cd apps/web
+npm install         # instala las dependencias (alternativa a `npm ci`)
+npx ng build         # genera el build en apps/web/dist/
+```
+
+El resultado queda en `apps/web/dist/`, listo para servirlo con cualquier servidor de archivos estáticos.
+
 ### Paso 3 · Probar la aplicación móvil en Android Studio
 
-1. Abrir Android Studio con **Open** y apuntar a la carpeta **`apps/movil`**, no a la raíz del repositorio (la raíz
+1. Abrir **Android Studio Quail · 2026.1.4** (o superior) con **Open** y apuntar a la carpeta **`apps/movil`**, no a la raíz del repositorio (la raíz
    no es un proyecto Gradle y el IDE no encontraría nada que sincronizar).
 2. Si pide actualizar el IDE o el Android Gradle Plugin, **actualizar el IDE**: el proyecto usa AGP 9.4.
 3. Esperar el «Gradle sync». La primera vez descarga Gradle 9.6 y las dependencias, y tarda varios minutos.
@@ -242,7 +285,7 @@ construido están registradas, con su resolución, en `docs/NAVEGACION.md` §7.
 
 Resumen para quien ya conoce el proyecto; el paso a paso explicado está en «Guía para el tutor», arriba.
 
-Requisitos: JDK 17, Android Studio compatible con AGP 9.4 (si al sincronizar pide actualizar el IDE, actualizarlo) con Android SDK 36 y un emulador o dispositivo con Android 8+ (minSdk 26); Node 22.23.2 (`nvm use`, ver `apps/web/.nvmrc`) y npm 10.
+Requisitos: JDK 17, Android Studio Quail · 2026.1.4 (compatible con AGP 9.4; si al sincronizar pide actualizar el IDE, actualizarlo) con Android SDK 36 y un emulador o dispositivo con Android 8+ (minSdk 26); Node 22.23.2 (`nvm use`, ver `apps/web/.nvmrc`) y npm 10.
 
 Gradle corre siempre con JDK 17 (`gradle/gradle-daemon-jvm.properties`): si la máquina no lo tiene, lo descarga. Los finales de línea los fija `.gitattributes` (LF, salvo `.bat`/`.cmd`), así `gradlew` funciona igual en Windows, WSL y CI.
 
@@ -257,16 +300,17 @@ cd apps/movil
 
 # apps/web · antes de cualquier npm/npx: source ~/.nvm/nvm.sh && nvm use 22.23.2 (o `nvm use` con el .nvmrc)
 cd apps/web
-npm ci
+npm ci                             # o `npm install` si no se necesita el lockfile exacto
 npx ng serve                       # http://localhost:4200
 npx ng test --watch=false          # Vitest vía @angular/build:unit-test
-npx ng build --configuration production
+npx ng build --configuration production   # o `npx ng build` para el build por defecto
 ```
 
 ## Frameworks y versiones
 
 | Ámbito | Herramienta | Versión | Dónde se fija |
 |---|---|---|---|
+| Móvil | Android Studio | Quail · 2026.1.4 | IDE recomendado para abrir `apps/movil`; no se fija en ningún archivo del repo |
 | Móvil | JDK (código y daemon de Gradle) | 17 | `apps/movil/app/build.gradle.kts` y `apps/movil/gradle/gradle-daemon-jvm.properties` (Gradle lo busca o lo descarga solo, sin importar `JAVA_HOME`) |
 | Móvil | Gradle | 9.6.0 | `apps/movil/gradle/wrapper/gradle-wrapper.properties` |
 | Móvil | Android Gradle Plugin (Kotlin integrado, DSL nuevo) | 9.4.1 | `apps/movil/gradle/libs.versions.toml` |
