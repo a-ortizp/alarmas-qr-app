@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.tappableElement
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -49,10 +50,13 @@ private val pestanas = listOf(
  */
 @Composable
 fun NavegacionInferior(activa: Pantalla, alCambiar: (Pantalla) -> Unit, modifier: Modifier = Modifier) {
-    // El inset real de WindowInsets.navigationBars (edge-to-edge) puede ser bastante alto (barra de 3 botones);
-    // topado a Espacio.Medianil para un respiro chico en vez del hueco completo, sin volver a pegar la barra
-    // al borde (el toque no depende de esto: el gesto de inicio solo intercepta el deslizar, no el toque).
-    val margenInferior = minOf(WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(), Espacio.Medianil)
+    // Barra de 3 botones (◁ ○ □): tappableElement trae su altura completa y se respeta entera, porque esos botones
+    // capturan el toque y taparían las pestañas. Barra de gestos: tappableElement es 0 y el inset de navigationBars
+    // se topa a Espacio.Medianil para un respiro chico en vez del hueco completo (el gesto de inicio solo
+    // intercepta el deslizar, no el toque).
+    val botonesSistema = WindowInsets.tappableElement.asPaddingValues().calculateBottomPadding()
+    val barraGestos = minOf(WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(), Espacio.Medianil)
+    val margenInferior = maxOf(botonesSistema, barraGestos)
     Row(
         modifier.fillMaxWidth().background(Colores.Blanco)
             .drawBehind { val y = Trazos.Borde.toPx() / 2; drawLine(Colores.GrisBorde, Offset(0f, y), Offset(size.width, y), Trazos.Borde.toPx()) }
